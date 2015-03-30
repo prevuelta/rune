@@ -1,0 +1,8 @@
+{
+	"gridHeight" : 5, 
+	"gridWidth" : 5,
+	"output" : "java", 
+	"outputPatterns" : {
+		"java" : "$1,",
+		"objc" : "@$1,"
+}
