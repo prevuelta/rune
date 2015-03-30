@@ -1,0 +1,30 @@
+{
+  "name": "mustache-wax",
+  "version": "0.9.0",
+  "main": "mustache-wax.min.js",
+  "description": "Wax is an extension for Mustache.js which enables the use of formatters inside of expressions",
+  "authors": [
+    "JVitela <j.vitel@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    ".*",
+    "examples",
+    "test",
+    "grunt",
+    "gruntfile.js",
+    "*.json",
+    "*.md"
+  ],
+  "homepage": "https://github.com/jvitela/mustache-wax",
+  "_release": "0.9.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.9.0",
+    "commit": "18c537206fe53d6aac5798ac183c814a832eaac1"
+  },
+  "_source": "git://github.com/jvitela/mustache-wax.git",
+  "_target": "~0.9.0",
+  "_originalSource": "mustache-wax",
+  "_direct": true
+}

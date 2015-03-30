@@ -1,0 +1,21 @@
+<header>
+
+	 <span>Rüne</span>
+
+  <ul>
+    {% assign pages = site.pages | sort:"weight"  %}
+   {% for node in pages | sort:weight  %}
+       {% if page.url == node.url %}
+      <li class="active"><a href="{{node.url}}" class="active">{{node.title}}</a></li>
+    {% elsif node.url contains '/css' %}
+    {% else %}
+      <li><a href="{{node.url}}">{{node.title}}</a></li>
+    {% endif %}
+  {% endfor %}
+
+  </ul>
+
+  <ul>
+    <li><a href="">Create an alphabet</a></li>
+</header>
+
