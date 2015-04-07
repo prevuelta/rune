@@ -8,13 +8,20 @@ var viewContainer = $('#main');
 function addView(template, model, callback, replace, prepend) {
 	// Form view
 
+	console.log('Prepend: ' + prepend);
+
 	$.get('templates/' + template + '.html', function(template) {
 		var rendered =  Mustache.render(template, model);
 		if(!replace && !prepend) {
+
 			viewContainer.append(rendered);
+
 		} else if(prepend) {
+
 			console.log('prepending');
+
 			viewContainer.prepend(rendered);
+
 		} else {
 			viewContainer.html(rendered);
 		}
@@ -28,20 +35,19 @@ function addView(template, model, callback, replace, prepend) {
 
 /* ------ Add multiple mustache views as callbacks ------ */
 
-function addViews(views, container, outerCallback) {
+function addViews(views, outerCallback) {
 
-	function createCallback(name, model, container, callback) {
+	function createCallback(template, model, callback) {
 		return function() {
-			addView(name, model, container, callback); 
+			addView(template, model, callback, false, false); 
 		}
 	}
 
 	var callback = outerCallback;
 
-	$(views).each(function(index, value) {
-		callback = createCallback(value[0], value[1], container, callback);
+	$.each(views, function(key, value) {
+		callback = createCallback(value.template, value.data, callback);
 	});
-
 
 	if(callback != null) {
 		callback();
@@ -49,16 +55,13 @@ function addViews(views, container, outerCallback) {
 }
 
 
-
-function setupPage(views) {
+function setupPage(views, outerCallback) {
 
 	var page = {
 
 		onReady : function() {
 			
-			$.each(views, function(key, value) {
-				addView(key, value.data, value.callback);
-			});	
+			addViews(views, outerCallback);
 
 		}
 	}
