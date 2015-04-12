@@ -5,13 +5,13 @@ var viewContainer = $('#main');
 
 /* ------ Add mustache view ------ */
 
-function addView(template, model, callback, replace, prepend) {
+function addView(view, model, callback, replace, prepend) {
 	// Form view
 
 	console.log('Prepend: ' + prepend);
 
-	$.get('templates/' + template + '.html', function(template) {
-		var rendered =  Mustache.render(template, model);
+	$.get('views/' + view + '.html', function(view) {
+		var rendered =  Mustache.render(view, model);
 		if(!replace && !prepend) {
 
 			viewContainer.append(rendered);
@@ -37,16 +37,16 @@ function addView(template, model, callback, replace, prepend) {
 
 function addViews(views, outerCallback) {
 
-	function createCallback(template, model, callback) {
+	function createCallback(view, model, callback) {
 		return function() {
-			addView(template, model, callback, false, false); 
+			addView(view, model, callback, false, false); 
 		}
 	}
 
 	var callback = outerCallback;
 
 	$.each(views, function(key, value) {
-		callback = createCallback(value.template, value.data, callback);
+		callback = createCallback(value.view, value.data, callback);
 	});
 
 	if(callback != null) {

@@ -1,5 +1,5 @@
 # Site settings
-title: jekyll-mustache
+title: Rüne
 email: hello@pablorevuelta.com
 description: > # this means to ignore newlines until "baseurl:"
   Write an awesome description for your new site here. You can edit this
@@ -7,7 +7,7 @@ description: > # this means to ignore newlines until "baseurl:"
   Google search results) and in your feed.xml site description.
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://prevuelta.github.io/jekyll-mustache" # the base hostname & protocol for your site
-github_username:  preuveta
+github_username:  prevuelta
 
 # Build settings
 markdown: kramdown

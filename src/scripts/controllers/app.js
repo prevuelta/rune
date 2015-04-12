@@ -15,20 +15,78 @@ var RuneGrid = {
 
 		console.log(this);
 
-		var letter = [
-			[0, 12],
-			[0, 0],
-			[0, 1],
-			[1, 10],
-			[0, 10],
-			[0, 2],
-			[0, 3],
-			[0, 15],
-			[0, 14],
-			[1, 5],
-			[0, 13]
+		var that = this;
 
-		];
+		var letter = {
+			"gridPoints" : [12, 0, 1, 10, 2, 3, 15, 14, 5, 13],
+			"distortions" : [
+				{
+					"type" : "tri",
+					"index" : 8,
+					"dir" : "down",
+					"p1" : 2,
+					"p2" : 3
+				},
+				{
+					"type" : "tri",
+					"index" : 3,
+					"dir" : "up",
+					"p1" : 7,
+					"p2" : 8
+				}
+			],
+			"rendered" : [],
+			render : function(grid) {
+				console.log(this);
+				var that = this;
+
+				var renderTemp = [];
+
+				$.each(this.gridPoints, function(idx, point) {
+					renderTemp.push(grid[point]);
+				});
+
+				$.each(this.distortions, function(idx, dist) {
+					that.distort(dist.dir, renderTemp[dist.index], renderTemp[dist.p1], renderTemp[dist.p2]);
+				});
+
+				that.rendered = renderTemp;
+			},
+			distort: function(dir, point, p1, p2) {
+
+				var angle = getAngle(p1, p2);
+
+				console.log("angle: " + angle);
+
+				function getAngle(p1, p2) {
+					var adj = that.xRes;
+					var hyp = p1.getDistance(p2);
+
+					return Math.acos( adj / hyp );
+				}
+
+				var adj = that.xRes;
+
+				var hyp = adj / Math.cos(angle);
+
+				console.log("Hyp" + hyp);
+
+				switch(dir) {
+					case "down" :
+						point.y += hyp - point.y;
+					break;
+
+					case "up" :
+						point.y -= hyp - point.y;
+					break;
+				}
+
+				
+
+			}
+		};
+
+		console.log(letter);
 
 		this.canvas = document.getElementById('rune-grid');
 		// Create an empty project and a view for the canvas:
@@ -55,6 +113,8 @@ var RuneGrid = {
 
 		var grid = this.gridLayers[0];
 
+		letter.render(grid);
+
 		// Create a Paper.js Path to draw a line into it:
 		var path = new paper.Path();
 		// Give the stroke a color
@@ -64,8 +124,6 @@ var RuneGrid = {
 		var start = new paper.Point(0, 0);
 		// Move to start and draw a line from there
 		path.moveTo(start);
-
-		var that = this;
 
 		$.each(this.gridLayers, function(idx, grid) {
 			var color = 'black';
@@ -85,11 +143,11 @@ var RuneGrid = {
 
 		path.strokeColor = 'red';
 
-		$.each(letter, function(idx, point) {
+		$.each(letter.rendered, function(idx, point) {
 			if(!idx) {
-				path.moveTo(that.gridLayers[point[0]][point[1]]);
+				path.moveTo(point);
 			} else {
-				path.lineTo(that.gridLayers[point[0]][point[1]]);
+				path.lineTo(point);
 			}
 		});
 
@@ -113,16 +171,25 @@ var RuneGrid = {
 		return this.xUnits * this.yUnits;
 	},
 	drawPoints: function(locations, color, paper, circles) {
+		
+		var gridColor = new paper.Color(255, 0, 0, 0.2);
+
 		$.each(locations, function(idx, point) {
 			console.log(point);
 			if(circles) {
 				var circle = new paper.Path.Circle(point, RuneGrid.xRes * Math.sqrt(2));
-				circle.strokeColor = color;
+				circle.strokeColor = gridColor;
 			}
+
 			var recPath = new paper.Path.Rectangle(point, RuneGrid.xRes);
-			recPath.strokeColor = color;
+			recPath.strokeColor = gridColor;
+			
 			var pointText = new paper.PointText({point: point, content: idx});
 			pointText.fillColor = color;
+
+			pointText.onMouseDown = function(e) {
+				console.log(e.target._content);
+			}
 			// recPath.fillColor = color;
 			// var path = paper.Rectangle(rec);
 		});
@@ -157,8 +224,8 @@ var callback = function() {
 
 setupPage([
 	{
-		"template" : "grid",
-		"data": {
+		"view" : "grid",
+		"model": {
 
 		},
 		
