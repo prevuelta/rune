@@ -22,7 +22,7 @@ var RuneGrid = {
 			"distortions" : 
 				{
 					"type" : "tri",
-					"points" : [1, 28, 34, 7],
+					"points" : [1, 28, 34 ,7],
 				}
 				// {
 				// 	"type" : "tri",
@@ -87,17 +87,21 @@ var RuneGrid = {
 				// Hypothesis to midpoint
 				var t1_hyp = points[2].getDistance(midPoint);
 				var t1_adj = that.xRes / 2;
-				var t1_oppAngle = 90 - radDeg(Math.acos( t1_adj / t1_hyp));
+
+				// var theta = 
+				var t1_phi = 90 - radDeg(Math.acos( t1_adj / t1_hyp));
+
+				console.log("Phi " + t1_phi);
 
 				// New vector
 				var vec = new paper.Point(points[2]);
-				vec.angle = (90 - radDeg( getAngle(points[0], points[2]))) - t1_oppAngle;
+				vec.angle = (90 - radDeg( getAngle(points[0], points[2]))) - t1_phi;
 
 				var side = getSize(null, t1_adj, t1_hyp);
 
 				var newVector = vec.normalize();
 
-				console.log(side);
+				console.log("Side" + side);
 
 				newVector.length = newVector.length * side;
 
@@ -105,16 +109,14 @@ var RuneGrid = {
 
 				console.log(newPoint);
 
-				testPath.lineTo(newPoint);
+				// testPath.lineTo(newPoint);
 
-
+// 
 				/* ------ Second triangulation ------ */
 
 				var otherPoint = new paper.Point(points[0].x, points[2].y);
 
 				console.log(otherPoint + " " + points[2]);
-
-				testPath.moveTo(otherPoint);
 
 				testPath.lineTo(otherPoint);
 
@@ -124,15 +126,22 @@ var RuneGrid = {
 
 				console.log("adj" + t2_adj);
 
-				var t2_hyp = t2_adj / Math.cos(t1_oppAngle);
+				console.log("Vec angle" + vec.angle);
 
-				console.log("Hyp: " + Math.abs(t2_hyp));
+				var t2_hyp = t2_adj / Math.cos( degRad(vec.angle) );
 
-				newVector.length = t2_hyp - newVector.length;
+				console.log("Hyp: " + t2_hyp + "  " +  newVector.length);
 
-				var newnewpoint = newPoint.add(newVector);
+				newVector.length = Math.abs(t2_hyp) - newVector.length;
 
-				// testPath.lineTo(newnewpoint);
+				var newnewpoint = newPoint.subtract(newVector);
+
+				testPath.lineTo(newnewpoint);
+
+				var finalMeasure = points[0].getDistance(newnewpoint);
+
+				points[3].y = points[0].y + finalMeasure;
+				points[1].y = points[2].y - finalMeasure;
 
 				function getAngle(p1, p2) {
 					// var adj = that.xRes;
@@ -147,7 +156,11 @@ var RuneGrid = {
 				}
 
 				function radDeg(radians) {
-					return radians * (180/Math.PI)
+					return radians * (180 / Math.PI)
+				}
+
+				function degRad(degrees) {
+					return degrees / (180 / Math.PI);
 				}
 
 				function getSize(adj, opp, hyp) {
@@ -158,34 +171,7 @@ var RuneGrid = {
 					} else if(opp & hyp) {
 						return Math.sqrt(hyp*hyp - opp*opp);
 					}
-				}
-
-				// SOH				
-
-				// o / sin() = h;
-
-				// var opp = that.xRes;
-
-				// var hyp =  opp / Math.sin(angle);
-
-				// console.log("Hyp: " + hyp);
-
-
-				// switch(dir) {
-				// 	case "down" :
-				// points[3].y = hyp;
-
-				// var dist = points[1].getDistance(points[2]);
-
-				// points[1].y -= hyp - dist;
-				// 	break;
-
-				// 	case "up" :
-				// 		point.y -= hyp - point.y;
-				// 	break;
-				// }
-
-				
+				}				
 
 			}
 		};
