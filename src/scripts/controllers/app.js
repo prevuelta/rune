@@ -224,7 +224,7 @@ var RuneGrid = {
 					color = new paper.Color(255, 0, 0, 0.2)
 				break;
 			}
-			that.drawPoints(grid, color, paper, circles);
+			// that.drawPoints(grid, color, paper, circles);
 		});
 		
 		var letterLayer = new paper.Layer();
@@ -244,7 +244,7 @@ var RuneGrid = {
 		// Draw the view now:
 		paper.view.draw();
 
-		return this;
+		console.log(paper.project.exportSVG());
 
 	},
 	drawLetter : function() {
