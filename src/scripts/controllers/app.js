@@ -66,10 +66,7 @@ var RuneGrid = {
 			},
 			correct: function(points) {
 
-				// var angle = getAngle(points[0], points[2]);
-
-				// console.log("angle: " + angle);
-
+				// Draw it all
 				var testPath = new paper.Path();
 
 				testPath.strokeColor = 'black';
@@ -85,32 +82,44 @@ var RuneGrid = {
 				var circle = new paper.Path.Circle(midPoint, that.xRes / 2);
 				circle.strokeColor = 'black'
 
-				var hyp = points[0].getDistance(midPoint);
+				/* ------ First triangulation ------ */
 
-				var line = new paper.Point(points[2]);
+				// Hypothesis to midpoint
+				var t1_hyp = points[2].getDistance(midPoint);
+				var t1_adj = that.xRes / 2;
+				var t1_oppAngle = 90 - radDeg(Math.acos( t1_adj / t1_hyp));
 
-				console.log(line);
+				// New vector
+				var vec = new paper.Point(points[2]);
+				vec.angle = (90 - radDeg( getAngle(points[0], points[2]))) - t1_oppAngle;
 
-				var adj = that.xRes / 2;
+				var side = getSize(null, t1_adj, t1_hyp);
 
-				var side = Math.sqrt(hyp*hyp - adj*adj);
-
-				line.angle = (Math.acos( adj / hyp) * (180/Math.PI));
-
-				var nLine = line.normalize();
+				var newVector = vec.normalize();
 
 				console.log(side);
 
-				nLine.length = nLine.length * side;
+				newVector.length = newVector.length * side;
 
-				console.log(nLine);
-
-				var newPoint = points[2].subtract(nLine);
-
+				var newPoint = points[2].subtract(newVector);
 
 				console.log(newPoint);
 
 				testPath.lineTo(newPoint);
+
+
+				/* ------ Second triangulation ------ */
+
+				var t2_adj = new paper.Point(points[0].x, points[2].y).getDistance(points[2]);
+				var t2_hyp = t2_adj / Math.cos(t1_oppAngle);
+
+				console.log("Hyp: " + t2_hyp);
+
+				newVector.length = t2_hyp - newVector.length;
+
+				var newnewpoint = newPoint.subtract(newVector);
+
+				testPath.lineTo(newnewpoint);
 
 				function getAngle(p1, p2) {
 					// var adj = that.xRes;
@@ -122,6 +131,20 @@ var RuneGrid = {
 
 					return (Math.PI / 2) - Math.acos( adj / hyp );
 
+				}
+
+				function radDeg(radians) {
+					return radians * (180/Math.PI)
+				}
+
+				function getSize(adj, opp, hyp) {
+					if(adj & hyp) {
+						return Math.sqrt(hyp*hyp - adj*adj);
+					} else if(adj & opp) {
+						return Math.sqrt(opp*opp + adj*adj);
+					} else if(opp & hyp) {
+						return Math.sqrt(hyp*hyp - opp*opp);
+					}
 				}
 
 				// SOH				
