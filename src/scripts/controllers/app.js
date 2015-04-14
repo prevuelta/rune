@@ -110,16 +110,29 @@ var RuneGrid = {
 
 				/* ------ Second triangulation ------ */
 
-				var t2_adj = new paper.Point(points[0].x, points[2].y).getDistance(points[2]);
+				var otherPoint = new paper.Point(points[0].x, points[2].y);
+
+				console.log(otherPoint + " " + points[2]);
+
+				testPath.moveTo(otherPoint);
+
+				testPath.lineTo(otherPoint);
+
+				testPath.lineTo(points[2]);
+
+				var t2_adj = otherPoint.getDistance(points[2]);
+
+				console.log("adj" + t2_adj);
+
 				var t2_hyp = t2_adj / Math.cos(t1_oppAngle);
 
-				console.log("Hyp: " + t2_hyp);
+				console.log("Hyp: " + Math.abs(t2_hyp));
 
 				newVector.length = t2_hyp - newVector.length;
 
-				var newnewpoint = newPoint.subtract(newVector);
+				var newnewpoint = newPoint.add(newVector);
 
-				testPath.lineTo(newnewpoint);
+				// testPath.lineTo(newnewpoint);
 
 				function getAngle(p1, p2) {
 					// var adj = that.xRes;
@@ -225,7 +238,7 @@ var RuneGrid = {
 					color = new paper.Color(255, 0, 0, 0.2)
 				break;
 			}
-			// that.drawPoints(grid, color, paper, circles);
+			that.drawPoints(grid, color, paper, circles);
 		});
 		
 		var letterLayer = new paper.Layer();
