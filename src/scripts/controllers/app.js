@@ -1,3 +1,192 @@
+
+//[31, 30, 0, 1, 28, 4, 5, 35, 34, 7]
+
+'use strict';
+
+const SILVER_RATIO = Math.sqrt(2);
+const GOLDEN_RATIO =  (1 + Math.sqrt(5)) / 2,
+
+/* ========== Utilities ========== */
+
+var util = {
+	getIndices: function(points, gridPoints) {
+		console.log(points);
+		return points.map(function(point) {
+			return gridPoints.indexOf(point);
+		});
+	}
+}
+
+var trigUtil = {
+	getSize : function (adj, opp, hyp) {
+			if(adj & hyp) {
+				return Math.sqrt(hyp*hyp - adj*adj);
+			} else if(adj & opp) {
+				return Math.sqrt(opp*opp + adj*adj);
+			} else if(opp & hyp) {
+				return Math.sqrt(hyp*hyp - opp*opp);
+			}				
+	},
+	getAngle: function(p1, p2) {
+		// var adj = that.xRes;
+
+		var adj = p1.getDistance(new paper.Point(p2.x, p1.y));
+		var hyp = p1.getDistance(p2);
+
+		// cos() = a / h;
+
+		return (Math.PI / 2) - Math.acos( adj / hyp );
+
+	},
+	radToDeg: function(radians) {
+		return radians * (180 / Math.PI)
+	},
+	degToRad: function(degrees) {
+		return degrees / (180 / Math.PI);
+	},
+	getMidPoint: function(paper, p1, p2) {
+		return new paper.Point( (p1.x + p2.x) / 2, (p1.y + p2.y) / 2);
+	}
+}
+
+
+/* ========== Letter ========== */
+
+function Letter(options) {
+
+	var _options = {
+
+	}
+
+	this.options = $.extend(_options, options);
+	this.renderedPoints = [];
+}
+
+Letter.prototype.render = function() {
+
+	var renderTemp = [];
+
+	$.each(this.gridPoints, function(idx, point) {
+		renderTemp.push(grid[point]);
+	});
+
+	var indices = this.getIndices(this.distortions.points, this.gridPoints);
+
+	var punits = indices.map(function(idx) {
+		return renderTemp[idx];
+	});
+
+	this.renderedPoints = renderTemp;
+
+}
+
+Letter.prototype.changeWeight = function(points, type) {
+
+	var showConstructors = true;
+
+	// Draw it all
+	// var testPath = new paper.Path();
+
+	// testPath.strokeColor = 'black';
+
+	// testPath.moveTo(points[0]);
+	// testPath.lineTo(points[2]);
+
+	// var circle = new paper.Path.Circle(midPoint, that.xRes / 2);
+	// circle.strokeColor = 'black'
+
+	//testPath.lineTo(otherPoint);
+
+	//testPath.lineTo(points[2]);
+
+	/* ------ Get initial vars ------ */
+
+	var midPoint = trigUtil.getMidPoint(paper, points[0], points[2]);
+
+	/* ------ First triangulation ------ */
+
+	// Hypothesis to midpoint
+	var t1_hyp = points[2].getDistance(midPoint);
+
+	// Adj 
+	var t1_adj = that.xRes / 2;
+
+	var t1_phi = 90 - trigUtil.radToDeg(Math.acos( t1_adj / t1_hyp));
+
+	// var vec = new paper.Point(points[2]);
+	var vec = new paper.Point();
+
+	vec.angle = (90 - trigUtil.radToDeg( trigUtil.getAngle(points[0], points[2]))) - t1_phi;
+
+	var side = trigUtil.getSize(null, t1_adj, t1_hyp);
+
+	var normalizedVector = vec.normalize();
+
+	var finalVector.length = normalizedVector.length * side;
+
+	var tangentPoint = points[2].subtract(finalVector);
+ 
+	/* ------ Second triangulation ------ */
+
+	var otherPoint = new paper.Point(points[0].x, points[2].y);
+
+	var t2_adj = otherPoint.getDistance(points[2]);
+
+	var t2_hyp = t2_adj / Math.cos( degRad(vec.angle) );
+
+	// New length for vector (reflects distance to new point[3]
+	finalVector.length = Math.abs(t2_hyp) - newVector.length;
+
+	var newPoint3 = newPoint.subtract(newVector);
+
+	var finalMeasure = points[0].getDistance(newPoint3);
+
+	points[3].y = points[0].y + finalMeasure;
+	points[1].y = points[2].y - finalMeasure;
+
+}
+
+/* ========== Grid ========== */
+
+function Grid(paper, totalUnits, yUnits, xRes, yRes, offset) {
+
+	var currentY = 0;
+	var currentX = 0;
+
+	this.points = [];
+
+	for(i = 0; i < totalUnits; i++) {
+		if(i % yUnits == 0 && i != 0) {
+			currentY++;
+			currentX = 0;
+		}
+		var point = new paper.Point(currentX * xRes, currentY * yRes);
+
+		this.points[i] = point.add(offset);
+
+		currentX++;
+	
+	}
+
+}
+
+/* ========== Rune master class ========== */
+
+function Rune(xUnits, yUnits, xRes, yRes) {
+	this.xRes = xRes;
+
+}
+
+/* ========== Tablet ========== */
+
+function tablet() {
+
+}
+
+
+
+
+
 var RuneGrid = {
 	
 	xUnits: 6,
@@ -17,165 +206,7 @@ var RuneGrid = {
 
 		var that = this;
 
-		var letter = {
-			"gridPoints" : [31, 30, 0, 1, 28, 4, 5, 35, 34, 7],
-			"distortions" : 
-				{
-					"type" : "tri",
-					"points" : [1, 28, 34 ,7],
-				}
-				// {
-				// 	"type" : "tri",
-				// 	"index" : 3,
-				// 	"dir" : "up",
-				// 	"p1" : 7,
-				// 	"p2" : 8
-				// }
-			,
-			"rendered" : [],
-			init: function() {
-
-			},
-			render : function(grid) {
-				console.log(this);
-				var that = this;
-
-				var renderTemp = [];
-
-				$.each(this.gridPoints, function(idx, point) {
-					renderTemp.push(grid[point]);
-				});
-
-				console.log(this.distortions.points);
-
-				var indices = this.getIndices(this.distortions.points, this.gridPoints);
-
-				var punits = indices.map(function(idx) {
-					return renderTemp[idx];
-				});
-
-				that.correct(punits);
-
-				that.rendered = renderTemp;
-			},
-			getIndices: function(points, gridPoints) {
-				console.log(points);
-				return points.map(function(point) {
-					return gridPoints.indexOf(point);
-				});
-			},
-			correct: function(points) {
-
-				// Draw it all
-				var testPath = new paper.Path();
-
-				testPath.strokeColor = 'black';
-
-				testPath.moveTo(points[0]);
-				testPath.lineTo(points[2]);
-
-				var x = ((points[2].x - points[0].x) / 2) + points[0].x;
-				var y = ((points[2].y - points[0].y) / 2) + points[0].y;
-
-				var midPoint = new paper.Point(x, y);
-
-				var circle = new paper.Path.Circle(midPoint, that.xRes / 2);
-				circle.strokeColor = 'black'
-
-				/* ------ First triangulation ------ */
-
-				// Hypothesis to midpoint
-				var t1_hyp = points[2].getDistance(midPoint);
-				var t1_adj = that.xRes / 2;
-
-				// var theta = 
-				var t1_phi = 90 - radDeg(Math.acos( t1_adj / t1_hyp));
-
-				console.log("Phi " + t1_phi);
-
-				// New vector
-				var vec = new paper.Point(points[2]);
-				vec.angle = (90 - radDeg( getAngle(points[0], points[2]))) - t1_phi;
-
-				var side = getSize(null, t1_adj, t1_hyp);
-
-				var newVector = vec.normalize();
-
-				console.log("Side" + side);
-
-				newVector.length = newVector.length * side;
-
-				var newPoint = points[2].subtract(newVector);
-
-				console.log(newPoint);
-
-				// testPath.lineTo(newPoint);
-
-// 
-				/* ------ Second triangulation ------ */
-
-				var otherPoint = new paper.Point(points[0].x, points[2].y);
-
-				console.log(otherPoint + " " + points[2]);
-
-				testPath.lineTo(otherPoint);
-
-				testPath.lineTo(points[2]);
-
-				var t2_adj = otherPoint.getDistance(points[2]);
-
-				console.log("adj" + t2_adj);
-
-				console.log("Vec angle" + vec.angle);
-
-				var t2_hyp = t2_adj / Math.cos( degRad(vec.angle) );
-
-				console.log("Hyp: " + t2_hyp + "  " +  newVector.length);
-
-				newVector.length = Math.abs(t2_hyp) - newVector.length;
-
-				var newnewpoint = newPoint.subtract(newVector);
-
-				testPath.lineTo(newnewpoint);
-
-				var finalMeasure = points[0].getDistance(newnewpoint);
-
-				points[3].y = points[0].y + finalMeasure;
-				points[1].y = points[2].y - finalMeasure;
-
-				function getAngle(p1, p2) {
-					// var adj = that.xRes;
-
-					var adj = p1.getDistance(new paper.Point(p2.x, p1.y));
-					var hyp = p1.getDistance(p2);
-
-					// cos() = a / h;
-
-					return (Math.PI / 2) - Math.acos( adj / hyp );
-
-				}
-
-				function radDeg(radians) {
-					return radians * (180 / Math.PI)
-				}
-
-				function degRad(degrees) {
-					return degrees / (180 / Math.PI);
-				}
-
-				function getSize(adj, opp, hyp) {
-					if(adj & hyp) {
-						return Math.sqrt(hyp*hyp - adj*adj);
-					} else if(adj & opp) {
-						return Math.sqrt(opp*opp + adj*adj);
-					} else if(opp & hyp) {
-						return Math.sqrt(hyp*hyp - opp*opp);
-					}
-				}				
-
-			}
-		};
-
+		
 		// console.log(letter);
 
 		this.canvas = document.getElementById('rune-grid');
@@ -247,10 +278,7 @@ var RuneGrid = {
 		console.log(paper.project.exportSVG());
 
 	},
-	drawLetter : function() {
-		// runeGrid.canvas
 
-	},
 	getWidth: function() {
 		return this.xUnits & this.xRes;
 	},
@@ -284,32 +312,11 @@ var RuneGrid = {
 			// var path = paper.Rectangle(rec);
 		});
 	},
-	setupGrid : function(paper, totalUnits, yUnits, xRes, yRes, offset) {
 
-		var currentY = 0;
-		var currentX = 0;
-
-		var grid = [];
-
-		for(i = 0; i < totalUnits; i++) {
-			if(i % yUnits == 0 && i != 0) {
-				currentY++;
-				currentX = 0;
-			}
-			var point = new paper.Point(currentX * xRes, currentY * yRes);
-
-			grid[i] = point.add(offset);
-
-			currentX++;
-		
-		}
-
-		return grid;
-	}
 }
 
 var callback = function() {
-	RuneGrid.init();
+	// RuneGrid.init();
 }
 
 setupPage([
