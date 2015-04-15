@@ -167,20 +167,34 @@ function Grid(paper, totalUnits, yUnits, xRes, yRes, offset) {
 		currentX++;
 	
 	}
-
 }
+
+Grid.prototype.getWidth = function() {
+	return this.xUnits & this.xRes;
+};
+
+Grid.prototype.getHeight =  function() {
+	return this.yUnits * this.yRes;
+};
+
+Grid.prototype.totalUnits = function() {
+	return this.xUnits * this.yUnits;
+};
 
 /* ========== Rune master class ========== */
 
 function Rune(xUnits, yUnits, xRes, yRes) {
 	this.xRes = xRes;
+}
+
+Rune.prototype.render = function(canvas) {
 
 }
 
 /* ========== Tablet ========== */
 
-function tablet() {
-
+function Tablet() {
+	this.runes = {};
 }
 
 
@@ -279,15 +293,7 @@ var RuneGrid = {
 
 	},
 
-	getWidth: function() {
-		return this.xUnits & this.xRes;
-	},
-	getHeight: function() {
-		return this.yUnits * this.yRes;
-	},
-	totalUnits: function() {
-		return this.xUnits * this.yUnits;
-	},
+
 	drawPoints: function(locations, color, paper, circles) {
 		
 		var gridColor = new paper.Color(255, 0, 0, 0.2);
