@@ -185,6 +185,14 @@ Grid.prototype.getTotalUnits = function() {
  	return this.xUnits * this.yUnits;
 };
 
+Grid.prototype.getWidth = function() {
+	return this.xUnits * this.xRes;
+};
+
+Grid.prototype.getHeight =  function() {
+	return this.yUnits * this.yRes;
+};
+
 
 /* ========== Rune master class ========== */
 
@@ -256,7 +264,9 @@ Rune.prototype.finishDraw = function() {
 }
 /* ========== Tablet ========== */
 
+
 function tablet() {
+
 
 }
 
