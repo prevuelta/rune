@@ -1,6 +1,4 @@
 
-//[31, 30, 0, 1, 28, 4, 5, 35, 34, 7]
-
 'use strict';
 
 const SILVER_RATIO = Math.sqrt(2);
@@ -14,7 +12,12 @@ var util = {
 		return points.map(function(point) {
 			return gridPoints.indexOf(point);
 		});
-	}
+	},
+	object: function (o) {
+        function F() {}
+        F.prototype = o;
+        return new F();
+    }
 }
 
 var trigUtil = {
@@ -61,6 +64,7 @@ function Letter(options) {
 	}
 
 	this.options = $.extend(_options, options);
+
 	this.renderedPoints = [];
 }
 
@@ -194,6 +198,16 @@ Grid.prototype.getHeight =  function() {
 };
 
 
+function GridPoint (paper, point) {
+	this.path = paper.Path.Circle(point, 8);
+	this.path.strokeColor = 'black';
+	this.path.fillColor = new paper.Color(255, 0, 0, 0.2);
+	this.path.onMouseDown = function(e) {
+		console.log(e.target._content);
+		this.fillColor = 'red';
+	}
+}
+
 /* ========== Rune master class ========== */
 
 function Rune(options, paper) {
@@ -237,16 +251,11 @@ Rune.prototype.draw = function(pointArray) {
 	$.each(pointArray, function(idx, point) {
 
 		var paperPoint = new that.paper.Point(point);
-		var path = new that.paper.Path.Circle(paperPoint, 2);
 
-		path.strokeColor = 'black';
-		path.fillColor = new paper.Color(255, 0, 0, 0.2);
+		var path = new GridPoint(paper, paperPoint);
 
-		if(idx) {
-			// path.lineTo(paperPoint);
-		} else {
-			// path.moveTo(paperPoint);
-		}
+		console.log(path);
+
 	});
 
 };
