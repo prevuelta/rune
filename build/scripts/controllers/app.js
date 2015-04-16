@@ -4,7 +4,7 @@
 'use strict';
 
 const SILVER_RATIO = Math.sqrt(2);
-const GOLDEN_RATIO =  (1 + Math.sqrt(5)) / 2,
+const GOLDEN_RATIO =  (1 + Math.sqrt(5)) / 2;
 
 /* ========== Utilities ========== */
 
@@ -43,12 +43,14 @@ var trigUtil = {
 	},
 	degToRad: function(degrees) {
 		return degrees / (180 / Math.PI);
-	},
-	getMidPoint: function(paper, p1, p2) {
-		return new paper.Point( (p1.x + p2.x) / 2, (p1.y + p2.y) / 2);
 	}
 }
 
+/* ========== Paper prototypes ========== */
+
+paper.Point.prototype.getMid = function(p2) {
+	return new paper.Point((this.x + p2.x) / 2, (this.y + p2.y) / 2);
+};
 
 /* ========== Letter ========== */
 
@@ -101,7 +103,7 @@ Letter.prototype.changeWeight = function(points, type) {
 
 	/* ------ Get initial vars ------ */
 
-	var midPoint = trigUtil.getMidPoint(paper, points[0], points[2]);
+	var midPoint = points[0].getMid(points[2]);
 
 	/* ------ First triangulation ------ */
 
@@ -122,7 +124,9 @@ Letter.prototype.changeWeight = function(points, type) {
 
 	var normalizedVector = vec.normalize();
 
-	var finalVector.length = normalizedVector.length * side;
+	var finalVector = new paper.Point();
+
+	finalVector.length = normalizedVector.length * side;
 
 	var tangentPoint = points[2].subtract(finalVector);
  
@@ -135,7 +139,7 @@ Letter.prototype.changeWeight = function(points, type) {
 	var t2_hyp = t2_adj / Math.cos( degRad(vec.angle) );
 
 	// New length for vector (reflects distance to new point[3]
-	finalVector.length = Math.abs(t2_hyp) - newVector.length;
+	finalVector.length = Math.abs(t2_hyp) - finalVector.length;
 
 	var newPoint3 = newPoint.subtract(newVector);
 
@@ -148,35 +152,108 @@ Letter.prototype.changeWeight = function(points, type) {
 
 /* ========== Grid ========== */
 
-function Grid(paper, totalUnits, yUnits, xRes, yRes, offset) {
+function Grid(xUnits, yUnits, xRes, yRes) {
+
+	this.xUnits = xUnits;
+	this.yUnits = yUnits;
+	this.xRes = xRes;
+	this.yRes = yRes;
+
+	/* ------ Setup default points ------ */
 
 	var currentY = 0;
 	var currentX = 0;
 
 	this.points = [];
 
-	for(i = 0; i < totalUnits; i++) {
+	for(var i = 0; i < this.getTotalUnits(); i++) {
 		if(i % yUnits == 0 && i != 0) {
 			currentY++;
 			currentX = 0;
 		}
-		var point = new paper.Point(currentX * xRes, currentY * yRes);
 
-		this.points[i] = point.add(offset);
+		var point = [currentX * xRes, currentY * yRes];
+
+		this.points[i] = point;
 
 		currentX++;
 	
 	}
-
 }
+
+Grid.prototype.getTotalUnits = function() {
+ 	return this.xUnits * this.yUnits;
+};
+
 
 /* ========== Rune master class ========== */
 
-function Rune(xUnits, yUnits, xRes, yRes) {
-	this.xRes = xRes;
+function Rune(options, paper) {
+
+	this.options = {
+		xUnits: 4, 
+		yUnits: 4,
+		xRes: 20,
+		yRes: 20,
+		canvasId: 'RuneCanvas'
+	};
+
+	$.extend(this.options, options);
+
+	console.log(options);
+
+	this.canvas = document.getElementById(this.options.canvasId);
+
+	this.paper = paper;
+
+	// Setup grid
+	this.grid = new Grid(
+		this.options.xUnits, 
+		this.options.yUnits,
+		this.options.xRes,
+		this.options.yRes
+	);
+
+	this.paper.setup(this.canvas);
+
+	this.drawGrid();
+
+	this.finishDraw();
 
 }
 
+Rune.prototype.draw = function(pointArray) {
+
+	var that = this;
+
+	$.each(pointArray, function(idx, point) {
+
+		var paperPoint = new that.paper.Point(point);
+		var path = new that.paper.Path.Circle(paperPoint, 2);
+
+		path.strokeColor = 'black';
+		path.fillColor = new paper.Color(255, 0, 0, 0.2);
+
+		if(idx) {
+			// path.lineTo(paperPoint);
+		} else {
+			// path.moveTo(paperPoint);
+		}
+	});
+
+};
+
+Rune.prototype.drawGrid = function() {
+
+	this.draw(this.grid.points);
+
+	// console.log(paper.project.exportSVG());
+};
+
+
+Rune.prototype.finishDraw = function() {
+	paper.view.draw();
+}
 /* ========== Tablet ========== */
 
 function tablet() {
@@ -185,138 +262,68 @@ function tablet() {
 
 
 
-
-
-var RuneGrid = {
+// var RuneGrid = {
 	
-	xUnits: 6,
-	yUnits: 6,
-	xRes: 40,
-	yRes: 40,
-	silverRatio: Math.sqrt(2),
-	goldenRatio: (1 + Math.sqrt(5)) / 2,
+// 	xUnits: 6,
+// 	yUnits: 6,
+// 	xRes: 40,
+// 	yRes: 40,
+// 	silverRatio: Math.sqrt(2),
+// 	goldenRatio: (1 + Math.sqrt(5)) / 2,
 
-	canvas : {},
+// 	init: function() {
 
-	gridLayers : [],
 
-	init: function() {
+// 	},
 
-		console.log(this);
-
-		var that = this;
-
+// 	getWidth: function() {
+// 		return this.xUnits & this.xRes;
+// 	},
+// 	getHeight: function() {
+// 		return this.yUnits * this.yRes;
+// 	},
+// 	totalUnits: function() {
+// 		return this.xUnits * this.yUnits;
+// 	},
+// 	drawPoints: function(locations, color, paper, circles) {
 		
-		// console.log(letter);
+// 		var gridColor = new paper.Color(255, 0, 0, 0.2);
 
-		this.canvas = document.getElementById('rune-grid');
-		// Create an empty project and a view for the canvas:
-		paper.setup(this.canvas);
+// 		$.each(locations, function(idx, point) {
+// 			// console.log(point);
+// 			if(circles) {
+// 				var circle = new paper.Path.Circle(point, RuneGrid.xRes * Math.sqrt(2));
+// 				circle.strokeColor = gridColor;
+// 			}
 
-		this.gridLayers[0] =  this.setupGrid(
-			paper, 
-			this.totalUnits(), 
-			this.yUnits,
-			this.xRes,
-			this.yRes,
-			new paper.Point(0, 0)
-		);
+// 			var recPath = new paper.Path.Rectangle(point, RuneGrid.xRes);
+// 			recPath.strokeColor = gridColor;
 
-		// this.gridLayers[1] =  this.setupGrid(
-		// 	paper, 
-		// 	this.totalUnits(), 
-		// 	this.yUnits,
-		// 	this.xRes,
-		// 	this.yRes,
-		// 	// new paper.Point((20 * Math.sqrt(2)) - 20, 0)
-		// 	new paper.Point(0, (this.yRes * this.silverRatio) - this.yRes)
-		// );
+// 			var pointText = new paper.PointText({point: new paper.Point(point.x, point.y+10), content: idx});
+// 			pointText.fillColor = color;
 
-		var grid = this.gridLayers[0];
+// 			// pointText.onMouseDown = function(e) {
+// 				// console.log(e.target._content);
+// 			// }
+// 			// recPath.fillColor = color;
+// 			// var path = paper.Rectangle(rec);
+// 		});
+// 	},
 
-		letter.render(grid);
-
-		// Create a Paper.js Path to draw a line into it:
-		var path = new paper.Path();
-		// Give the stroke a color
-		path.strokeColor = 'black';
-		path.fillColor = new paper.Color(255, 0, 0, 0.2);
-
-		var start = new paper.Point(0, 0);
-		// Move to start and draw a line from there
-		path.moveTo(start);
-
-		$.each(this.gridLayers, function(idx, grid) {
-			var color = 'black';
-			var circles = true;
-			switch(idx) {
-				case 1 :
-					circles = false;
-					color = new paper.Color(255, 0, 0, 0.2)
-				break;
-			}
-			// that.drawPoints(grid, color, paper, circles);
-		});
-		
-		var letterLayer = new paper.Layer();
-
-		var secondPath = new paper.Path();
-
-		path.strokeColor = new paper.Color(255, 255, 0, 0.2);
-
-		$.each(letter.rendered, function(idx, point) {
-			if(!idx) {
-				path.moveTo(point);
-			} else {
-				path.lineTo(point);
-			}
-		});
-
-		// Draw the view now:
-		paper.view.draw();
-
-		console.log(paper.project.exportSVG());
-
-	},
-
-	getWidth: function() {
-		return this.xUnits & this.xRes;
-	},
-	getHeight: function() {
-		return this.yUnits * this.yRes;
-	},
-	totalUnits: function() {
-		return this.xUnits * this.yUnits;
-	},
-	drawPoints: function(locations, color, paper, circles) {
-		
-		var gridColor = new paper.Color(255, 0, 0, 0.2);
-
-		$.each(locations, function(idx, point) {
-			// console.log(point);
-			if(circles) {
-				var circle = new paper.Path.Circle(point, RuneGrid.xRes * Math.sqrt(2));
-				circle.strokeColor = gridColor;
-			}
-
-			var recPath = new paper.Path.Rectangle(point, RuneGrid.xRes);
-			recPath.strokeColor = gridColor;
-
-			var pointText = new paper.PointText({point: new paper.Point(point.x, point.y+10), content: idx});
-			pointText.fillColor = color;
-
-			// pointText.onMouseDown = function(e) {
-				// console.log(e.target._content);
-			// }
-			// recPath.fillColor = color;
-			// var path = paper.Rectangle(rec);
-		});
-	},
-
-}
+// }
 
 var callback = function() {
-	// RuneGrid.init();
+
+	// var tablet = new Tablet();
+
+	var rune = new Rune({
+		xUnits: 10,
+		yUnits: 10,
+		xRes: 20,
+		yRes: 20,
+		canvasId: 'rune-grid',
+	}, paper);
+
 }
 
 setupPage([
