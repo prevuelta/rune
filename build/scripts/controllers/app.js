@@ -86,6 +86,18 @@ Letter.prototype.render = function() {
 
 }
 
+Letter.prototype.distort = function(type) {
+	switch(type) {
+		case "random" : 
+			this.renderedPoints.forEach(function(idx, element) {
+				// Insert randomness here
+			});
+		break;
+		default:
+		break;
+	}
+}
+
 Letter.prototype.changeWeight = function(points, type) {
 
 	var showConstructors = true;
@@ -156,8 +168,8 @@ Letter.prototype.changeWeight = function(points, type) {
 
 /* ========== Grid ========== */
 
-function Grid(xUnits, yUnits, xRes, yRes) {
-
+function Grid(xUnits, yUnits, xRes, yRes, padding) {
+	
 	this.xUnits = xUnits;
 	this.yUnits = yUnits;
 	this.xRes = xRes;
@@ -176,7 +188,7 @@ function Grid(xUnits, yUnits, xRes, yRes) {
 			currentX = 0;
 		}
 
-		var point = [currentX * xRes, currentY * yRes];
+		var point = [currentX * xRes + padding, currentY * yRes + padding];
 
 		this.points[i] = point;
 
@@ -198,9 +210,12 @@ Grid.prototype.getHeight =  function() {
 };
 
 
-function GridPoint (paper, point) {
-	this.path = paper.Path.Circle(point, 8);
-	this.path.strokeColor = 'black';
+function GridPoint (paper, point, value) {
+
+	this.value = value;
+
+	this.path = paper.Path.Circle(point, 10);
+
 	this.path.fillColor = new paper.Color(255, 0, 0, 0.2);
 	this.path.onMouseDown = function(e) {
 		console.log(e.target._content);
@@ -217,6 +232,7 @@ function Rune(options, paper) {
 		yUnits: 4,
 		xRes: 20,
 		yRes: 20,
+		padding: 20,
 		canvasId: 'RuneCanvas'
 	};
 
@@ -233,7 +249,8 @@ function Rune(options, paper) {
 		this.options.xUnits, 
 		this.options.yUnits,
 		this.options.xRes,
-		this.options.yRes
+		this.options.yRes,
+		this.options.padding
 	);
 
 	this.paper.setup(this.canvas);
@@ -336,11 +353,12 @@ var callback = function() {
 	// var tablet = new Tablet();
 
 	var rune = new Rune({
-		xUnits: 10,
-		yUnits: 10,
-		xRes: 20,
-		yRes: 20,
+		xUnits: 3,
+		yUnits: 3,
+		xRes: 40,
+		yRes: 40,
 		canvasId: 'rune-grid',
+		padding: 20
 	}, paper);
 
 }
