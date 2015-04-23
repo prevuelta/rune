@@ -60,12 +60,22 @@ paper.Point.prototype.getMid = function(p2) {
 function Letter(options) {
 
 	var _options = {
-
+		gridPoints : []
 	}
 
 	this.options = $.extend(_options, options);
 
 	this.renderedPoints = [];
+
+	var that = this;
+}
+
+Letter.prototype.clear = function() {
+	this.options.gridPoints = [];
+}
+
+Letter.prototype.addPoint= function(point) {
+	this.options.gridPoints.push(point);
 }
 
 Letter.prototype.render = function() {
@@ -224,7 +234,6 @@ Grid.prototype.getHeight =  function() {
 // 	}
 // }
 
-
 var GridPoint = function(paper, point, value) {
 
 	// this.value = value;
@@ -235,9 +244,14 @@ var GridPoint = function(paper, point, value) {
 
 	path.fillColor = new paper.Color(255, 0, 0, 0.2);
 	
-	path.onMouseEnter = function(e) {
-		console.log(e.target._content);
+	path.onMouseDown = function(e) {
+		console.log(e.target);
 		this.fillColor = 'red';
+
+		var event = new CustomEvent('addGridPoint', { 'detail' : e.target.value});
+		
+		document.dispatchEvent(event);
+
 	}
 
 	return path;
@@ -262,9 +276,16 @@ function Rune(options, paper) {
 
 	console.log(options);
 
+	this.letter = {};
+
 	this.canvas = document.getElementById(this.options.canvasId);
 
 	this.paper = paper;
+
+	document.addEventListener('addGridPoint', function(e) { 
+		// that.addGridPoint(e.detail) ;
+		console.log("point added");
+	} );
 
 	// Setup grid
 	this.grid = new Grid(
@@ -291,7 +312,7 @@ Rune.prototype.draw = function(pointArray) {
 
 		var paperPoint = new that.paper.Point(point);
 
-		var path = GridPoint(paper, paperPoint, null);
+		var path = GridPoint(paper, paperPoint, idx);
 
 		console.log(path);
 
@@ -306,10 +327,15 @@ Rune.prototype.drawGrid = function() {
 	// console.log(paper.project.exportSVG());
 };
 
-
 Rune.prototype.finishDraw = function() {
 	paper.view.draw();
 }
+
+Rune.prototype.addLetter = function(options) {
+	this.letter = new Letter(options);
+}
+
+
 /* ========== Tablet ========== */
 
 
@@ -375,13 +401,15 @@ var callback = function() {
 	// var tablet = new Tablet();
 
 	var rune = new Rune({
-		xUnits: 10,
-		yUnits: 10,
+		xUnits: 6,
+		yUnits: 6,
 		xRes: 40,
 		yRes: 40,
 		canvasId: 'rune-grid',
 		padding: 30
 	}, paper);
+
+	rune.addLetter();
 
 }
 
