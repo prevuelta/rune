@@ -4,6 +4,10 @@ body {
   font-family: "Lekton", sans-serif;
   font-weight: 400; }
 
+h1 {
+  font-size: 60px;
+  text-align: center; }
+
 header {
   background: #f4f4f4;
   padding: 6px 12px; }
@@ -15,9 +19,19 @@ header {
 
 .wrapper {
   margin: 12px;
-  background: #f4f4f4;
+  background: #f3ecd9;
   border: 1px solid #f0f0f0;
   border-radius: 6px; }
+
+#main {
+  text-align: center; }
+  #main #canvas-wrapper {
+    margin: 0 0 24px 0;
+    background: white;
+    padding: 12px;
+    border: 1px solid #ffcf4f;
+    border-radius: 4px;
+    display: inline-block; }
 
 #rune-grid {
   background: #ccc;

@@ -210,18 +210,40 @@ Grid.prototype.getHeight =  function() {
 };
 
 
-function GridPoint (paper, point, value) {
+// function GridPoint (paper, point, value) {
 
-	this.value = value;
+// 	this.value = value;
 
-	this.path = paper.Path.Circle(point, 10);
+// 	this.path = paper.Path.Circle(point, 10);
 
-	this.path.fillColor = new paper.Color(255, 0, 0, 0.2);
-	this.path.onMouseDown = function(e) {
+// 	this.path.fillColor = new paper.Color(255, 0, 0, 0.2);
+
+// 	this.path.onMouseEnter = function(e) {
+// 		console.log(e.target._content);
+// 		this.fillColor = 'red';
+// 	}
+// }
+
+
+var GridPoint = function(paper, point, value) {
+
+	// this.value = value;
+
+	var path = paper.Path.Circle(point, 15);
+
+	path.value = value;
+
+	path.fillColor = new paper.Color(255, 0, 0, 0.2);
+	
+	path.onMouseEnter = function(e) {
 		console.log(e.target._content);
 		this.fillColor = 'red';
 	}
+
+	return path;
 }
+
+
 
 /* ========== Rune master class ========== */
 
@@ -269,7 +291,7 @@ Rune.prototype.draw = function(pointArray) {
 
 		var paperPoint = new that.paper.Point(point);
 
-		var path = new GridPoint(paper, paperPoint);
+		var path = GridPoint(paper, paperPoint, null);
 
 		console.log(path);
 
@@ -353,12 +375,12 @@ var callback = function() {
 	// var tablet = new Tablet();
 
 	var rune = new Rune({
-		xUnits: 3,
-		yUnits: 3,
+		xUnits: 10,
+		yUnits: 10,
 		xRes: 40,
 		yRes: 40,
 		canvasId: 'rune-grid',
-		padding: 20
+		padding: 30
 	}, paper);
 
 }

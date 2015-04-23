@@ -1,6 +1,21 @@
 .wrapper {
 	margin: $bu;
-	background: #f4f4f4;
+	background:#f3ecd9;
 	border: 1px solid #f0f0f0;
 	border-radius: $hbu;
+}
+
+#main {
+	text-align: center;
+	#canvas-wrapper {
+		margin: 0 0 $bu2 0;
+		background: white;
+		padding: $bu;
+		border: 1px solid #ffcf4f;
+		border-radius: 4px;
+		display: inline-block;
+		canvas {
+			
+		}
+	}
 }
