@@ -1,5 +1,16 @@
 @import url(lib/normalize.css);
 /* ------ Base Units ------ */
+.cf:before, #main #rune-toolbar .tools:before,
+.cf:after,
+#main #rune-toolbar .tools:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */ }
+
+.cf:after, #main #rune-toolbar .tools:after {
+  clear: both; }
+
 body {
   font-family: "Lekton", sans-serif;
   font-weight: 400; }
@@ -8,33 +19,66 @@ h1 {
   font-size: 60px;
   text-align: center; }
 
+h5 {
+  margin: 0; }
+
 header {
   background: #f4f4f4;
-  padding: 6px 12px; }
+  padding: 6px 12px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 36px;
+  box-sizing: border-box; }
+  header strong {
+    line-height: 1.8em; }
   header ul {
     margin: 0;
     display: inline-block; }
     header ul li {
       display: inline-block; }
 
-.wrapper {
-  margin: 12px;
-  background: #f3ecd9;
-  border: 1px solid #f0f0f0;
-  border-radius: 6px; }
-
-#main {
-  text-align: center; }
-  #main #canvas-wrapper {
-    margin: 0 0 24px 0;
-    background: white;
-    padding: 12px;
-    border: 1px solid #ffcf4f;
-    border-radius: 4px;
-    display: inline-block; }
+#main #rune-toolbar {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  top: 36px;
+  width: 120px;
+  background: #e0e0e0;
+  padding: 12px; }
+  #main #rune-toolbar h4 {
+    margin: 6px 0 12px 0; }
+  #main #rune-toolbar .tools {
+    margin-bottom: 12px; }
+    #main #rune-toolbar .tools .tool {
+      float: left;
+      width: 46px;
+      height: 46px;
+      text-align: center;
+      line-height: 48px;
+      font-weight: bold;
+      background: white;
+      margin: 1px;
+      box-sizing: border-box;
+      cursor: pointer; }
+      #main #rune-toolbar .tools .tool:hover {
+        background: #def5f5; }
+      #main #rune-toolbar .tools .tool.active {
+        background: #b7f2f1; }
+#main #rune-tablet {
+  background: white;
+  position: fixed;
+  top: 36px;
+  right: 0;
+  bottom: 0;
+  left: 120px;
+  border: 1px solid #ccc; }
+  #main #rune-tablet canvas {
+    cursor: crosshair; }
 
 #rune-grid {
   background: #ccc;
-  width: 300px;
-  height: 300px;
+  width: 500px;
+  height: 500px;
   padding: 20px; }

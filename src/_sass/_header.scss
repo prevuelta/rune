@@ -2,9 +2,15 @@ header {
 
 	background: #f4f4f4;
 	padding: $hbu $bu;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	height: $bu3;
+	box-sizing: border-box;
 
-	span {
-
+	strong{
+		line-height: 1.8em;
 	}
 
 	ul {

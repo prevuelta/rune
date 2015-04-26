@@ -4,6 +4,10 @@
 const SILVER_RATIO = Math.sqrt(2);
 const GOLDEN_RATIO =  (1 + Math.sqrt(5)) / 2;
 
+var apiAddress;
+var testEndpoint;
+
+
 /* ========== Utilities ========== */
 
 var util = {
@@ -60,8 +64,9 @@ paper.Point.prototype.getMid = function(p2) {
 function Letter(options) {
 
 	var _options = {
-		gridPoints : []
 	}
+
+	this.gridPoints = [];
 
 	this.options = $.extend(_options, options);
 
@@ -78,15 +83,17 @@ Letter.prototype.addPoint= function(point) {
 	this.options.gridPoints.push(point);
 }
 
-Letter.prototype.render = function() {
+Letter.prototype.render = function(grid) {
 
 	var renderTemp = [];
 
 	$.each(this.gridPoints, function(idx, point) {
-		renderTemp.push(grid[point]);
+		renderTemp.push(grid.points[point]);
 	});
 
-	var indices = this.getIndices(this.distortions.points, this.gridPoints);
+	console.log(grid.points);
+
+	var indices = util.getIndices(this.gridPoints, grid.points);
 
 	var punits = indices.map(function(idx) {
 		return renderTemp[idx];
@@ -98,14 +105,40 @@ Letter.prototype.render = function() {
 
 Letter.prototype.distort = function(type) {
 	switch(type) {
-		case "random" : 
+		case "randomize" : 
 			this.renderedPoints.forEach(function(idx, element) {
 				// Insert randomness here
 			});
 		break;
+		case "distress" :
+			// Coming soon
+		break;
+		case "inflate" :
+		break;
+		case "deflate" :
+		break;
 		default:
 		break;
 	}
+}
+
+Letter.prototype.draw = function() {
+
+	var letter = this;
+
+	 var letterPath = new paper.Path();
+
+	 letterPath.strokeColor = 'black';
+
+	$.each(letter.renderedPoints, function(idx, point) {
+
+		if(idx) {
+			letterPath.lineTo(point);
+		} else {
+			letterPath.moveTo(point);
+		}
+
+	});
 }
 
 Letter.prototype.changeWeight = function(points, type) {
@@ -234,19 +267,38 @@ Grid.prototype.getHeight =  function() {
 // 	}
 // }
 
-var GridPoint = function(paper, point, value) {
+Grid.prototype.GridPoint = function(paper, point, value) {
 
 	// this.value = value;
 
-	var path = paper.Path.Circle(point, 15);
+	var hitPath = paper.Path.Circle(point, this.xRes / 2 );
 
-	path.value = value;
+	var displayPath = paper.Path.Circle(point, 2);
+	displayPath.fillColor = 'black';
 
-	path.fillColor = new paper.Color(255, 0, 0, 0.2);
+	hitPath.value = value;
+
+	hitPath.fillColor = new paper.Color(255, 0, 255, 0.2);
 	
-	path.onMouseDown = function(e) {
+	hitPath.onMouseEnter = function(e) {
+		displayPath.fillColor = 'red';
+
+	}
+
+	hitPath.onMouseLeave = function(e) {
+		displayPath.fillColor = 'black';
+	}
+
+	hitPath.onClick = function(e) {
 		console.log(e.target);
 		this.fillColor = 'red';
+
+		var myCircle = new paper.Path.Circle({
+			center: e.point,
+			radius: 10
+		});
+		myCircle.strokeColor = 'black';
+		myCircle.fillColor = 'white';
 
 		var event = new CustomEvent('addGridPoint', { 'detail' : e.target.value});
 		
@@ -254,7 +306,7 @@ var GridPoint = function(paper, point, value) {
 
 	}
 
-	return path;
+	return hitPath;
 }
 
 
@@ -264,11 +316,11 @@ var GridPoint = function(paper, point, value) {
 function Rune(options, paper) {
 
 	this.options = {
-		xUnits: 4, 
-		yUnits: 4,
+		xUnits: 5, 
+		yUnits: 5,
 		xRes: 20,
 		yRes: 20,
-		padding: 20,
+		padding: 0,
 		canvasId: 'RuneCanvas'
 	};
 
@@ -282,9 +334,18 @@ function Rune(options, paper) {
 
 	this.paper = paper;
 
+	this.addLetter();
+
+	var rune = this;
+
 	document.addEventListener('addGridPoint', function(e) { 
 		// that.addGridPoint(e.detail) ;
-		console.log("point added");
+		console.log("point added" + e.detail);
+		// rune.letter.push(e.detail);
+
+		rune.letter.gridPoints.push(e.detail);
+		rune.letter.render(rune.grid);
+		rune.letter.draw();
 	} );
 
 	// Setup grid
@@ -306,13 +367,13 @@ function Rune(options, paper) {
 
 Rune.prototype.draw = function(pointArray) {
 
-	var that = this;
+	var rune = this;
 
 	$.each(pointArray, function(idx, point) {
 
-		var paperPoint = new that.paper.Point(point);
+		var paperPoint = new rune.paper.Point(point);
 
-		var path = GridPoint(paper, paperPoint, idx);
+		var path = rune.grid.GridPoint(paper, paperPoint, idx);
 
 		console.log(path);
 
@@ -401,15 +462,13 @@ var callback = function() {
 	// var tablet = new Tablet();
 
 	var rune = new Rune({
-		xUnits: 6,
-		yUnits: 6,
+		xUnits: 5,
+		yUnits: 5,
 		xRes: 40,
 		yRes: 40,
 		canvasId: 'rune-grid',
 		padding: 30
 	}, paper);
-
-	rune.addLetter();
 
 }
 

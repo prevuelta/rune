@@ -11,7 +11,6 @@ var server = http.createServer(function(req, res) {
 
 	if(req.url == "/api/endpoint") {
 		resultText = "end point 123 123";
-		
 	}
 
 	res.end(resultText);
