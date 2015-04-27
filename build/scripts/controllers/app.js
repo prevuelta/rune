@@ -280,8 +280,8 @@ Grid.prototype.GridPoint = function(paper, point, value) {
 
 	hitPath.fillColor = new paper.Color(255, 0, 255, 0.2);
 	
-	hitPath.onMouseEnter = function(e) {
-		displayPath.fillColor = 'red';
+	hitPath.onMouseMove = function(e) {
+
 
 	}
 
@@ -292,13 +292,6 @@ Grid.prototype.GridPoint = function(paper, point, value) {
 	hitPath.onClick = function(e) {
 		console.log(e.target);
 		this.fillColor = 'red';
-
-		var myCircle = new paper.Path.Circle({
-			center: e.point,
-			radius: 10
-		});
-		myCircle.strokeColor = 'black';
-		myCircle.fillColor = 'white';
 
 		var event = new CustomEvent('addGridPoint', { 'detail' : e.target.value});
 		

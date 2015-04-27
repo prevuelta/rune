@@ -1,3 +1,6 @@
+$toolbar-width: $bu10;
+
+
 #main {
 
 	#rune-toolbar {
@@ -5,7 +8,7 @@
 		left: 0;
 		bottom: 0;
 		top: $bu3;
-		width: $bu10;
+		width: $toolbar-width;
 		background: #e0e0e0;
 		padding: $bu;
 		h4 {
@@ -41,10 +44,7 @@
 		top: $bu3;
 		right: 0;
 		bottom: 0;
-		left: $bu10;
+		left: $toolbar-width;
 		border: 1px solid #ccc;
-		canvas {
-			cursor: crosshair;
-		}
 	}
 }
