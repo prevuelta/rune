@@ -17,7 +17,7 @@ var callback = function() {
 
 	// rune.addLetter();
 
-	addView($('#rune-tablet'), 'rune-tablets', {}, null);
+	addPartialView('rune-tablets', {}, null);
 
 }
 

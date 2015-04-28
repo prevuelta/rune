@@ -17,11 +17,13 @@ var callback = function() {
 
 	// rune.addLetter();
 
+	addView('rune-tablets', {}, null);
+
 }
 
 setupPage([
 	{
-		"view" : "grid",
+		"view" : "app",
 		"model": {
 
 		},

@@ -38,7 +38,8 @@ $toolbar-width: $bu10;
 		}
 
 	}
-	#rune-tablet {
+
+	#rune-canvas {
 		background: white;
 		position: fixed;
 		top: $bu3;
@@ -47,4 +48,14 @@ $toolbar-width: $bu10;
 		left: $toolbar-width;
 		border: 1px solid #ccc;
 	}
+
+	#rune-tablet {
+		position: fixed;
+		bottom: 0;
+		left: $toolbar-width;
+		right: 0;
+		height: $bu4;
+		background: #ccc
+	}
+
 }

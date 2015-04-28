@@ -1,29 +1,24 @@
 
 'use strict';
 
-var viewContainer = $('#main');
-
 /* ------ Add mustache view ------ */
 
-function addView(view, model, callback, replace, prepend) {
-	// Form view
-
-	console.log('Prepend: ' + prepend);
+function addView(container, view, model, callback, replace, prepend) {
 
 	$.get('views/' + view + '.html', function(view) {
 		var rendered =  Mustache.render(view, model);
 		if(!replace && !prepend) {
 
-			viewContainer.append(rendered);
+			container.append(rendered);
 
 		} else if(prepend) {
 
 			console.log('prepending');
 
-			viewContainer.prepend(rendered);
+			container.prepend(rendered);
 
 		} else {
-			viewContainer.html(rendered);
+			container.html(rendered);
 		}
 		console.log("view added");
 		if(callback){
@@ -35,11 +30,11 @@ function addView(view, model, callback, replace, prepend) {
 
 /* ------ Add multiple mustache views as callbacks ------ */
 
-function addViews(views, outerCallback) {
+function addViews(container, views, outerCallback) {
 
 	function createCallback(view, model, callback) {
 		return function() {
-			addView(view, model, callback, false, false); 
+			addView(container, view, model, callback, false, false); 
 		}
 	}
 
@@ -54,6 +49,7 @@ function addViews(views, outerCallback) {
 	}
 }
 
+var viewContainer = $('#main');
 
 function setupPage(views, outerCallback) {
 
@@ -61,7 +57,7 @@ function setupPage(views, outerCallback) {
 
 		onReady : function() {
 			
-			addViews(views, outerCallback);
+			addViews(viewContainer, views, outerCallback);
 
 		}
 	}
