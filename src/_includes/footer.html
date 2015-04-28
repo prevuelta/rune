@@ -15,8 +15,9 @@
 {% javascript main %}
 {% javascript util %}
 
-{% if page.controller %} 
-	{{ page.controller | javascript }}
+{% if page.controller %}
+	{% capture controller %}page_controllers/{{ page.controller}}{% endcapture %}
+	{{ controller | javascript }}
  {% endif %}
 
 
