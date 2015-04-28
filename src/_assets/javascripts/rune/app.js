@@ -12,9 +12,6 @@ paper.Point.prototype.getMid = function(p2) {
 };
 
 
-
-
-
 // var RuneGrid = {
 	
 // 	xUnits: 6,

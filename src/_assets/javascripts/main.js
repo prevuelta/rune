@@ -1,6 +1,8 @@
 
 'use strict';
 
+//= require util
+
 /* ------ Add mustache view ------ */
 
 function addView(container, view, model, callback, replace, prepend) {
