@@ -69,3 +69,4 @@ function setupPage(views, outerCallback) {
 	$(document).ready( page.onReady );
 
 }
+;

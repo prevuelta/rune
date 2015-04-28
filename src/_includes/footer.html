@@ -12,6 +12,12 @@
 
 <!-- endbower -->
 
-<script src="/scripts/util.js"></script>
-<script src="/scripts/main.js"></script>
-<script src="/scripts/controllers/{{ page.controller }}.js"></script>
+{% javascript main %}
+{% javascript util %}
+
+{% if page.controller %} 
+	{{ page.controller | javascript }}
+ {% endif %}
+
+
+<!-- <script src="/scripts/controllers/{{ page.controller }}.js"></script> -->
