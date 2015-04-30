@@ -1,7 +1,9 @@
+// Requires mustache-wax
+Mustache.Formatters = {
+
+};
 
 'use strict';
-
-//= require util
 
 /* ------ Add mustache view ------ */
 

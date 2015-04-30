@@ -1,4 +1,8 @@
-//= require util
+// Requires mustache-wax
+
+Mustache.Formatters = {
+
+};
 
 'use strict';
 
@@ -66,3 +70,4 @@ function setupPage(views, outerCallback) {
 	$(document).ready( page.onReady );
 
 }
+;

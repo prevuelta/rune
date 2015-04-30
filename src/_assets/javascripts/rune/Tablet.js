@@ -1,7 +1,7 @@
 /* ========== Tablet ========== */
 
 
-function Tablet() extends Array {
+function Tablet() {
 
 
 

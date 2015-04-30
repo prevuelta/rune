@@ -1,6 +1,6 @@
-'use strict';
+//= require rune/app
 
-//= require ../rune/app
+'use strict';
 
 var callback = function() {
 
