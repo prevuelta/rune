@@ -22,9 +22,18 @@ function Rune(options, paper) {
 
 	this.paper = paper;
 
+	this.addLetter();
+
+	var rune = this;
+
 	document.addEventListener('addGridPoint', function(e) { 
 		// that.addGridPoint(e.detail) ;
-		console.log("point added");
+		console.log("point added" + e.detail);
+		// rune.letter.push(e.detail);
+
+		rune.letter.gridPoints.push(e.detail);
+		rune.letter.render(rune.grid);
+		rune.letter.draw();
 	} );
 
 	// Setup grid

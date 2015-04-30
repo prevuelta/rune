@@ -4,14 +4,14 @@
 function Letter(options) {
 
 	var _options = {
-		gridPoints : []
+		
 	}
 
 	this.options = $.extend(_options, options);
 
 	this.renderedPoints = [];
 
-	var that = this;
+	this.gridPoints = [];
 }
 
 Letter.prototype.clear = function() {
@@ -22,15 +22,17 @@ Letter.prototype.addPoint= function(point) {
 	this.options.gridPoints.push(point);
 }
 
-Letter.prototype.render = function() {
+Letter.prototype.render = function(grid) {
 
 	var renderTemp = [];
 
 	$.each(this.gridPoints, function(idx, point) {
-		renderTemp.push(grid[point]);
+		renderTemp.push(grid.points[point]);
 	});
 
-	var indices = this.getIndices(this.distortions.points, this.gridPoints);
+	console.log(grid.points);
+
+	var indices = util.getIndices(this.gridPoints, grid.points);
 
 	var punits = indices.map(function(idx) {
 		return renderTemp[idx];
@@ -38,6 +40,27 @@ Letter.prototype.render = function() {
 
 	this.renderedPoints = renderTemp;
 
+}
+
+
+
+Letter.prototype.draw = function() {
+
+	var letter = this;
+
+	var letterPath = new paper.Path();
+
+	letterPath.strokeColor = 'black';
+
+	$.each(letter.renderedPoints, function(idx, point) {
+
+		if(idx) {
+			letterPath.lineTo(point);
+		} else {
+			letterPath.moveTo(point);
+		}
+
+	});
 }
 
 Letter.prototype.distort = function(type) {

@@ -43,33 +43,34 @@ Grid.prototype.getHeight =  function() {
 };
 
 
-// function GridPoint (paper, point, value) {
-
-// 	this.value = value;
-
-// 	this.path = paper.Path.Circle(point, 10);
-
-// 	this.path.fillColor = new paper.Color(255, 0, 0, 0.2);
-
-// 	this.path.onMouseEnter = function(e) {
-// 		console.log(e.target._content);
-// 		this.fillColor = 'red';
-// 	}
-// }
-
 var GridPoint = function(paper, point, value) {
-
-	// this.value = value;
 
 	var path = paper.Path.Circle(point, 15);
 
 	path.value = value;
+	path.active = false;
 
-	path.fillColor = new paper.Color(255, 0, 0, 0.2);
+	var grey = new paper.Color(255, 0, 0, 0.2);
+
+	path.fillColor = grey;
 	
+	path.onMouseEnter = function(e) {
+		if(!this.active) {
+			this.fillColor = 'orange';
+		}
+	}
+
+	path.onMouseLeave = function(e) {
+		if(!this.active) {
+			this.fillColor = grey;
+		}
+	}
+
 	path.onMouseDown = function(e) {
-		console.log(e.target);
+
 		this.fillColor = 'red';
+
+		this.active = true;
 
 		var event = new CustomEvent('addGridPoint', { 'detail' : e.target.value});
 		

@@ -7,15 +7,13 @@ var callback = function() {
 	var tablet = new Tablet();
 
 	var rune = new Rune({
-		xUnits: 6,
-		yUnits: 6,
-		xRes: 40,
-		yRes: 40,
+		xUnits: 10,
+		yUnits: 10,
+		xRes: 30,
+		yRes: 30,
 		canvasId: 'rune-grid',
 		padding: 30
 	}, paper);
-
-	rune.addLetter();
 
 	addView($('#rune-tablet'), 'rune-tablets', {}, null);
 

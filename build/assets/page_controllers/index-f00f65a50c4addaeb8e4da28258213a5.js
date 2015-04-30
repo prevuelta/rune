@@ -94,33 +94,34 @@ Grid.prototype.getHeight =  function() {
 };
 
 
-// function GridPoint (paper, point, value) {
-
-// 	this.value = value;
-
-// 	this.path = paper.Path.Circle(point, 10);
-
-// 	this.path.fillColor = new paper.Color(255, 0, 0, 0.2);
-
-// 	this.path.onMouseEnter = function(e) {
-// 		console.log(e.target._content);
-// 		this.fillColor = 'red';
-// 	}
-// }
-
 var GridPoint = function(paper, point, value) {
-
-	// this.value = value;
 
 	var path = paper.Path.Circle(point, 15);
 
 	path.value = value;
+	path.active = false;
 
-	path.fillColor = new paper.Color(255, 0, 0, 0.2);
+	var grey = new paper.Color(255, 0, 0, 0.2);
+
+	path.fillColor = grey;
 	
+	path.onMouseEnter = function(e) {
+		if(!this.active) {
+			this.fillColor = 'orange';
+		}
+	}
+
+	path.onMouseLeave = function(e) {
+		if(!this.active) {
+			this.fillColor = grey;
+		}
+	}
+
 	path.onMouseDown = function(e) {
-		console.log(e.target);
+
 		this.fillColor = 'red';
+
+		this.active = true;
 
 		var event = new CustomEvent('addGridPoint', { 'detail' : e.target.value});
 		
@@ -138,14 +139,14 @@ var GridPoint = function(paper, point, value) {
 function Letter(options) {
 
 	var _options = {
-		gridPoints : []
+		
 	}
 
 	this.options = $.extend(_options, options);
 
 	this.renderedPoints = [];
 
-	var that = this;
+	this.gridPoints = [];
 }
 
 Letter.prototype.clear = function() {
@@ -156,15 +157,17 @@ Letter.prototype.addPoint= function(point) {
 	this.options.gridPoints.push(point);
 }
 
-Letter.prototype.render = function() {
+Letter.prototype.render = function(grid) {
 
 	var renderTemp = [];
 
 	$.each(this.gridPoints, function(idx, point) {
-		renderTemp.push(grid[point]);
+		renderTemp.push(grid.points[point]);
 	});
 
-	var indices = this.getIndices(this.distortions.points, this.gridPoints);
+	console.log(grid.points);
+
+	var indices = util.getIndices(this.gridPoints, grid.points);
 
 	var punits = indices.map(function(idx) {
 		return renderTemp[idx];
@@ -172,6 +175,27 @@ Letter.prototype.render = function() {
 
 	this.renderedPoints = renderTemp;
 
+}
+
+
+
+Letter.prototype.draw = function() {
+
+	var letter = this;
+
+	var letterPath = new paper.Path();
+
+	letterPath.strokeColor = 'black';
+
+	$.each(letter.renderedPoints, function(idx, point) {
+
+		if(idx) {
+			letterPath.lineTo(point);
+		} else {
+			letterPath.moveTo(point);
+		}
+
+	});
 }
 
 Letter.prototype.distort = function(type) {
@@ -279,9 +303,18 @@ function Rune(options, paper) {
 
 	this.paper = paper;
 
+	this.addLetter();
+
+	var rune = this;
+
 	document.addEventListener('addGridPoint', function(e) { 
 		// that.addGridPoint(e.detail) ;
-		console.log("point added");
+		console.log("point added" + e.detail);
+		// rune.letter.push(e.detail);
+
+		rune.letter.gridPoints.push(e.detail);
+		rune.letter.render(rune.grid);
+		rune.letter.draw();
 	} );
 
 	// Setup grid
@@ -417,15 +450,13 @@ var callback = function() {
 	var tablet = new Tablet();
 
 	var rune = new Rune({
-		xUnits: 6,
-		yUnits: 6,
+		xUnits: 10,
+		yUnits: 10,
 		xRes: 40,
 		yRes: 40,
 		canvasId: 'rune-grid',
 		padding: 30
 	}, paper);
-
-	rune.addLetter();
 
 	addView($('#rune-tablet'), 'rune-tablets', {}, null);
 
