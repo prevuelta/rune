@@ -1,20 +1,26 @@
 
 /* ========== Letter ========== */
 
-function Letter(options) {
+function Letter(paper) {
 
-	var _options = {
+
+	// var _options = {
 		
-	}
+	// }
 
-	this.options = $.extend(_options, options);
+	// this.options = $.extend(_options, options);
 
 	this.renderedPoints = [];
 
 	this.gridPoints = [];
+
+	console.log(paper.project);
+
+	this.layer = new paper.Layer();
+
 }
 
-Letter.prototype.clear = function() {
+Letter.prototype.clearPoints = function() {
 	this.options.gridPoints = [];
 }
 
@@ -30,7 +36,7 @@ Letter.prototype.render = function(grid) {
 		renderTemp.push(grid.points[point]);
 	});
 
-	console.log(grid.points);
+	// console.log(grid.points);
 
 	var indices = util.getIndices(this.gridPoints, grid.points);
 
@@ -42,11 +48,20 @@ Letter.prototype.render = function(grid) {
 
 }
 
+Letter.prototype.clear = function() {
+	this.layer.removeChildren();
+}
 
+Letter.prototype.reset = function() {
+	this.gridPoints = [];
+	this.clear();
+}
 
-Letter.prototype.draw = function() {
+Letter.prototype.draw = function(paper) {
 
 	var letter = this;
+
+	letter.layer.activate();
 
 	var letterPath = new paper.Path();
 

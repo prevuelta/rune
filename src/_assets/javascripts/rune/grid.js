@@ -1,7 +1,7 @@
 
 /* ========== Grid ========== */
 
-function Grid(xUnits, yUnits, xRes, yRes, padding) {
+function Grid(xUnits, yUnits, xRes, yRes, padding, paper) {
 	
 	this.xUnits = xUnits;
 	this.yUnits = yUnits;
@@ -28,6 +28,9 @@ function Grid(xUnits, yUnits, xRes, yRes, padding) {
 		currentX++;
 	
 	}
+
+	this.layer = new paper.Layer();
+
 }
 
 Grid.prototype.getTotalUnits = function() {
@@ -42,8 +45,15 @@ Grid.prototype.getHeight =  function() {
 	return this.yUnits * this.yRes;
 };
 
+Grid.prototype.hide = function(paper) {
+	this.layer.visible = false;
+}
 
-var GridPoint = function(paper, point, value) {
+Grid.prototype.reset = function() {
+	
+}
+
+var createGridPoint = function(paper, point, value) {
 
 	var path = paper.Path.Circle(point, 15);
 

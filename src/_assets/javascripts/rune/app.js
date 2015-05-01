@@ -1,9 +1,9 @@
 //= require rune/const
 //= require rune/util
-//= require rune/Grid
-//= require rune/Letter
-//= require rune/Rune
-//= require rune/Tablet
+//= require rune/grid
+//= require rune/letter
+//= require rune/rune
+//= require rune/tablet
 
 /* ========== Paper prototypes ========== */
 

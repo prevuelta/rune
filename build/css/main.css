@@ -38,6 +38,13 @@ header {
     display: inline-block; }
     header ul li {
       display: inline-block; }
+  header #rune-actionbar {
+    float: right; }
+    header #rune-actionbar ul {
+      padding: 0;
+      margin: 0; }
+      header #rune-actionbar ul li {
+        display: inline-block; }
 
 #main #rune-toolbar {
   position: fixed;

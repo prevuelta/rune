@@ -1,3 +1,8 @@
+//= require bower_components/jquery/dist/jquery.min.js
+//= require bower_components/mustache/mustache.min.js
+//= require bower_components/mustache-wax/mustache-wax.min.js
+//= require bower_components/paper/dist/paper-full.min.js
+
 //= require util
 
 'use strict';

@@ -22,19 +22,9 @@ function Rune(options, paper) {
 
 	this.paper = paper;
 
-	this.addLetter();
-
 	var rune = this;
 
-	document.addEventListener('addGridPoint', function(e) { 
-		// that.addGridPoint(e.detail) ;
-		console.log("point added" + e.detail);
-		// rune.letter.push(e.detail);
-
-		rune.letter.gridPoints.push(e.detail);
-		rune.letter.render(rune.grid);
-		rune.letter.draw();
-	} );
+	this.paper.setup(this.canvas);
 
 	// Setup grid
 	this.grid = new Grid(
@@ -42,26 +32,58 @@ function Rune(options, paper) {
 		this.options.yUnits,
 		this.options.xRes,
 		this.options.yRes,
-		this.options.padding
+		this.options.padding,
+		paper
 	);
 
-	this.paper.setup(this.canvas);
-
+	
 	this.drawGrid();
+
+	this.addLetter(this.paper);
 
 	this.finishDraw();
 
+	// Event listeners
+
+	document.addEventListener('addGridPoint', function(e) { 
+
+		rune.letter.gridPoints.push(e.detail);
+
+		rune.update();
+	
+	});
+
+
+	document.addEventListener('clearGridPoints', function() {
+
+		console.log('done received');
+		rune.grid.reset();
+		rune.letter.reset();
+
+	});
+
+	document.addEventListener('toggleGrid', function() {
+		console.log('Hide Grid');
+		rune.grid.hide();
+	});
+
+}
+
+Rune.prototype.update = function() {
+	this.letter.clear()
+	this.letter.render(rune.grid);
+	this.letter.draw(this.paper);
 }
 
 Rune.prototype.draw = function(pointArray) {
 
-	var that = this;
+	var rune = this;
 
 	$.each(pointArray, function(idx, point) {
 
-		var paperPoint = new that.paper.Point(point);
+		var paperPoint = new rune.paper.Point(point);
 
-		var path = GridPoint(paper, paperPoint, idx);
+		var path = createGridPoint(rune.paper, paperPoint, idx);
 
 		console.log(path);
 
@@ -73,13 +95,16 @@ Rune.prototype.drawGrid = function() {
 
 	this.draw(this.grid.points);
 
-	// console.log(paper.project.exportSVG());
 };
+
+Rune.prototype.hideGrid = function() {
+	this.grid.hide();
+}
 
 Rune.prototype.finishDraw = function() {
 	paper.view.draw();
 }
 
-Rune.prototype.addLetter = function(options) {
-	this.letter = new Letter(options);
+Rune.prototype.addLetter = function(paper) {
+	this.letter = new Letter(paper);
 }
