@@ -41,7 +41,7 @@ function Rune(options, paper) {
 
 	this.addLetter(this.paper);
 
-	this.finishDraw();
+	this.reDraw();
 
 	// Event listeners
 
@@ -59,6 +59,7 @@ function Rune(options, paper) {
 		console.log('done received');
 		rune.grid.reset();
 		rune.letter.reset();
+		rune.reDraw();
 
 	});
 
@@ -101,7 +102,7 @@ Rune.prototype.hideGrid = function() {
 	this.grid.hide();
 }
 
-Rune.prototype.finishDraw = function() {
+Rune.prototype.reDraw = function() {
 	paper.view.draw();
 }
 
