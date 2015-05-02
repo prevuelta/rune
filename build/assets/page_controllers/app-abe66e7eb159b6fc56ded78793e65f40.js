@@ -96,9 +96,14 @@ Grid.prototype.getHeight =  function() {
 	return this.yUnits * this.yRes;
 };
 
-Grid.prototype.hide = function(paper) {
+Grid.prototype.hide = function() {
 	this.layer.visible = false;
 }
+
+Grid.prototype.show = function() {
+	this.layer.visible = true;
+}
+
 
 Grid.prototype.reset = function() {
 	
@@ -324,13 +329,13 @@ function Rune(options, paper) {
 
 	this.letter = {};
 
-	this.canvas = document.getElementById(this.options.canvasId);
+	var canvas = document.getElementById(this.options.canvasId);
 
 	this.paper = paper;
 
 	var rune = this;
 
-	this.paper.setup(this.canvas);
+	this.paper.setup(canvas);
 
 	// Setup grid
 	this.grid = new Grid(
@@ -347,7 +352,9 @@ function Rune(options, paper) {
 
 	this.addLetter(this.paper);
 
-	this.finishDraw();
+	this.redraw();
+
+	this.showGrid = true;
 
 	// Event listeners
 
@@ -359,19 +366,23 @@ function Rune(options, paper) {
 	
 	});
 
-
 	document.addEventListener('clearGridPoints', function() {
 
 		console.log('done received');
 		rune.grid.reset();
 		rune.letter.reset();
-		rune.reDraw();
+		rune.redraw();
 
 	});
 
 	document.addEventListener('toggleGrid', function() {
-		console.log('Hide Grid');
-		rune.grid.hide();
+		rune.showGrid = !rune.showGrid;
+		if(rune.showGrid) {
+			rune.grid.show();
+		} else {
+			rune.grid.hide();
+		}
+		rune.redraw();
 	});
 
 }
@@ -408,7 +419,7 @@ Rune.prototype.hideGrid = function() {
 	this.grid.hide();
 }
 
-Rune.prototype.reDraw = function() {
+Rune.prototype.redraw = function() {
 	paper.view.draw();
 }
 
@@ -436,6 +447,13 @@ function ActionBar() {
 			action : function(e) {
 				e.preventDefault();
 				console.log("Saved");
+				// console.log(tablet);
+
+				var tabletString = JSON.stringify(tablet);
+				
+				localStorage["rune"]  = tabletString;
+
+				console.log(tabletString);
 			}
 		},
 		{
@@ -477,21 +495,27 @@ ActionBar.prototype.init = function(container) {
 
 'use strict';
 
-var tablet = createTablet();
+if(localStorage["rune"]) {
+	var tablet = localStorage["rune"];
+} else {
+	var tablet = createTablet();
+}
 
 
 var callback = function() {
 
-	tablet.push(
-		rune = new Rune({
-			xUnits: 10,
-			yUnits: 10,
-			xRes: 30,
-			yRes: 30,
-			canvasId: 'rune-grid',
-			padding: 30
-		}, paper)
-	);
+		tablet.push(
+			rune = new Rune({
+				xUnits: 6,
+				yUnits: 6,
+				xRes: 30,
+				yRes: 30,
+				canvasId: 'rune-grid',
+				padding: 30
+			}, paper)
+		);
+
+	}
 
 	addView($('#rune-tablet'), 'rune-tablets', {}, null);
 

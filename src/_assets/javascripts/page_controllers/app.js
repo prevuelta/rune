@@ -8,21 +8,27 @@
 
 'use strict';
 
-var tablet = createTablet();
+if(localStorage["rune"]) {
+	var tablet = JSON.parse(localStorage["rune"]);
+	console.log("Loaded saved tablet");
+	console.log(tablet);
+} else {
+	var tablet = createTablet();
+}
 
 
 var callback = function() {
 
-	tablet.push(
-		rune = new Rune({
-			xUnits: 10,
-			yUnits: 10,
-			xRes: 30,
-			yRes: 30,
-			canvasId: 'rune-grid',
-			padding: 30
-		}, paper)
-	);
+		// tablet.push(
+		// 	rune = new Rune({
+		// 		xUnits: 6,
+		// 		yUnits: 6,
+		// 		xRes: 30,
+		// 		yRes: 30,
+		// 		canvasId: 'rune-grid',
+		// 		padding: 30
+		// 	}, paper)
+		// );
 
 	addView($('#rune-tablet'), 'rune-tablets', {}, null);
 

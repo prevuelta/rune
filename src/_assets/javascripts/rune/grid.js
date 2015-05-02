@@ -45,9 +45,14 @@ Grid.prototype.getHeight =  function() {
 	return this.yUnits * this.yRes;
 };
 
-Grid.prototype.hide = function(paper) {
+Grid.prototype.hide = function() {
 	this.layer.visible = false;
 }
+
+Grid.prototype.show = function() {
+	this.layer.visible = true;
+}
+
 
 Grid.prototype.reset = function() {
 	

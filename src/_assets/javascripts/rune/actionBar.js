@@ -6,6 +6,13 @@ function ActionBar() {
 			action : function(e) {
 				e.preventDefault();
 				console.log("Saved");
+				// console.log(tablet);
+
+				var tabletString = JSON.stringify(tablet);
+				
+				localStorage["rune"]  = tabletString;
+
+				console.log(tabletString);
 			}
 		},
 		{
