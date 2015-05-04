@@ -23,28 +23,20 @@ h5 {
   margin: 0; }
 
 header {
-  background: #f4f4f4;
+  background: #222222;
+  color: #fe6600;
   padding: 6px 12px;
   position: fixed;
   left: 0;
   right: 0;
   top: 0;
   height: 36px;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2); }
   header strong {
-    line-height: 1.8em; }
-  header ul {
-    margin: 0;
-    display: inline-block; }
-    header ul li {
-      display: inline-block; }
-  header #rune-actionbar {
-    float: right; }
-    header #rune-actionbar ul {
-      padding: 0;
-      margin: 0; }
-      header #rune-actionbar ul li {
-        display: inline-block; }
+    display: inline-block;
+    line-height: 1.8em;
+    margin-right: 12px; }
 
 #main #rune-toolbar {
   position: fixed;
@@ -53,7 +45,8 @@ header {
   top: 36px;
   width: 120px;
   background: #e0e0e0;
-  padding: 12px; }
+  padding: 12px;
+  border-right: 1px solid #aaa; }
   #main #rune-toolbar h4 {
     margin: 6px 0 12px 0; }
   #main #rune-toolbar .tools {
@@ -79,17 +72,29 @@ header {
   top: 36px;
   right: 0;
   bottom: 0;
-  left: 120px;
-  border: 1px solid #ccc; }
+  left: 145px;
+  z-index: 0; }
 #main #rune-tablet {
   position: fixed;
   bottom: 0;
-  left: 120px;
+  left: 145px;
   right: 0;
-  height: 48px;
-  background: #ccc; }
+  height: 96px;
+  background: #ccc;
+  z-index: 1;
+  border-top: 1px solid #aaa; }
 
 #rune-grid {
-  background: #ccc;
-  width: 500px;
-  height: 500px; }
+  width: 100%;
+  height: 100%; }
+
+#rune-actionbar {
+  display: inline-block; }
+  #rune-actionbar ul {
+    padding: 0;
+    margin: 0; }
+    #rune-actionbar ul li {
+      display: inline-block; }
+      #rune-actionbar ul li a {
+        font-size: 13px;
+        color: white; }

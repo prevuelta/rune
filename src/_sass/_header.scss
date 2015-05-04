@@ -1,6 +1,7 @@
 header {
 
-	background: #f4f4f4;
+	background: #222222;
+	color: $orange;
 	padding: $hbu $bu;
 	position: fixed;
 	left: 0;
@@ -8,30 +9,11 @@ header {
 	top: 0;
 	height: $bu3;
 	box-sizing: border-box;
+	box-shadow: 0px 0px 3px rgba(0,0,0,0.2);
 
 	strong{
-		line-height: 1.8em;
-	}
-
-	ul {
-		margin: 0;
 		display: inline-block;
-		li {
-			display: inline-block;
-			a {
-
-			}
-		}
-	}
-
-	#rune-actionbar {
-		float: right;
-		ul {
-			padding: 0;
-			margin: 0;
-			li {
-				display: inline-block;
-			}
-		}
+		line-height: 1.8em;
+		margin-right: $bu;
 	}
 }

@@ -11,6 +11,7 @@ $toolbar-width: $bu10;
 		width: $toolbar-width;
 		background: #e0e0e0;
 		padding: $bu;
+		border-right: 1px solid #aaa;
 		h4 {
 			margin: $hbu 0 $bu 0;
 		}
@@ -28,6 +29,7 @@ $toolbar-width: $bu10;
 				margin: 1px;
 				box-sizing: border-box;
 				cursor: pointer;
+				
 				&:hover {
 					background: $lighter-teal;
 				}
@@ -45,17 +47,19 @@ $toolbar-width: $bu10;
 		top: $bu3;
 		right: 0;
 		bottom: 0;
-		left: $toolbar-width;
-		border: 1px solid #ccc;
+		left: $toolbar-width + $bu2 + 1;
+		z-index: 0;
 	}
 
 	#rune-tablet {
 		position: fixed;
 		bottom: 0;
-		left: $toolbar-width;
+		left: $toolbar-width  + $bu2 + 1;
 		right: 0;
-		height: $bu4;
-		background: #ccc
+		height: $bu8;
+		background: #ccc;
+		z-index: 1;
+		border-top: 1px solid #aaa;
 	}
 
 }
