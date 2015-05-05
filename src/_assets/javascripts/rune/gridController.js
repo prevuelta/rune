@@ -1,12 +1,14 @@
 
 /* ========== Grid ========== */
 
-function Grid(xUnits, yUnits, xRes, yRes, padding, paper) {
+function Grid(options) {
 	
-	this.xUnits = xUnits;
-	this.yUnits = yUnits;
-	this.xRes = xRes;
-	this.yRes = yRes;
+	this.res = options.res;
+	this.xUnits = options.xUnits;
+	this.yUnits = options.yUnits;
+	this.padding = options.padding;
+
+	console.log(this);
 
 	/* ------ Setup default points ------ */
 
@@ -16,12 +18,12 @@ function Grid(xUnits, yUnits, xRes, yRes, padding, paper) {
 	this.points = [];
 
 	for(var i = 0; i < this.getTotalUnits(); i++) {
-		if(i % yUnits == 0 && i != 0) {
+		if(i % this.yUnits == 0 && i != 0) {
 			currentY++;
 			currentX = 0;
 		}
 
-		var point = [currentX * xRes + padding, currentY * yRes + padding];
+		var point = [currentX * this.res + options.padding, currentY * this.res + options.padding];
 
 		this.points[i] = point;
 
@@ -29,7 +31,7 @@ function Grid(xUnits, yUnits, xRes, yRes, padding, paper) {
 	
 	}
 
-	this.layer = new paper.Layer();
+	// this.layer = new paper.Layer();
 
 }
 
@@ -38,11 +40,11 @@ Grid.prototype.getTotalUnits = function() {
 };
 
 Grid.prototype.getWidth = function() {
-	return this.xUnits * this.xRes;
+	return this.res * this.xUnits;
 };
 
 Grid.prototype.getHeight =  function() {
-	return this.yUnits * this.yRes;
+	return this.res * this.yUnits;
 };
 
 Grid.prototype.hide = function() {
@@ -58,7 +60,7 @@ Grid.prototype.reset = function() {
 	
 }
 
-var createGridPoint = function(paper, point, value) {
+var createGridPoint = function(point, value) {
 
 	var path = paper.Path.Circle(point, 15);
 
@@ -87,11 +89,9 @@ var createGridPoint = function(paper, point, value) {
 
 		this.active = true;
 
-		var event = new CustomEvent('addGridPoint', { 'detail' : e.target.value});
+		var event = new CustomEvent('addPoint', { 'detail' : e.target.value});
 		
 		document.dispatchEvent(event);
 
 	}
-
-	return path;
 }

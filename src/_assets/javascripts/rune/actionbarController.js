@@ -38,7 +38,7 @@ function ActionBar() {
 			title: "Add rune",
 			action: function(e) {
 				e.preventDefault();
-				workspace.tablet.addRune();
+				app.workspace.tablet.addRune();
 			}
 		}
 	]

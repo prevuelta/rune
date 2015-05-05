@@ -7,41 +7,30 @@
 
 // Models
 //= require rune/runeModel
-//= require rune/letterModel
-
-		// tablet.runes.push(
-		// 	rune = new Rune({
-		// 		xUnits: 6,
-		// 		yUnits: 6,
-		// 		xRes: 30,
-		// 		yRes: 30,
-		// 		canvasId: 'rune-grid',
-		// 		padding: 30
-		// 	}, paper)
-		// );r
 
 function RuneEditor(options, paper) {
 
 	// Setup workspace
 
-	this.workspace = new WorkSpace(options);
+	var editor = this;
 
-	this.loadTablet();
+	editor.workspace = new WorkSpace(options);
+
+	editor.loadTablet();
 
 	// Event listeners
 
-	document.addEventListener('addGridPoint', function(e) { 
-		rune.letter.gridPoints.push(e.detail);
-		rune.update();
-
+	document.addEventListener('addPoint', function(e) {
+		editor.tablet.getActiveRune().addPoint(e.detail);
+		editor.workspace.redrawLetter();
 	});
 
 	document.addEventListener('clearGridPoints', function() {
 
-		console.log('done received');
-		rune.grid.reset();
-		rune.letter.reset();
-		rune.redraw();
+		// console.log('done received');
+		// rune.grid.reset();
+		// rune.letter.reset();
+		// rune.redraw();
 
 	});
 
@@ -57,26 +46,27 @@ function RuneEditor(options, paper) {
 
 }
 
-RuneEditor.prototype.addListeners = function() {
+RuneEditor.prototype = {
+	addListeners : function() {
 
-}
-
-RuneEditor.prototype.loadTablet = function() {
+	},
+	loadTablet : function() {
 	
-	// Load data / create data
+		// Load data / create data
 
-	if(localStorage["rune"]) {
-		this.tablet = JSON.parse(localStorage["rune"]);
-		console.log("Loaded saved tablet");
-	} else {
-		this.tablet = new TabletModelController();
+		if(localStorage["rune"]) {
+			this.tablet = JSON.parse(localStorage["rune"]);
+			console.log("Loaded saved tablet");
+		} else {
+			this.tablet = new TabletModelController();
+		}
+
+		console.log(this.tablet);
+
+		this.workspace.displayTablet(this.tablet);
+
+		this.workspace.displayRune(this.tablet.getActiveRune());
+
 	}
-
-	console.log(this.tablet);
-
-	this.workspace.displayTablet(this.tablet);
-
-	this.workspace.displayRune(this.tablet.getActiveRune());
-
 }
 

@@ -1,3 +1,5 @@
+//= require rune/runeModel
+
 /* ========== Tablet ========== */
 
 
@@ -10,10 +12,10 @@ function TabletModelController() {
 
 TabletModelController.prototype.getActiveRune = function() {
 	if(typeof this.runes[this.activeRuneIndex] === 'undefined') {
-		return null;
-	} else {
-		return this.runes[this.activeRuneIndex];
+		this.addRune();
 	}
+
+	return this.runes[this.activeRuneIndex];
 }
 
 TabletModelController.prototype.addRune = function() {

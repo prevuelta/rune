@@ -86,7 +86,8 @@ header {
 
 #rune-grid {
   width: 100%;
-  height: 100%; }
+  height: 100%;
+  background: #aaa; }
 
 #rune-actionbar {
   display: inline-block; }

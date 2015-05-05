@@ -1,17 +1,18 @@
 
-/* ========== Rune master class ========== */
+/* ========== Rune model ========== */
 
-function Rune(options) {
+function RuneModel(gridOptions) {
 
-	this.options = {
-		baseUnit: 4,
-		xRes: 20,
-		yRes: 20
+	this.gridOptions = {
+		xUnits: 10,
+		yUnits: 10,
+		res: 30,
+		padding: 20
 	};
 
-	$.extend(this.options, options);
+	$.extend(this.gridOptions, gridOptions);
 
-	this.letter = {};
+	this.letter = new LetterModel();
 
 	this.distortions = [];
 
@@ -21,29 +22,22 @@ function Rune(options) {
 
 }
 
-Rune.prototype.addLetter = function(paper) {
-	this.letter = new LetterModel();
-}
+RuneModel.prototype = {
+	addPoint: function(gridRef) {
+		this.letter.gridPoints.push(gridRef);
+	}
+}	
 
 
 /* ========== Letter ========== */
 
-function Letter(paper) {
-
-
-	// var _options = {
-		
-	// }
-
-	// this.options = $.extend(_options, options);
+function LetterModel() {
 
 	this.renderedPoints = [];
 
 	this.gridPoints = [];
 
-	console.log(paper.project);
-
-	this.layer = new paper.Layer();
+	this.distortions = [];
 
 }
 
@@ -55,7 +49,7 @@ Letter.prototype.addPoint= function(point) {
 	this.options.gridPoints.push(point);
 }
 
-Letter.prototype.render = function(grid) {
+Letter.prototype.preRender = function(grid) {
 
 	var renderTemp = [];
 
@@ -71,38 +65,12 @@ Letter.prototype.render = function(grid) {
 		return renderTemp[idx];
 	});
 
-	this.renderedPoints = renderTemp;
+	this.actualPoints = renderTemp;
 
-}
-
-Letter.prototype.clear = function() {
-	this.layer.removeChildren();
 }
 
 Letter.prototype.reset = function() {
 	this.gridPoints = [];
-	this.clear();
-}
-
-Letter.prototype.draw = function(paper) {
-
-	var letter = this;
-
-	letter.layer.activate();
-
-	var letterPath = new paper.Path();
-
-	letterPath.strokeColor = 'black';
-
-	$.each(letter.renderedPoints, function(idx, point) {
-
-		if(idx) {
-			letterPath.lineTo(point);
-		} else {
-			letterPath.moveTo(point);
-		}
-
-	});
 }
 
 Letter.prototype.distort = function(type) {
