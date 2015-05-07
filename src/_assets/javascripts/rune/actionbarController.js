@@ -7,11 +7,8 @@ function ActionBar() {
 			action : function(e) {
 				e.preventDefault();
 
-				var tabletString = JSON.stringify(app.tablet.model);
+				app.save();
 
-				localStorage["rune"] = tabletString;
-
-				console.log(tabletString);
 			}
 		},
 		{

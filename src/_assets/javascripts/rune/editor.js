@@ -25,7 +25,7 @@ function RuneEditor(options, paper) {
 		console.log("Adding point");
 		console.log(activeRune);
 		activeRune.addPoint(e.detail);
-		editor.workspace.drawLetter(activeRune.letter);
+		editor.workspace.drawLetter(activeRune.model.letter);
 	});
 
 	document.addEventListener('clearGridPoints', function() {
@@ -68,8 +68,15 @@ RuneEditor.prototype = {
 
 		this.workspace.displayTablet(this.tablet);
 
-		this.workspace.displayRune(this.tablet.getActiveRune());
+		this.workspace.displayRune(this.tablet.getActiveRune().model);
 
+	},
+	saveTablet : function() {
+						var tabletString = JSON.stringify(app.tablet.model);
+
+				localStorage["rune"] = tabletString;
+
+				console.log(tabletString);
 	}
 }
 

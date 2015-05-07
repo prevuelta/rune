@@ -31,7 +31,7 @@ TabletModelController.prototype = {
 	addRune : function() {
 		console.log("Adding rune");
 		console.log(this.model);
-		this.model.runes.push(new RuneModelController(new RuneModel()) );
+		this.model.runes.push(new RuneModelController(new RuneModel( )) );
 	},
 	delRune : function() {
 

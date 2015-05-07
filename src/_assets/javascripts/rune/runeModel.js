@@ -1,14 +1,15 @@
 
 /* ========== Rune model ========== */
 
-function RuneController(model) {
+function RuneModelController(model) {
 	this.model = model;
 }
 
-RuneController.prototype = {
+RuneModelController.prototype = {
 	addPoint: function(gridRef) {
 		console.log("Addingpoint " + gridRef);
-		this.model.letter.addPoint(gridRef);
+		var letterController = new LetterModelController(this.model.letter);
+		letterController.addPoint(gridRef);
 	}
 }
 

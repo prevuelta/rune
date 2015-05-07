@@ -63,6 +63,8 @@ function RuneView (runeModel) {
 
 	this.drawGrid();
 
+	console.log(runeModel);
+
 	this.drawLetter(runeModel.letter.gridPoints);
 
 	this.redraw();
