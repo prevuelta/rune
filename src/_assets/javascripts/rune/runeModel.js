@@ -16,13 +16,15 @@ function RuneModel(gridOptions) {
 
 	this.distortions = [];
 
-	var rune = this;
-
 	this.showGrid = true;
 
 }
 
-RuneModel.prototype = {
+function RuneController() {
+
+}
+
+RuneController.prototype = {
 	addPoint: function(gridRef) {
 		console.log("Addingpoint " + gridRef);
 		this.letter.addPoint(gridRef);
@@ -42,7 +44,9 @@ function LetterModel() {
 
 }
 
-LetterModel.prototype = {
+function letterController(){}
+
+LetterController.prototype = {
 	clearPoints: function() {
 		this.gridPoints = [];
 	},

@@ -22,6 +22,8 @@ function RuneEditor(options, paper) {
 
 	document.addEventListener('addPoint', function(e) {
 		var activeRune = editor.tablet.getActiveRune();
+		console.log("Adding point");
+		console.log(activeRune);
 		activeRune.addPoint(e.detail);
 		editor.workspace.drawLetter(activeRune.letter);
 	});
@@ -31,7 +33,7 @@ function RuneEditor(options, paper) {
 		console.log('done received');
 		// rune.grid.reset();
 		editor.workspace.clearLetter();
-		editor.workspace.redraw();
+		editor.workspace.drawLetter();
 	});
 
 	document.addEventListener('toggleGrid', function() {
@@ -53,12 +55,13 @@ RuneEditor.prototype = {
 	loadTablet : function() {
 	
 		// Load data / create data
+		console.log(typeof localStorage["rune"]);
 
-		if(localStorage["rune"]) {
-			this.tablet = JSON.parse(localStorage["rune"]);
-			console.log("Loaded saved tablet");
+		if(localStorage["rune"] && typeof localStorage["rune"] === 'string') {
+			var tabletModel= JSON.parse(localStorage["rune"]);
+			this.tablet = new TabletModelController(tabletModel);
 		} else {
-			this.tablet = new TabletModelController();
+			this.tablet = new TabletModelController();	
 		}
 
 		console.log(this.tablet);

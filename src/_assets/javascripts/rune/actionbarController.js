@@ -6,11 +6,10 @@ function ActionBar() {
 			title : "Save tablet",
 			action : function(e) {
 				e.preventDefault();
-				console.log("Saved");
-				// console.log(tablet);
-				var tabletString = JSON.stringify(tablet);
 
-				localStorage["rune"]  = tabletString;
+				var tabletString = JSON.stringify(app.tablet.model);
+
+				localStorage["rune"] = tabletString;
 
 				console.log(tabletString);
 			}

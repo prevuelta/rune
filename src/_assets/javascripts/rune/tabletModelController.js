@@ -3,25 +3,35 @@
 /* ========== Tablet ========== */
 
 
-function TabletModelController() {
+function TabletModelController(tabletModel) {
 
-	this.runes = [];
+	if(tabletModel) {
+		this.model = tabletModel;
+	} else {
+		this.newTabletModel();
+	}
 	this.activeRuneIndex = 0;
 
 }
 
-TabletModelController.prototype.getActiveRune = function() {
-	if(typeof this.runes[this.activeRuneIndex] === 'undefined') {
+TabletModelController.prototype = {
+	newTabletModel : function() {
+		this.model = {
+			runes : []
+		};
 		this.addRune();
+	},
+	getActiveRune : function() {
+		if(typeof this.model.runes[this.activeRuneIndex] === 'undefined') {
+			this.addRune();
+		}
+
+		return this.model.runes[this.activeRuneIndex];
+	},
+	addRune : function() {
+		this.model.runes.push(new RuneModel());
+	},
+	delRune : function() {
+
 	}
-
-	return this.runes[this.activeRuneIndex];
-}
-
-TabletModelController.prototype.addRune = function() {
-	this.runes.push(new RuneModel());
-}
-
-TabletModelController.prototype.delRune = function() {
-
 }

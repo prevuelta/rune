@@ -52,6 +52,8 @@ function RuneView (runeModel) {
 		runeModel.gridOptions
 	);
 
+	console.log(runeModel);
+
 	this.addLetterView();
 
 	this.layers = {
@@ -60,6 +62,8 @@ function RuneView (runeModel) {
 	}
 
 	this.drawGrid();
+
+	this.drawLetter(runeModel.letter.gridPoints);
 
 	this.redraw();
 
@@ -75,8 +79,6 @@ RuneView.prototype = {
 	// this.letter.draw(this.paper);
 	},
 	drawLetter : function(gridPoints) {
-
-		console.log(gridPoints);
 
 		this.letter.computePoints(gridPoints, this.grid);
 
