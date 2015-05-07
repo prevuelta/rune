@@ -21,17 +21,17 @@ function RuneEditor(options, paper) {
 	// Event listeners
 
 	document.addEventListener('addPoint', function(e) {
-		editor.tablet.getActiveRune().addPoint(e.detail);
-		editor.workspace.redrawLetter();
+		var activeRune = editor.tablet.getActiveRune();
+		activeRune.addPoint(e.detail);
+		editor.workspace.drawLetter(activeRune.letter);
 	});
 
 	document.addEventListener('clearGridPoints', function() {
 
-		// console.log('done received');
+		console.log('done received');
 		// rune.grid.reset();
-		// rune.letter.reset();
-		// rune.redraw();
-
+		editor.workspace.clearLetter();
+		editor.workspace.redraw();
 	});
 
 	document.addEventListener('toggleGrid', function() {

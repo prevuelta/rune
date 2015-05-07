@@ -11,8 +11,6 @@ function WorkSpace(options) {
 
 	// Canvas
 
-	console.log(options.canvasId);
-
 	var canvas = document.getElementById(this.options.canvasId);
 
 	paper.setup(canvas);
@@ -38,8 +36,8 @@ WorkSpace.prototype = {
 			actionBar.init();
 		});
 	},
-	redrawLetter : function(letter) {
-		this.runeView
+	drawLetter : function(letterModel) {
+		this.runeView.drawLetter(letterModel.gridPoints);
 	}
 }
 
@@ -53,6 +51,13 @@ function RuneView (runeModel) {
 	this.grid = new Grid(
 		runeModel.gridOptions
 	);
+
+	this.addLetterView();
+
+	this.layers = {
+		"grid" : new paper.Layer(),
+		"letter" : new paper.Layer()
+	}
 
 	this.drawGrid();
 
@@ -69,19 +74,27 @@ RuneView.prototype = {
 	// this.letter.render(rune.grid);
 	// this.letter.draw(this.paper);
 	},
-	draw : function(pointArray) {
+	drawLetter : function(gridPoints) {
 
-		$.each(pointArray, function(idx, point) {
+		console.log(gridPoints);
+
+		this.letter.computePoints(gridPoints, this.grid);
+
+		this.layers.letter.activate();
+
+		this.letter.draw(this);
+	},
+	drawGrid : function() {
+
+		this.layers.grid.activate();
+
+		$.each(this.grid.points, function(idx, point) {
 
 			var paperPoint = new paper.Point(point);
 
 			createGridPoint(paperPoint, idx);
 
 		});
-	},
-	drawGrid : function() {
-
-		this.draw(this.grid.points);
 
 	},
 	hideGrid : function() {
@@ -90,50 +103,40 @@ RuneView.prototype = {
 	redraw : function() {
 		paper.view.draw();
 	},
-	addLetterView : function(paper) {
-		this.letter = new Letter(paper);
+	addLetterView : function() {
+		this.letter = new LetterView();
 	}
 }
 
 
 /* ========== Letter ========== */
 
-function Letter(paper) {
-
-
-	// var _options = {
-		
-	// }
-
-	// this.options = $.extend(_options, options);
+function LetterView() {
 
 	this.renderedPoints = [];
-
-	this.gridPoints = [];
-
-	this.layer = new paper.Layer();
-
+	
 }
 
 
-Letter.prototype = {
-	render : function(grid) {
+LetterView.prototype = {
+	computePoints : function(gridPoints, grid) {
 
 		var renderTemp = [];
 
-		$.each(this.gridPoints, function(idx, point) {
+		$.each(gridPoints, function(idx, point) {
 			renderTemp.push(grid.points[point]);
 		});
 
-		// console.log(grid.points);
 
-		var indices = util.getIndices(this.gridPoints, grid.points);
+		var indices = util.getIndices(gridPoints, grid.points);
 
 		var punits = indices.map(function(idx) {
 			return renderTemp[idx];
 		});
 
 		this.renderedPoints = renderTemp;
+
+		console.log(this);
 
 	},
 	clear : function() {
@@ -142,9 +145,7 @@ Letter.prototype = {
 	draw : function() {
 
 		var letter = this;
-
-		letter.layer.activate();
-
+		
 		var letterPath = new paper.Path();
 
 		letterPath.strokeColor = 'black';
