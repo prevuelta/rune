@@ -29,7 +29,9 @@ TabletModelController.prototype = {
 		return this.model.runes[this.activeRuneIndex];
 	},
 	addRune : function() {
-		this.model.runes.push(new RuneModel());
+		console.log("Adding rune");
+		console.log(this.model);
+		this.model.runes.push(new RuneModelController(new RuneModel()) );
 	},
 	delRune : function() {
 

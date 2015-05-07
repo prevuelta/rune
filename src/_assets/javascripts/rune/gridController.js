@@ -8,7 +8,7 @@ function Grid(options) {
 	this.yUnits = options.yUnits;
 	this.padding = options.padding;
 
-	console.log(this);
+	// console.log(this);
 
 	/* ------ Setup default points ------ */
 

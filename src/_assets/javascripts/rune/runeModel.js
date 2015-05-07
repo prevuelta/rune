@@ -1,6 +1,17 @@
 
 /* ========== Rune model ========== */
 
+function RuneController(model) {
+	this.model = model;
+}
+
+RuneController.prototype = {
+	addPoint: function(gridRef) {
+		console.log("Addingpoint " + gridRef);
+		this.model.letter.addPoint(gridRef);
+	}
+}
+
 function RuneModel(gridOptions) {
 
 	this.gridOptions = {
@@ -20,17 +31,6 @@ function RuneModel(gridOptions) {
 
 }
 
-function RuneController() {
-
-}
-
-RuneController.prototype = {
-	addPoint: function(gridRef) {
-		console.log("Addingpoint " + gridRef);
-		this.letter.addPoint(gridRef);
-	}
-}	
-
 
 /* ========== Letter ========== */
 
@@ -44,14 +44,16 @@ function LetterModel() {
 
 }
 
-function letterController(){}
+function LetterModelController(model){
+	this.model = model;
+}
 
-LetterController.prototype = {
+LetterModelController.prototype = {
 	clearPoints: function() {
-		this.gridPoints = [];
+		this.model.gridPoints = [];
 	},
 	addPoint :function(point) {
-		this.gridPoints.push(point);
+		this.model.gridPoints.push(point);
 	},
 	// preRender : function(grid) {
 

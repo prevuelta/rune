@@ -52,7 +52,7 @@ function RuneView (runeModel) {
 		runeModel.gridOptions
 	);
 
-	console.log(runeModel);
+	// console.log(runeModel);
 
 	this.addLetterView();
 

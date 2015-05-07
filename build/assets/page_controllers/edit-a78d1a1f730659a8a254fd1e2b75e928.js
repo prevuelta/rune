@@ -114,7 +114,7 @@ function Grid(options) {
 	this.yUnits = options.yUnits;
 	this.padding = options.padding;
 
-	console.log(this);
+	// console.log(this);
 
 	/* ------ Setup default points ------ */
 
@@ -256,7 +256,9 @@ function RuneView (runeModel) {
 		runeModel.gridOptions
 	);
 
-	this.addLetterView(runeModel.letter);
+	// console.log(runeModel);
+
+	this.addLetterView();
 
 	this.layers = {
 		"grid" : new paper.Layer(),
@@ -264,6 +266,8 @@ function RuneView (runeModel) {
 	}
 
 	this.drawGrid();
+
+	this.drawLetter(runeModel.letter.gridPoints);
 
 	this.redraw();
 
@@ -279,8 +283,6 @@ RuneView.prototype = {
 	// this.letter.draw(this.paper);
 	},
 	drawLetter : function(gridPoints) {
-
-		console.log(gridPoints);
 
 		this.letter.computePoints(gridPoints, this.grid);
 
@@ -370,6 +372,17 @@ LetterView.prototype = {
 /* ========== Rune model ========== */
 
 
+function RuneController(model) {
+	this.model = model;
+}
+
+RuneController.prototype = {
+	addPoint: function(gridRef) {
+		console.log("Addingpoint " + gridRef);
+		this.model.letter.addPoint(gridRef);
+	}
+}
+
 function RuneModel(gridOptions) {
 
 	this.gridOptions = {
@@ -385,18 +398,9 @@ function RuneModel(gridOptions) {
 
 	this.distortions = [];
 
-	var rune = this;
-
 	this.showGrid = true;
 
 }
-
-RuneModel.prototype = {
-	addPoint: function(gridRef) {
-		console.log("Addingpoint " + gridRef);
-		this.letter.addPoint(gridRef);
-	}
-}	
 
 
 /* ========== Letter ========== */
@@ -411,12 +415,16 @@ function LetterModel() {
 
 }
 
-LetterModel.prototype = {
+function LetterModelController(model){
+	this.model = model;
+}
+
+LetterModelController.prototype = {
 	clearPoints: function() {
-		this.gridPoints = [];
+		this.model.gridPoints = [];
 	},
 	addPoint :function(point) {
-		this.gridPoints.push(point);
+		this.model.gridPoints.push(point);
 	},
 	// preRender : function(grid) {
 
@@ -549,7 +557,9 @@ TabletModelController.prototype = {
 		return this.model.runes[this.activeRuneIndex];
 	},
 	addRune : function() {
-		this.model.runes.push(new RuneModel());
+		console.log("Adding rune");
+		console.log(this.model);
+		this.model.runes.push(new RuneModelController(new RuneModel()) );
 	},
 	delRune : function() {
 
@@ -580,6 +590,8 @@ function RuneEditor(options, paper) {
 
 	document.addEventListener('addPoint', function(e) {
 		var activeRune = editor.tablet.getActiveRune();
+		console.log("Adding point");
+		console.log(activeRune);
 		activeRune.addPoint(e.detail);
 		editor.workspace.drawLetter(activeRune.letter);
 	});
