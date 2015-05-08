@@ -61,11 +61,8 @@ function ActionBar() {
 			action : function(e) {
 				e.preventDefault();
 
-				var tabletString = JSON.stringify(app.tablet.model);
+				app.save();
 
-				localStorage["rune"] = tabletString;
-
-				console.log(tabletString);
 			}
 		},
 		{
@@ -267,6 +264,8 @@ function RuneView (runeModel) {
 
 	this.drawGrid();
 
+	console.log(runeModel);
+
 	this.drawLetter(runeModel.letter.gridPoints);
 
 	this.redraw();
@@ -368,84 +367,72 @@ LetterView.prototype = {
 	}
 }
 ;
+/* ========== Tablet ========== */
 
-/* ========== Rune model ========== */
 
 
-function RuneModelController(model) {
-	this.model = model;
-}
+function TabletModelController(tabletModel) {
 
-RuneModelController.prototype = {
-	addPoint: function(gridRef) {
-		console.log("Addingpoint " + gridRef);
-		this.model.letter.addPoint(gridRef);
+	if(tabletModel) {
+		this.model = tabletModel;
+	} else {
+		this.model = new TabletModel();
 	}
+	this.activeRuneIndex = 0;
+
+	this.setActiveRune();
 }
 
-function RuneModel(gridOptions) {
+TabletModelController.prototype = {
+	load : function() {
+		// Load data / create data
+		console.log(typeof localStorage["rune"]);
 
-	this.gridOptions = {
-		xUnits: 10,
-		yUnits: 10,
-		res: 30,
-		padding: 20
-	};
+		if(localStorage["rune"] && typeof localStorage["rune"] === 'string') {
+			var tabletModel= JSON.parse(localStorage["rune"]);
+			this.tablet = new TabletModelController(tabletModel);
+		} else {
+			this.tablet = new TabletModelController();	
+		}
 
-	$.extend(this.gridOptions, gridOptions);
-
-	this.letter = new LetterModel();
-
-	this.distortions = [];
-
-	this.showGrid = true;
-
-}
-
-
-/* ========== Letter ========== */
-
-function LetterModel() {
-
-	this.renderedPoints = [];
-
-	this.gridPoints = [];
-
-	this.distortions = [];
-
-}
-
-function LetterModelController(model){
-	this.model = model;
-}
-
-LetterModelController.prototype = {
-	clearPoints: function() {
-		this.model.gridPoints = [];
 	},
-	addPoint :function(point) {
-		this.model.gridPoints.push(point);
+	save : function() {
+		var tabletString = JSON.stringify(app.tablet.model);
+
+		localStorage["rune"] = tabletString;
+
+				console.log(tabletString);
 	},
-	// preRender : function(grid) {
+	newTabletModel : function() {
+		this.model = {
+			runes : []
+		};
+		this.addRune();
+	},
+	getActiveRune : function() {
+		if(typeof this.model.runes[this.activeRuneIndex] === 'undefined') {
+			this.addRune();
+		}
 
-	// 	var renderTemp = [];
+		return this.model.runes[this.activeRuneIndex];
+	},
+	addRune : function() {
+		console.log("Adding rune");
+		console.log(this.model);
+		this.model.runes.push(new RuneModelController(new RuneModel( )) );
+	},
+	delRune : function() {
 
-	// 	$.each(this.gridPoints, function(idx, point) {
-	// 		renderTemp.push(grid.points[point]);
-	// 	});
-
-
-	// 	var indices = util.getIndices(this.gridPoints, grid.points);
-
-	// 	var punits = indices.map(function(idx) {
-	// 		return renderTemp[idx];
-	// 	});
-
-	// 	this.actualPoints = renderTemp;
-
-
-	// },
-	distort : function(type) {
+	},
+	addLetterPoint: function(gridRef) {
+		console.log("Addingpoint " + gridRef);
+		var letterController = new LetterModelController(this.model.letter);
+		this.getActiveRune().letter.gridPoints.push(gridRef);
+	},
+	clearLetter: function() {
+		this.getActiveRune().letter.gridPoints = [];
+	},
+	distortPoints : function(type) {
 		switch(type) {
 			case "random" : 
 				this.renderedPoints.forEach(function(idx, element) {
@@ -456,7 +443,7 @@ LetterModelController.prototype = {
 			break;
 		}
 	},
-	changeWeight : function(points, type) {
+	changeSelectedWeight : function(points, type) {
 
 		var showConstructors = true;
 
@@ -524,46 +511,46 @@ LetterModelController.prototype = {
 
 	}
 }
-;
 
 
-/* ========== Tablet ========== */
+/* ========== Rune model ========== */
 
 
+function TabletModel() {
+	this.runes = [];
+}
 
-function TabletModelController(tabletModel) {
 
-	if(tabletModel) {
-		this.model = tabletModel;
-	} else {
-		this.newTabletModel();
-	}
-	this.activeRuneIndex = 0;
+function RuneModel(gridOptions) {
+
+	this.gridOptions = {
+		xUnits: 10,
+		yUnits: 10,
+		res: 30,
+		padding: 20
+	};
+
+	$.extend(this.gridOptions, gridOptions);
+
+	this.letter = new LetterModel();
+
+	this.distortions = [];
+
+	this.showGrid = true;
 
 }
 
-TabletModelController.prototype = {
-	newTabletModel : function() {
-		this.model = {
-			runes : []
-		};
-		this.addRune();
-	},
-	getActiveRune : function() {
-		if(typeof this.model.runes[this.activeRuneIndex] === 'undefined') {
-			this.addRune();
-		}
 
-		return this.model.runes[this.activeRuneIndex];
-	},
-	addRune : function() {
-		console.log("Adding rune");
-		console.log(this.model);
-		this.model.runes.push(new RuneModelController(new RuneModel( )) );
-	},
-	delRune : function() {
+/* ========== Letter ========== */
 
-	}
+function LetterModel() {
+
+	this.renderedPoints = [];
+
+	this.gridPoints = [];
+
+	this.distortions = [];
+
 }
 ;
 
@@ -573,35 +560,35 @@ TabletModelController.prototype = {
 
 
 
-// Models
-
 
 function RuneEditor(options, paper) {
 
 	// Setup workspace
 
-	var editor = this;
+	var app = this;
 
-	editor.workspace = new WorkSpace(options);
+	app.workspace = new WorkSpace(options);
 
-	editor.loadTablet();
+	app.loadTablet();
 
 	// Event listeners
 
 	document.addEventListener('addPoint', function(e) {
-		var activeRune = editor.tablet.getActiveRune();
-		console.log("Adding point");
-		console.log(activeRune);
-		activeRune.addPoint(e.detail);
-		editor.workspace.drawLetter(activeRune.letter);
+		// var activeRune = editor.tablet.getActiveRune();
+		// console.log("Adding point");
+		// console.log(activeRune);
+		// activeRune.addPoint(e.detail);
+		// editor.workspace.drawLetter(activeRune.model.letter);
+		app.addPoint(e.detail);
+		app.workspace.drawLetter(app.getActiveRune().letter);
 	});
 
 	document.addEventListener('clearGridPoints', function() {
 
 		console.log('done received');
 		// rune.grid.reset();
-		editor.workspace.clearLetter();
-		editor.workspace.drawLetter();
+		// editor.workspace.clearLetter();
+		// editor.workspace.drawLetter();
 	});
 
 	document.addEventListener('toggleGrid', function() {
@@ -621,23 +608,14 @@ RuneEditor.prototype = {
 
 	},
 	loadTablet : function() {
-	
-		// Load data / create data
-		console.log(typeof localStorage["rune"]);
-
-		if(localStorage["rune"] && typeof localStorage["rune"] === 'string') {
-			var tabletModel= JSON.parse(localStorage["rune"]);
-			this.tablet = new TabletModelController(tabletModel);
-		} else {
-			this.tablet = new TabletModelController();	
-		}
-
-		console.log(this.tablet);
+		this.tablet.load();
 
 		this.workspace.displayTablet(this.tablet);
 
-		this.workspace.displayRune(this.tablet.getActiveRune());
-
+		this.workspace.displayRune(this.tablet.getActiveRune().model);
+	},
+	saveTablet : function() {
+		this.tablet.save();
 	}
 }
 

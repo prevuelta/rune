@@ -12,28 +12,30 @@ function RuneEditor(options, paper) {
 
 	// Setup workspace
 
-	var editor = this;
+	var app = this;
 
-	editor.workspace = new WorkSpace(options);
+	app.workspace = new WorkSpace(options);
 
-	editor.loadTablet();
+	app.loadTablet();
 
 	// Event listeners
 
 	document.addEventListener('addPoint', function(e) {
-		var activeRune = editor.tablet.getActiveRune();
-		console.log("Adding point");
-		console.log(activeRune);
-		activeRune.addPoint(e.detail);
-		editor.workspace.drawLetter(activeRune.model.letter);
+		// var activeRune = editor.tablet.getActiveRune();
+		// console.log("Adding point");
+		// console.log(activeRune);
+		// activeRune.addPoint(e.detail);
+		// editor.workspace.drawLetter(activeRune.model.letter);
+		app.addPoint(e.detail);
+		app.workspace.drawLetter(app.getActiveRune().letter);
 	});
 
 	document.addEventListener('clearGridPoints', function() {
 
 		console.log('done received');
 		// rune.grid.reset();
-		editor.workspace.clearLetter();
-		editor.workspace.drawLetter();
+		// editor.workspace.clearLetter();
+		// editor.workspace.drawLetter();
 	});
 
 	document.addEventListener('toggleGrid', function() {
@@ -64,19 +66,13 @@ RuneEditor.prototype = {
 			this.tablet = new TabletModelController();	
 		}
 
-		console.log(this.tablet);
-
 		this.workspace.displayTablet(this.tablet);
 
 		this.workspace.displayRune(this.tablet.getActiveRune().model);
 
 	},
 	saveTablet : function() {
-						var tabletString = JSON.stringify(app.tablet.model);
-
-				localStorage["rune"] = tabletString;
-
-				console.log(tabletString);
+		this.tablet.save();
 	}
 }
 
