@@ -5,9 +5,6 @@
 //= require rune/workspaceController
 //= require rune/tabletModelController
 
-// Models
-//= require rune/runeModel
-
 function RuneEditor(options, paper) {
 
 	// Setup workspace
@@ -16,26 +13,22 @@ function RuneEditor(options, paper) {
 
 	app.workspace = new WorkSpace(options);
 
-	app.loadTablet();
+	app.addTablet();
 
 	// Event listeners
 
 	document.addEventListener('addPoint', function(e) {
-		// var activeRune = editor.tablet.getActiveRune();
-		// console.log("Adding point");
-		// console.log(activeRune);
-		// activeRune.addPoint(e.detail);
-		// editor.workspace.drawLetter(activeRune.model.letter);
-		app.addPoint(e.detail);
-		app.workspace.drawLetter(app.getActiveRune().letter);
+
+		app.tablet.addLetterPoint(e.detail);
+		app.workspace.drawLetter(app.tablet.getActiveRune().letter);
+	
 	});
 
 	document.addEventListener('clearGridPoints', function() {
 
 		console.log('done received');
-		// rune.grid.reset();
-		// editor.workspace.clearLetter();
-		// editor.workspace.drawLetter();
+		app.tablet.clearLetter();
+		app.workspace.runeView.clearLetterView();
 	});
 
 	document.addEventListener('toggleGrid', function() {
@@ -54,7 +47,7 @@ RuneEditor.prototype = {
 	addListeners : function() {
 
 	},
-	loadTablet : function() {
+	addTablet : function() {
 	
 		// Load data / create data
 		console.log(typeof localStorage["rune"]);
@@ -66,9 +59,11 @@ RuneEditor.prototype = {
 			this.tablet = new TabletModelController();	
 		}
 
-		this.workspace.displayTablet(this.tablet);
+		this.workspace.displayTablet(this.tablet.data);
 
-		this.workspace.displayRune(this.tablet.getActiveRune().model);
+		console.log(this.tablet.getActiveRune());
+
+		this.workspace.displayRune(this.tablet.getActiveRune());
 
 	},
 	saveTablet : function() {

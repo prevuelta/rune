@@ -62,4 +62,13 @@ $toolbar-width: $bu10;
 		border-top: 1px solid #aaa;
 	}
 
+	#rune-properties { 
+		position: fixed;
+		right: 0;
+		width: $bu8 * 2;
+		top: $bu3;
+		bottom: 0;
+		background: white;
+	}
+
 }

@@ -7,7 +7,7 @@ function ActionBar() {
 			action : function(e) {
 				e.preventDefault();
 
-				app.save();
+				app.saveTablet();
 
 			}
 		},

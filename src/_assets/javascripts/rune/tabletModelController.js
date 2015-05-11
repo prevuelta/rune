@@ -4,13 +4,13 @@
 function TabletModelController(tabletModel) {
 
 	if(tabletModel) {
-		this.model = tabletModel;
+		this.data = tabletModel;
 	} else {
-		this.model = new TabletModel();
+		this.newTabletModel();
 	}
 	this.activeRuneIndex = 0;
 
-	this.setActiveRune();
+	this.getActiveRune();
 }
 
 TabletModelController.prototype = {
@@ -27,11 +27,12 @@ TabletModelController.prototype = {
 
 	},
 	save : function() {
-		var tabletString = JSON.stringify(app.tablet.model);
+		var tabletString = JSON.stringify(app.tablet.data);
 
 		localStorage["rune"] = tabletString;
 
-				console.log(tabletString);
+		console.log(tabletString);
+	
 	},
 	newTabletModel : function() {
 		this.model = {
@@ -40,23 +41,23 @@ TabletModelController.prototype = {
 		this.addRune();
 	},
 	getActiveRune : function() {
-		if(typeof this.model.runes[this.activeRuneIndex] === 'undefined') {
+		if(typeof this.data.runes[this.activeRuneIndex] === 'undefined') {
 			this.addRune();
 		}
 
-		return this.model.runes[this.activeRuneIndex];
+		return this.data.runes[this.activeRuneIndex];
 	},
 	addRune : function() {
 		console.log("Adding rune");
 		console.log(this.model);
-		this.model.runes.push(new RuneModelController(new RuneModel( )) );
+		this.model.runes.push(new RuneModel());
 	},
 	delRune : function() {
 
 	},
 	addLetterPoint: function(gridRef) {
 		console.log("Addingpoint " + gridRef);
-		var letterController = new LetterModelController(this.model.letter);
+		console.log(this);
 		this.getActiveRune().letter.gridPoints.push(gridRef);
 	},
 	clearLetter: function() {
@@ -144,11 +145,6 @@ TabletModelController.prototype = {
 
 
 /* ========== Rune model ========== */
-
-
-function TabletModel() {
-	this.runes = [];
-}
 
 
 function RuneModel(gridOptions) {

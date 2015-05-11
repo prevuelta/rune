@@ -19,8 +19,10 @@ function WorkSpace(options) {
 }
 
 WorkSpace.prototype = {
-	displayTablet : function(tablet) {
-		addView($(this.options.tabletContainer), 'rune-tablets', { runes : tablet.runes }, null);
+	displayTablet : function(data) {
+		console.log("what");
+		console.log(data);
+		addView($(this.options.tabletContainer), 'rune-tablets', { runes : data.runes }, null);
 	},
 	displayToolbar : function() {
 
@@ -46,6 +48,8 @@ WorkSpace.prototype = {
 function RuneView (runeModel) {
 
 	var rune = this;
+
+	console.log(runeModel);
 
 	// Setup grid
 	this.grid = new Grid(
@@ -79,6 +83,10 @@ RuneView.prototype = {
 	// this.letter.clear()
 	// this.letter.render(rune.grid);
 	// this.letter.draw(this.paper);
+	},
+	clearLetterView : function() {
+		this.layers.letter.removeChildren();
+		this.redraw();
 	},
 	drawLetter : function(gridPoints) {
 
@@ -142,9 +150,6 @@ LetterView.prototype = {
 
 		console.log(this);
 
-	},
-	clear : function() {
-		this.layer.removeChildren();
 	},
 	draw : function() {
 

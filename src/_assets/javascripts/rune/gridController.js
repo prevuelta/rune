@@ -8,8 +8,6 @@ function Grid(options) {
 	this.yUnits = options.yUnits;
 	this.padding = options.padding;
 
-	// console.log(this);
-
 	/* ------ Setup default points ------ */
 
 	var currentY = 0;
@@ -30,9 +28,6 @@ function Grid(options) {
 		currentX++;
 	
 	}
-
-	// this.layer = new paper.Layer();
-
 }
 
 Grid.prototype.getTotalUnits = function() {

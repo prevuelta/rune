@@ -24,7 +24,7 @@ h5 {
 
 header {
   background: #222222;
-  color: #fe6600;
+  color: #ff5d31;
   padding: 6px 12px;
   position: fixed;
   left: 0;
@@ -83,6 +83,13 @@ header {
   background: #ccc;
   z-index: 1;
   border-top: 1px solid #aaa; }
+#main #rune-properties {
+  position: fixed;
+  right: 0;
+  width: 192px;
+  top: 36px;
+  bottom: 0;
+  background: white; }
 
 #rune-grid {
   width: 100%;

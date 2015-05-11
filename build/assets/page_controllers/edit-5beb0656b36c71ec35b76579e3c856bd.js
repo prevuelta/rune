@@ -61,7 +61,7 @@ function ActionBar() {
 			action : function(e) {
 				e.preventDefault();
 
-				app.save();
+				app.saveTablet();
 
 			}
 		},
@@ -220,8 +220,10 @@ function WorkSpace(options) {
 }
 
 WorkSpace.prototype = {
-	displayTablet : function(tablet) {
-		addView($(this.options.tabletContainer), 'rune-tablets', { runes : tablet.runes }, null);
+	displayTablet : function(data) {
+		console.log("what");
+		console.log(data);
+		addView($(this.options.tabletContainer), 'rune-tablets', { runes : data.runes }, null);
 	},
 	displayToolbar : function() {
 
@@ -247,6 +249,8 @@ WorkSpace.prototype = {
 function RuneView (runeModel) {
 
 	var rune = this;
+
+	console.log(runeModel);
 
 	// Setup grid
 	this.grid = new Grid(
@@ -280,6 +284,10 @@ RuneView.prototype = {
 	// this.letter.clear()
 	// this.letter.render(rune.grid);
 	// this.letter.draw(this.paper);
+	},
+	clearLetterView : function() {
+		this.layers.letter.removeChildren();
+		this.redraw();
 	},
 	drawLetter : function(gridPoints) {
 
@@ -344,9 +352,6 @@ LetterView.prototype = {
 		console.log(this);
 
 	},
-	clear : function() {
-		this.layer.removeChildren();
-	},
 	draw : function() {
 
 		var letter = this;
@@ -374,13 +379,13 @@ LetterView.prototype = {
 function TabletModelController(tabletModel) {
 
 	if(tabletModel) {
-		this.model = tabletModel;
+		this.data = tabletModel;
 	} else {
-		this.model = new TabletModel();
+		this.newTabletModel();
 	}
 	this.activeRuneIndex = 0;
 
-	this.setActiveRune();
+	this.getActiveRune();
 }
 
 TabletModelController.prototype = {
@@ -397,11 +402,12 @@ TabletModelController.prototype = {
 
 	},
 	save : function() {
-		var tabletString = JSON.stringify(app.tablet.model);
+		var tabletString = JSON.stringify(app.tablet.data);
 
 		localStorage["rune"] = tabletString;
 
-				console.log(tabletString);
+		console.log(tabletString);
+	
 	},
 	newTabletModel : function() {
 		this.model = {
@@ -410,23 +416,23 @@ TabletModelController.prototype = {
 		this.addRune();
 	},
 	getActiveRune : function() {
-		if(typeof this.model.runes[this.activeRuneIndex] === 'undefined') {
+		if(typeof this.data.runes[this.activeRuneIndex] === 'undefined') {
 			this.addRune();
 		}
 
-		return this.model.runes[this.activeRuneIndex];
+		return this.data.runes[this.activeRuneIndex];
 	},
 	addRune : function() {
 		console.log("Adding rune");
 		console.log(this.model);
-		this.model.runes.push(new RuneModelController(new RuneModel( )) );
+		this.model.runes.push(new RuneModel());
 	},
 	delRune : function() {
 
 	},
 	addLetterPoint: function(gridRef) {
 		console.log("Addingpoint " + gridRef);
-		var letterController = new LetterModelController(this.model.letter);
+		console.log(this);
 		this.getActiveRune().letter.gridPoints.push(gridRef);
 	},
 	clearLetter: function() {
@@ -516,11 +522,6 @@ TabletModelController.prototype = {
 /* ========== Rune model ========== */
 
 
-function TabletModel() {
-	this.runes = [];
-}
-
-
 function RuneModel(gridOptions) {
 
 	this.gridOptions = {
@@ -560,7 +561,6 @@ function LetterModel() {
 
 
 
-
 function RuneEditor(options, paper) {
 
 	// Setup workspace
@@ -569,7 +569,7 @@ function RuneEditor(options, paper) {
 
 	app.workspace = new WorkSpace(options);
 
-	app.loadTablet();
+	app.addTablet();
 
 	// Event listeners
 
@@ -579,14 +579,16 @@ function RuneEditor(options, paper) {
 		// console.log(activeRune);
 		// activeRune.addPoint(e.detail);
 		// editor.workspace.drawLetter(activeRune.model.letter);
-		app.addPoint(e.detail);
-		app.workspace.drawLetter(app.getActiveRune().letter);
+		app.tablet.addLetterPoint(e.detail);
+		app.workspace.drawLetter(app.tablet.getActiveRune().letter);
 	});
 
 	document.addEventListener('clearGridPoints', function() {
 
 		console.log('done received');
-		// rune.grid.reset();
+		app.tablet.clearLetter();
+		// console.log(app.tablet.getActiveRune().data);
+		app.workspace.rune.clearLetterView();
 		// editor.workspace.clearLetter();
 		// editor.workspace.drawLetter();
 	});
@@ -607,12 +609,24 @@ RuneEditor.prototype = {
 	addListeners : function() {
 
 	},
-	loadTablet : function() {
-		this.tablet.load();
+	addTablet : function() {
+	
+		// Load data / create data
+		console.log(typeof localStorage["rune"]);
 
-		this.workspace.displayTablet(this.tablet);
+		if(localStorage["rune"] && typeof localStorage["rune"] === 'string') {
+			var tabletModel= JSON.parse(localStorage["rune"]);
+			this.tablet = new TabletModelController(tabletModel);
+		} else {
+			this.tablet = new TabletModelController();	
+		}
 
-		this.workspace.displayRune(this.tablet.getActiveRune().model);
+		this.workspace.displayTablet(this.tablet.data);
+
+		console.log(this.tablet.getActiveRune());
+
+		this.workspace.displayRune(this.tablet.getActiveRune());
+
 	},
 	saveTablet : function() {
 		this.tablet.save();
