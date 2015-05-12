@@ -25,8 +25,8 @@ function ActionBar() {
 			title: "Toggle Grid",
 			action: function(e) {
 				e.preventDefault();
-				var clearPoints = new CustomEvent("toggleGrid");
-				document.dispatchEvent(clearPoints);
+				var toggleGrid = new CustomEvent("toggleGrid");
+				document.dispatchEvent(toggleGrid);
 			}
 		},
 		{

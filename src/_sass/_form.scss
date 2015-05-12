@@ -3,3 +3,13 @@ button {
 	border: none;
 	border-radius: 2px;
 }
+
+label {
+	display: block;
+}
+
+input {
+	padding: $qbu;
+	margin: $hbu 0;
+	border: 1px solid #e4e4e4;
+}

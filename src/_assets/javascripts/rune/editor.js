@@ -32,13 +32,14 @@ function RuneEditor(options, paper) {
 	});
 
 	document.addEventListener('toggleGrid', function() {
-		rune.showGrid = !rune.showGrid;
-		if(rune.showGrid) {
-			rune.grid.show();
-		} else {
-			rune.grid.hide();
-		}
-		rune.redraw();
+		app.workspace.runeView.showGrid = !app.workspace.runeView.showGrid;
+		app.workspace.runeView.toggleGrid(app.workspace.runeView.showGrid);
+		// if(rune.showGrid) {
+		// 	rune.grid.show();
+		// } else {
+		// 	rune.grid.hide();
+		// }
+		// rune.redraw();
 	});		
 
 }

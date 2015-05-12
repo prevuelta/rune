@@ -122,8 +122,9 @@ RuneView.prototype = {
 		this.redraw();
 
 	},
-	hideGrid : function() {
-		this.grid.hide();
+	toggleGrid : function(showGrid) {
+		this.layers.grid.visible = showGrid;
+		this.redraw();
 	},
 	redraw : function() {
 		paper.view.draw();
@@ -231,20 +232,16 @@ GridView.prototype = {
 		path.value = value;
 		path.active = false;
 
-		var grey = new paper.Color(255, 0, 0, 0.2);
+		var opaque = new paper.Color(255, 0, 0, 0.2);
 
-		path.fillColor = grey;
+		path.fillColor = opaque;
 		
 		path.onMouseEnter = function(e) {
-			if(!this.active) {
-				this.fillColor = 'orange';
-			}
+			this.fillColor = 'orange';
 		}
 
 		path.onMouseLeave = function(e) {
-			if(!this.active) {
-				this.fillColor = grey;
-			}
+			this.fillColor = this.active ? 'red' : opaque;
 		}
 
 		path.onMouseDown = function(e) {
