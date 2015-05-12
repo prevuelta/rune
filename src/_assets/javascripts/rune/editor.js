@@ -52,6 +52,7 @@ RuneEditor.prototype = {
 		this.tablet = new TabletModelController(util.checkLocal("runeData")); 
 
 		this.workspace.displayTablet(this.tablet.data);
+
 		this.workspace.setActiveRune(this.tablet.getActiveRune());
 
 	},

@@ -1,5 +1,4 @@
 //= require rune/actionbarController
-//= require rune/gridController
 
 function WorkSpace(options) {
 
@@ -20,8 +19,7 @@ function WorkSpace(options) {
 
 WorkSpace.prototype = {
 	displayTablet : function(data) {
-		console.log("what");
-		console.log(data);
+
 		addView($(this.options.tabletContainer), 'rune-tablets', { runes : data.runes }, null);
 	},
 	displayToolbar : function() {
@@ -30,6 +28,7 @@ WorkSpace.prototype = {
 	setActiveRune : function(runeModel) {
 
 		this.runeView = new RuneView(runeModel);
+
 		// Populate properties
 		var workspace = this;
 
@@ -42,8 +41,8 @@ WorkSpace.prototype = {
 			});
 
 			ractive.observe('gridOptions', function(newValue, oldValue, keyPath) {
-				app.tablet.updateGrid();
-				workspace.runeView = new RuneView(runeModel);
+				app.tablet.updateGrid(runeModel.gridOptions);
+				workspace.runeView.addGrid(runeModel.gridOptions);
 			});
 
 		
@@ -63,9 +62,6 @@ WorkSpace.prototype = {
 	},
 	updateProperties : function(model) {
 
-	},
-	updateGrid: function(runeModel) {
-		this.runeView.updateGrid(runeModel.gridOptions);
 	}
 }
 
@@ -75,23 +71,16 @@ function RuneView (runeModel) {
 
 	var rune = this;
 
-	console.log(runeModel);
-
-	// Setup grid
-	this.grid = new Grid(
-		runeModel.gridOptions
-	);
-
-	this.addLetterView();
-
 	this.layers = {
 		"grid" : new paper.Layer(),
 		"letter" : new paper.Layer()
 	}
 
-	this.drawGrid();
+	// Setup grid
 
-	console.log(runeModel);
+	this.addGrid(runeModel.gridOptions);
+
+	this.addLetterView();
 
 	this.drawLetter(runeModel.letter.gridPoints);
 
@@ -103,36 +92,34 @@ function RuneView (runeModel) {
 }
 
 RuneView.prototype = {
-	updateGrid : function(gridOptions) {
-	// this.letter.clear()
-	// this.letter.render(rune.grid);
-	// this.letter.draw(this.paper);
-	},
 	clearLetterView : function() {
 		this.layers.letter.removeChildren();
 		this.redraw();
 	},
 	drawLetter : function(gridPoints) {
 
+		this.clearLetterView();
+
 		this.letter.computePoints(gridPoints, this.grid);
 
 		this.layers.letter.activate();
 
 		this.letter.draw(this);
+
 	},
-	drawGrid : function() {
+	addGrid : function(gridOptions) {
+		this.grid = new GridView(gridOptions);
+		this.drawGrid(gridOptions);
+	},
+	drawGrid : function(gridPoints) {
 
 		this.layers.grid.removeChildren();
 
 		this.layers.grid.activate();
 
-		$.each(this.grid.points, function(idx, point) {
+		this.grid.draw();
 
-			var paperPoint = new paper.Point(point);
-
-			createGridPoint(paperPoint, idx);
-
-		});
+		this.redraw();
 
 	},
 	hideGrid : function() {
@@ -162,19 +149,11 @@ LetterView.prototype = {
 		var renderTemp = [];
 
 		$.each(gridPoints, function(idx, point) {
-			renderTemp.push(grid.points[point]);
-		});
-
-
-		var indices = util.getIndices(gridPoints, grid.points);
-
-		var punits = indices.map(function(idx) {
-			return renderTemp[idx];
+			var renderedPoint = grid.renderPoint(point);
+			renderTemp.push( renderedPoint );
 		});
 
 		this.renderedPoints = renderTemp;
-
-		console.log(this);
 
 	},
 	draw : function() {
@@ -194,5 +173,90 @@ LetterView.prototype = {
 			}
 
 		});
+	}
+}
+
+/* ========== Grid view ========== */
+
+function GridView(options) {
+
+	this.res = options.res;
+	this.xUnits = options.xUnits;
+	this.yUnits = options.yUnits;
+	this.padding = options.padding;
+
+	this.points = [];
+
+	for(var row = 0; row < this.xUnits; row++) {
+		
+		this.points[row] = [];
+
+		for(var col = 0; col < this.yUnits; col++) {
+			
+			var point = [row, col];
+			this.points[row].push(point);
+
+		}
+
+		col = 0;
+	}
+}
+
+GridView.prototype = {
+	draw: function() {
+
+		var grid = this;
+
+		for(var i = 0, arr; arr = grid.points[i++];) {
+			for( var j = 0, point; point = arr[j++];) {
+
+				var paperPoint = new paper.Point( this.renderPoint(point) );
+				grid.createGridPoint(paperPoint, point);
+			}
+		}
+	},
+	getWidth : function() {
+		return this.res * this.xUnits;
+	},
+	getHeight :  function() {
+		return this.res * this.yUnits;
+	},
+	renderPoint: function(point){
+		return [point[0] * this.res + this.padding, point[1] * this.res + this.padding];
+	},
+	createGridPoint : function(point, value) {
+
+		var path = paper.Path.Circle(point, 15);
+
+		path.value = value;
+		path.active = false;
+
+		var grey = new paper.Color(255, 0, 0, 0.2);
+
+		path.fillColor = grey;
+		
+		path.onMouseEnter = function(e) {
+			if(!this.active) {
+				this.fillColor = 'orange';
+			}
+		}
+
+		path.onMouseLeave = function(e) {
+			if(!this.active) {
+				this.fillColor = grey;
+			}
+		}
+
+		path.onMouseDown = function(e) {
+
+			this.fillColor = 'red';
+
+			this.active = true;
+
+			var event = new CustomEvent('addPoint', { 'detail' : e.target.value});
+			
+			document.dispatchEvent(event);
+
+		}
 	}
 }

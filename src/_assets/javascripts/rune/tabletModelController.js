@@ -22,8 +22,6 @@ TabletModelController.prototype = {
 		var tabletString = JSON.stringify(app.tablet.data);
 
 		localStorage["runeData"] = tabletString;
-
-		console.log(tabletString);
 	
 	},
 	newTabletModel : function() {
@@ -40,16 +38,12 @@ TabletModelController.prototype = {
 		return this.data.runes[this.activeRuneIndex];
 	},
 	addRune : function() {
-		console.log("Adding rune");
-		console.log(this.model);
 		this.data.runes.push(new RuneModel());
 	},
 	delRune : function() {
 
 	},
 	addLetterPoint: function(gridRef) {
-		console.log("Addingpoint " + gridRef);
-		console.log(this);
 		this.getActiveRune().letter.gridPoints.push(gridRef);
 	},
 	clearLetter: function() {
@@ -168,8 +162,6 @@ function RuneModel(gridOptions) {
 /* ========== Letter ========== */
 
 function LetterModel() {
-
-	this.renderedPoints = [];
 
 	this.gridPoints = [];
 

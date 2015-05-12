@@ -3,7 +3,6 @@
 
 var util = {
 	getIndices: function(points, gridPoints) {
-		console.log(points);
 		return points.map(function(point) {
 			return gridPoints.indexOf(point);
 		});
@@ -14,11 +13,7 @@ var util = {
         return new F();
     },
     checkLocal: function(ref) {
-    	// && typeof localStorage["rune"] === 'string'
-    	// JSON.parse(localStorage["rune"]
-    		console.log("Checking loval");
-    		console.log(localStorage[ref]);
-    	return JSON.parse(localStorage[ref]) || false;
+    	return (localStorage[ref] && typeof localStorage[ref] === 'string') ? JSON.parse(localStorage[ref]) : false;
     }
 }
 
