@@ -3,39 +3,31 @@
 
 function TabletModelController(tabletModel) {
 
-	if(tabletModel) {
-		this.data = tabletModel;
-	} else {
+	console.log(tabletModel);
+
+	if(!tabletModel) {
+		console.log("no tablet module");
 		this.newTabletModel();
+	} else {
+		this.data = tabletModel;
 	}
+
 	this.activeRuneIndex = 0;
 
 	this.getActiveRune();
 }
 
 TabletModelController.prototype = {
-	load : function() {
-		// Load data / create data
-		console.log(typeof localStorage["rune"]);
-
-		if(localStorage["rune"] && typeof localStorage["rune"] === 'string') {
-			var tabletModel= JSON.parse(localStorage["rune"]);
-			this.tablet = new TabletModelController(tabletModel);
-		} else {
-			this.tablet = new TabletModelController();	
-		}
-
-	},
 	save : function() {
 		var tabletString = JSON.stringify(app.tablet.data);
 
-		localStorage["rune"] = tabletString;
+		localStorage["runeData"] = tabletString;
 
 		console.log(tabletString);
 	
 	},
 	newTabletModel : function() {
-		this.model = {
+		this.data = {
 			runes : []
 		};
 		this.addRune();
@@ -50,7 +42,7 @@ TabletModelController.prototype = {
 	addRune : function() {
 		console.log("Adding rune");
 		console.log(this.model);
-		this.model.runes.push(new RuneModel());
+		this.data.runes.push(new RuneModel());
 	},
 	delRune : function() {
 
@@ -73,6 +65,11 @@ TabletModelController.prototype = {
 			default:
 			break;
 		}
+	},
+	updateGrid : function() {
+		this.getActiveRune().letter.gridPoints.filter(function(entry) {
+			return true;
+		});
 	},
 	changeSelectedWeight : function(points, type) {
 

@@ -12,3 +12,7 @@ github_username:  prevuelta
 # Build settings
 markdown: kramdown
 destination: ../build
+exclude:
+  - assets/javascripts/bower_components
+# assets:
+   # js_compressor: uglifier

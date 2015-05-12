@@ -1,7 +1,8 @@
-//= require bower_components/jquery/dist/jquery.min.js
-//= require bower_components/mustache/mustache.min.js
-//= require bower_components/mustache-wax/mustache-wax.min.js
-//= require bower_components/paper/dist/paper-full.min.js
+//= require lib/jquery/jquery.js
+//= require lib/mustache/mustache.js
+//= require lib/mustache-wax/mustache-wax.min.js
+//= require lib/paper/paper-full.js
+//= require lib/ractive/ractive.js
 
 //= require util
 

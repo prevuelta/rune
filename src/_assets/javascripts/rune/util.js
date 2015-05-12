@@ -12,6 +12,13 @@ var util = {
         function F() {}
         F.prototype = o;
         return new F();
+    },
+    checkLocal: function(ref) {
+    	// && typeof localStorage["rune"] === 'string'
+    	// JSON.parse(localStorage["rune"]
+    		console.log("Checking loval");
+    		console.log(localStorage[ref]);
+    	return JSON.parse(localStorage[ref]) || false;
     }
 }
 

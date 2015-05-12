@@ -27,8 +27,28 @@ WorkSpace.prototype = {
 	displayToolbar : function() {
 
 	},
-	displayRune : function(runeModel) {
+	setActiveRune : function(runeModel) {
+
 		this.runeView = new RuneView(runeModel);
+		// Populate properties
+		var workspace = this;
+
+		$.get('views/rune-properties.html', function(template) {
+
+			var ractive = new Ractive({
+				el: '#rune-properties',
+				template : template,
+				data : runeModel
+			});
+
+			ractive.observe('gridOptions', function(newValue, oldValue, keyPath) {
+				app.tablet.updateGrid();
+				workspace.runeView = new RuneView(runeModel);
+			});
+
+		
+		});
+
 	},
 	displayActionBar : function() {
 
@@ -40,6 +60,12 @@ WorkSpace.prototype = {
 	},
 	drawLetter : function(letterModel) {
 		this.runeView.drawLetter(letterModel.gridPoints);
+	},
+	updateProperties : function(model) {
+
+	},
+	updateGrid: function(runeModel) {
+		this.runeView.updateGrid(runeModel.gridOptions);
 	}
 }
 
@@ -55,8 +81,6 @@ function RuneView (runeModel) {
 	this.grid = new Grid(
 		runeModel.gridOptions
 	);
-
-	// console.log(runeModel);
 
 	this.addLetterView();
 
@@ -79,7 +103,7 @@ function RuneView (runeModel) {
 }
 
 RuneView.prototype = {
-	update : function() {
+	updateGrid : function(gridOptions) {
 	// this.letter.clear()
 	// this.letter.render(rune.grid);
 	// this.letter.draw(this.paper);
@@ -97,6 +121,8 @@ RuneView.prototype = {
 		this.letter.draw(this);
 	},
 	drawGrid : function() {
+
+		this.layers.grid.removeChildren();
 
 		this.layers.grid.activate();
 

@@ -48,22 +48,11 @@ RuneEditor.prototype = {
 
 	},
 	addTablet : function() {
-	
-		// Load data / create data
-		console.log(typeof localStorage["rune"]);
 
-		if(localStorage["rune"] && typeof localStorage["rune"] === 'string') {
-			var tabletModel= JSON.parse(localStorage["rune"]);
-			this.tablet = new TabletModelController(tabletModel);
-		} else {
-			this.tablet = new TabletModelController();	
-		}
+		this.tablet = new TabletModelController(util.checkLocal("runeData")); 
 
 		this.workspace.displayTablet(this.tablet.data);
-
-		console.log(this.tablet.getActiveRune());
-
-		this.workspace.displayRune(this.tablet.getActiveRune());
+		this.workspace.setActiveRune(this.tablet.getActiveRune());
 
 	},
 	saveTablet : function() {
