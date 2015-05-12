@@ -67,9 +67,10 @@ TabletModelController.prototype = {
 		}
 	},
 	updateGrid : function() {
-		this.getActiveRune().letter.gridPoints.filter(function(entry) {
-			return true;
-		});
+		var rune = this.getActiveRune();
+		// rune.letter.gridPoints.forEach(function(entry, i) {
+			
+		// });
 	},
 	changeSelectedWeight : function(points, type) {
 
