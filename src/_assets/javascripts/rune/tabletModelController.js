@@ -15,6 +15,9 @@ function TabletModelController(tabletModel) {
 	this.activeRuneIndex = 0;
 
 	this.getActiveRune();
+
+	this.selectedPoints = [];
+
 }
 
 TabletModelController.prototype = {
@@ -65,6 +68,9 @@ TabletModelController.prototype = {
 		// rune.letter.gridPoints.forEach(function(entry, i) {
 			
 		// });
+	},
+	deleteSelected : function() {
+		console.log(this.letter.gridPoints.some(function(idx, entry) { return this.selectedPoints[entry];  } ));
 	},
 	changeSelectedWeight : function(points, type) {
 

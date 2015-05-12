@@ -1,4 +1,5 @@
 //= require rune/editor
+//= require rune/events
 
 var app = new RuneEditor({
 	toolbarContainer: '',
@@ -6,4 +7,8 @@ var app = new RuneEditor({
 	tabletContainer: '#rune-tablet',
 	canvasId : 'rune-grid'
 });
+
+
+// Events
+setupEvents();
 

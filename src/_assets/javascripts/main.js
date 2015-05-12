@@ -3,6 +3,7 @@
 //= require lib/mustache-wax/mustache-wax.min.js
 //= require lib/paper/paper-full.js
 //= require lib/ractive/ractive.js
+//= require lib/underscore/underscore.js
 
 //= require util
 

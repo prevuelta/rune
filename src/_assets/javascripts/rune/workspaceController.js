@@ -167,6 +167,8 @@ LetterView.prototype = {
 
 		$.each(letter.renderedPoints, function(idx, point) {
 
+			letter.createLetterPoint(point, idx);
+
 			if(idx) {
 				letterPath.lineTo(point);
 			} else {
@@ -174,6 +176,41 @@ LetterView.prototype = {
 			}
 
 		});
+	},
+	createLetterPoint: function(point, value) {
+
+		var path = paper.Path.Rectangle([point[0]-5, point[1]-5], 10);
+
+		path.strokeColor = 'red';
+		path.fillColor = 'white';
+
+		path.value = value;
+		
+		path.onMouseEnter = function(e) {
+			// this.fillColor = this.selected ? 'red' : 'orange';
+		}
+
+		path.onMouseLeave = function(e) {
+			// this.fillColor = 'white';
+		}
+
+		path.onMouseDown = function(e) {
+
+			this.selected = !this.selected;
+
+			var event = new CustomEvent('selectPoint', { 'detail' : [this.selected, e.target.value]  } );
+			
+			document.dispatchEvent(event);
+
+		}
+		path.onKeyDown = function(e) {
+			console.log(e.key);
+			switch(e.key) {
+				case 'delete' :
+					console.log('de');
+				break;
+			}
+		}
 	}
 }
 
