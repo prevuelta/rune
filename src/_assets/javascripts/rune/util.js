@@ -14,7 +14,11 @@ var util = {
     },
     checkLocal: function(ref) {
     	return (localStorage[ref] && typeof localStorage[ref] === 'string') ? JSON.parse(localStorage[ref]) : false;
-    }
+    },
+    dispatchRuneEvent: function(name, data) {
+		var runeEvent = new CustomEvent('runeEvent', { 'detail' : { 'event' : name, 'data' :  data }});
+		document.dispatchEvent(runeEvent);
+	}
 }
 
 var trigUtil = {
@@ -50,4 +54,10 @@ var trigUtil = {
 
 paper.Point.prototype.getMid = function(p2) {
 	return new paper.Point((this.x + p2.x) / 2, (this.y + p2.y) / 2);
+};
+
+/* ========== JS prototypes ========== */
+
+Array.prototype.insert = function (index, item) {
+    this.splice(index, 0, item);
 };

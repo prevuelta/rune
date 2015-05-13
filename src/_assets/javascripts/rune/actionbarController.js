@@ -16,8 +16,7 @@ function ActionBar() {
 			title : "Clear",
 			action: function(e) {
 				e.preventDefault();
-				var clearPoints = new CustomEvent("clearGridPoints");
-				document.dispatchEvent(clearPoints);
+				util.dispatchRuneEvent("clearGridPoints");
 			}
 		},
 		{
@@ -25,8 +24,7 @@ function ActionBar() {
 			title: "Toggle Grid",
 			action: function(e) {
 				e.preventDefault();
-				var toggleGrid = new CustomEvent("toggleGrid");
-				document.dispatchEvent(toggleGrid);
+				util.dispatchRuneEvent("toggleGrid");
 			}
 		},
 		{
@@ -35,6 +33,18 @@ function ActionBar() {
 			action: function(e) {
 				e.preventDefault();
 				app.workspace.tablet.addRune();
+			}
+		},
+		{
+			id: "svg",
+			title: "Export as SVG",
+			action: function(e) {
+				e.preventDefault();
+				var url = "data:image/svg+xml;utf8," + encodeURIComponent(paper.project.exportSVG({asString:true}));
+				var link = document.createElement("a");
+				link.download = 'rune_export.svg';
+				link.href = url;
+				link.click();
 			}
 		}
 	]

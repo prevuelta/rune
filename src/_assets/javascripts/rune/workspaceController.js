@@ -25,6 +25,10 @@ WorkSpace.prototype = {
 	displayToolbar : function() {
 
 	},
+	toggleGrid: function() {
+		this.runeView.showGrid = !app.workspace.runeView.showGrid;
+		this.runeView.toggleGrid(app.workspace.runeView.showGrid);
+	},
 	setActiveRune : function(runeModel) {
 
 		this.runeView = new RuneView(runeModel);
@@ -58,7 +62,7 @@ WorkSpace.prototype = {
 		});
 	},
 	drawLetter : function(letterModel) {
-		this.runeView.drawLetter(letterModel.gridPoints);
+		this.runeView.drawLetter(letterModel);
 	},
 	updateProperties : function(model) {
 
@@ -82,7 +86,9 @@ function RuneView (runeModel) {
 
 	this.addLetterView();
 
-	this.drawLetter(runeModel.letter.gridPoints);
+	console.log(runeModel);
+
+	this.drawLetter(runeModel.letter);
 
 	this.redraw();
 
@@ -96,15 +102,20 @@ RuneView.prototype = {
 		this.layers.letter.removeChildren();
 		this.redraw();
 	},
-	drawLetter : function(gridPoints) {
+	drawLetter : function(letter) {
 
 		this.clearLetterView();
 
-		this.letter.computePoints(gridPoints, this.grid);
+		console.log("Letter");
+		console.log(letter);
+
+		this.letter.computePoints(letter.gridPoints, this.grid);
 
 		this.layers.letter.activate();
 
-		this.letter.draw(this);
+		this.letter.draw(letter.selectedPoints);
+
+		this.redraw();
 
 	},
 	addGrid : function(gridOptions) {
@@ -147,6 +158,8 @@ function LetterView() {
 LetterView.prototype = {
 	computePoints : function(gridPoints, grid) {
 
+		console.log(gridPoints);
+
 		var renderTemp = [];
 
 		$.each(gridPoints, function(idx, point) {
@@ -157,7 +170,10 @@ LetterView.prototype = {
 		this.renderedPoints = renderTemp;
 
 	},
-	draw : function() {
+	draw : function(selected) {
+
+		console.log("Selected");
+		console.log(selected);
 
 		var letter = this;
 		
@@ -167,7 +183,7 @@ LetterView.prototype = {
 
 		$.each(letter.renderedPoints, function(idx, point) {
 
-			letter.createLetterPoint(point, idx);
+			letter.createLetterPoint(point, idx, selected.indexOf(idx) > -1);
 
 			if(idx) {
 				letterPath.lineTo(point);
@@ -177,7 +193,7 @@ LetterView.prototype = {
 
 		});
 	},
-	createLetterPoint: function(point, value) {
+	createLetterPoint: function(point, value, selected) {
 
 		var path = paper.Path.Rectangle([point[0]-5, point[1]-5], 10);
 
@@ -185,6 +201,8 @@ LetterView.prototype = {
 		path.fillColor = 'white';
 
 		path.value = value;
+
+		path.selected = selected || false;
 		
 		path.onMouseEnter = function(e) {
 			// this.fillColor = this.selected ? 'red' : 'orange';
@@ -198,9 +216,7 @@ LetterView.prototype = {
 
 			this.selected = !this.selected;
 
-			var event = new CustomEvent('selectPoint', { 'detail' : [this.selected, e.target.value]  } );
-			
-			document.dispatchEvent(event);
+			util.dispatchRuneEvent('selectPoint', [this.selected, e.target.value] );
 
 		}
 		path.onKeyDown = function(e) {
@@ -285,11 +301,10 @@ GridView.prototype = {
 
 			this.fillColor = 'red';
 
-			this.active = true;
+			// this.active = true;
 
-			var event = new CustomEvent('addPoint', { 'detail' : e.target.value});
+			util.dispatchRuneEvent('addPoint', e.target.value);
 			
-			document.dispatchEvent(event);
 
 		}
 	}
