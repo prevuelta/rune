@@ -106,10 +106,7 @@ RuneView.prototype = {
 
 		this.clearLetterView();
 
-		console.log("Letter");
-		console.log(letter);
-
-		this.letter.computePoints(letter.gridPoints, this.grid);
+		this.letter.computePoints(letter, this.grid);
 
 		this.layers.letter.activate();
 
@@ -156,14 +153,23 @@ function LetterView() {
 
 
 LetterView.prototype = {
-	computePoints : function(gridPoints, grid) {
+	computePoints : function(letter, grid) {
 
-		console.log(gridPoints);
+		// console.log(gridPoints);
 
 		var renderTemp = [];
 
-		$.each(gridPoints, function(idx, point) {
+		$.each(letter.points, function(idx, point) {
 			var renderedPoint = grid.renderPoint(point);
+
+			// Add Transforms
+			if(letter.point[2]){
+
+				renderedPoint[0] += point[2]
+				renderedPoint[1] += point[3]
+				
+				console.log(renderedPoint);
+			}
 			renderTemp.push( renderedPoint );
 		});
 

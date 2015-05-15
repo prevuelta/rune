@@ -47,6 +47,7 @@ TabletModelController.prototype = {
 	addLetterPoint: function(gridRef) {
 		var letter = this.getActiveRune().letter;
 		letter.gridPoints.insert(letter.currentIndex, gridRef);
+		letter.currentIndex++;
 		util.dispatchRuneEvent('deselectAll');
 	},
 	clearLetter: function() {
@@ -101,9 +102,7 @@ function RuneModel(gridOptions) {
 
 function LetterModel() {
 
-	this.gridPoints = [];
-
-	this.distortions = [];
+	this.points = [];
 
 	this.selectedPoints = [];
 

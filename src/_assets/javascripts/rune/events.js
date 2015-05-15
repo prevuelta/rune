@@ -46,7 +46,6 @@ var eventHandlers = {
 	},
 	deselectAll: function(e) {
 		app.tablet.getActiveRune().letter.selectedPoints = [];
-		app.workspace.drawLetter(app.tablet.getActiveRune().letter);
 	}
 }
 
