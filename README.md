@@ -1,2 +1,5 @@
 # Rune
-HTML canvas app for generating basic vector type based on grid
+## Work in progress
+
+SVG glyph creator using paper.js. Grid based design system to produce letter forms, icons etc then export as SVG from browser.
+
