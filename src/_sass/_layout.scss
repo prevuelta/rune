@@ -70,6 +70,12 @@ $toolbar-width: $bu10;
 		bottom: 0;
 		background: white;
 		padding: $hbu;
+		.panel {
+			background: #f4f4f4;
+			width: 200px;
+			height: auto;
+			padding: $bu;
+		}
 	}
 
 }

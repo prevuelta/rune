@@ -4,6 +4,7 @@
 //= require lib/paper/paper-full.js
 //= require lib/ractive/ractive.js
 //= require lib/underscore/underscore.js
+//= require lib/draggable/draggable.min.js
 
 //= require util
 

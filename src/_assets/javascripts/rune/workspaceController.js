@@ -163,7 +163,7 @@ LetterView.prototype = {
 			var renderedPoint = grid.renderPoint(point);
 
 			// Add Transforms
-			if(letter.point[2]){
+			if(point[2]){
 
 				renderedPoint[0] += point[2]
 				renderedPoint[1] += point[3]

@@ -456,8 +456,6 @@ function TabletModelController(tabletModel) {
 
 	this.activeRuneIndex = 0;
 
-	this.getActiveRune();
-
 }
 
 TabletModelController.prototype = {
@@ -488,7 +486,8 @@ TabletModelController.prototype = {
 	},
 	addLetterPoint: function(gridRef) {
 		var letter = this.getActiveRune().letter;
-		letter.gridPoints.insert(letter.currentIndex, gridRef);
+		console.log(letter);
+		letter.points.insert(letter.currentIndex, gridRef);
 		letter.currentIndex++;
 		util.dispatchRuneEvent('deselectAll');
 	},
