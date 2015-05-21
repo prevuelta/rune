@@ -59,7 +59,17 @@ $toolbar-width: $bu10;
 		height: $bu8;
 		background: #ccc;
 		z-index: 1;
+		padding: $bu;
 		border-top: 1px solid #aaa;
+		ul {
+			margin: 0;
+			li {
+				width: 100px;
+				height: 100px;
+				background: red;
+				float: left;
+			}
+		}
 	}
 
 	#rune-properties { 
@@ -71,6 +81,9 @@ $toolbar-width: $bu10;
 		background: white;
 		padding: $hbu;
 		.panel {
+			h3 {
+				margin: 0 0 $hbu 0;
+			}
 			background: #f4f4f4;
 			width: 200px;
 			height: auto;

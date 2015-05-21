@@ -95,7 +95,15 @@ input {
   height: 96px;
   background: #ccc;
   z-index: 1;
+  padding: 12px;
   border-top: 1px solid #aaa; }
+  #main #rune-tablet ul {
+    margin: 0; }
+    #main #rune-tablet ul li {
+      width: 100px;
+      height: 100px;
+      background: red;
+      float: left; }
 #main #rune-properties {
   position: fixed;
   right: 0;
@@ -109,6 +117,8 @@ input {
     width: 200px;
     height: auto;
     padding: 12px; }
+    #main #rune-properties .panel h3 {
+      margin: 0 0 6px 0; }
 
 #rune-grid {
   width: 100%;

@@ -40,7 +40,8 @@ function ActionBar() {
 			title: "Export as SVG",
 			action: function(e) {
 				e.preventDefault();
-				var url = "data:image/svg+xml;utf8," + encodeURIComponent(paper.project.exportSVG({asString:true}));
+				var svgString = paper.project.exportSVG({asString:true});
+				var url = "data:image/svg+xml;utf8," + encodeURIComponent(svgString);
 				var link = document.createElement("a");
 				link.download = 'rune_export.svg';
 				link.href = url;

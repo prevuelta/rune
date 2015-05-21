@@ -18,6 +18,9 @@ function TabletModelController(tabletModel) {
 
 TabletModelController.prototype = {
 	save : function() {
+		var svgString = app.workspace.runeView.layers["letter"].exportSVG({asString:true});
+		app.tablet.getActiveRune().renderedSvg = svgString;
+		
 		var tabletString = JSON.stringify(app.tablet.data);
 
 		localStorage["runeData"] = tabletString;
@@ -50,7 +53,7 @@ TabletModelController.prototype = {
 		util.dispatchRuneEvent('deselectAll');
 	},
 	clearLetter: function() {
-		this.getActiveRune().letter.gridPoints = [];
+		this.getActiveRune().letter.points = [];
 	},
 
 	updateGrid : function() {
@@ -90,11 +93,9 @@ function RuneModel(gridOptions) {
 
 	this.letter = new LetterModel();
 
-	this.distortions = [
-	
-	];
-
 	this.showGrid = true;
+
+	this.renderedSVG = '';
 
 }
 

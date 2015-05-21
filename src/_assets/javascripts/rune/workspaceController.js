@@ -20,7 +20,7 @@ function WorkSpace(options) {
 WorkSpace.prototype = {
 	displayTablet : function(data) {
 
-		addView($(this.options.tabletContainer), 'rune-tablets', { runes : data.runes }, null);
+		addView($(this.options.tabletContainer), 'toolbar-tablets', { runes : data.runes }, null);
 	},
 	displayToolbar : function() {
 
@@ -36,12 +36,15 @@ WorkSpace.prototype = {
 		// Populate properties
 		var workspace = this;
 
-		$.get('views/rune-properties.html', function(template) {
+		$.get('views/panel-properties.html', function(template) {
 
 			var ractive = new Ractive({
 				el: '#rune-properties',
 				template : template,
-				data : runeModel
+				data : runeModel,
+				oncomplete: function() {
+					$('.panel').draggable();
+				}
 			});
 
 			ractive.observe('gridOptions', function(newValue, oldValue, keyPath) {
@@ -57,7 +60,7 @@ WorkSpace.prototype = {
 
 		var actionBar = new ActionBar();
 
-		addView($(this.options.actionbarContainer), 'rune-actionbar', { "actions" : actionBar.actions}, function() {
+		addView($(this.options.actionbarContainer), 'toolbar-actions', { "actions" : actionBar.actions}, function() {
 			actionBar.init();
 		});
 	},

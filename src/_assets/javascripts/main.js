@@ -1,10 +1,10 @@
 //= require lib/jquery/jquery.js
+//= require lib/jquery-ui/jquery-ui.js
 //= require lib/mustache/mustache.js
 //= require lib/mustache-wax/mustache-wax.min.js
 //= require lib/paper/paper-full.js
 //= require lib/ractive/ractive.js
 //= require lib/underscore/underscore.js
-//= require lib/draggable/draggable.min.js
 
 //= require util
 
