@@ -1,11 +1,10 @@
-//= require rune/editor
-//= require rune/events
+//= require rune/pages/editorPage
 
 var app = new RuneEditor({
 	toolbarContainer: '',
 	actionbarContainer: 'header#main-header',
 	tabletContainer: '#rune-tablet',
-	canvasId : 'rune-grid'
+	canvasId : 'rune-view'
 });
 
 

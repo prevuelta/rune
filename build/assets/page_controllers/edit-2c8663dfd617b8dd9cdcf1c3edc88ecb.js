@@ -64,6 +64,62 @@ paper.Point.prototype.getMid = function(p2) {
 Array.prototype.insert = function (index, item) {
     this.splice(index, 0, item);
 };
+// Event listeners
+
+function setupEvents() {
+
+	document.addEventListener('runeEvent', function(e) {
+		console.log('Event received: ' + e.detail.event);
+		eventHandlers[e.detail.event](e.detail.data);
+
+	});
+
+	document.addEventListener('keydown', function(e) {
+		console.log(e.keyCode);
+		switch(e.keyCode) {
+			case 8: //delete
+				e.preventDefault();
+				app.tablet.deleteSelected();
+				app.workspace.drawLetter(app.tablet.getActiveRune().letter);
+				
+				util.dispatchRuneEvent('deselectAll');
+
+			break;
+		}
+	});
+
+}
+
+var eventHandlers = {
+	addPoint : function(data) {
+		app.tablet.addLetterPoint(data);
+		app.workspace.drawLetter(app.tablet.getActiveRune().letter);
+	},
+	selectPoint: function(data) {
+		if(data[0]) {
+			app.tablet.selectPoint(data[1]);
+		} else {
+			app.tablet.getActiveRune().letter.selectedPoints = _.without(app.tablet.getActiveRune().letter.selectedPoints, data[1]);
+		}
+		// console.log(app.tablet.selectedPoints);
+	},
+	clearGridPoints : function(e) {
+		app.tablet.clearLetter();
+		app.workspace.runeView.clearLetterView();
+	},
+	toggleGrid: function(e) {
+		app.workspace.toggleGrid();
+	},
+	deselectAll: function(e) {
+		app.tablet.getActiveRune().letter.selectedPoints = [];
+	}
+}
+
+
+
+
+
+;
 function ActionBar() {
 
 	this.actions = [
@@ -98,7 +154,7 @@ function ActionBar() {
 			title: "Add rune",
 			action: function(e) {
 				e.preventDefault();
-				app.workspace.tablet.addRune();
+				app.tablet.addRune();
 			}
 		},
 		{
@@ -120,157 +176,111 @@ function ActionBar() {
 ActionBar.prototype.init = function(container) {
 	for (var i=0; i < this.actions.length; i++) {
 		var action = this.actions[i];
-		$('[data-type="' + action.id + '"]').on('click', action.action);
+		$('[data-action="' + action.id + '"]').on('click', action.action);
 	}
 };
+function Transform () {
 
-function WorkSpace(options) {
+	console.log("Transform!");
 
-	this.options = options;
+	this.title = "Transform";
 
-	// Load data
+	this.transforms = [
+		{
+			id : "weight",
+			title : "Fix weight",
+			action : function(e) {
+				e.preventDefault();
 
-	this.displayActionBar();
+				this.weight(app.tablet.getActiveRune().letter.selectedPoints);
 
-	// Canvas
+			}
+		}
+	];
 
-	var canvas = document.getElementById(this.options.canvasId);
-
-	paper.setup(canvas);
-
+	this.transforms.forEach(function(transform) {
+		console.log("What?");
+		console.log(transform);
+		$('#rune-panels').on('click', '[data-transform="' + transform.id + '"]', transform.action);
+	});
 
 }
 
-WorkSpace.prototype = {
-	displayTablet : function(data) {
+Transform.prototype = {
+	constructor: Transform,
+	weight : function(points) {
 
-		addView($(this.options.tabletContainer), 'toolbar-tablets', { runes : data.runes }, null);
-	},
-	displayToolbar : function() {
+		var showConstructors = true;
 
-	},
-	toggleGrid: function() {
-		this.runeView.showGrid = !app.workspace.runeView.showGrid;
-		this.runeView.toggleGrid(app.workspace.runeView.showGrid);
-	},
-	setActiveRune : function(runeModel) {
+		// Draw it all
+		// var testPath = new paper.Path();
 
-		this.runeView = new RuneView(runeModel);
+		// testPath.strokeColor = 'black';
 
-		// Populate properties
-		var workspace = this;
+		// testPath.moveTo(points[0]);
+		// testPath.lineTo(points[2]);
 
-		$.get('views/panel-properties.html', function(template) {
+		// var circle = new paper.Path.Circle(midPoint, that.xRes / 2);
+		// circle.strokeColor = 'black'
 
-			var ractive = new Ractive({
-				el: '#rune-properties',
-				template : template,
-				data : runeModel,
-				oncomplete: function() {
-					$('.panel').draggable();
-				}
-			});
+		//testPath.lineTo(otherPoint);
 
-			ractive.observe('gridOptions', function(newValue, oldValue, keyPath) {
-				app.tablet.updateGrid(runeModel.gridOptions);
-				workspace.runeView.addGrid(runeModel.gridOptions);
-			});
+		//testPath.lineTo(points[2]);
 
-		
-		});
+		/* ------ Get initial vars ------ */
 
-	},
-	displayActionBar : function() {
+		var midPoint = points[0].getMid(points[2]);
 
-		var actionBar = new ActionBar();
+		/* ------ First triangulation ------ */
 
-		addView($(this.options.actionbarContainer), 'toolbar-actions', { "actions" : actionBar.actions}, function() {
-			actionBar.init();
-		});
-	},
-	drawLetter : function(letterModel) {
-		this.runeView.drawLetter(letterModel);
-	},
-	updateProperties : function(model) {
+		// Hypothesis to midpoint
+		var t1_hyp = points[2].getDistance(midPoint);
+
+		// Adj 
+		var t1_adj = that.xRes / 2;
+
+		var t1_phi = 90 - trigUtil.radToDeg(Math.acos( t1_adj / t1_hyp));
+
+		// var vec = new paper.Point(points[2]);
+		var vec = new paper.Point();
+
+		vec.angle = (90 - trigUtil.radToDeg( trigUtil.getAngle(points[0], points[2]))) - t1_phi;
+
+		var side = trigUtil.getSize(null, t1_adj, t1_hyp);
+
+		var normalizedVector = vec.normalize();
+
+		var finalVector = new paper.Point();
+
+		finalVector.length = normalizedVector.length * side;
+
+		var tangentPoint = points[2].subtract(finalVector);
+	 
+		/* ------ Second triangulation ------ */
+
+		var otherPoint = new paper.Point(points[0].x, points[2].y);
+
+		var t2_adj = otherPoint.getDistance(points[2]);
+
+		var t2_hyp = t2_adj / Math.cos( degRad(vec.angle) );
+
+		// New length for vector (reflects distance to new point[3]
+		finalVector.length = Math.abs(t2_hyp) - finalVector.length;
+
+		var newPoint3 = newPoint.subtract(newVector);
+
+		var finalMeasure = points[0].getDistance(newPoint3);
+
+		points[3].y = points[0].y + finalMeasure;
+		points[1].y = points[2].y - finalMeasure;
 
 	}
 }
-
-/* ========== Render Rune ========== */
-
-function RuneView (runeModel) {
-
-	var rune = this;
-
-	this.layers = {
-		"grid" : new paper.Layer(),
-		"letter" : new paper.Layer()
-	}
-
-	// Setup grid
-
-	this.addGrid(runeModel.gridOptions);
-
-	this.addLetterView();
-
-	console.log(runeModel);
-
-	this.drawLetter(runeModel.letter);
-
-	this.redraw();
-
-	this.showGrid = true;
-
-
-}
-
-RuneView.prototype = {
-	clearLetterView : function() {
-		this.layers.letter.removeChildren();
-		this.redraw();
-	},
-	drawLetter : function(letter) {
-
-		this.clearLetterView();
-
-		this.letter.computePoints(letter, this.grid);
-
-		this.layers.letter.activate();
-
-		this.letter.draw(letter.selectedPoints);
-
-		this.redraw();
-
-	},
-	addGrid : function(gridOptions) {
-		this.grid = new GridView(gridOptions);
-		this.drawGrid(gridOptions);
-	},
-	drawGrid : function(gridPoints) {
-
-		this.layers.grid.removeChildren();
-
-		this.layers.grid.activate();
-
-		this.grid.draw();
-
-		this.redraw();
-
-	},
-	toggleGrid : function(showGrid) {
-		this.layers.grid.visible = showGrid;
-		this.redraw();
-	},
-	redraw : function() {
-		paper.view.draw();
-	},
-	addLetterView : function() {
-		this.letter = new LetterView();
-	}
-}
+;
 
 
 /* ========== Letter ========== */
+
 
 function LetterView() {
 
@@ -280,6 +290,7 @@ function LetterView() {
 
 
 LetterView.prototype = {
+	constructor: LetterView,
 	computePoints : function(letter, grid) {
 
 		// console.log(gridPoints);
@@ -362,8 +373,10 @@ LetterView.prototype = {
 		}
 	}
 }
+;
 
 /* ========== Grid view ========== */
+
 
 function GridView(options) {
 
@@ -390,6 +403,7 @@ function GridView(options) {
 }
 
 GridView.prototype = {
+	constructor: GridView,
 	draw: function() {
 
 		var grid = this;
@@ -443,8 +457,234 @@ GridView.prototype = {
 	}
 }
 ;
-/* ========== Tablet ========== */
 
+
+
+/* ========== Render Rune ========== */
+
+
+function RuneView (runeModel) {
+
+	var rune = this;
+
+	this.layers = {
+		"grid" : new paper.Layer(),
+		"letter" : new paper.Layer()
+	}
+
+	// Setup grid
+
+	this.addGrid(runeModel.gridOptions);
+
+	this.addLetterView();
+
+	console.log(runeModel);
+
+	this.drawLetter(runeModel.letter);
+
+	this.redraw();
+
+	this.showGrid = true;
+
+
+}
+
+RuneView.prototype = {
+	constructor: RuneView,
+	clearLetterView : function() {
+		this.layers.letter.removeChildren();
+		this.redraw();
+	},
+	drawLetter : function(letter) {
+
+		this.clearLetterView();
+
+		this.letter.computePoints(letter, this.grid);
+
+		this.layers.letter.activate();
+
+		this.letter.draw(letter.selectedPoints);
+
+		this.redraw();
+
+	},
+	addGrid : function(gridOptions) {
+		this.grid = new GridView(gridOptions);
+		this.drawGrid(gridOptions);
+	},
+	drawGrid : function(gridPoints) {
+
+		this.layers.grid.removeChildren();
+
+		this.layers.grid.activate();
+
+		this.grid.draw();
+
+		this.redraw();
+
+	},
+	toggleGrid : function(showGrid) {
+		this.layers.grid.visible = showGrid;
+		this.redraw();
+	},
+	redraw : function() {
+		paper.view.draw();
+	},
+	addLetterView : function() {
+		this.letter = new LetterView();
+	}
+}
+;
+
+
+
+
+
+function WorkSpace(options) {
+
+	this.options = options;
+
+	// Load data
+
+	this.displayActionBar();
+
+	// Canvas
+
+	var canvas = document.getElementById(this.options.canvasId);
+
+	paper.setup(canvas);
+
+	[
+		{
+			template : 'panel-properties.html',
+			data: {
+				title: "Properties"
+			},
+			controller : function() {}
+		},
+		{
+			template : 'panel-transform.html',
+			data: {
+				title : "Transform"
+			},
+			controller : Transform
+		}
+	].forEach(this.loadPanel);
+
+}
+
+WorkSpace.prototype = {
+	constructor: WorkSpace,
+	displayTablet : function(data) {
+
+		addView($(this.options.tabletContainer), 'toolbar-tablets', { runes : data.runes }, function() {
+			$('.rune').on('click', function() {
+				var index = $(this).data('rune-index');
+				console.log(index);
+				app.tablet.setActiveRune(index);
+			});
+		});
+	},
+	displayToolbar : function() {
+
+	},
+	toggleGrid: function() {
+		this.runeView.showGrid = !app.workspace.runeView.showGrid;
+		this.runeView.toggleGrid(app.workspace.runeView.showGrid);
+	},
+	setActiveRune : function(runeModel) {
+
+		this.runeView = new RuneView(runeModel);
+
+		// Populate properties
+		var workspace = this;
+
+	},
+	loadPanel : function(options) {
+
+		console.log(options);
+
+		$.get('views/' + options.template, function(template) {
+
+			var ractive = new Ractive({
+				el: '#rune-panels',
+				template : template,
+				data : options.data,
+				append : true,
+				oncomplete: function() {
+					$('.panel').draggable();
+					// console.log(options.controller);
+					var controller = new options.controller();
+				}
+			});
+
+			// ractive.observe('gridOptions', function(newValue, oldValue, keyPath) {
+			// 	app.tablet.updateGrid(runeModel.gridOptions);
+			// 	workspace.runeView.addGrid(runeModel.gridOptions);
+			// });
+
+		});
+	},
+	displayActionBar : function() {
+
+		var actionBar = new ActionBar();
+
+		addView($(this.options.actionbarContainer), 'toolbar-actions', { "actions" : actionBar.actions}, function() {
+			actionBar.init();
+		});
+
+	},
+	drawLetter : function(letterModel) {
+		this.runeView.drawLetter(letterModel);
+	},
+	updateProperties : function(model) {
+
+	}
+}
+;
+
+/* ========== Rune model ========== */
+
+
+function RuneModel(gridOptions, index) {
+
+	this.gridOptions = {
+		xUnits: 10,
+		yUnits: 10,
+		res: 30,
+		padding: 20
+	};
+
+	if(gridOptions != null){
+		$.extend(this.gridOptions, gridOptions);
+	}
+
+	this.letter = new LetterModel();
+
+	this.showGrid = true;
+
+	this.renderedSVG = '';
+
+	this.runeIndex = index;
+
+}
+
+
+/* ========== Letter ========== */
+
+function LetterModel() {
+
+	this.points = [];
+
+	this.selectedPoints = [];
+
+	this.currentIndex = 0;
+
+}
+;
+
+
+/* ========== Tablet ========== */
 
 
 function TabletModelController(tabletModel) {
@@ -463,6 +703,7 @@ function TabletModelController(tabletModel) {
 }
 
 TabletModelController.prototype = {
+	constructor: TabletModelController,
 	save : function() {
 		var svgString = app.workspace.runeView.layers["letter"].exportSVG({asString:true});
 		app.tablet.getActiveRune().renderedSvg = svgString;
@@ -485,8 +726,11 @@ TabletModelController.prototype = {
 
 		return this.data.runes[this.activeRuneIndex];
 	},
+	setActiveRune : function(index) {
+		this.activeRuneIndex = index;
+	},
 	addRune : function() {
-		this.data.runes.push(new RuneModel());
+		this.data.runes.push(new RuneModel(null, this.data.runes.length ));
 	},
 	delRune : function() {
 
@@ -521,44 +765,9 @@ TabletModelController.prototype = {
 		letter.currentIndex = data;
 	}
 }
-
-
-/* ========== Rune model ========== */
-
-
-function RuneModel(gridOptions) {
-
-	this.gridOptions = {
-		xUnits: 10,
-		yUnits: 10,
-		res: 30,
-		padding: 20
-	};
-
-	$.extend(this.gridOptions, gridOptions);
-
-	this.letter = new LetterModel();
-
-	this.showGrid = true;
-
-	this.renderedSVG = '';
-
-}
-
-
-/* ========== Letter ========== */
-
-function LetterModel() {
-
-	this.points = [];
-
-	this.selectedPoints = [];
-
-	this.currentIndex = 0;
-
-}
 ;
 // Base
+
 
 
 
@@ -571,14 +780,13 @@ function RuneEditor(options) {
 	// Setup workspace
 
 	var app = this;
-
 	app.workspace = new WorkSpace(options);
-
 	app.addTablet();
 
 }
 
 RuneEditor.prototype = {
+	constructor: RuneEditor,
 	addListeners : function() {
 
 	},
@@ -599,70 +807,12 @@ RuneEditor.prototype = {
 
 
 ;
-// Event listeners
-
-function setupEvents() {
-
-	document.addEventListener('runeEvent', function(e) {
-		console.log('Event received: ' + e.detail.event);
-		eventHandlers[e.detail.event](e.detail.data);
-
-	});
-
-	document.addEventListener('keydown', function(e) {
-		console.log(e.keyCode);
-		switch(e.keyCode) {
-			case 8: //delete
-				e.preventDefault();
-				app.tablet.deleteSelected();
-				app.workspace.drawLetter(app.tablet.getActiveRune().letter);
-				
-				util.dispatchRuneEvent('deselectAll');
-
-			break;
-		}
-	});
-
-}
-
-var eventHandlers = {
-	addPoint : function(data) {
-		app.tablet.addLetterPoint(data);
-		app.workspace.drawLetter(app.tablet.getActiveRune().letter);
-	},
-	selectPoint: function(data) {
-		if(data[0]) {
-			app.tablet.selectPoint(data[1]);
-		} else {
-			app.tablet.getActiveRune().letter.selectedPoints = _.without(app.tablet.getActiveRune().letter.selectedPoints, data[1]);
-		}
-		// console.log(app.tablet.selectedPoints);
-	},
-	clearGridPoints : function(e) {
-		app.tablet.clearLetter();
-		app.workspace.runeView.clearLetterView();
-	},
-	toggleGrid: function(e) {
-		app.workspace.toggleGrid();
-	},
-	deselectAll: function(e) {
-		app.tablet.getActiveRune().letter.selectedPoints = [];
-	}
-}
-
-
-
-
-
-;
-
-
 
 var app = new RuneEditor({
 	toolbarContainer: '',
 	actionbarContainer: 'header#main-header',
 	tabletContainer: '#rune-tablet',
-	canvasId : 'rune-grid'
+	canvasId : 'rune-view'
 });
 
 

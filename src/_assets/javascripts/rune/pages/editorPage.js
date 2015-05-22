@@ -1,24 +1,24 @@
 // Base
-//= require rune/const
-//= require rune/util
+//= require rune/global/const
+//= require rune/global/util
+//= require rune/global/events
 
 // Controllers
-//= require rune/workspaceController
-//= require rune/tabletModelController
+//= require rune/controllers/workspaceController
+//= require rune/controllers/tabletModelController
 
 function RuneEditor(options) {
 
 	// Setup workspace
 
 	var app = this;
-
 	app.workspace = new WorkSpace(options);
-
 	app.addTablet();
 
 }
 
 RuneEditor.prototype = {
+	constructor: RuneEditor,
 	addListeners : function() {
 
 	},

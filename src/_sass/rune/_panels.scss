@@ -1,0 +1,5 @@
+.panel {
+	&.ui-draggable-dragging {
+		z-index: 9999;
+	}
+}

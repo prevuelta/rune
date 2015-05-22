@@ -64,15 +64,16 @@ $toolbar-width: $bu10;
 		ul {
 			margin: 0;
 			li {
-				width: 100px;
-				height: 100px;
+				width: $bu5;
+				height: $bu5;
 				background: red;
 				float: left;
+				margin-right: $hbu;
 			}
 		}
 	}
 
-	#rune-properties { 
+	#rune-panels { 
 		position: fixed;
 		right: 0;
 		width: $bu8 * 2;

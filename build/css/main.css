@@ -100,11 +100,12 @@ input {
   #main #rune-tablet ul {
     margin: 0; }
     #main #rune-tablet ul li {
-      width: 100px;
-      height: 100px;
+      width: 60px;
+      height: 60px;
       background: red;
-      float: left; }
-#main #rune-properties {
+      float: left;
+      margin-right: 6px; }
+#main #rune-panels {
   position: fixed;
   right: 0;
   width: 192px;
@@ -112,15 +113,15 @@ input {
   bottom: 0;
   background: white;
   padding: 6px; }
-  #main #rune-properties .panel {
+  #main #rune-panels .panel {
     background: #f4f4f4;
     width: 200px;
     height: auto;
     padding: 12px; }
-    #main #rune-properties .panel h3 {
+    #main #rune-panels .panel h3 {
       margin: 0 0 6px 0; }
 
-#rune-grid {
+#rune-view {
   width: 100%;
   height: 100%;
   background: #aaa; }
@@ -135,3 +136,6 @@ input {
       #rune-actionbar ul li a {
         font-size: 13px;
         color: white; }
+
+.panel.ui-draggable-dragging {
+  z-index: 9999; }

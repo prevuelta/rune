@@ -1,44 +1,35 @@
-function ToolBar() {
+function Transform () {
 
-	this.tools = [
+	console.log("Transform!");
+
+	this.title = "Transform";
+
+	var transform = this;
+
+	this.transforms = [
 		{
-			id : "save",
-			title : "S",
-			icond: '',
+			id : "weight",
+			title : "Fix weight",
 			action : function(e) {
 				e.preventDefault();
 
-				app.saveTablet();
+				transform.weight(app.tablet.getActiveRune().letter.selectedPoints);
 
 			}
-		},
-	]
-}
-
-ToolBar.prototype.init = function(container) {
-	for (var i=0; i < this.actions.length; i++) {
-		var action = this.actions[i];
-		$('[data-type="' + action.id + '"]').on('click', action.action);
-	}
-};
-
-ToolBar.prototype.transform = function(type) {
-		switch(type) {
-			case "random" : 
-				this.renderedPoints.forEach(function(idx, element) {
-					// Insert randomness here
-				});
-			break;
-			case "bend" :
-			break;
-			case "weight" :
-			break;
 		}
-	}
+	];
+
+	this.transforms.forEach(function(transform) {
+		console.log("What?");
+		console.log(transform);
+		$('#rune-panels').on('click', '[data-transform="' + transform.id + '"]', transform.action);
+	});
+
 }
 
-var transform = {
-	weight : function(points, type) {
+Transform.prototype = {
+	constructor: Transform,
+	weight : function(points) {
 
 		var showConstructors = true;
 

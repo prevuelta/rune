@@ -1,5 +1,6 @@
-/* ========== Tablet ========== */
+//= require rune/models/RuneModel
 
+/* ========== Tablet ========== */
 
 function TabletModelController(tabletModel) {
 
@@ -17,6 +18,7 @@ function TabletModelController(tabletModel) {
 }
 
 TabletModelController.prototype = {
+	constructor: TabletModelController,
 	save : function() {
 		var svgString = app.workspace.runeView.layers["letter"].exportSVG({asString:true});
 		app.tablet.getActiveRune().renderedSvg = svgString;
@@ -39,8 +41,11 @@ TabletModelController.prototype = {
 
 		return this.data.runes[this.activeRuneIndex];
 	},
+	setActiveRune : function(index) {
+		this.activeRuneIndex = index;
+	},
 	addRune : function() {
-		this.data.runes.push(new RuneModel());
+		this.data.runes.push(new RuneModel(null, this.data.runes.length ));
 	},
 	delRune : function() {
 
@@ -74,40 +79,4 @@ TabletModelController.prototype = {
 		letter.selectedPoints.push(data);
 		letter.currentIndex = data;
 	}
-}
-
-
-/* ========== Rune model ========== */
-
-
-function RuneModel(gridOptions) {
-
-	this.gridOptions = {
-		xUnits: 10,
-		yUnits: 10,
-		res: 30,
-		padding: 20
-	};
-
-	$.extend(this.gridOptions, gridOptions);
-
-	this.letter = new LetterModel();
-
-	this.showGrid = true;
-
-	this.renderedSVG = '';
-
-}
-
-
-/* ========== Letter ========== */
-
-function LetterModel() {
-
-	this.points = [];
-
-	this.selectedPoints = [];
-
-	this.currentIndex = 0;
-
 }

@@ -32,7 +32,7 @@ function ActionBar() {
 			title: "Add rune",
 			action: function(e) {
 				e.preventDefault();
-				app.workspace.tablet.addRune();
+				app.tablet.addRune();
 			}
 		},
 		{
@@ -54,6 +54,6 @@ function ActionBar() {
 ActionBar.prototype.init = function(container) {
 	for (var i=0; i < this.actions.length; i++) {
 		var action = this.actions[i];
-		$('[data-type="' + action.id + '"]').on('click', action.action);
+		$('[data-action="' + action.id + '"]').on('click', action.action);
 	}
 };
