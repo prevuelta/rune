@@ -185,6 +185,8 @@ function Transform () {
 
 	this.title = "Transform";
 
+	var transform = this;
+
 	this.transforms = [
 		{
 			id : "weight",
@@ -192,24 +194,28 @@ function Transform () {
 			action : function(e) {
 				e.preventDefault();
 
-				console.log("Workinh");
+				transform.weight(app.tablet.getActiveRune().letter.selectedPoints);
 
 			}
 		}
 	];
+
+	this.transforms.forEach(function(transform) {
+		console.log("What?");
+		console.log(transform);
+		$('#rune-panels').on('click', '[data-transform="' + transform.id + '"]', transform.action);
+	});
+
 }
 
 Transform.prototype = {
 	constructor: Transform,
-	init : function(container) {
-		console.log("huh?");
-		this.transforms.forEach(function(transform) {
-			console.log("What?");
-			console.log(transform);
-			$('#rune-panels').on('click', '[data-transform="' + transform.id + '"]', transform.action);
+	weight : function(points, base_unit) {
+		
+		points = points.map(function(entry) {
+			return new paper.Point(app.workspace.runeView.letter.renderedPoints[entry]);
 		});
-	},
-	weight : function(points) {
+
 
 		var showConstructors = true;
 
@@ -229,6 +235,8 @@ Transform.prototype = {
 		//testPath.lineTo(points[2]);
 
 		/* ------ Get initial vars ------ */
+
+		console.log(points[0]);
 
 		var midPoint = points[0].getMid(points[2]);
 

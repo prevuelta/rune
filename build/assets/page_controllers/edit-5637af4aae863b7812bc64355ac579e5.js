@@ -185,6 +185,8 @@ function Transform () {
 
 	this.title = "Transform";
 
+	var transform = this;
+
 	this.transforms = [
 		{
 			id : "weight",
@@ -192,7 +194,7 @@ function Transform () {
 			action : function(e) {
 				e.preventDefault();
 
-				this.weight(app.tablet.getActiveRune().letter.selectedPoints);
+				transform.weight(app.tablet.getActiveRune().letter.selectedPoints);
 
 			}
 		}
@@ -208,7 +210,12 @@ function Transform () {
 
 Transform.prototype = {
 	constructor: Transform,
-	weight : function(points) {
+	weight : function(points, xRes) {
+		
+		points = points.map(function(entry) {
+			return new paper.Point(app.workspace.runeView.letter.renderedPoints[entry]);
+		});
+
 
 		var showConstructors = true;
 
@@ -228,6 +235,8 @@ Transform.prototype = {
 		//testPath.lineTo(points[2]);
 
 		/* ------ Get initial vars ------ */
+
+		console.log(points[0]);
 
 		var midPoint = points[0].getMid(points[2]);
 

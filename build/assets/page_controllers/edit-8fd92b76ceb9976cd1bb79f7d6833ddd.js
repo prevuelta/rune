@@ -211,6 +211,12 @@ function Transform () {
 Transform.prototype = {
 	constructor: Transform,
 	weight : function(points) {
+		
+
+		var renderedPoints = points.map(function(entry) {
+			return app.workspace.runeView.letter.renderedPoints[entry];
+		});
+
 
 		var showConstructors = true;
 
@@ -230,6 +236,8 @@ Transform.prototype = {
 		//testPath.lineTo(points[2]);
 
 		/* ------ Get initial vars ------ */
+
+		console.log(points[0]);
 
 		var midPoint = points[0].getMid(points[2]);
 

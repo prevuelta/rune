@@ -185,6 +185,8 @@ function Transform () {
 
 	this.title = "Transform";
 
+	var transform = this;
+
 	this.transforms = [
 		{
 			id : "weight",
@@ -192,7 +194,7 @@ function Transform () {
 			action : function(e) {
 				e.preventDefault();
 
-				console.log("Workinh");
+				transform.weight(app.tablet.getActiveRune().letter.selectedPoints, app.tablet.getActiveRune().gridOptions.res);
 
 			}
 		}
@@ -208,7 +210,12 @@ function Transform () {
 
 Transform.prototype = {
 	constructor: Transform,
-	weight : function(points) {
+	weight : function(points, res) {
+		
+		points = points.map(function(entry) {
+			return new paper.Point(app.workspace.runeView.letter.renderedPoints[entry]);
+		});
+
 
 		var showConstructors = true;
 
@@ -220,7 +227,7 @@ Transform.prototype = {
 		// testPath.moveTo(points[0]);
 		// testPath.lineTo(points[2]);
 
-		// var circle = new paper.Path.Circle(midPoint, that.xRes / 2);
+		// var circle = new paper.Path.Circle(midPoint, res / 2);
 		// circle.strokeColor = 'black'
 
 		//testPath.lineTo(otherPoint);
@@ -228,6 +235,8 @@ Transform.prototype = {
 		//testPath.lineTo(points[2]);
 
 		/* ------ Get initial vars ------ */
+
+		console.log(points[0]);
 
 		var midPoint = points[0].getMid(points[2]);
 
@@ -237,7 +246,7 @@ Transform.prototype = {
 		var t1_hyp = points[2].getDistance(midPoint);
 
 		// Adj 
-		var t1_adj = that.xRes / 2;
+		var t1_adj = res / 2;
 
 		var t1_phi = 90 - trigUtil.radToDeg(Math.acos( t1_adj / t1_hyp));
 
@@ -262,7 +271,7 @@ Transform.prototype = {
 
 		var t2_adj = otherPoint.getDistance(points[2]);
 
-		var t2_hyp = t2_adj / Math.cos( degRad(vec.angle) );
+		var t2_hyp = t2_adj / Math.cos( trigUtil.degToRad(vec.angle) );
 
 		// New length for vector (reflects distance to new point[3]
 		finalVector.length = Math.abs(t2_hyp) - finalVector.length;

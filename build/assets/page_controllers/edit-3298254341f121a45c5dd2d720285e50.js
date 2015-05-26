@@ -185,6 +185,8 @@ function Transform () {
 
 	this.title = "Transform";
 
+	var transform = this;
+
 	this.transforms = [
 		{
 			id : "weight",
@@ -192,7 +194,7 @@ function Transform () {
 			action : function(e) {
 				e.preventDefault();
 
-				console.log("Workinh");
+				transform.weight(app.tablet.getActiveRune().letter.selectedPoints);
 
 			}
 		}
@@ -203,15 +205,11 @@ function Transform () {
 		console.log(transform);
 		$('#rune-panels').on('click', '[data-transform="' + transform.id + '"]', transform.action);
 	});
-	
+
 }
 
 Transform.prototype = {
 	constructor: Transform,
-	init : function(container) {
-		console.log("huh?");
-
-	},
 	weight : function(points) {
 
 		var showConstructors = true;
@@ -232,6 +230,8 @@ Transform.prototype = {
 		//testPath.lineTo(points[2]);
 
 		/* ------ Get initial vars ------ */
+
+		console.log(points[0]);
 
 		var midPoint = points[0].getMid(points[2]);
 
