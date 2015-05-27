@@ -1,4 +1,6 @@
 
+paper.install(this);
+
 /* ========== Utilities ========== */
 
 var util = {
@@ -22,6 +24,12 @@ var util = {
 }
 
 var trigUtil = {
+	getMid : function(p1, p2) {
+		return [(p1.x + p2.x) / 2, (p1.y + p2.y) / 2];
+	},
+	getDistance : function(p1, p2) {
+		return this.getSize(p1.y - p2.y, p1.x - p2.x, null);
+	},
 	getSize : function (adj, opp, hyp) {
 			if(adj & hyp) {
 				return Math.sqrt(hyp*hyp - adj*adj);

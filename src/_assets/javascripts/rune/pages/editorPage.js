@@ -5,7 +5,7 @@
 
 // Controllers
 //= require rune/controllers/workspaceController
-//= require rune/controllers/tabletModelController
+//= require rune/controllers/modelController
 
 function RuneEditor(options) {
 

@@ -30,6 +30,11 @@ function RuneModel(gridOptions, index) {
 function LetterModel() {
 
 	this.points = [];
+	// eg: 
+	// [[0, 2], [[1.5, 230], [1, 180]]];	
+
+	// eg:
+	// [10, 10, 230]; // pointIndex, amount, angle
 
 	this.selectedPoints = [];
 

@@ -18,16 +18,17 @@ LetterView.prototype = {
 		var renderTemp = [];
 
 		$.each(letter.points, function(idx, point) {
-			var renderedPoint = grid.renderPoint(point);
+			console.log("Pointypoiunt: "+point[0]);
+			var renderedPoint = grid.renderPoint(point[0]);
 
-			// Add Transforms
-			if(point[2]){
+			// // Add Transforms
+			// if(point[2]){
 
-				renderedPoint[0] += point[2]
-				renderedPoint[1] += point[3]
+			// 	renderedPoint[0] += point[2]
+			// 	renderedPoint[1] += point[3]
 				
 				console.log(renderedPoint);
-			}
+			// }
 			renderTemp.push( renderedPoint );
 		});
 
@@ -58,6 +59,8 @@ LetterView.prototype = {
 		});
 	},
 	createLetterPoint: function(point, value, selected) {
+
+		console.log("Point" + point);
 
 		var path = paper.Path.Rectangle([point[0]-5, point[1]-5], 10);
 
