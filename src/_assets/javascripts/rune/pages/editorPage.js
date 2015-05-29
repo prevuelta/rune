@@ -7,6 +7,7 @@
 //= require rune/controllers/workspaceController
 //= require rune/controllers/modelController
 
+
 function RuneEditor(options) {
 
 	// Setup workspace
