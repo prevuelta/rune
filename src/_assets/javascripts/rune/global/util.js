@@ -1,6 +1,3 @@
-
-paper.install(this);
-
 /* ========== Utilities ========== */
 
 var util = {

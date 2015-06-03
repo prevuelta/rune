@@ -17,6 +17,8 @@ function WorkSpace(options) {
 
 	paper.setup(canvas);
 
+	paper.install(window);
+
 	[
 		{
 			template : 'panel-properties.html',
@@ -28,7 +30,8 @@ function WorkSpace(options) {
 		{
 			template : 'panel-transform.html',
 			data: {
-				title : "Transform"
+				title : "Transform",
+				res : 0
 			},
 			controller : Transform
 		}

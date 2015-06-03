@@ -35,6 +35,7 @@ function LetterModel() {
 
 	// eg:
 	// [10, 10, 230]; // pointIndex, amount, angle
+	this.transforms = [];
 
 	this.selectedPoints = [];
 

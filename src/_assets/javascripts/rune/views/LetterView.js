@@ -4,41 +4,14 @@
 
 function LetterView() {
 
-	this.renderedPoints = [];
+	this.points = [];
 	
 }
 
 
 LetterView.prototype = {
 	constructor: LetterView,
-	computePoints : function(letter, grid) {
-
-		// console.log(gridPoints);
-
-		var renderTemp = [];
-
-		$.each(letter.points, function(idx, point) {
-			console.log("Pointypoiunt: "+point[0]);
-			var renderedPoint = grid.renderPoint(point[0]);
-
-			// // Add Transforms
-			// if(point[2]){
-
-			// 	renderedPoint[0] += point[2]
-			// 	renderedPoint[1] += point[3]
-				
-				console.log(renderedPoint);
-			// }
-			renderTemp.push( renderedPoint );
-		});
-
-		this.renderedPoints = renderTemp;
-
-	},
-	draw : function(selected) {
-
-		console.log("Selected");
-		console.log(selected);
+	draw : function(letterModel, grid) {
 
 		var letter = this;
 		
@@ -46,23 +19,38 @@ LetterView.prototype = {
 
 		letterPath.strokeColor = 'black';
 
-		$.each(letter.renderedPoints, function(idx, point) {
+		letter.letterPoints = [];
 
-			letter.createLetterPoint(point, idx, selected.indexOf(idx) > -1);
+		$.each(letterModel.points, function(idx, point) {
+
+			var letterPoint = letter.createLetterPoint(grid.renderPoint(point), idx, letterModel.selectedPoints.indexOf(idx) > -1, letterModel.transforms[idx] || null);
+
+			letter.points.push(letterPoint);
 
 			if(idx) {
-				letterPath.lineTo(point);
+				letterPath.lineTo(letterPoint.point);
 			} else {
-				letterPath.moveTo(point);
+				letterPath.moveTo(letterPoint.point);
 			}
 
 		});
 	},
-	createLetterPoint: function(point, value, selected) {
+	createLetterPoint: function(point, value, selected, transform) {
 
-		console.log("Point" + point);
+		var paperPoint = new paper.Point(point)
 
-		var path = paper.Path.Rectangle([point[0]-5, point[1]-5], 10);
+		if(transform) {
+			paperPoint.add((function() { var point = new paper.Point(); point.angle = transform[0]; point.length = transform[1]; return point;})());
+		}
+
+		var path = new paper.Path.Rectangle(point[0]-5, point[1]-5, 20);
+
+				var letterPath = new paper.Path();
+
+		letterPath.strokeColor = 'black';
+
+		letterPath.moveTo(0, 0);
+		letterPath.lineTo(10, 10);
 
 		path.strokeColor = 'red';
 		path.fillColor = 'white';
@@ -86,6 +74,7 @@ LetterView.prototype = {
 			util.dispatchRuneEvent('selectPoint', [this.selected, e.target.value] );
 
 		}
+
 		path.onKeyDown = function(e) {
 			console.log(e.key);
 			switch(e.key) {
@@ -94,5 +83,7 @@ LetterView.prototype = {
 				break;
 			}
 		}
+
+		return {point:paperPoint, path:path};
 	}
 }

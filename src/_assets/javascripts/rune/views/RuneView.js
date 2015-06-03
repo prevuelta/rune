@@ -39,11 +39,9 @@ RuneView.prototype = {
 
 		this.clearLetterView();
 
-		this.letter.computePoints(letter, this.grid);
-
 		this.layers.letter.activate();
 
-		this.letter.draw(letter.selectedPoints);
+		this.letter.draw(letter, this.grid);
 
 		this.redraw();
 

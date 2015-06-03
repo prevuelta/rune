@@ -20,8 +20,9 @@ function TabletModelController(tabletModel) {
 TabletModelController.prototype = {
 	constructor: TabletModelController,
 	save : function() {
-		var svgString = app.workspace.runeView.layers["letter"].exportSVG({asString:true});
-		app.tablet.getActiveRune().renderedSvg = svgString;
+		// var svgString = app.workspace.runeView.layers["letter"].exportSVG({asString:true});
+		
+		// app.tablet.getActiveRune().renderedSvg = svgString;
 		
 		var tabletString = JSON.stringify(app.tablet.data);
 
@@ -54,7 +55,7 @@ TabletModelController.prototype = {
 		var letter = this.getActiveRune().letter;
 		console.log(letter);
 		console.log(gridRef);
-		letter.points.insert(letter.currentIndex, [gridRef, []]);
+		letter.points.insert(letter.currentIndex, gridRef);
 		letter.currentIndex++;
 		util.dispatchRuneEvent('deselectAll');
 	},

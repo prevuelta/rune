@@ -13,7 +13,7 @@ function Transform () {
 			action : function(e) {
 				e.preventDefault();
 
-				transform.weight(app.tablet.getActiveRune().letter.selectedPoints, app.tablet.getActiveRune().gridOptions.res);
+				transform.weight(app.tablet.getActiveRune().letter.selectedPoints, app.tablet.getActiveRune().gridOptions.res  * 2);
 
 			}
 		}
@@ -29,71 +29,71 @@ function Transform () {
 
 Transform.prototype = {
 	constructor: Transform,
-	weight : function(points, res) {
+	weight : function(originalPoints, res) {
 		
-		points = points.map(function(entry) {
-			return new paper.Point(app.workspace.runeView.letter.renderedPoints[entry]);
+		points = originalPoints.map(function(entry) {
+			return new paper.Point(app.workspace.runeView.letter.points[entry].point);
 		});
 
 
 				// Hypothesis to midpoint
-// 				var t1_hyp = points[2].getDistance(midPoint);
-// 				var t1_adj = that.xRes / 2;
+	// 				var t1_hyp = points[2].getDistance(midPoint);
+	// 				var t1_adj = that.xRes / 2;
 
-// 				// var theta = 
-// 				var t1_phi = 90 - radDeg(Math.acos( t1_adj / t1_hyp));
+	// 				// var theta = 
+	// 				var t1_phi = 90 - radDeg(Math.acos( t1_adj / t1_hyp));
 
-// 				console.log("Phi " + t1_phi);
+	// 				console.log("Phi " + t1_phi);
 
-// 				// New vector
-// 				var vec = new paper.Point(points[2]);
-// 				vec.angle = (90 - radDeg( getAngle(points[0], points[2]))) - t1_phi;
+	// 				// New vector
+	// 				var vec = new paper.Point(points[2]);
+	// 				vec.angle = (90 - radDeg( getAngle(points[0], points[2]))) - t1_phi;
 
-// 				var side = getSize(null, t1_adj, t1_hyp);
+	// 				var side = getSize(null, t1_adj, t1_hyp);
 
-// 				var newVector = vec.normalize();
+	// 				var newVector = vec.normalize();
 
-// 				console.log("Side" + side);
+	// 				console.log("Side" + side);
 
-// 				newVector.length = newVector.length * side;
+	// 				newVector.length = newVector.length * side;
 
-// 				var newPoint = points[2].subtract(newVector);
+	// 				var newPoint = points[2].subtract(newVector);
 
-// 				console.log(newPoint);
+	// 				console.log(newPoint);
 
-// 				// testPath.lineTo(newPoint);
+	// 				// testPath.lineTo(newPoint);
 
-// // 
-// 				/* ------ Second triangulation ------ */
+	// // 
+	// 				/* ------ Second triangulation ------ */
 
-// 				var otherPoint = new paper.Point(points[0].x, points[2].y);
+	// 				var otherPoint = new paper.Point(points[0].x, points[2].y);
 
-// 				console.log(otherPoint + " " + points[2]);
+	// 				console.log(otherPoint + " " + points[2]);
 
-// 				testPath.lineTo(otherPoint);
+	// 				testPath.lineTo(otherPoint);
 
-// 				testPath.lineTo(points[2]);
+	// 				testPath.lineTo(points[2]);
 
-// 				var t2_adj = otherPoint.getDistance(points[2]);
+	// 				var t2_adj = otherPoint.getDistance(points[2]);
 
-// 				console.log("adj" + t2_adj);
+	// 				console.log("adj" + t2_adj);
 
-// 				console.log("Vec angle" + vec.angle);
+	// 				console.log("Vec angle" + vec.angle);
 
-// 				var t2_hyp = t2_adj / Math.cos( degRad(vec.angle) );
+	// 				var t2_hyp = t2_adj / Math.cos( degRad(vec.angle) );
 
-// 				console.log("Hyp: " + t2_hyp + "  " +  newVector.length);
+	// 				console.log("Hyp: " + t2_hyp + "  " +  newVector.length);
 
-// 				newVector.length = Math.abs(t2_hyp) - newVector.length;
+	// 				newVector.length = Math.abs(t2_hyp) - newVector.length;
 
-// 				var newnewpoint = newPoint.subtract(newVector);
+	// 				var newnewpoint = newPoint.subtract(newVector);
 
-// 				testPath.lineTo(newnewpoint);
+	// 				testPath.lineTo(newnewpoint);
 
-// 				var finalMeasure = points[0].getDistance(newnewpoint);
+	// 				var finalMeasure = points[0].getDistance(newnewpoint);
 
-// 				points[3].y = points[0].y + finalMeasure;
-// 				points[1].y = points[2].y - finalMeasure;
+	// 				points[3].y = points[0].y + finalMeasure;
+	// 				points[1].y = points[2].y - finalMeasure;
 
 		// var showConstructors = true;
 
@@ -110,9 +110,12 @@ Transform.prototype = {
 
 		// testPath.lineTo(points[2]);
 
+		var testPath = new paper.Path();
+		testPath.strokeColor = 'red';
+
 		/* ------ Get initial vars ------ */
 
-		console.log(points);
+		// console.log(points);
 
 		var midPoint = points[0].getMid(points[2]);
 
@@ -137,20 +140,14 @@ Transform.prototype = {
 
 		var side = trigUtil.getSize(null, t1_adj, t1_hyp);
 
-		console.log("Side" + side);
+		vec.length = side;
 
-		var normalizedVector = vec.normalize();
-
-		var finalVector = new paper.Point();
-
-		finalVector.length = side;
-
-		console.log(normalizedVector.length);
-
-		var tangentPoint = points[2].subtract(finalVector);
+		var tangentPoint = points[2].subtract(vec);
 	 
-		/* ------ Second triangulation ------ */
+		testPath.moveTo(points[2]);
+		testPath.lineTo(tangentPoint);
 
+		/* ------ Second triangulation ------ */
 
 		var otherPoint = new paper.Point(points[0].x, points[2].y);
 
@@ -160,43 +157,28 @@ Transform.prototype = {
 		var t2_hyp = t2_adj / Math.cos( trigUtil.degToRad(vec.angle) );
 
 		// New length for vector (reflects distance to new point[3]
-		finalVector.length = Math.abs(t2_hyp) - finalVector.length;
+		vec.length = Math.abs(t2_hyp) - vec.length;
 
 		// var newPoint = points[2].subtract(finalVector.length);
 
-		var newPoint3 = tangentPoint.subtract(normalizedVector);
+		var newPoint3 = tangentPoint.subtract(vec);
+
+		testPath.lineTo(newPoint3);
+
 		// var newPoint3 = otherPoint.subtract(finalVector);
 
 		var finalMeasure = points[0].getDistance(newPoint3);
 
-		console.log("Distance" + points[0].getDistance(newPoint3));
+		console.log("Distance" + finalMeasure);
 
-		points[3].y = points[0].y + finalMeasure;
-		points[1].y = points[2].y - finalMeasure;
+		// points[3].y = points[0].y + finalMeasure;
+		// points[1].y = points[2].y - finalMeasure;
 
-// 				newVector.length = Math.abs(t2_hyp) - newVector.length;
+		app.tablet.getActiveRune().letter.transforms = {};
 
-// 				var newnewpoint = newPoint.subtract(newVector);
+		app.tablet.getActiveRune().letter.transforms[originalPoints[3]] = [-90, -finalMeasure];
+		app.tablet.getActiveRune().letter.transforms[originalPoints[1]] = [90, finalMeasure];
 
-// 				testPath.lineTo(newnewpoint);
-
-// 				var finalMeasure = points[0].getDistance(newnewpoint);
-
-
-		var testPath = new paper.Path();
-
-		testPath.strokeColor = 'red';
-
-		// testPath.moveTo(newPoint);
-		testPath.moveTo(newPoint3);
-
-		// testPath.moveTo(points[0]);
-		// testPath.lineTo(points[1]);
-		// testPath.lineTo(points[2]);
-		testPath.lineTo(points[3]);
-
-		// Work out vector here?
-		console.log(points);
 
 	},
 	randomise : function(points) {
