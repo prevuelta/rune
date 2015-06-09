@@ -3,10 +3,11 @@
 
 function RuneModel(gridOptions, index) {
 
+	var units = 10;
+
 	this.gridOptions = {
-		xUnits: 10,
-		yUnits: 10,
-		res: 30,
+		units: units,
+		res: CANVAS_SIZE / units,
 		padding: 20
 	};
 

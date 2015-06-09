@@ -4,17 +4,16 @@
 function GridView(options) {
 
 	this.res = options.res;
-	this.xUnits = options.xUnits;
-	this.yUnits = options.yUnits;
+	this.units = options.units;
 	this.padding = options.padding;
 
 	this.points = [];
 
-	for(var row = 0; row < this.xUnits; row++) {
+	for(var row = 0; row < this.units; row++) {
 		
 		this.points[row] = [];
 
-		for(var col = 0; col < this.yUnits; col++) {
+		for(var col = 0; col < this.units; col++) {
 			
 			var point = [row, col];
 			this.points[row].push(point);
@@ -39,18 +38,12 @@ GridView.prototype = {
 			}
 		}
 	},
-	getWidth : function() {
-		return this.res * this.xUnits;
-	},
-	getHeight :  function() {
-		return this.res * this.yUnits;
-	},
 	renderPoint: function(point){
 		return [point[0] * this.res + this.padding, point[1] * this.res + this.padding];
 	},
 	createGridPoint : function(point, value) {
 
-		var path = paper.Path.Circle(point, 15);
+		var path = paper.Path.Circle(point, this.res / 2);
 
 		path.value = value;
 		path.active = false;

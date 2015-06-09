@@ -83,8 +83,8 @@ input {
   background: white;
   position: fixed;
   top: 36px;
-  right: 0;
-  bottom: 0;
+  width: 360px;
+  height: 360px;
   left: 145px;
   z-index: 0; }
 #main #rune-tablet {

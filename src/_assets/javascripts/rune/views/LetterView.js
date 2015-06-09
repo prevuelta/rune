@@ -37,20 +37,17 @@ LetterView.prototype = {
 	},
 	createLetterPoint: function(point, value, selected, transform) {
 
-		var paperPoint = new paper.Point(point)
+		var paperPoint = new paper.Point(point);
 
 		if(transform) {
+			console.log(transform);
 			paperPoint.add((function() { var point = new paper.Point(); point.angle = transform[0]; point.length = transform[1]; return point;})());
 		}
 
-		var path = new paper.Path.Rectangle(point[0]-5, point[1]-5, 20);
+		var path = new paper.Path.Rectangle(paperPoint.subtract([5, 5]), 10);
+		
 
-				var letterPath = new paper.Path();
-
-		letterPath.strokeColor = 'black';
-
-		letterPath.moveTo(0, 0);
-		letterPath.lineTo(10, 10);
+		console.log(path);
 
 		path.strokeColor = 'red';
 		path.fillColor = 'white';

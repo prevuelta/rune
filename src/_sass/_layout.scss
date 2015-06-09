@@ -45,8 +45,8 @@ $toolbar-width: $bu10;
 		background: white;
 		position: fixed;
 		top: $bu3;
-		right: 0;
-		bottom: 0;
+		width: 360px;
+		height: 360px;
 		left: $toolbar-width + $bu2 + 1;
 		z-index: 0;
 	}

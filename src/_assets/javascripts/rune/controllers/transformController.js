@@ -174,11 +174,10 @@ Transform.prototype = {
 		// points[3].y = points[0].y + finalMeasure;
 		// points[1].y = points[2].y - finalMeasure;
 
-		app.tablet.getActiveRune().letter.transforms = {};
+		// app.tablet.getActiveRune().letter.transforms = {};
 
 		app.tablet.getActiveRune().letter.transforms[originalPoints[3]] = [-90, -finalMeasure];
 		app.tablet.getActiveRune().letter.transforms[originalPoints[1]] = [90, finalMeasure];
-
 
 	},
 	randomise : function(points) {
