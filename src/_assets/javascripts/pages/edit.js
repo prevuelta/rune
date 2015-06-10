@@ -1,4 +1,4 @@
-//= require rune/pages/editorPage
+//= require app/pages/EditorPage
 
 var app = new RuneEditor({
 	toolbarContainer: '',

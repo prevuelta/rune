@@ -1,14 +1,14 @@
 // Base
-//= require rune/global/const
-//= require rune/global/util
-//= require rune/global/events
+//= require app/global/const
+//= require app/global/util
+//= require app/global/events
 
 // Controllers
-//= require rune/controllers/workspaceController
-//= require rune/controllers/modelController
+//= require app/data/DataController
+//= require app/workspace/WorkspaceController
 
 
-function RuneEditor(options) {
+function App(options) {
 
 	// Setup workspace
 
@@ -18,7 +18,7 @@ function RuneEditor(options) {
 
 }
 
-RuneEditor.prototype = {
+App.prototype = {
 	constructor: RuneEditor,
 	addListeners : function() {
 
@@ -28,7 +28,6 @@ RuneEditor.prototype = {
 		this.tablet = new TabletModelController(util.checkLocal("runeData")); 
 
 		this.workspace.displayTablet(this.tablet.data);
-
 		this.workspace.setActiveRune(this.tablet.getActiveRune());
 
 	},

@@ -2,13 +2,9 @@
 	<p> This is the site footer </p>
 </footer>
 
-
 {% javascript main %}
 
 {% if page.controller %}
-	{% capture controller %}page_controllers/{{ page.controller}}{% endcapture %}
+	{% capture controller %}pages/{{ page.controller}}{% endcapture %}
 	{{ controller | javascript }}
  {% endif %}
-
-
-<!-- <script src="/scripts/controllers/{{ page.controller }}.js"></script> -->

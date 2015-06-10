@@ -1,15 +1,27 @@
-//= require rune/views/LetterView
-//= require rune/views/GridView
+//= require_tree .
 
 /* ========== Render Rune ========== */
 
-function RuneView (runeModel) {
+function CanvasController (tabletModel) {
+
+	// Canvas
+
+	var canvas = document.getElementById(this.options.canvasId);
+
+	paper.setup(canvas);
+
+	paper.install(window);
+
+
 
 	var rune = this;
 
 	this.layers = {
-		"grid" : new paper.Layer(),
-		"letter" : new paper.Layer()
+		"grid" : new paper.Layer()
+	};
+
+	tabletModel.letter.forEach(){
+
 	}
 
 	// Setup grid
@@ -26,11 +38,11 @@ function RuneView (runeModel) {
 
 	this.showGrid = true;
 
-
 }
 
-RuneView.prototype = {
+CanvasController.prototype = {
 	constructor: RuneView,
+
 	clearLetterView : function() {
 		this.layers.letter.removeChildren();
 		this.redraw();

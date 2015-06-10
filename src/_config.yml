@@ -14,5 +14,10 @@ markdown: kramdown
 destination: ../build
 exclude:
   - assets/javascripts/bower_components
-# assets:
+assets:
+  sources:
+    - _assets/images
+    - _assets/javascripts
+    - _assets/stylesheets
+    - _assets/app
    # js_compressor: uglifier
