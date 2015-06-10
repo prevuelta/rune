@@ -1,9 +1,8 @@
 // Base
-//= require app/global/const
-//= require app/global/util
-//= require app/global/events
+//= require_tree ../global/.
 
 // Controllers
+//= require app/canvas/CanvasController
 //= require app/data/DataController
 //= require app/workspace/WorkspaceController
 
@@ -13,25 +12,18 @@ function App(options) {
 	// Setup workspace
 
 	var app = this;
-	app.workspace = new WorkSpace(options);
-	app.addTablet();
+	app.workspace = new WorkSpace();
+	app.data = new DataController(util.checkLocal("runeData")); 
+	app.canvas = new CanvasController(options, app.data);
 
 }
 
 App.prototype = {
-	constructor: RuneEditor,
-	addListeners : function() {
+	constructor: App,
+	setup: function() {
 
 	},
-	addTablet : function() {
-
-		this.tablet = new TabletModelController(util.checkLocal("runeData")); 
-
-		this.workspace.displayTablet(this.tablet.data);
-		this.workspace.setActiveRune(this.tablet.getActiveRune());
-
-	},
-	saveTablet : function() {
+	save : function() {
 		this.tablet.save();
 	}
 }

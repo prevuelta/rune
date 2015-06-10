@@ -2,7 +2,7 @@
 
 /* ========== Render Rune ========== */
 
-function CanvasController (tabletModel) {
+function CanvasController (options, tabletModel) {
 
 	// Canvas
 
@@ -12,17 +12,11 @@ function CanvasController (tabletModel) {
 
 	paper.install(window);
 
-
-
 	var rune = this;
 
 	this.layers = {
 		"grid" : new paper.Layer()
 	};
-
-	tabletModel.letter.forEach(){
-
-	}
 
 	// Setup grid
 
@@ -41,8 +35,20 @@ function CanvasController (tabletModel) {
 }
 
 CanvasController.prototype = {
-	constructor: RuneView,
+	constructor: CanvasController,
+	toggleGrid: function() {
+		this.runeView.showGrid = !app.workspace.runeView.showGrid;
+		this.runeView.toggleGrid(app.workspace.runeView.showGrid);
+	},	
+	drawLetter : function(letterModel) {
+		this.runeView.drawLetter(letterModel);
+	},
 
+	setActiveRune : function(runeModel) {
+
+		this.runeView = new RuneView(runeModel);
+
+	},
 	clearLetterView : function() {
 		this.layers.letter.removeChildren();
 		this.redraw();

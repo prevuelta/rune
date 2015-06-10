@@ -1,7 +1,7 @@
 
 /* ========== Rune model ========== */
 
-function RuneModel(gridOptions, index) {
+function RuneModel(gridOptions) {
 
 	var units = 10;
 
@@ -20,8 +20,6 @@ function RuneModel(gridOptions, index) {
 	this.showGrid = true;
 
 	this.renderedSVG = '';
-
-	this.runeIndex = index;
 
 }
 

@@ -41,3 +41,7 @@ loadPanel : function(options) {
 
 		});
 	},
+
+		updateProperties : function(model) {
+
+	}

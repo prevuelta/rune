@@ -1,55 +1,32 @@
-//= require rune/models/RuneModel
+//= require_tree .
 
-/* ========== Tablet ========== */
+/* ========== Data ========== */
 
-function TabletModelController(tabletModel) {
+function DataController(tabletModel) {
 
-	console.log(tabletModel);
-
-	if(!tabletModel) {
-		console.log("no tablet module");
-		this.newTabletModel();
-	} else {
-		this.data = tabletModel;
-	}
+	this.data = tabletModel || this.dataModel();
 
 	this.activeRuneIndex = 0;
 
 }
 
-TabletModelController.prototype = {
-	constructor: TabletModelController,
+DataController.prototype = {
+	constructor: DataController,
 	save : function() {
-		// var svgString = app.workspace.runeView.layers["letter"].exportSVG({asString:true});
-		
-		// app.tablet.getActiveRune().renderedSvg = svgString;
-		
-		var tabletString = JSON.stringify(app.tablet.data);
-
-		localStorage["runeData"] = tabletString;
-	
+		localStorage["runeData"] = JSON.stringify(app.data);
 	},
-	newTabletModel : function() {
-		this.data = {
-			runes : []
+	dataModel : function() {
+		return {
+			runes : [
+				new RuneModel(null, this.data.runes.length)
+			]
 		};
-		this.addRune();
 	},
-	getActiveRune : function() {
-		if(typeof this.data.runes[this.activeRuneIndex] === 'undefined') {
-			this.addRune();
-		}
-
-		return this.data.runes[this.activeRuneIndex];
-	},
-	setActiveRune : function(index) {
-		this.activeRuneIndex = index;
+	setActiveRune : function(i) {
+		this.activeRune = this.data.runes[i];
 	},
 	addRune : function() {
-		this.data.runes.push(new RuneModel(null, this.data.runes.length ));
-	},
-	delRune : function() {
-
+		this.data.runes.push(new RuneModel(null));
 	},
 	addLetterPoint: function(gridRef) {
 		var letter = this.getActiveRune().letter;
@@ -60,25 +37,25 @@ TabletModelController.prototype = {
 		util.dispatchRuneEvent('deselectAll');
 	},
 	clearLetter: function() {
-		this.getActiveRune().letter.points = [];
+		this.activeRune.letter.points = [];
 	},
 
 	updateGrid : function() {
-		var rune = this.getActiveRune();
+		// var rune = this.getActiveRune();
 		// rune.letter.gridPoints.forEach(function(entry, i) {
 			
 		// });
 	},
 	deleteSelected : function() {
-		var tablet = this;
-		var letter = this.getActiveRune().letter;
+		var letter = this.activeRune.letter;
 		letter.gridPoints = letter.gridPoints.filter(function(entry, idx) {
 			return letter.selectedPoints.indexOf(idx) == -1; 
 		});
 	},
 	selectPoint: function(data) {
-		var letter = this.getActiveRune().letter;
+		var letter = this.activeRune.letter;
 		letter.selectedPoints.push(data);
 		letter.currentIndex = data;
+		this.activeRune.letter.push(data);
 	}
 }
