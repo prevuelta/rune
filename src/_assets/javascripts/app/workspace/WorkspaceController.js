@@ -21,7 +21,7 @@ WorkSpace.prototype = {
 
 		var actionBar = new ActionBar();
 
-		addView($('header#main-header'), 'toolbar-actions', { "actions" : actionBar.actions}, function() {
+		addView($('header#main-header'), 'ToolsView', { "actions" : actionBar.actions}, function() {
 			actionBar.init();
 		});
 

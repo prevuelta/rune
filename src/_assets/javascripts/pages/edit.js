@@ -1,10 +1,4 @@
 //= require app/pages/EditorPage
 
-var app = new App({
-	canvasId : 'rune-view'
-});
-
-
-// Events
-setupEvents();
+var app = new App();
 

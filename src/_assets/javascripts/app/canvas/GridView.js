@@ -48,6 +48,7 @@ GridView.prototype = {
 		path.value = value;
 		path.active = false;
 
+
 		var opaque = new paper.Color(255, 0, 0, 0.2);
 
 		path.fillColor = opaque;

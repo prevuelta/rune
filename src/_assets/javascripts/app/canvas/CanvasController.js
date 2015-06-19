@@ -1,18 +1,14 @@
 //= require_tree .
 
-/* ========== Render Rune ========== */
+/* ========== Render Tablet ========== */
 
-function CanvasController (options, tabletModel) {
+function TabletController (tabletModel) {
 
 	// Canvas
 
-	var canvas = document.getElementById(this.options.canvasId);
+	this.canvas = document.getElementById('tablet');
 
-	paper.setup(canvas);
-
-	paper.install(window);
-
-	var rune = this;
+	paper.setup(this.canvas).install(window);
 
 	this.layers = {
 		"grid" : new paper.Layer()
@@ -20,13 +16,9 @@ function CanvasController (options, tabletModel) {
 
 	// Setup grid
 
-	this.addGrid(runeModel.gridOptions);
+	this.setupGrid(tabletModel.tablet.gridOptions);
 
-	this.addLetterView();
-
-	console.log(runeModel);
-
-	this.drawLetter(runeModel.letter);
+	// this.drawLetter(runeModel.letter);
 
 	this.redraw();
 
@@ -34,8 +26,8 @@ function CanvasController (options, tabletModel) {
 
 }
 
-CanvasController.prototype = {
-	constructor: CanvasController,
+TabletController.prototype = {
+	constructor: TabletController,
 	toggleGrid: function() {
 		this.runeView.showGrid = !app.workspace.runeView.showGrid;
 		this.runeView.toggleGrid(app.workspace.runeView.showGrid);
@@ -64,7 +56,7 @@ CanvasController.prototype = {
 		this.redraw();
 
 	},
-	addGrid : function(gridOptions) {
+	setupGrid : function(gridOptions) {
 		this.grid = new GridView(gridOptions);
 		this.drawGrid(gridOptions);
 	},

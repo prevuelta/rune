@@ -7,14 +7,17 @@
 //= require app/workspace/WorkspaceController
 
 
-function App(options) {
+function App() {
 
 	// Setup workspace
 
 	var app = this;
 	app.workspace = new WorkSpace();
 	app.data = new DataController(util.checkLocal("runeData")); 
-	app.canvas = new CanvasController(options, app.data);
+	app.canvas = new CanvasController(app.data);
+
+	// Events
+	setupEvents();
 
 }
 

@@ -1,7 +1,7 @@
 
-/* ========== Rune model ========== */
+/* ========== Tablet Model ========== */
 
-function RuneModel(gridOptions) {
+function TabletData(gridOptions) {
 
 	var units = 10;
 
@@ -15,7 +15,9 @@ function RuneModel(gridOptions) {
 		$.extend(this.gridOptions, gridOptions);
 	}
 
-	this.letter = new LetterModel();
+	this.runes = [];
+
+	this.runes.push(new RuneModel());
 
 	this.showGrid = true;
 
@@ -24,9 +26,9 @@ function RuneModel(gridOptions) {
 }
 
 
-/* ========== Letter ========== */
+/* ========== Rune Model ========== */
 
-function LetterModel() {
+function RuneData() {
 
 	this.points = [];
 	// eg: 
@@ -41,3 +43,4 @@ function LetterModel() {
 	this.currentIndex = 0;
 
 }
+

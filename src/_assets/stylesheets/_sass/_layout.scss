@@ -1,0 +1,95 @@
+$toolbar-width: $bu10;
+
+
+#main {
+
+	#rune-toolbar {
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		top: $bu3;
+		width: $toolbar-width;
+		background: #e0e0e0;
+		padding: $bu;
+		border-right: 1px solid #aaa;
+		h4 {
+			margin: $hbu 0 $bu 0;
+		}
+		.tools {
+			@extend .cf;
+			margin-bottom: $bu;
+			.tool {
+				float: left;
+				width: $bu4 - 2px;;
+				height: $bu4 - 2px;
+				text-align: center;
+				line-height: $bu4;
+				font-weight: bold;
+				background: white;
+				margin: 1px;
+				box-sizing: border-box;
+				cursor: pointer;
+				
+				&:hover {
+					background: $lighter-teal;
+				}
+				&.active {
+					background: $light-teal;
+				}
+			}
+		}
+
+	}
+
+	#rune-board {
+		background: white;
+		position: fixed;
+		top: $bu3;
+		width: 360px;
+		height: 360px;
+		left: $toolbar-width + $bu2 + 1;
+		z-index: 0;
+	}
+
+	#rune-tablet {
+		position: fixed;
+		bottom: 0;
+		left: $toolbar-width  + $bu2 + 1;
+		right: 0;
+		height: $bu8;
+		background: #ccc;
+		z-index: 1;
+		padding: $bu;
+		border-top: 1px solid #aaa;
+		ul {
+			margin: 0;
+			li {
+				width: $bu5;
+				height: $bu5;
+				background: red;
+				float: left;
+				margin-right: $hbu;
+			}
+		}
+	}
+
+	#rune-panels { 
+		position: fixed;
+		right: 0;
+		width: $bu8 * 2;
+		top: $bu3;
+		bottom: 0;
+		background: white;
+		padding: $hbu;
+		.panel {
+			h3 {
+				margin: 0 0 $hbu 0;
+			}
+			background: #f4f4f4;
+			width: 200px;
+			height: auto;
+			padding: $bu;
+		}
+	}
+
+}

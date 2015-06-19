@@ -4,9 +4,8 @@
 
 function DataController(tabletModel) {
 
-	this.data = tabletModel || this.dataModel();
-
-	this.activeRuneIndex = 0;
+	this.tablet = tabletModel || new TabletModel(null);
+	this.activeRune = this.tablet.runes[0];
 
 }
 
@@ -15,29 +14,20 @@ DataController.prototype = {
 	save : function() {
 		localStorage["runeData"] = JSON.stringify(app.data);
 	},
-	dataModel : function() {
-		return {
-			runes : [
-				new RuneModel(null, this.data.runes.length)
-			]
-		};
-	},
 	setActiveRune : function(i) {
-		this.activeRune = this.data.runes[i];
+		this.activeRune = this.tablet.runes[i];
 	},
 	addRune : function() {
-		this.data.runes.push(new RuneModel(null));
+		this.tablet.runes.push(new RuneModel(null));
 	},
-	addLetterPoint: function(gridRef) {
-		var letter = this.getActiveRune().letter;
-		console.log(letter);
-		console.log(gridRef);
-		letter.points.insert(letter.currentIndex, gridRef);
-		letter.currentIndex++;
+	addRunePoint: function(gridRef) {
+		this.activeRune.points.insert(letter.currentIndex, gridRef);
+		this.activeRune.currentIndex++;
+
 		util.dispatchRuneEvent('deselectAll');
 	},
-	clearLetter: function() {
-		this.activeRune.letter.points = [];
+	clearRune: function() {
+		this.activeRune.points = [];
 	},
 
 	updateGrid : function() {
@@ -47,15 +37,14 @@ DataController.prototype = {
 		// });
 	},
 	deleteSelected : function() {
-		var letter = this.activeRune.letter;
-		letter.gridPoints = letter.gridPoints.filter(function(entry, idx) {
-			return letter.selectedPoints.indexOf(idx) == -1; 
+		this.activeRune.gridPoints = this.activeRune.gridPoints.filter(function(entry, idx) {
+			return this.activeRune.selectedPoints.indexOf(idx) == -1; 
 		});
 	},
 	selectPoint: function(data) {
-		var letter = this.activeRune.letter;
-		letter.selectedPoints.push(data);
-		letter.currentIndex = data;
-		this.activeRune.letter.push(data);
+		console.log(data);
+		this.activeRune.selectedPoints.push(data);
+		this.activeRune.currentIndex = data;
+		// this.activeRune.letter.push(data);
 	}
 }
