@@ -32,7 +32,9 @@ CanvasController.prototype = {
 		// this.runeView.showGrid = !app.workspace.runeView.showGrid;
 		// this.runeView.toggleGrid(app.workspace.runeView.showGrid);
 	},	
-	drawRune : function(data) {
+	draw : function(data) {
+		// Draw active layer
+		
 		// this.runeView.draw(data);
 	},
 

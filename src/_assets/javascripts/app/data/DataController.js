@@ -20,7 +20,7 @@ DataController.prototype = {
 	addRune : function() {
 		this.tablet.runes.push(new RuneData(null));
 	},
-	addRunePoint: function(gridRef) {
+	addPoint: function(gridRef) {
 
 		var rune = this.activeRune;
 

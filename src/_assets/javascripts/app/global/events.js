@@ -26,8 +26,8 @@ function setupEvents() {
 
 var eventHandlers = {
 	addPoint : function(data) {
-		app.data.addRunePoint(data);
-		app.workspace.drawRune(app.data.activeRune);
+		app.data.addPoint(data);
+		app.canvas.draw();
 	},
 	selectPoint: function(data) {
 		if(data[0]) {
