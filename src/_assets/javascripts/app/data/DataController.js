@@ -4,7 +4,7 @@
 
 function DataController(tabletModel) {
 
-	this.tablet = tabletModel || new TabletModel(null);
+	this.tablet = tabletModel || new TabletData(null);
 	this.activeRune = this.tablet.runes[0];
 
 }
@@ -18,13 +18,16 @@ DataController.prototype = {
 		this.activeRune = this.tablet.runes[i];
 	},
 	addRune : function() {
-		this.tablet.runes.push(new RuneModel(null));
+		this.tablet.runes.push(new RuneData(null));
 	},
 	addRunePoint: function(gridRef) {
-		this.activeRune.points.insert(letter.currentIndex, gridRef);
-		this.activeRune.currentIndex++;
 
+		var rune = this.activeRune;
+
+		rune.points.splice(rune.currentIndex, 0, gridRef);
+		rune.currentIndex++;
 		util.dispatchRuneEvent('deselectAll');
+
 	},
 	clearRune: function() {
 		this.activeRune.points = [];

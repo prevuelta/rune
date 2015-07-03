@@ -17,7 +17,7 @@ function TabletData(gridOptions) {
 
 	this.runes = [];
 
-	this.runes.push(new RuneModel());
+	this.runes.push(new RuneData());
 
 	this.showGrid = true;
 

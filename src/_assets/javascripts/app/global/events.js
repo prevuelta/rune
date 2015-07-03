@@ -13,8 +13,8 @@ function setupEvents() {
 		switch(e.keyCode) {
 			case 8: //delete
 				e.preventDefault();
-				app.tablet.deleteSelected();
-				app.workspace.drawLetter(app.tablet.getActiveRune().letter);
+				app.data.deleteSelected();
+				app.workspace.drawRune(app.data.activeRune);
 				
 				util.dispatchRuneEvent('deselectAll');
 
@@ -26,26 +26,26 @@ function setupEvents() {
 
 var eventHandlers = {
 	addPoint : function(data) {
-		app.tablet.addLetterPoint(data);
-		app.workspace.drawLetter(app.tablet.getActiveRune().letter);
+		app.data.addRunePoint(data);
+		app.workspace.drawRune(app.data.activeRune);
 	},
 	selectPoint: function(data) {
 		if(data[0]) {
-			app.tablet.selectPoint(data[1]);
+			app.data.selectPoint(data[1]);
 		} else {
-			app.tablet.getActiveRune().letter.selectedPoints = _.without(app.tablet.getActiveRune().letter.selectedPoints, data[1]);
+			app.data.activeRune.selectedPoints = _.without(app.data.activeRune.selectedPoints, data[1]);
 		}
 		// console.log(app.tablet.selectedPoints);
 	},
 	clearGridPoints : function(e) {
-		app.tablet.clearLetter();
-		app.workspace.runeView.clearLetterView();
+		app.data.clearRune();
+		// app.workspace.runeView.clearLetterView();
 	},
 	toggleGrid: function(e) {
 		app.workspace.toggleGrid();
 	},
 	deselectAll: function(e) {
-		app.tablet.getActiveRune().letter.selectedPoints = [];
+		app.data.activeRune.selectedPoints = [];
 	}
 }
 

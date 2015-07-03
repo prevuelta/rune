@@ -2,7 +2,7 @@
 
 /* ========== Render Tablet ========== */
 
-function TabletController (tabletModel) {
+function CanvasController (tabletModel) {
 
 	// Canvas
 
@@ -26,20 +26,18 @@ function TabletController (tabletModel) {
 
 }
 
-TabletController.prototype = {
-	constructor: TabletController,
+CanvasController.prototype = {
+	constructor: CanvasController,
 	toggleGrid: function() {
-		this.runeView.showGrid = !app.workspace.runeView.showGrid;
-		this.runeView.toggleGrid(app.workspace.runeView.showGrid);
+		// this.runeView.showGrid = !app.workspace.runeView.showGrid;
+		// this.runeView.toggleGrid(app.workspace.runeView.showGrid);
 	},	
-	drawLetter : function(letterModel) {
-		this.runeView.drawLetter(letterModel);
+	drawRune : function(data) {
+		// this.runeView.draw(data);
 	},
 
 	setActiveRune : function(runeModel) {
-
-		this.runeView = new RuneView(runeModel);
-
+		this.tabletView = new TabletView(runeModel);
 	},
 	clearLetterView : function() {
 		this.layers.letter.removeChildren();
@@ -47,13 +45,13 @@ TabletController.prototype = {
 	},
 	drawLetter : function(letter) {
 
-		this.clearLetterView();
+		// this.clearLetterView();
 
-		this.layers.letter.activate();
+		// this.layers.letter.activate();
 
-		this.letter.draw(letter, this.grid);
+		// this.letter.draw(letter, this.grid);
 
-		this.redraw();
+		// this.redraw();
 
 	},
 	setupGrid : function(gridOptions) {
