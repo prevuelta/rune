@@ -1,0 +1,11 @@
+header {
+	position: fixed; 
+	left: $bu2;
+	top: $bu2;
+	strong{
+		display: inline-block;
+		line-height: 1.8em;
+		margin-right: $bu;
+		font-size: 2rem;
+	}
+}

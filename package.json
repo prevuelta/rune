@@ -1,0 +1,32 @@
+{
+  "name": "Rune",
+  "version": "1.0.0",
+  "description": "SVG glyph creator using paper.js. Grid based design system to produce letter forms, icons etc then export as SVG from browser.",
+  "main": "index.js",
+  "scripts": {
+    "build:watch" : "parallelshell 'npm run watch:js' 'npm run watch:css' 'npm run watch:html'",
+    "watch:js": "watch 'npm run build:js' ./src/assets/javascripts",
+    "watch:css": "sass --watch ./src/assets/stylesheets/main.scss:./build/assets/stylesheets/main.css",
+    "watch:html" : "echo 'wat'",
+    "build": "echo 'building app...' && npm run build:js && npm run build:css && npm run copy-statics",
+    "build:js": "echo 'compiling javascript...' && browserify ./src/assets/javascripts/app.js | uglifyjs -b -o ./build/assets/javascripts/app.min.js",
+    "build:css": "echo 'compiling stylesheets...' && sass ./src/assets/stylesheets/main.scss:./build/assets/stylesheets/main.css",
+    "copy-statics": "echo 'Copying statics...' && cp ./src/index.html ./build/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/prevuelta/rune.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/prevuelta/rune/issues"
+  },
+  "homepage": "https://github.com/prevuelta/rune",
+  "devDependencies": {
+    "browserify": "latest",
+    "parallelshell": "^2.0.0",
+    "uglifyjs": "^2.4.10",
+    "watch": "latest"
+  }
+}
