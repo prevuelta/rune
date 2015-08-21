@@ -4,10 +4,10 @@
   "description": "SVG glyph creator using paper.js. Grid based design system to produce letter forms, icons etc then export as SVG from browser.",
   "main": "index.js",
   "scripts": {
-    "build:watch" : "parallelshell 'npm run watch:js' 'npm run watch:css' 'npm run watch:html'",
+    "build:watch": "parallelshell 'npm run watch:js' 'npm run watch:css' 'npm run watch:html' 'http-server ./build/ -p 8000'",
     "watch:js": "watch 'npm run build:js' ./src/assets/javascripts",
     "watch:css": "sass --watch ./src/assets/stylesheets/main.scss:./build/assets/stylesheets/main.css",
-    "watch:html" : "echo 'wat'",
+    "watch:html": "cp ./src/index.html ./build/index.html",
     "build": "echo 'building app...' && npm run build:js && npm run build:css && npm run copy-statics",
     "build:js": "echo 'compiling javascript...' && browserify ./src/assets/javascripts/app.js | uglifyjs -b -o ./build/assets/javascripts/app.min.js",
     "build:css": "echo 'compiling stylesheets...' && sass ./src/assets/stylesheets/main.scss:./build/assets/stylesheets/main.css",
@@ -16,6 +16,19 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/prevuelta/rune.git"
+  },
+  "browserify": {
+    "extension": [
+      "jsx"
+    ],
+    "transform": [
+      [
+        "reactify",
+        {
+          "es6": true
+        }
+      ]
+    ]
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +39,8 @@
   "devDependencies": {
     "browserify": "latest",
     "parallelshell": "^2.0.0",
+    "react": "^0.13.3",
+    "reactify": "^1.1.1",
     "uglifyjs": "^2.4.10",
     "watch": "latest"
   }
