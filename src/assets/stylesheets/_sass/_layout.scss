@@ -1,17 +1,30 @@
 $toolbar-width: $bu10;
 
+html, body {
+	height: 100%;
+	width: 100%;
+}
+
+body {
+	padding: 0;
+	margin: 0;
+}
 
 #main {
-
+	#rune-canvas {
+		@extend .shadow;
+		border: 1px solid orange;
+	}
 	#rune-toolbar {
 		position: fixed;
-		left: 0;
-		bottom: 0;
-		top: $bu3;
+		left: $bu;
+		top: $bu8;
+		height: $bu * 16;
 		width: $toolbar-width;
 		background: #e0e0e0;
 		padding: $bu;
-		border-right: 1px solid #aaa;
+		border: 1px solid #aaa;
+		@extend .shadow;
 		h4 {
 			margin: $hbu 0 $bu 0;
 		}
@@ -75,12 +88,13 @@ $toolbar-width: $bu10;
 
 	#rune-panels { 
 		position: fixed;
-		right: 0;
+		right: $bu;
 		width: $bu8 * 2;
 		top: $bu3;
 		bottom: 0;
 		background: white;
 		padding: $hbu;
+		@extend .shadow;
 		.panel {
 			h3 {
 				margin: 0 0 $hbu 0;

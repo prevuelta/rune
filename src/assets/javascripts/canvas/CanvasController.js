@@ -9,7 +9,7 @@ function CanvasController (tabletModel) {
 
 	// Canvas
 
-	this.canvas = document.getElementById('tablet');
+	this.canvas = document.getElementById('rune-canvas');
 
 	paper.setup(this.canvas).install(window);
 

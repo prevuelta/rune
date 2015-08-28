@@ -51,7 +51,7 @@ function ActionBar() {
 		}
 	];
 	this.render();
-	this.addEvents();
+	// this.addEvents();
 }
 
 ActionBar.prototype.addEvents = function(container) {

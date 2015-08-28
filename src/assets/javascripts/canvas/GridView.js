@@ -28,14 +28,35 @@ function GridView(options) {
 GridView.prototype = {
 	constructor: GridView,
 	draw: function() {
+		console.log("Drawing grid");
 
 		var grid = this;
 
+		// Draw lines
+		var gridGrid = new paper.Raster();
+		gridGrid.setImageData(gridGrid.createImageData(200));
+		gridGrid.setPixel(10, 10, 'black');
+		// for(var i = this.res / 2; i < 2000; i+= this.res) {
+		// 	var p1 = new paper.Point(i, 0);
+		// 	var p2 = new paper.Point(i, 2000);
+		// 	var aLine = new paper.Path.Line(p1, p2);
+		// 	aLine.strokeColor = '#ff3333';
+		// 	aLine.strokeWidth = 1;
+
+			// for(var j = 0; j < 2000; j+= this.res) {
+
+			// }
+
+
+			// for() {;
+
+			// }
+		// }
+
 		for(var i = 0, arr; arr = grid.points[i++];) {
 			for( var j = 0, point; point = arr[j++];) {
-
-				var paperPoint = new paper.Point( this.renderPoint(point) );
-				grid.createGridPoint(paperPoint, point);
+				// var paperPoint = new paper.Point( this.renderPoint(point) );
+				// grid.createGridPoint(paperPoint, point);
 			}
 		}
 	},
@@ -48,7 +69,6 @@ GridView.prototype = {
 
 		path.value = value;
 		path.active = false;
-
 
 		var opaque = new paper.Color(255, 0, 0, 0.2);
 
