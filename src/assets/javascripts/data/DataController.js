@@ -1,4 +1,5 @@
 var TabletData = require('./DataModel');
+var util = require('../global/util');
 
 /* ========== Data ========== */
 
@@ -26,7 +27,9 @@ DataController.prototype = {
 
 		rune.points.splice(rune.currentIndex, 0, gridRef);
 		rune.currentIndex++;
-		util.dispatchRuneEvent('deselectAll');
+		util.dispatchRuneEvent('deselectAll')
+
+		console.log(this.activeRune);
 
 	},
 	clearRune: function() {

@@ -1,10 +1,47 @@
+var util = require('./util');
+
 // Event listeners
-var events = {
+function Events(app) {
+
+	this.app = app;
+
+	var events = this;
+
+	this.eventHandlers = {
+		addPoint : function(data) {
+			events.app.data.addPoint(data);
+			events.app.canvas.draw();
+		},
+		selectPoint: function(data) {
+			if(data[0]) {
+				events.app.data.selectPoint(data[1]);
+			} else {
+				events.app.data.activeRune.selectedPoints = _.without(app.data.activeRune.selectedPoints, data[1]);
+			}
+			// console.log(app.tablet.selectedPoints);
+		},
+		clearGridPoints : function(e) {
+			events.app.data.clearRune();
+			// app.workspace.runeView.clearLetterView();
+		},
+		toggleGrid: function(e) {
+			events.app.workspace.toggleGrid();
+		},
+		deselectAll: function(e) {
+			events.app.data.activeRune.selectedPoints = [];
+		}
+	}
+}
+
+Events.prototype = {
+	constructor: Events,
 	init: function() {
+		
+		var events = this;
 
 		document.addEventListener('runeEvent', function(e) {
 			console.log('Event received: ' + e.detail.event);
-			this.eventHandlers[e.detail.event](e.detail.data);
+			events.eventHandlers[e.detail.event](e.detail.data);
 
 		});
 
@@ -13,8 +50,8 @@ var events = {
 			switch(e.keyCode) {
 				case 8: //delete
 					e.preventDefault();
-					app.data.deleteSelected();
-					app.workspace.drawRune(app.data.activeRune);
+					events.app.data.deleteSelected();
+					events.app.workspace.drawRune(app.data.activeRune);
 					
 					util.dispatchRuneEvent('deselectAll');
 
@@ -22,33 +59,10 @@ var events = {
 			}
 		});
 	},
-	eventHandlers : {
-		addPoint : function(data) {
-			app.data.addPoint(data);
-			app.canvas.draw();
-		},
-		selectPoint: function(data) {
-			if(data[0]) {
-				app.data.selectPoint(data[1]);
-			} else {
-				app.data.activeRune.selectedPoints = _.without(app.data.activeRune.selectedPoints, data[1]);
-			}
-			// console.log(app.tablet.selectedPoints);
-		},
-		clearGridPoints : function(e) {
-			app.data.clearRune();
-			// app.workspace.runeView.clearLetterView();
-		},
-		toggleGrid: function(e) {
-			app.workspace.toggleGrid();
-		},
-		deselectAll: function(e) {
-			app.data.activeRune.selectedPoints = [];
-		}
-	}
+
 }
 
-module.exports = events;
+module.exports = Events;
 
 
 

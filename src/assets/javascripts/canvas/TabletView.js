@@ -11,27 +11,29 @@ TabletView.prototype = {
 	constructor: TabletView,
 	draw : function(letterModel, grid) {
 
-		// var letter = this;
+		console.log("Tablet view drawing");
+
+		var letter = this;
 		
-		// var letterPath = new paper.Path();
+		var letterPath = new paper.Path();
 
-		// letterPath.strokeColor = 'black';
+		letterPath.strokeColor = 'black';
 
-		// letter.letterPoints = [];
+		letter.letterPoints = [];
 
-		// $.each(letterModel.points, function(idx, point) {
+		$.each(letterModel.points, function(idx, point) {
 
-		// 	var letterPoint = letter.createLetterPoint(grid.renderPoint(point), idx, letterModel.selectedPoints.indexOf(idx) > -1, letterModel.transforms[idx] || null);
+			var letterPoint = letter.createLetterPoint(grid.renderPoint(point), idx, letterModel.selectedPoints.indexOf(idx) > -1, letterModel.transforms[idx] || null);
 
-		// 	letter.points.push(letterPoint);
+			letter.points.push(letterPoint);
 
-		// 	if(idx) {
-		// 		letterPath.lineTo(letterPoint.point);
-		// 	} else {
-		// 		letterPath.moveTo(letterPoint.point);
-		// 	}
-
-		// });
+			if(idx) {
+				letterPath.lineTo(letterPoint.point);
+			} else {
+				letterPath.moveTo(letterPoint.point);
+			}
+			
+		});
 	},
 	createLetterPoint: function(point, value, selected, transform) {
 

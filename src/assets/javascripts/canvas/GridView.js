@@ -1,4 +1,6 @@
 var paper = require('paper');
+var util = require('../global/util');
+
 
 /* ========== Grid view ========== */
 
@@ -36,27 +38,24 @@ GridView.prototype = {
 		var gridGrid = new paper.Raster();
 		gridGrid.setImageData(gridGrid.createImageData(200));
 		gridGrid.setPixel(10, 10, 'black');
-		// for(var i = this.res / 2; i < 2000; i+= this.res) {
-		// 	var p1 = new paper.Point(i, 0);
-		// 	var p2 = new paper.Point(i, 2000);
-		// 	var aLine = new paper.Path.Line(p1, p2);
-		// 	aLine.strokeColor = '#ff3333';
-		// 	aLine.strokeWidth = 1;
 
-			// for(var j = 0; j < 2000; j+= this.res) {
-
-			// }
-
-
-			// for() {;
-
-			// }
-		// }
+		for(var i = this.res / 2; i < 2000; i+= this.res) {
+			var p1 = new paper.Point(i, 0);
+			var p2 = new paper.Point(i, 2000);
+			var rec = new paper.Path.Rectangle([i, 0], 1, 2000);
+			rec.fillColor = 'black';
+			for(var j = this.res / 2; j < 2000; j+= this.res) {
+				var p1 = new paper.Point(0, i);
+				var p2 = new paper.Point(2000, i);
+				var rec = new paper.Path.Rectangle([0, i], 2000, 1);
+				rec.fillColor = 'black';
+			}
+		}
 
 		for(var i = 0, arr; arr = grid.points[i++];) {
 			for( var j = 0, point; point = arr[j++];) {
-				// var paperPoint = new paper.Point( this.renderPoint(point) );
-				// grid.createGridPoint(paperPoint, point);
+				var paperPoint = new paper.Point( this.renderPoint(point) );
+				grid.createGridPoint(paperPoint, point);
 			}
 		}
 	},

@@ -14,14 +14,17 @@ function CanvasController (tabletModel) {
 	paper.setup(this.canvas).install(window);
 
 	this.layers = {
-		"grid" : new paper.Layer()
+		"grid" : new paper.Layer(),
+		"letter" : new paper.Layer()
 	};
 
 	// Setup grid
 
 	this.setupGrid(tabletModel.tablet.gridOptions);
 
-	// this.drawLetter(runeModel.letter);
+	this.tabletView = new TabletView(tabletModel);
+
+	// this.drawLetter(tabletModel.letter);
 
 	this.redraw();
 
@@ -37,12 +40,12 @@ CanvasController.prototype = {
 	},	
 	draw : function(data) {
 		// Draw active layer
-		
+		console.log("Trying to draw...");
 		// this.runeView.draw(data);
 	},
 
 	setActiveRune : function(runeModel) {
-		this.tabletView = new TabletView(runeModel);
+		// this.runeView = new TabletView(runeModel);
 	},
 	clearLetterView : function() {
 		this.layers.letter.removeChildren();

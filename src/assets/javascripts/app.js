@@ -2,7 +2,7 @@
 
 // Rune
 var util = require('./global/util');
-var events = require('./global/events');
+var Events = require('./global/Events');
 var WorkSpaceController = require('./workspace/WorkspaceController');
 var CanvasController = require('./canvas/CanvasController');
 var DataController = require('./data/DataController');
@@ -20,6 +20,7 @@ function App() {
 	app.canvas = new CanvasController(app.data);
 
 	// Events
+	var events = new Events(app);
 	events.init();
 
 }
