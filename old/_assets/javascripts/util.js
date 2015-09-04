@@ -1,4 +1,0 @@
-Mustache.Formatters = {
-
-};
-

@@ -1,4 +1,4 @@
-function Transform () {
+function TransformPanel () {
 
 	console.log("Transform!");
 
@@ -13,7 +13,10 @@ function Transform () {
 			action : function(e) {
 				e.preventDefault();
 
-				transform.weight(app.tablet.getActiveRune().letter.selectedPoints, app.tablet.getActiveRune().gridOptions.res  * 2);
+				transform.weight(
+					app.tablet.getActiveRune().letter.selectedPoints, 
+					app.tablet.getActiveRune().gridOptions.res * 2
+				);
 
 			}
 		}
@@ -27,8 +30,8 @@ function Transform () {
 
 }
 
-Transform.prototype = {
-	constructor: Transform,
+TransformPanel.prototype = {
+	constructor: TransformPanel,
 	weight : function(originalPoints, res) {
 		
 		points = originalPoints.map(function(entry) {
@@ -184,3 +187,5 @@ Transform.prototype = {
 
 	}
 }
+
+module.exports = TransformPanel;

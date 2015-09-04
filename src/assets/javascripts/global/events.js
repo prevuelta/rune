@@ -22,13 +22,14 @@ function Events(app) {
 		},
 		clearGridPoints : function(e) {
 			events.app.data.clearRune();
-			// app.workspace.runeView.clearLetterView();
+			events.app.canvas.draw();
 		},
 		toggleGrid: function(e) {
-			events.app.workspace.toggleGrid();
+			events.app.canvas.toggleGrid();
 		},
 		deselectAll: function(e) {
 			events.app.data.activeRune.selectedPoints = [];
+			events.app.canvas.draw();
 		}
 	}
 }
@@ -36,7 +37,6 @@ function Events(app) {
 Events.prototype = {
 	constructor: Events,
 	init: function() {
-		
 		var events = this;
 
 		document.addEventListener('runeEvent', function(e) {
@@ -51,15 +51,13 @@ Events.prototype = {
 				case 8: //delete
 					e.preventDefault();
 					events.app.data.deleteSelected();
-					events.app.workspace.drawRune(app.data.activeRune);
-					
+					events.app.canvas.draw();
 					util.dispatchRuneEvent('deselectAll');
 
 				break;
 			}
 		});
-	},
-
+	}
 }
 
 module.exports = Events;

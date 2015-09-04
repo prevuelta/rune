@@ -1,76 +1,64 @@
 var paper = require('paper');
 
 var GridView = require('./GridView.js');
-var TabletView = require('./TabletView.js');
+var RuneView = require('./RuneView.js');
 
 /* ========== Render Tablet ========== */
 
 function CanvasController (tabletModel) {
 
 	// Canvas
+	var canvasController = this;
 
-	this.canvas = document.getElementById('rune-canvas');
+	canvasController.canvas = document.getElementById('rune-canvas');
 
-	paper.setup(this.canvas).install(window);
+	paper.setup(canvasController.canvas).install(window);
 
-	this.layers = {
-		"grid" : new paper.Layer(),
-		"letter" : new paper.Layer()
-	};
+	canvasController.gridLayer = new paper.Layer(),
+
+	canvasController.layers = [];
 
 	// Setup grid
 
-	this.setupGrid(tabletModel.tablet.gridOptions);
+	canvasController.setupGrid(tabletModel.tablet.gridOptions);
 
-	this.tabletView = new TabletView(tabletModel);
+	canvasController.runeViews = [];
 
-	// this.drawLetter(tabletModel.letter);
+	tabletModel.tablet.runes.forEach(function(val, idx) {
+		canvasController.layers.push(new paper.Layer());
+		canvasController.runeViews.push(new RuneView(val, canvasController.grid));
+	});
 
-	this.redraw();
+	canvasController.currentRuneIndex = 0;
 
-	this.showGrid = true;
+	canvasController.redraw();
+
+	canvasController.showGrid = true;
 
 }
 
 CanvasController.prototype = {
 	constructor: CanvasController,
-	toggleGrid: function() {
-		// this.runeView.showGrid = !app.workspace.runeView.showGrid;
-		// this.runeView.toggleGrid(app.workspace.runeView.showGrid);
-	},	
-	draw : function(data) {
+	draw : function() {
 		// Draw active layer
-		console.log("Trying to draw...");
-		// this.runeView.draw(data);
-	},
-
-	setActiveRune : function(runeModel) {
-		// this.runeView = new TabletView(runeModel);
-	},
-	clearLetterView : function() {
-		this.layers.letter.removeChildren();
+		this.layers[this.currentRuneIndex].removeChildren();
+		this.layers[this.currentRuneIndex].activate();
+		this.runeViews[this.currentRuneIndex].draw();
 		this.redraw();
 	},
-	drawLetter : function(letter) {
-
-		// this.clearLetterView();
-
-		// this.layers.letter.activate();
-
-		// this.letter.draw(letter, this.grid);
-
-		// this.redraw();
-
+	setActiveRune : function() {
+		// this.runeView = new TabletView(runeModel);
 	},
+
 	setupGrid : function(gridOptions) {
 		this.grid = new GridView(gridOptions);
 		this.drawGrid(gridOptions);
 	},
 	drawGrid : function(gridPoints) {
 
-		this.layers.grid.removeChildren();
+		this.gridLayer.removeChildren();
 
-		this.layers.grid.activate();
+		this.gridLayer.activate();
 
 		this.grid.draw();
 
@@ -78,14 +66,12 @@ CanvasController.prototype = {
 
 	},
 	toggleGrid : function(showGrid) {
-		this.layers.grid.visible = showGrid;
+		this.showGrid = !this.showGrid;
+		this.gridLayer.visible = this.showGrid;
 		this.redraw();
 	},
 	redraw : function() {
 		paper.view.draw();
-	},
-	addLetterView : function() {
-		this.letter = new LetterView();
 	}
 }
 

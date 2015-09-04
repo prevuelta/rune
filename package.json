@@ -7,7 +7,7 @@
     "build:watch": "parallelshell 'npm run watch:js -s' 'npm run watch:css -s' 'npm run build:html -s' 'http-server ./build/ -p 8000'",
     "watch:js": "watch 'npm run build:js' ./src/assets/javascripts/",
     "watch:css": "sass --watch ./src/assets/stylesheets/main.scss:./build/assets/stylesheets/main.css",
-    "watch:html" : "watch 'npm run build:html'",
+    "watch:html": "watch 'npm run build:html'",
     "build:html": "cp ./src/index.html ./build/index.html",
     "build": "echo 'building app...' && npm run build:js && npm run build:css && npm run copy-statics",
     "build:js": "echo 'compiling javascript...' && browserify ./src/assets/javascripts/app.js | uglifyjs -b -o ./build/assets/javascripts/app.min.js",
@@ -41,6 +41,7 @@
     "browserify": "latest",
     "parallelshell": "^2.0.0",
     "react": "^0.13.3",
+    "react-draggable": "^0.8.1",
     "reactify": "^1.1.1",
     "uglifyjs": "^2.4.10",
     "watch": "latest"

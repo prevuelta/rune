@@ -10,13 +10,10 @@ var DataController = require('./data/DataController');
 function App() {
 
 	// Setup workspace
-	console.log("What");
-	console.log(DataController);
-	console.log(CanvasController);
 
 	var app = this;
-	app.workspace = new WorkSpaceController();
 	app.data = new DataController(util.checkLocal("runeData")); 
+	app.workspace = new WorkSpaceController(app.data);
 	app.canvas = new CanvasController(app.data);
 
 	// Events

@@ -1,4 +1,5 @@
 var React = require('React');
+var util = require('../global/util.js');
 
 function ActionBar() {
 	this.actions = [
@@ -51,7 +52,7 @@ function ActionBar() {
 		}
 	];
 	this.render();
-	// this.addEvents();
+	this.addEvents();
 }
 
 ActionBar.prototype.addEvents = function(container) {
@@ -66,24 +67,24 @@ ActionBar.prototype.render = function() {
 
 	var actions = this.actions;
 
-	var ActionBarComponent = React.createClass({displayName: 'Hello',
+	var ActionBarComponent = React.createClass({
 	    render: function() {
 	        return (
 				<ul>
-					{ 	
+					{
 						this.props.actions.map(function(action, i) {
-							return <li><a class="action" href="" data-action="{ action.id }">{ action.title }</a></li>;
+							return <li><a className="action" data-action={ action.id }>{ action.title }</a></li>;
 						})
 					}
 				</ul>
 	        );
 	    }
-	});					
-	 
+	});
+
 	React.render(
 	    <ActionBarComponent actions={actions} />,
 	    document.getElementById('rune-actionbar')
-	);	
+	);
 };
 
 module.exports = ActionBar;

@@ -1,9 +1,11 @@
 var ActionBar = require('./ActionBarController.jsx');
+var PanelController = require('./../panels/PanelController.jsx');
 var React = require('React');
 
-function WorkSpaceController() {
+function WorkSpaceController(tabletModel) {
 
 	this.addActionBar();
+	this.panels = new PanelController(tabletModel);
 
 }
 

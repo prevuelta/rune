@@ -12,6 +12,8 @@ function GridView(options) {
 
 	this.points = [];
 
+	this.gridColor = 'orange';
+
 	for(var row = 0; row < this.units; row++) {
 		
 		this.points[row] = [];
@@ -43,12 +45,12 @@ GridView.prototype = {
 			var p1 = new paper.Point(i, 0);
 			var p2 = new paper.Point(i, 2000);
 			var rec = new paper.Path.Rectangle([i, 0], 1, 2000);
-			rec.fillColor = 'black';
+			rec.fillColor = grid.gridColor;
 			for(var j = this.res / 2; j < 2000; j+= this.res) {
 				var p1 = new paper.Point(0, i);
 				var p2 = new paper.Point(2000, i);
 				var rec = new paper.Path.Rectangle([0, i], 2000, 1);
-				rec.fillColor = 'black';
+				rec.fillColor = grid.gridColor;
 			}
 		}
 

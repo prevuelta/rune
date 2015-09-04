@@ -43,8 +43,9 @@ DataController.prototype = {
 		// });
 	},
 	deleteSelected : function() {
-		this.activeRune.gridPoints = this.activeRune.gridPoints.filter(function(entry, idx) {
-			return this.activeRune.selectedPoints.indexOf(idx) == -1; 
+		var rune = this.activeRune;
+		rune.points = rune.points.filter(function(entry, idx) {
+			return rune.selectedPoints.indexOf(idx) == -1; 
 		});
 	},
 	selectPoint: function(data) {
