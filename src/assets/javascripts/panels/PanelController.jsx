@@ -10,28 +10,41 @@ function PanelController (data) {
 
 	var panelController = this;
 
+	panelController.data = data;
+
 	console.log(data);
 
 	panelController.panels = [
 		{
-			template : <p></p>,
 			title: "Properties",
-			data: {
-			}
+			properties : [
+				{
+					label: "Grid units",
+					value: data.tablet.gridOptions.units
+				},
+				{
+					label: "Grid resolution",
+					value: panelController.data.tablet.gridOptions.res
+				}
+			]
 		},
 		{
-			template : <p></p>,
 			title: "Nudge",
-			data: {
-			}
+			properties: [
+				{
+					label: "what",
+					value: 'wt'
+				}
+			]
 		},
 		{
 			title: "Transform",
-			template : <p>Hello world</p>,
-			data: {
-				res : 0,
-				points: data.activeRune.points
-			}
+			properties: [
+				{
+					label: "Points:",
+					value: data.activeRune.selectedPoints
+				}
+			]
 		}
 	];
 
@@ -63,11 +76,11 @@ PanelController.prototype = {
 		        		onStart={this.handleStart}
 		        		>
 		        		<div className="panel">
-			        		<div className="handle"></div>
+			        		<div className="handle">{ this.props.options.title }</div>
 			        		<div className="panel-content">
-			        			<h4>{ this.props.options.title }</h4>
-			        			{ this.props.options.template }
-			        			{ this.props.options.data.points }
+			        			{ this.props.options.properties.map(function(property, index) {
+			        				return <label><span>{property.label}</span> {property.value}</label>
+			        			})}
 			        		</div>
 		        		</div>
 		        	</Draggable>

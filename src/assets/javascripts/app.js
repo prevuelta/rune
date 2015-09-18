@@ -9,11 +9,11 @@ var DataController = require('./data/DataController');
 
 function App() {
 
-	// Setup workspace
-
 	var app = this;
-	app.data = new DataController(util.checkLocal("runeData")); 
-	app.workspace = new WorkSpaceController(app.data);
+
+	// Setup workspace
+	app.data = new DataController(util.checkLocal("runeData"));
+	app.workspace = new WorkSpaceController(app);
 	app.canvas = new CanvasController(app.data);
 
 	// Events
@@ -28,7 +28,7 @@ App.prototype = {
 
 	},
 	save : function() {
-		this.tablet.save();
+		this.data.save();
 	}
 }
 

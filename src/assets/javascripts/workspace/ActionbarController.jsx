@@ -1,15 +1,19 @@
 var React = require('React');
 var util = require('../global/util.js');
 
-function ActionBar() {
+function ActionBar(app) {
+
+	var actionBar = this;
+	actionBar.app = app;
+
 	this.actions = [
 		{
 			id : "save",
-			title : "Save tablet",
+			title : "Save",
 			action : function(e) {
 				e.preventDefault();
-
-				app.saveTablet();
+				// debugger;
+				actionBar.app.data.save();
 
 			}
 		},

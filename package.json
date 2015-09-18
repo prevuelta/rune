@@ -10,7 +10,7 @@
     "watch:html": "watch 'npm run build:html'",
     "build:html": "cp ./src/index.html ./build/index.html",
     "build": "echo 'building app...' && npm run build:js && npm run build:css && npm run copy-statics",
-    "build:js": "echo 'compiling javascript...' && browserify ./src/assets/javascripts/app.js | uglifyjs -b -o ./build/assets/javascripts/app.min.js",
+    "build:js": "echo 'compiling javascript...' && browserify ./src/assets/javascripts/app.js | uglifyjs -b -o ./build/assets/javascripts/app.min.js && echo 'Finished compiling.'",
     "build:css": "echo 'compiling stylesheets...' && sass ./src/assets/stylesheets/main.scss:./build/assets/stylesheets/main.css",
     "copy-statics": "echo 'Copying statics...' && cp ./src/index.html ./build/index.html"
   },

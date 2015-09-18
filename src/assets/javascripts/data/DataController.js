@@ -13,7 +13,8 @@ function DataController(tabletModel) {
 DataController.prototype = {
 	constructor: DataController,
 	save : function() {
-		localStorage["runeData"] = JSON.stringify(app.data);
+		console.log(this);
+		localStorage["runeData"] = JSON.stringify(this.tablet);
 	},
 	setActiveRune : function(i) {
 		this.activeRune = this.tablet.runes[i];
@@ -38,8 +39,7 @@ DataController.prototype = {
 
 	updateGrid : function() {
 		// var rune = this.getActiveRune();
-		// rune.letter.gridPoints.forEach(function(entry, i) {
-			
+		// rune.letter.gridPoints.forEach(function(entry, i) {	
 		// });
 	},
 	deleteSelected : function() {

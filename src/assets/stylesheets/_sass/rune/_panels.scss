@@ -10,15 +10,18 @@
 	&.ui-draggable-dragging {
 		z-index: 9999;
 	}
-	h3 {
-
-	}
 	.panel-content {
 		padding: $bu;
+		font-size: 12px;
 	}
 	.handle {
-		background: red;
+		background: #eee;
 		width: 100%;
-		height: $bu2;
+		height: $bu3;
+		font-weight: bold;
+		font-size: 12px;
+		padding: $qbu $hbu;
+		line-height: $bu3;
+		box-sizing: border-box;
 	}
 }

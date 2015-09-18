@@ -31,7 +31,7 @@ function CanvasController (tabletModel) {
 
 	canvasController.currentRuneIndex = 0;
 
-	canvasController.redraw();
+	canvasController.draw();
 
 	canvasController.showGrid = true;
 
