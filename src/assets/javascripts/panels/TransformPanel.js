@@ -33,7 +33,7 @@ function TransformPanel () {
 TransformPanel.prototype = {
 	constructor: TransformPanel,
 	weight : function(originalPoints, res) {
-		
+
 		points = originalPoints.map(function(entry) {
 			return new paper.Point(app.workspace.runeView.letter.points[entry].point);
 		});

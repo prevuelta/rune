@@ -39,6 +39,7 @@
   "homepage": "https://github.com/prevuelta/rune",
   "devDependencies": {
     "browserify": "latest",
+    "lodash": "^3.10.1",
     "parallelshell": "^2.0.0",
     "react": "^0.13.3",
     "react-draggable": "^0.8.1",

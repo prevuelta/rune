@@ -10,43 +10,43 @@ function PanelController (data) {
 
 	var panelController = this;
 
-	panelController.data = data;
+	// panelController.panels = [
+	// 	{
+	// 		title: "Properties",
+	// 		properties : [
+	// 			{
+	// 				label: "Grid units",
+	// 				value: data.tablet.gridOptions.units
+	// 			},
+	// 			{
+	// 				label: "Grid resolution",
+	// 				value: data.tablet.gridOptions.res
+	// 			}
+	// 		]
+	// 	},
+	// 	{
+	// 		title: "Nudge",
+	// 		properties: [
+	// 			{
+	// 				label: "what",
+	// 				value: 'wt'
+	// 			}
+	// 		]
+	// 	},
+	// 	{
+	// 		title: "Transform",
+	// 		properties: [
+	// 			{
+	// 				label: "Points:",
+	// 				value: data.activeRune.selectedPoints
+	// 			}
+	// 		]
+	// 	}
+	// ];
 
-	console.log(data);
+    // panelController.data.activeRune.selectedPoints = [];
 
-	panelController.panels = [
-		{
-			title: "Properties",
-			properties : [
-				{
-					label: "Grid units",
-					value: data.tablet.gridOptions.units
-				},
-				{
-					label: "Grid resolution",
-					value: panelController.data.tablet.gridOptions.res
-				}
-			]
-		},
-		{
-			title: "Nudge",
-			properties: [
-				{
-					label: "what",
-					value: 'wt'
-				}
-			]
-		},
-		{
-			title: "Transform",
-			properties: [
-				{
-					label: "Points:",
-					value: data.activeRune.selectedPoints
-				}
-			]
-		}
-	];
+    // console.log("probs bra: " + panelController.panels[2].properties[0].value);
 
 	panelController.loadPanels();
 
