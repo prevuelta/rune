@@ -1,5 +1,5 @@
 var React = require('React');
-var util = require('../global/util.js');
+var util = require('../../global/util.js');
 
 function ActionBar(app) {
 

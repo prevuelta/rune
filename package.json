@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "build:watch": "parallelshell 'npm run watch:js -s' 'npm run watch:css -s' 'npm run build:html -s' 'http-server ./build/ -p 8000'",
-    "watch:js": "watch 'npm run build:js' ./src/assets/javascripts/",
-    "watch:css": "sass --watch ./src/assets/stylesheets/main.scss:./build/assets/stylesheets/main.css",
+    "watch:js": "watch 'npm run build:js' ./src/app/",
+    "watch:css": "sass --watch ./src/app/styles/main.scss:./build/styles/main.css",
     "watch:html": "watch 'npm run build:html'",
-    "build:html": "cp ./src/index.html ./build/index.html",
+    "build:html": "cp ./src/app/index.html ./build/index.html",
     "build": "echo 'building app...' && npm run build:js && npm run build:css && npm run copy-statics",
-    "build:js": "echo 'compiling javascript...' && browserify ./src/assets/javascripts/app.js | uglifyjs -b -o ./build/assets/javascripts/app.min.js && echo 'Finished compiling.'",
-    "build:css": "echo 'compiling stylesheets...' && sass ./src/assets/stylesheets/main.scss:./build/assets/stylesheets/main.css",
+    "build:js": "echo 'compiling javascript...' && browserify ./src/app/app.js > ./build/app.min.js && echo 'Finished compiling.'",
+    "build:css": "echo 'compiling stylesheets...' && sass ./src/styles/main.scss:./build/styles/main.css",
     "copy-statics": "echo 'Copying statics...' && cp ./src/index.html ./build/index.html"
   },
   "repository": {

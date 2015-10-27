@@ -15,3 +15,6 @@ npm run build:watch
 
 Enjoy :)
 
+###Dev notes:
+
+Re-jigging to re-structure all point modifiers (transforms) as 'extensions'

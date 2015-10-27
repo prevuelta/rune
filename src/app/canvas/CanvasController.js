@@ -1,7 +1,7 @@
 var paper = require('paper');
 
-var GridView = require('./GridView.js');
-var RuneView = require('./RuneView.js');
+var GridView = require('./grid/GridView.js');
+var RuneView = require('./rune/RuneView.js');
 
 /* ========== Render Tablet ========== */
 

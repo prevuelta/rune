@@ -1,5 +1,5 @@
 var paper = require('paper');
-var util = require('../global/util');
+var util = require('../../global/util');
 
 /* ========== Tablet ========== */
 
