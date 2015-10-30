@@ -8,18 +8,17 @@ function GridView(options) {
 
 	this.res = options.res;
 	this.units = options.units;
-	this.padding = options.padding;
 
 	this.points = [];
 
 	this.gridColor = 'orange';
 
 	for(var row = 0; row < this.units; row++) {
-		
+
 		this.points[row] = [];
 
 		for(var col = 0; col < this.units; col++) {
-			
+
 			var point = [row, col];
 			this.points[row].push(point);
 
@@ -36,6 +35,8 @@ GridView.prototype = {
 
 		var grid = this;
 
+        var gridColor = new paper.Color(grid.gridColor, 100);
+
 		// Draw lines
 		var gridGrid = new paper.Raster();
 		gridGrid.setImageData(gridGrid.createImageData(200));
@@ -45,12 +46,12 @@ GridView.prototype = {
 			var p1 = new paper.Point(i, 0);
 			var p2 = new paper.Point(i, 2000);
 			var rec = new paper.Path.Rectangle([i, 0], 1, 2000);
-			rec.fillColor = grid.gridColor;
+			rec.fillColor = gridColor;
 			for(var j = this.res / 2; j < 2000; j+= this.res) {
 				var p1 = new paper.Point(0, i);
 				var p2 = new paper.Point(2000, i);
 				var rec = new paper.Path.Rectangle([0, i], 2000, 1);
-				rec.fillColor = grid.gridColor;
+				rec.fillColor = gridColor;
 			}
 		}
 
@@ -62,7 +63,7 @@ GridView.prototype = {
 		}
 	},
 	renderPoint: function(point){
-		return [point[0] * this.res + this.padding, point[1] * this.res + this.padding];
+		return [point[0] * this.res + (this.res / 2), point[1] * this.res + (this.res/2)];
 	},
 	createGridPoint : function(point, value) {
 
@@ -74,7 +75,7 @@ GridView.prototype = {
 		var opaque = new paper.Color(255, 0, 0, 0.2);
 
 		path.fillColor = opaque;
-		
+
 		path.onMouseEnter = function(e) {
 			this.fillColor = 'orange';
 		}
@@ -90,8 +91,6 @@ GridView.prototype = {
 			// this.active = true;
 
 			util.dispatchRuneEvent('addPoint', e.target.value);
-			
-
 		}
 	}
 }

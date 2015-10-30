@@ -9,7 +9,8 @@ label {
 }
 
 input {
-	padding: $qbu;
+	padding: $hbu;
+    border-radius: $qbu;
 	margin: $hbu 0;
 	border: 1px solid #e4e4e4;
 }

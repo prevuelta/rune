@@ -5,7 +5,7 @@ var React = require('React');
 function WorkSpaceController(app) {
 
 	this.actionBar = new ActionBar(app);
-	this.panels = new PanelController(app.data);
+	this.panels = new PanelController(app);
 }
 
 WorkSpaceController.prototype = {

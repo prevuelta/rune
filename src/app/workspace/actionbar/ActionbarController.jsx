@@ -27,10 +27,10 @@ function ActionBar(app) {
 		},
 		{
 			id: "grid",
-			title: "Toggle Grid",
+			title: "Preview",
 			action: function(e) {
 				e.preventDefault();
-				util.dispatchRuneEvent("toggleGrid");
+				util.dispatchRuneEvent("preview");
 			}
 		},
 		{

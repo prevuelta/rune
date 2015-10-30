@@ -5,8 +5,6 @@
 	height: $bu * 16;
 	width: $panel-width;
 	background: #f4f4f4;
-	border: 1px solid #aaa;
-	@extend .shadow;
 	&.ui-draggable-dragging {
 		z-index: 9999;
 	}
@@ -15,7 +13,7 @@
 		font-size: 12px;
 	}
 	.handle {
-		background: #eee;
+		background: #d4d4d4;
 		width: 100%;
 		height: $bu3;
 		font-weight: bold;

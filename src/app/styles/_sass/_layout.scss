@@ -12,10 +12,6 @@ body {
 }
 
 #main {
-	#rune-canvas {
-		@extend .shadow;
-		border: 1px solid orange;
-	}
 	#rune-toolbar {
 		position: fixed;
 		left: $bu;
@@ -24,8 +20,6 @@ body {
 		width: $toolbar-width;
 		background: #e0e0e0;
 		padding: $bu;
-		border: 1px solid #aaa;
-		@extend .shadow;
 		h4 {
 			margin: $hbu 0 $bu 0;
 		}
@@ -43,7 +37,6 @@ body {
 				margin: 1px;
 				box-sizing: border-box;
 				cursor: pointer;
-				
 				&:hover {
 					background: $lighter-teal;
 				}
@@ -65,27 +58,27 @@ body {
 		z-index: 0;
 	}
 
-	#rune-tablet {
-		position: fixed;
-		bottom: 0;
-		left: $toolbar-width  + $bu2 + 1;
-		right: 0;
-		height: $bu8;
-		background: #ccc;
-		z-index: 1;
-		padding: $bu;
-		border-top: 1px solid #aaa;
-		ul {
-			margin: 0;
-			li {
-				width: $bu5;
-				height: $bu5;
-				background: red;
-				float: left;
-				margin-right: $hbu;
-			}
-		}
-	}
+	// #rune-tablet {
+	// 	position: fixed;
+	// 	bottom: 0;
+	// 	left: $toolbar-width  + $bu2 + 1;
+	// 	right: 0;
+	// 	height: $bu8;
+	// 	background: #ccc;
+	// 	z-index: 1;
+	// 	padding: $bu;
+	// 	border-top: 1px solid #aaa;
+	// 	ul {
+	// 		margin: 0;
+	// 		li {
+	// 			width: $bu5;
+	// 			height: $bu5;
+	// 			background: red;
+	// 			float: left;
+	// 			margin-right: $hbu;
+	// 		}
+	// 	}
+	// }
 
 	#rune-panels {
 	}

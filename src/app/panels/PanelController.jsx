@@ -8,9 +8,9 @@ var transformPanel = require('./transform/TransformPanel');
 var getGridPanelComponent = require('./grid/GridPanelComponent.jsx');
 
 
-function PanelController (data) {
+function PanelController (app) {
 
-    this.data = data;
+    this.data = app.data;
 
 	var panelController = this;
 
@@ -18,7 +18,12 @@ function PanelController (data) {
 		{
 			title: "Grid",
             panelType: "grid",
-            data: data.tablet.gridOptions
+            data: panelController.data.tablet.gridOptions
+        },
+        {
+            title: 'Transform',
+            panelType: 'transform',
+            data: app.extensions.geo
         }
 		// {
 		// 	title: "Nudge",

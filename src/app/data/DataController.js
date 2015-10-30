@@ -5,55 +5,60 @@ var util = require('../global/util');
 
 function DataController(tabletModel) {
 
-	this.tablet = tabletModel || new TabletData(null);
-	this.activeRune = this.tablet.runes[0];
-
+    this.tablet = tabletModel || new TabletData(null);
+    this.currentRune = 0;
 }
 
 DataController.prototype = {
-	constructor: DataController,
-	save : function() {
-		console.log(this);
-		localStorage["runeData"] = JSON.stringify(this.tablet);
-	},
-	setActiveRune : function(i) {
-		this.activeRune = this.tablet.runes[i];
-	},
-	addRune : function() {
-		this.tablet.runes.push(new RuneData(null));
-	},
-	addPoint: function(gridRef) {
+    constructor: DataController,
+    get activeRune() {
+        return this.tablet.runes[this.currentRune];
+    },
+    save : function() {
+        console.log(this);
+        localStorage["runeData"] = JSON.stringify(this.tablet.data);
+    },
+    addRune : function() {
+        this.tablet.runes.push(new RuneData(null));
+    },
+    addPoint: function(gridRef) {
 
-		var rune = this.activeRune;
+        var rune = this.activeRune;
 
-		rune.points.splice(rune.currentIndex, 0, gridRef);
-		rune.currentIndex++;
-		util.dispatchRuneEvent('deselectAll')
+        rune.currentPath.splice(rune.currentPointIndex, 0, gridRef);
 
-		console.log(this.activeRune);
+        util.dispatchRuneEvent('deselectAll')
 
-	},
-	clearRune: function() {
-		this.activeRune.points = [];
-	},
+        console.log(this.activeRune);
 
-	updateGrid : function() {
-		// var rune = this.getActiveRune();
-		// rune.letter.gridPoints.forEach(function(entry, i) {	
-		// });
-	},
-	deleteSelected : function() {
-		var rune = this.activeRune;
-		rune.points = rune.points.filter(function(entry, idx) {
-			return rune.selectedPoints.indexOf(idx) == -1; 
-		});
-	},
-	selectPoint: function(data) {
-		console.log(data);
-		this.activeRune.selectedPoints.push(data);
-		this.activeRune.currentIndex = data;
-		// this.activeRune.letter.push(data);
-	}
+    },
+    clearRune: function() {
+        this.activeRune.clearPaths();
+    },
+
+    updateGrid : function() {
+        // var rune = this.getactiveRune();
+        // rune.letter.gridPoints.forEach(function(entry, i) {
+        // });
+    },
+    deleteSelected : function() {
+        var rune = this.activeRune;
+        rune.currentPath = rune.currentPath.filter(function(point, idx) {
+            console.log(point);
+            console.log(rune.selectedPoints.indexOf(point) > -1);
+            return ~rune.selectedPoints.indexOf(point);
+            // return rune.selectedPoints.some(function(selectedPoint, idx) {
+            //     console.log(selectedPoint);
+            //     console.log(point);
+            //     selectedPoint === point;
+            // });
+        });
+    },
+    selectPoint: function(data) {
+        this.activeRune.selectedPoints.push(data);
+        this.activeRune.currentIndex = data;
+        // this.activeRune.letter.push(data);
+    }
 }
 
 module.exports = DataController;

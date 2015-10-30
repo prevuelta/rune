@@ -25,13 +25,16 @@ function Events(app) {
 			events.app.data.clearRune();
 			events.app.canvas.draw();
 		},
-		toggleGrid: function(e) {
+		preview: function(e) {
 			events.app.canvas.toggleGrid();
 		},
 		deselectAll: function(e) {
 			events.app.data.activeRune.selectedPoints = [];
 			events.app.canvas.draw();
-		}
+		},
+        refreshCanvas: function() {
+            events.app.canvas.setupGrid();
+        }
 	}
 }
 
@@ -46,17 +49,20 @@ Events.prototype = {
 
 		});
 
+        // Needs fixing
 		document.addEventListener('keydown', function(e) {
-			console.log(e.keyCode);
-			switch(e.keyCode) {
-				case 8: //delete
-					e.preventDefault();
-					events.app.data.deleteSelected();
-					events.app.canvas.draw();
-					util.dispatchRuneEvent('deselectAll');
+			console.log(e.target.tagName);
+            if(e.target.tagName !== 'INPUT') {
+    			switch(e.keyCode) {
+    				case 8: //delete
+    					e.preventDefault();
+    					events.app.data.deleteSelected();
+    					events.app.canvas.draw();
+    					util.dispatchRuneEvent('deselectAll');
 
-				break;
-			}
+    				break;
+    			}
+            }
 		});
 	}
 }

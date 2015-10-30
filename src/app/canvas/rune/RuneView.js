@@ -7,9 +7,7 @@ function RuneView(runeModel, grid) {
 
 	this.points = [];
 
-	this.runeModel = runeModel;
-
-	console.log(grid);
+	this.data = runeModel;
 
 	this.grid = grid;
 
@@ -20,29 +18,43 @@ RuneView.prototype = {
 	constructor: RuneView,
 	draw : function() {
 
-		console.log("Tablet view drawing");
+		var runeView = this;
 
-		var rune = this;
+        runeView.runePoints = [];
+		runeView.path = new paper.Path();
+		runeView.path.strokeColor = 'black';
 
-		var runePath = new paper.Path();
+        console.log(runeView.data.currentPath);
 
-		runePath.strokeColor = 'black';
+        var testPath = new paper.Path({
+            segments: runeView.data.currentPath.map(function(point, idx) {
+                return runeView.grid.renderPoint(point);
+            }),
+            selected: true
+        })
 
-		rune.runePoints = [];
+        testPath.onMouseDown = function(e) {
+            this.selected = !this.selected;
+        };
 
-		rune.runeModel.points.forEach(function(point, idx) {
+        testPath.strokeColor = '#ff0000';
 
-			var runePoint = rune.createRunePoint(rune.grid.renderPoint(point), idx, rune.runeModel.selectedPoints.indexOf(idx) > -1, rune.runeModel.transforms[idx] || null);
+		// runeView.data.currentPath.forEach(function(point, idx) {
 
-			rune.points.push(runePoint);
+		// 	var runePoint = runeView.createRunePoint(
+  //               runeView.grid.renderPoint(point),
+  //               idx,
+  //               runeView.data.selectedPoints.indexOf(idx) > -1,
+  //               runeView.data.transforms[idx] || null);
+		// 	runeView.points.push(runePoint);
 
-			if(idx) {
-				runePath.lineTo(runePoint.point);
-			} else {
-				runePath.moveTo(runePoint.point);
-			}
+		// 	if(idx) {
+		// 		runeView.path.lineTo(runePoint.point);
+		// 	} else {
+		// 		runeView.path.moveTo(runePoint.point);
+		// 	}
 
-		});
+		// });
 	},
 	createRunePoint: function(point, value, selected, transform) {
 
@@ -50,18 +62,20 @@ RuneView.prototype = {
 
 		if(transform) {
 			console.log(transform);
-			paperPoint.add((function() { var point = new paper.Point(); point.angle = transform[0]; point.length = transform[1]; return point;})());
+			paperPoint.add((function() {
+                var point = new paper.Point();
+                point.angle = transform[0];
+                point.length = transform[1];
+                return point;
+            })());
 		}
 
 		var path = new paper.Path.Rectangle(paperPoint.subtract([5, 5]), 10);
-		
-		path.strokeColor = 'red';
-		path.fillColor = 'white';
 
+		path.fillColor = 'white';
 		path.value = value;
 
 		path.selected = selected || false;
-		
 		path.onMouseEnter = function(e) {
 			// this.fillColor = this.selected ? 'red' : 'orange';
 		}
@@ -71,11 +85,8 @@ RuneView.prototype = {
 		}
 
 		path.onMouseDown = function(e) {
-
 			this.selected = !this.selected;
-
 			util.dispatchRuneEvent('selectPoint', [this.selected, e.target.value] );
-
 		}
 
 		path.onKeyDown = function(e) {

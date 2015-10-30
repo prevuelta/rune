@@ -10,9 +10,13 @@ function CanvasController (tabletModel) {
 	// Canvas
 	var canvasController = this;
 
+    canvasController.data = tabletModel;
+
 	canvasController.canvas = document.getElementById('rune-canvas');
 
 	paper.setup(canvasController.canvas).install(window);
+
+    paper.settings.handleSize = 8;
 
 	canvasController.gridLayer = new paper.Layer(),
 
@@ -20,7 +24,7 @@ function CanvasController (tabletModel) {
 
 	// Setup grid
 
-	canvasController.setupGrid(tabletModel.tablet.gridOptions);
+	canvasController.setupGrid();
 
 	canvasController.runeViews = [];
 
@@ -46,15 +50,11 @@ CanvasController.prototype = {
 		this.runeViews[this.currentRuneIndex].draw();
 		this.redraw();
 	},
-	setActiveRune : function() {
-		// this.runeView = new TabletView(runeModel);
+	setupGrid : function() {
+		this.grid = new GridView(this.data.tablet.gridOptions);
+		this.drawGrid();
 	},
-
-	setupGrid : function(gridOptions) {
-		this.grid = new GridView(gridOptions);
-		this.drawGrid(gridOptions);
-	},
-	drawGrid : function(gridPoints) {
+	drawGrid : function() {
 
 		this.gridLayer.removeChildren();
 
@@ -75,4 +75,4 @@ CanvasController.prototype = {
 	}
 }
 
-module.exports = CanvasController; 
+module.exports = CanvasController;
