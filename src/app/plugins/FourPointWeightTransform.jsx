@@ -1,4 +1,9 @@
-module.exports = {
+'use strict';
+
+var React = require('react');
+
+module.exports = function(data) {
+    return {
         title: 'Weight Transform',
         icon: '',
         fn: function(originalPoints, res) {
@@ -148,9 +153,6 @@ module.exports = {
             app.tablet.getactiveRune().letter.transforms[originalPoints[1]] = [90, finalMeasure];
 
             // return newPoints;
-
-        }
+        };
     }
-
-
-// module.exports = new Extension();
+}

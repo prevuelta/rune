@@ -4,114 +4,30 @@ var util = require('../global/util.js');
 var React = require('react'),
     Draggable = require('react-draggable');
 
-var transformPanel = require('./transform/TransformPanel');
-var getGridPanelComponent = require('./grid/GridPanelComponent.jsx');
+// var getGridPanelComponent = require('./grid/GridPanelComponent.jsx');
 
 
 function PanelController (app) {
 
-    this.data = app.data;
-
-	var panelController = this;
-
-	panelController.panels = [
-		{
-			title: "Grid",
-            panelType: "grid",
-            data: panelController.data.tablet.gridOptions
-        },
-        {
-            title: 'Transform',
-            panelType: 'transform',
-            data: app.extensions.geo
-        }
-		// {
-		// 	title: "Nudge",
-		// 	properties: [
-		// 		{
-		// 			label: "what",
-		// 			value: 'wt'
-		// 		}
-		// 	]
-		// },
-		// {
-		// 	title: "Transform",
-		// 	properties: [
-		// 		{
-		// 			label: "Points:",
-		// 			value: data.activeRune.selectedPoints
-		// 		}
-		// 	]
-		// }
-	];
-
-    // panelController.data.activeRune.selectedPoints = [];
-
-    // console.log("probs bra: " + panelController.panels[2].properties[0].value);
-
-	panelController.loadPanels();
+    this.app = app;
+    this.loadPanels();
 
 }
 
 PanelController.prototype = {
-	constructor: PanelController,
-	loadPanels: function() {
+    constructor: PanelController,
+    loadPanels: function() {
 
-		var panelController = this;
+        var panelController = this;
 
-        // var HelloMessage = React.createClass({
-        //     getInitialState: function() {
-        //         return {name: test.name};
-        //     },
-        //     render: function() {
-        //         return (<div onClick={this.handleChange}>Hello {this.state.name} </div>);
-        //     },
-        //     handleChange: function() {
-        //     console.log("woink");
-        //         this.setState({name: test.name});
-        //     }
-        // });
-
-        // React.render(<HelloMessage name={test.name} />,
-        //     document.getElementById('rune-panels'));
-
-        // test.name = 'not seb';
-
-		// var PanelComponent = React.createClass({
-		// 	handleStart: function() {
-
-		// 	},
-		// 	handleDrag: function() {
-
-		// 	},
-		//     render: function() {
-		//     	var offsetY = this.props.offset * 200;
-		//         return (
-		//         	<Draggable
-		//         		start={{x: 800, y: offsetY }}
-		//         		onStart={this.handleStart}
-		//         		>
-		//         		<div className="panel">
-		// 	        		<div className="handle">{ this.props.options.title }</div>
-		// 	        		<div className="panel-content">
-		// 	        			{ this.props.options.properties.map(function(property, index) {
-		// 	        				return <label><span>{property.label}</span> {property.value}</label>
-		// 	        			})}
-		// 	        		</div>
-		//         		</div>
-		//         	</Draggable>
-		//         );
-		//     }
-		// });
-
-		var PanelWrapper = React.createClass({
+        var PanelWrapper = React.createClass({
             handleStart: function() {
 
             },
             handleDrag: function() {
 
             },
-			render: function() {
+            render: function() {
                 var offsetY = this.props.offset * 200;
                 return (
                     <Draggable
@@ -126,52 +42,41 @@ PanelController.prototype = {
                             </div>
                         </div>
                     </Draggable>
-				);
-			}
-		});
+                );
+            }
+        });
 
-// var GridPanelComponent = React.createClass({
-//     handleStart: function() {
+        var Panels = React.createClass({
+            render: function() {
+                console.log(this.props.data);
+                return (
+                    <div>
+                        {
+                            this.props.data.map(function(panel, idx) {
+                                var Component = panel.panel;
+                                return <PanelWrapper offset={idx} options={{title : panel.title}} >
+                                     <Component />
+                                 </PanelWrapper>;
+                            })
+                        }
+                    </div>
+                );
+            }
+        });
 
-//     },
-//     handleDrag: function() {
+        console.log(panelController.app.plugins);
 
-//     },
-//     render: function() {
-//         var offsetY = this.props.offset * 200;
-//         return (
-//             <Draggable
-//                 start={{x: 800, y: offsetY }}
-//                 onStart={this.handleStart}
-//                 >
-//                 <div className="panel">
-//                     <div className="handle">{ this.props.options.title }</div>
-//                     <div className="panel-content">
-//                         { this.props.options.properties.map(function(property, index) {
-//                             return <label><span>{property.label}</span> {property.value}</label>
-//                         })}
-//                     </div>
-//                 </div>
-//             </Draggable>
-//         );
-//     }
-// });
+        // Plugin panels
+        React.render(
+            <Panels data={panelController.app.plugins} />,
+            document.getElementById('rune-panels')
+        );
 
-        var GridPanelComponent = getGridPanelComponent(panelController.data.tablet.gridOptions);
 
-		React.render(
-		    <PanelWrapper offset={0} options={{title : 'Grid'}} >
-                <GridPanelComponent />
-            </PanelWrapper>,
-		    document.getElementById('rune-panels')
-		);
+    },
+    updateProperties : function(model) {
 
-        console.log(panelController.panels);
-
-	},
-	updateProperties : function(model) {
-
-	}
+    }
 }
 
 module.exports = PanelController;
