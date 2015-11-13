@@ -11,7 +11,10 @@ module.exports = function(data) {
         },
         panel: React.createClass({
             render: function() {
-                return <div className="foo"><p>This is coolio</p></div>;
+                return  <div>
+                            <a>+</a>
+                            <a>-</a>
+                        </div>;
             }
         })
     };

@@ -1,5 +1,6 @@
 var TabletData = require('./DataModel');
 var util = require('../global/util');
+var _ = require('lodash');
 
 /* ========== Data ========== */
 
@@ -58,6 +59,9 @@ DataController.prototype = {
         this.activeRune.selectedPoints.push(data);
         this.activeRune.currentIndex = data;
         // this.activeRune.letter.push(data);
+    },
+    deselectPoint: function(data) {
+        this.activeRune.selectedPoints = _.without(this.activeRune.selectedPoints, data);
     }
 }
 

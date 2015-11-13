@@ -59,6 +59,9 @@ RuneModel.prototype = {
     set currentPath(arr) {
         this.data.paths[this.data.currentPathIndex] = arr;
     },
+    set selectedPoints(selectedPoints) {
+        this.data.selectedPoints = selectedPoints;
+    },
     get selectedPoints() {
         return this.data.selectedPoints;
     },

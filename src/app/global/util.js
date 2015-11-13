@@ -34,7 +34,7 @@ module.exports = {
 					return Math.sqrt(opp*opp + adj*adj);
 				} else if(opp & hyp) {
 					return Math.sqrt(hyp*hyp - opp*opp);
-				}				
+				}
 		},
 		getAngle: function(p1, p2) {
 			// var adj = that.xRes;

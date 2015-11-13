@@ -17,9 +17,11 @@ function Events(app) {
 			if(data[0]) {
 				events.app.data.selectPoint(data[1]);
 			} else {
-				events.app.data.activeRune.selectedPoints = _.without(app.data.activeRune.selectedPoints, data[1]);
+                console.log("this");
+                events.app.data.deselectPoint(data[1]);
 			}
-			// console.log(app.tablet.selectedPoints);
+            console.log(data);
+			console.log(app.data.activeRune.selectedPoints);
 		},
 		clearGridPoints : function(e) {
 			events.app.data.clearRune();
