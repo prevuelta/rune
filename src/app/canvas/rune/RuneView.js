@@ -24,8 +24,11 @@ RuneView.prototype = {
 
         var testPath = new paper.Path({
             segments: runeView.data.currentPath.map(function(point, idx) {
+                var pointWithTransforms = point.reduce(function(prev, current) {
+                    return [prev[0] + current[0], prev[1] + current[1]];
+                });
                 return runeView.createRuneSegment(
-                    runeView.grid.renderPoint(point),
+                    runeView.grid.renderPoint(pointWithTransforms),
                     idx,
                     runeView.data.selectedPoints.indexOf(idx) > -1,
                     null

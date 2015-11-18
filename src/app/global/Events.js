@@ -9,33 +9,35 @@ function Events(app) {
 	var events = this;
 
 	this.eventHandlers = {
-		addPoint : function(data) {
+		addPoint : function (data) {
 			events.app.data.addPoint(data);
 			events.app.canvas.draw();
 		},
-		selectPoint: function(data) {
+		selectPoint: function (data) {
 			if(data[0]) {
 				events.app.data.selectPoint(data[1]);
 			} else {
-                console.log("this");
                 events.app.data.deselectPoint(data[1]);
 			}
             console.log(data);
 			console.log(app.data.activeRune.selectedPoints);
 		},
-		clearGridPoints : function(e) {
+		clearGridPoints : function (e) {
 			events.app.data.clearRune();
 			events.app.canvas.draw();
 		},
-		preview: function(e) {
+		preview: function (e) {
 			events.app.canvas.toggleGrid();
 		},
-		deselectAll: function(e) {
+		deselectAll: function (e) {
 			events.app.data.activeRune.selectedPoints = [];
 			events.app.canvas.draw();
 		},
-        refreshCanvas: function() {
+        refreshCanvas: function () {
             events.app.canvas.setupGrid();
+        },
+        redraw : function () {
+            events.app.canvas.draw();
         }
 	}
 }

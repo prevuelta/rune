@@ -38,7 +38,6 @@ function RuneModel () {
         /* All points / paths in rune */
         paths: [ [] ],
         /* Point specific transforms */
-        transforms: [],
 
         selectedPoints: [],
 
@@ -77,9 +76,6 @@ RuneModel.prototype = {
     },
     get currentPointIndex() {
         return this.data.scurrentPointIndex;
-    },
-    get transforms() {
-        return this.data.transforms;
     }
 }
 

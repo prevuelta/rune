@@ -16,21 +16,23 @@ DataController.prototype = {
         return this.tablet.runes[this.currentRune];
     },
     save : function() {
-        console.log(this);
         localStorage["runeData"] = JSON.stringify(this.tablet.data);
     },
     addRune : function() {
         this.tablet.runes.push(new RuneData(null));
     },
     addPoint: function(gridRef) {
-
         var rune = this.activeRune;
-
-        rune.currentPath.splice(rune.currentPointIndex, 0, gridRef);
-
+        rune.currentPath.splice(rune.currentPointIndex, 0, [gridRef]);
         util.dispatchRuneEvent('deselectAll')
 
-        console.log(this.activeRune);
+    },
+    addTransformToSelected: function (transform) {
+        var rune = this.activeRune;
+        rune.selectedPoints.forEach(function(pointIndex) {
+            rune.currentPath[pointIndex].push(transform);
+        });
+        util.dispatchRuneEvent('redraw');
 
     },
     clearRune: function() {

@@ -21,13 +21,13 @@ function App() {
 
     app.plugins = require('./plugins')({
         gridOptions: app.data.tablet.gridOptions,
-        selectedPoints: [],
+        selectedPoints: app.data.activeRune.selectedPoints,
+        addTransformToSelected: function(data) { app.data.addTransformToSelected(data); },
         util: app.util
     });
 
     app.workspace = new WorkSpaceController(app);
     app.canvas = new CanvasController(app.data);
-
     // Events
     var events = new Events(app);
     events.init();

@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-module.exports = function(data) {
+module.exports = function(exposedData) {
     return {
         title: 'Point Translate',
         icon: '',
@@ -10,10 +10,22 @@ module.exports = function(data) {
             return newPoint;
         },
         panel: React.createClass({
-            render: function() {
+            translates: {
+                'up' : [0, 1],
+                'down': [0, -1],
+                'left' : [-1, 0],
+                'right' : [1,0]
+            },
+            translate: function (direction) {
+                console.log(direction);
+                exposedData.addTransformToSelected(this.translates[direction]);
+            },
+            render: function () {
                 return  <div>
-                            <a>+</a>
-                            <a>-</a>
+                            <span onClick={function() { event.target.translate('left'); }} className="tool">&larr;</span>
+                            <span onClick={function(this) { event.target.translate('right'); }} className="tool">&rarr;</span>
+                            <span onClick={function(this) { this.translate('up'); }} className="tool">&uarr;</span>
+                            <span onClick={function(this) { this.translate('down'); }} className="tool">&darr;</span>
                         </div>;
             }
         })
