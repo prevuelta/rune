@@ -18,22 +18,24 @@ function CanvasController (tabletModel) {
 
     paper.settings.handleSize = 8;
 
-	canvasController.gridLayer = new paper.Layer(),
-
-	canvasController.layers = [];
+	canvasController.layerControllers = [{
+        name: 'Grid',
+        layer: new paper.Layer()
+    }];
 
 	// Setup grid
 
 	canvasController.setupGrid();
 
-	canvasController.runeViews = [];
-
 	tabletModel.tablet.runes.forEach(function(val, idx) {
-		canvasController.layers.push(new paper.Layer());
-		canvasController.runeViews.push(new RuneView(val, canvasController.grid));
+		canvasController.layerControllers.push({
+            name: 'Rune ' + idx,
+            layer: new paper.Layer(),
+            view: new RuneView(val, canvasController.grid)
+        });
 	});
 
-	canvasController.currentRuneIndex = 0;
+	canvasController.currentLayerIndex = 1;
 
 	canvasController.draw();
 
@@ -43,11 +45,25 @@ function CanvasController (tabletModel) {
 
 CanvasController.prototype = {
 	constructor: CanvasController,
+    set displayMode(displayMode) {
+        switch(displayMode) {
+            case 'preview':
+                this.toggleGrid();
+            break;
+            default :
+                this.toggleGrid();
+            break;
+        }
+        this.displayMode = displayMode;
+    },
+    get gridLayer() {
+        return this.layerControllers[0].layer;
+    },
 	draw : function() {
 		// Draw active layer
-		this.layers[this.currentRuneIndex].removeChildren();
-		this.layers[this.currentRuneIndex].activate();
-		this.runeViews[this.currentRuneIndex].draw();
+		this.layerControllers[this.currentLayerIndex].layer.removeChildren();
+		this.layerControllers[this.currentLayerIndex].layer.activate();
+		this.layerControllers[this.currentLayerIndex].view.draw();
 		this.redraw();
 	},
 	setupGrid : function() {
@@ -57,7 +73,6 @@ CanvasController.prototype = {
 	drawGrid : function() {
 
 		this.gridLayer.removeChildren();
-
 		this.gridLayer.activate();
 
 		this.grid.draw();

@@ -23,9 +23,9 @@ module.exports = function(exposedData) {
             render: function () {
                 return  <div>
                             <span onClick={function() { event.target.translate('left'); }} className="tool">&larr;</span>
-                            <span onClick={function(this) { event.target.translate('right'); }} className="tool">&rarr;</span>
-                            <span onClick={function(this) { this.translate('up'); }} className="tool">&uarr;</span>
-                            <span onClick={function(this) { this.translate('down'); }} className="tool">&darr;</span>
+                            <span onClick={function() { event.target.translate('right'); }} className="tool">&rarr;</span>
+                            <span onClick={function() { this.translate('up'); }} className="tool">&uarr;</span>
+                            <span onClick={function() { this.translate('down'); }} className="tool">&darr;</span>
                         </div>;
             }
         })

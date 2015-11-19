@@ -8,9 +8,7 @@ function RuneView(runeModel, grid) {
     this.points = [];
     this.data = runeModel;
     this.grid = grid;
-
 }
-
 
 RuneView.prototype = {
     constructor: RuneView,

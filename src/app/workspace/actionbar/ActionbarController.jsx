@@ -1,6 +1,8 @@
 var React = require('React');
 var util = require('../../global/util.js');
 
+var paper = require('paper');
+
 function ActionBar(app) {
 
 	var actionBar = this;
@@ -46,12 +48,14 @@ function ActionBar(app) {
 			title: "Export as SVG",
 			action: function(e) {
 				e.preventDefault();
+                actionBar.app.canvas.displayMode = 'preview';
 				var svgString = paper.project.exportSVG({asString:true});
 				var url = "data:image/svg+xml;utf8," + encodeURIComponent(svgString);
 				var link = document.createElement("a");
 				link.download = 'rune_export.svg';
 				link.href = url;
 				link.click();
+                actionBar.app.canvas.displayMode = 'working';
 			}
 		}
 	];

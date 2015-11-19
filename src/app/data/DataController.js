@@ -6,7 +6,9 @@ var _ = require('lodash');
 
 function DataController(tabletModel) {
 
-    this.tablet = tabletModel || new TabletData(null);
+    console.log(tabletModel);
+
+    this.tablet = new TabletData(tabletModel) || new TabletData(null);
     this.currentRune = 0;
 }
 
@@ -16,6 +18,9 @@ DataController.prototype = {
         return this.tablet.runes[this.currentRune];
     },
     save : function() {
+        this.tablet.data.runes = this.tablet.runes.map(function(entry) {
+            return entry.data;
+        });
         localStorage["runeData"] = JSON.stringify(this.tablet.data);
     },
     addRune : function() {

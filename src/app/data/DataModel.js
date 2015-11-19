@@ -2,39 +2,51 @@ var constants = require('../global/const');
 
 /* ========== Tablet Model ========== */
 
-function TabletData(gridOptions) {
+function TabletData(data) {
 
     var defaultUnits = 10;
     var defaultRes = constants.CANVAS_SIZE / defaultUnits
 
-    this.data = {
+    var tablet = this;
+
+    tablet.data = data || {
         gridOptions: {
             units: defaultUnits,
             res: defaultRes
         },
-        runes: [new RuneModel()],
-        renderedSVG: ''
+        renderedSVG: '',
+        currentPathIndex: 0
     };
 
-    if(gridOptions != null){
-        $.extend(this.data.gridOptions, gridOptions);
+    tablet.runes = [];
+
+    if(data) {
+        data.runes.forEach(function(entry) {
+            console.log(entry);
+            tablet.runes.push(new RuneModel(entry));
+        });
+    } else {
+        tablet.runes.push(new RuneModel(null));
     }
+
+    // if(gridOptions != null){
+    //     $.extend(this.data.gridOptions, gridOptions);
+    // }
 }
 
 TabletData.prototype = {
     constructor: TabletData,
     get gridOptions() {
          return this.data.gridOptions;
-    },
-    get runes() {
-         return this.data.runes;
     }
 }
 
 /* ========== Rune Model ========== */
 
-function RuneModel () {
-    this.data = {
+function RuneModel (data) {
+    console.log("@runemodel");
+    console.log(data);
+    this.data = data || {
         /* All points / paths in rune */
         paths: [ [] ],
         /* Point specific transforms */
