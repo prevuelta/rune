@@ -6,8 +6,6 @@ var _ = require('lodash');
 
 function DataController(tabletModel) {
 
-    console.log(tabletModel);
-
     this.tablet = new TabletData(tabletModel) || new TabletData(null);
     this.currentRune = 0;
 }
@@ -28,6 +26,8 @@ DataController.prototype = {
     },
     addPoint: function(gridRef) {
         var rune = this.activeRune;
+        console.log(rune);
+        console.log("Waht" + rune.currentPointIndex);
         rune.currentPath.splice(rune.currentPointIndex, 0, [gridRef]);
         util.dispatchRuneEvent('deselectAll')
 
@@ -52,20 +52,13 @@ DataController.prototype = {
     deleteSelected : function() {
         var rune = this.activeRune;
         rune.currentPath = rune.currentPath.filter(function(point, idx) {
-            console.log(point);
-            console.log(rune.selectedPoints.indexOf(point) > -1);
-            return ~rune.selectedPoints.indexOf(point);
-            // return rune.selectedPoints.some(function(selectedPoint, idx) {
-            //     console.log(selectedPoint);
-            //     console.log(point);
-            //     selectedPoint === point;
-            // });
+            return !~rune.selectedPoints.indexOf(idx);
         });
     },
     selectPoint: function(data) {
         this.activeRune.selectedPoints.push(data);
-        this.activeRune.currentIndex = data;
-        // this.activeRune.letter.push(data);
+        this.activeRune.currentPointIndex = data;
+        console.log("Currnet index: " + this.activeRune.currentPointIndex);
     },
     deselectPoint: function(data) {
         this.activeRune.selectedPoints = _.without(this.activeRune.selectedPoints, data);

@@ -44,8 +44,6 @@ TabletData.prototype = {
 /* ========== Rune Model ========== */
 
 function RuneModel (data) {
-    console.log("@runemodel");
-    console.log(data);
     this.data = data || {
         /* All points / paths in rune */
         paths: [ [] ],
@@ -87,7 +85,10 @@ RuneModel.prototype = {
         return this.data.currentPathIndex;
     },
     get currentPointIndex() {
-        return this.data.scurrentPointIndex;
+        return this.data.currentPointIndex;
+    },
+    set currentPointIndex(currentPointIndex) {
+        this.data.currentPointIndex = currentPointIndex;
     }
 }
 

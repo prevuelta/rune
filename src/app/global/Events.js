@@ -19,7 +19,7 @@ function Events(app) {
 			} else {
                 events.app.data.deselectPoint(data[1]);
 			}
-            console.log(data);
+            console.log("Selected points:");
 			console.log(app.data.activeRune.selectedPoints);
 		},
 		clearGridPoints : function (e) {
@@ -55,7 +55,6 @@ Events.prototype = {
 
         // Needs fixing
 		document.addEventListener('keydown', function(e) {
-			console.log(e.target.tagName);
             if(e.target.tagName !== 'INPUT') {
     			switch(e.keyCode) {
     				case 8: //delete
