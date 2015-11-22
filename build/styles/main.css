@@ -121,7 +121,7 @@ body {
   position: fixed;
   left: 12px;
   top: 96px;
-  height: 192px;
+  height: auto;
   width: 168px;
   background: #f4f4f4; }
   .panel.ui-draggable-dragging {
@@ -130,14 +130,17 @@ body {
     padding: 12px;
     font-size: 12px; }
   .panel .handle {
+    cursor: pointer;
     background: #d4d4d4;
     width: 100%;
-    height: 36px;
+    height: 24px;
     font-weight: bold;
     font-size: 12px;
-    padding: 3px 6px;
-    line-height: 36px;
+    padding: 0 6px;
+    line-height: 24px;
     box-sizing: border-box; }
+    .panel .handle:active {
+      background: red; }
 
 .tool {
   display: inline-block;

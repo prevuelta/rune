@@ -2,7 +2,7 @@
 	position: fixed;
 	left: $bu;
 	top: $bu8;
-	height: $bu * 16;
+	height: auto;//$bu * 16;
 	width: $panel-width;
 	background: #f4f4f4;
 	&.ui-draggable-dragging {
@@ -13,14 +13,18 @@
 		font-size: 12px;
 	}
 	.handle {
+        cursor: pointer;
 		background: #d4d4d4;
 		width: 100%;
-		height: $bu3;
+		height: $bu2;
 		font-weight: bold;
 		font-size: 12px;
-		padding: $qbu $hbu;
-		line-height: $bu3;
+		padding: 0 $hbu;
+		line-height: $bu2;
 		box-sizing: border-box;
+        &:active {
+            background: red;
+        }
 	}
 }
 

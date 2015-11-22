@@ -17,4 +17,12 @@ Enjoy :)
 
 ###Dev notes:
 
-Re-jigging to re-structure all point modifiers (transforms) as 'extensions'
+* Re-jigging to use plugins for most non-core functionality
+* Setup color for a selected point at index.
+
+ ####Plugin ideas:
+
+ * Randomise points
+ * Shapes (center at selected point);
+ * Grid plugins and multiple grids eg. Diagonal, square, ellipse
+ * Proper preview mode

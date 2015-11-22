@@ -23,9 +23,6 @@ module.exports = function(exposedData) {
     return {
         title: 'Point Translate',
         icon: '',
-        fn: function(oldPoints, direction, amount) {
-            return newPoint;
-        },
         panel: React.createClass({
             render: function () {
                 return  <div>

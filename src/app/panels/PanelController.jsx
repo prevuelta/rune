@@ -8,10 +8,8 @@ var React = require('react'),
 
 
 function PanelController (app) {
-
     this.app = app;
     this.loadPanels();
-
 }
 
 PanelController.prototype = {
@@ -28,10 +26,11 @@ PanelController.prototype = {
 
             },
             render: function() {
-                var offsetY = this.props.offset * 200;
+                var offsetY = this.props.offset * 50;
+                var offsetX = this.props.offset * 5;
                 return (
                     <Draggable
-                        start={{x: 800, y: offsetY }}
+                        start={{x: offsetX + 800, y: offsetY }}
                         onStart={this.handleStart}
                         handle=".handle"
                         >
