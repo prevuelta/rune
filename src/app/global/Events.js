@@ -27,7 +27,7 @@ function Events(app) {
 			events.app.canvas.draw();
 		},
 		preview: function (e) {
-			events.app.canvas.displayMode('preview');
+			events.app.canvas.displayMode = 'preview';
 		},
 		deselectAll: function (e) {
 			events.app.data.activeRune.selectedPoints = [];

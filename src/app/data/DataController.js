@@ -25,10 +25,7 @@ DataController.prototype = {
         this.tablet.runes.push(new RuneData(null));
     },
     addPoint: function(gridRef) {
-        var rune = this.activeRune;
-        console.log(rune);
-        console.log("Waht" + rune.currentPointIndex);
-        rune.currentPath.splice(rune.currentPointIndex, 0, [gridRef]);
+        this.activeRune.addPoint(gridRef);
         util.dispatchRuneEvent('deselectAll')
 
     },
@@ -41,7 +38,7 @@ DataController.prototype = {
 
     },
     clearRune: function() {
-        this.activeRune.clearPaths();
+        this.activeRune.clearPaths().currentPointIndex = 0;
     },
 
     updateGrid : function() {

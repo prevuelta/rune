@@ -19,6 +19,7 @@ Enjoy :)
 
 * Re-jigging to use plugins for most non-core functionality
 * Setup color for a selected point at index.
+* SVG repo of symbols
 
  ####Plugin ideas:
 
@@ -26,3 +27,4 @@ Enjoy :)
  * Shapes (center at selected point);
  * Grid plugins and multiple grids eg. Diagonal, square, ellipse
  * Proper preview mode
+ * Symbol library

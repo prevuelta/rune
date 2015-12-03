@@ -46,15 +46,25 @@ function CanvasController (tabletModel) {
 CanvasController.prototype = {
 	constructor: CanvasController,
     set displayMode(displayMode) {
-        switch(displayMode) {
-            case 'preview':
-                this.toggleGrid();
-            break;
-            default :
-                this.toggleGrid();
-            break;
-        }
-        this.displayMode = displayMode;
+        this.toggleGrid();
+        var isPreview = displayMode === 'preview';
+        this.layerControllers.forEach(function(layerController, index) {
+            if (index) {
+                console.log(layerController.layer);
+                layerController.layer.children.forEach(function(child){
+                    console.log(child);
+                    if (child.isHandle) {
+                        child.visible = !isPreview;
+                    } else if (child.runePath) {
+                        child.fillColor = isPreview ? 'black' : null;
+                        child.strokeColor = isPreview ? null : 'red';
+                        child.closed = isPreview;
+                    }
+                });
+            }
+        });
+        this._displayMode = displayMode;
+        this.redraw();
     },
     get gridLayer() {
         return this.layerControllers[0].layer;

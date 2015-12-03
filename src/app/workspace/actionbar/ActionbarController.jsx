@@ -49,9 +49,11 @@ function ActionBar(app) {
 			action: function(e) {
 				e.preventDefault();
                 actionBar.app.canvas.displayMode = 'preview';
-				var svgString = paper.project.exportSVG({asString:true});
+                console.log("here");
+				var svgString = paper.project.exportSVG({asString:true, layerIndex: 1});
 				var url = "data:image/svg+xml;utf8," + encodeURIComponent(svgString);
 				var link = document.createElement("a");
+                console.log("and here");
 				link.download = 'rune_export.svg';
 				link.href = url;
 				link.click();

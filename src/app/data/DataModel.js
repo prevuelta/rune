@@ -45,13 +45,8 @@ TabletData.prototype = {
 
 function RuneModel (data) {
     this.data = data || {
-        /* All points / paths in rune */
         paths: [ [] ],
-        /* Point specific transforms */
-
         selectedPoints: [],
-
-        /* Current index: [path, point] */
         currentPathIndex: 0,
         currentPointIndex: 0
     };
@@ -61,6 +56,12 @@ RuneModel.prototype = {
     constructor: RuneModel,
     clearPaths: function() {
         this.data.paths = [[]];
+        return this;
+    },
+    addPoint: function(gridRef) {
+        this.currentPath.splice(this.currentPointIndex, 0, [gridRef]);
+        currentPointIndex = this.currentPath.length;
+        return this;
     },
     get currentPath() {
         return this.data.paths[this.data.currentPathIndex];

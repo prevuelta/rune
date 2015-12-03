@@ -34,7 +34,9 @@ RuneView.prototype = {
             })
         })
 
+        testPath.runePath = true;
         testPath.strokeColor = '#ff0000';
+
 
     },
     createRuneSegment: function(point, value, selected, transform) {
@@ -53,6 +55,7 @@ RuneView.prototype = {
 
         var path = new paper.Path.Rectangle(paperPoint.subtract([5, 5]), 10);
 
+        path.isHandle = true;
         path.fillColor = 'white';
         path.value = value;
         path.selected = selected || false;
