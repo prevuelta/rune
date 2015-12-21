@@ -1,87 +1,25 @@
 'use strict';
 
 var React = require('react');
+var paper = require('paper');
 
 module.exports = function(data) {
-    return {
-        title: 'Weight Transform',
-        icon: '',
-        fn: function(originalPoints, res) {
 
+    console.log(data);
 
-                    // Hypothesis to midpoint
-        //              var t1_hyp = points[2].getDistance(midPoint);
-        //              var t1_adj = that.xRes / 2;
+    var transformPoints = function () {
+            var points = data.selectedPoints;
 
-        //              // var theta = 
-        //              var t1_phi = 90 - radDeg(Math.acos( t1_adj / t1_hyp));
+            console.log(points);
+            console.log(points.length);
 
-        //              console.log("Phi " + t1_phi);
+            if(points.length !== 4) {
+                console.log("Not the right no of selected points");
+                return;
+            }
 
-        //              // New vector
-        //              var vec = new paper.Point(points[2]);
-        //              vec.angle = (90 - radDeg( getAngle(points[0], points[2]))) - t1_phi;
+            console.log("Going strong!");
 
-        //              var side = getSize(null, t1_adj, t1_hyp);
-
-        //              var newVector = vec.normalize();
-
-        //              console.log("Side" + side);
-
-        //              newVector.length = newVector.length * side;
-
-        //              var newPoint = points[2].subtract(newVector);
-
-        //              console.log(newPoint);
-
-        //              // testPath.lineTo(newPoint);
-
-        // // 
-        //              /* ------ Second triangulation ------ */
-
-        //              var otherPoint = new paper.Point(points[0].x, points[2].y);
-
-        //              console.log(otherPoint + " " + points[2]);
-
-        //              testPath.lineTo(otherPoint);
-
-        //              testPath.lineTo(points[2]);
-
-        //              var t2_adj = otherPoint.getDistance(points[2]);
-
-        //              console.log("adj" + t2_adj);
-
-        //              console.log("Vec angle" + vec.angle);
-
-        //              var t2_hyp = t2_adj / Math.cos( degRad(vec.angle) );
-
-        //              console.log("Hyp: " + t2_hyp + "  " +  newVector.length);
-
-        //              newVector.length = Math.abs(t2_hyp) - newVector.length;
-
-        //              var newnewpoint = newPoint.subtract(newVector);
-
-        //              testPath.lineTo(newnewpoint);
-
-        //              var finalMeasure = points[0].getDistance(newnewpoint);
-
-        //              points[3].y = points[0].y + finalMeasure;
-        //              points[1].y = points[2].y - finalMeasure;
-
-            // var showConstructors = true;
-
-            // Draw it all
-            // var testPath = new paper.Path();
-
-            // testPath.strokeColor = 'orange';
-
-            // testPath.moveTo(points[0]);
-            // testPath.lineTo(points[2]);
-
-
-            // testPath.lineTo(otherPoint);
-
-            // testPath.lineTo(points[2]);
 
             var testPath = new paper.Path();
             testPath.strokeColor = 'red';
@@ -149,10 +87,30 @@ module.exports = function(data) {
 
             // app.tablet.getactiveRune().letter.transforms = {};
 
-            app.tablet.getactiveRune().letter.transforms[originalPoints[3]] = [-90, -finalMeasure];
-            app.tablet.getactiveRune().letter.transforms[originalPoints[1]] = [90, finalMeasure];
+            // app.tablet.getactiveRune().letter.transforms[originalPoints[3]] = [-90, -finalMeasure];
+            // app.tablet.getactiveRune().letter.transforms[originalPoints[1]] = [90, finalMeasure];
 
             // return newPoints;
-        };
+    }
+
+    return {
+        title: 'Weight Transform',
+        icon: '',
+        panel: React.createClass({
+            getInitialState : function() {
+                return {data: data.gridOptions };
+            },
+            triggerTransform: function() {
+                console.log("Doing the 4pt");
+                transformPoints();
+            },
+            render: function() {
+                return (
+                    <div>
+                        <button onClick={this.triggerTransform}>4pt Transform</button>
+                    </div>
+                );
+            }
+        })
     }
 }

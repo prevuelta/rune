@@ -50,6 +50,7 @@ function RuneModel (data) {
         currentPathIndex: 0,
         currentPointIndex: 0
     };
+   this.reverseAdd = false;
 }
 
 RuneModel.prototype = {
@@ -59,8 +60,20 @@ RuneModel.prototype = {
         return this;
     },
     addPoint: function(gridRef) {
-        this.currentPath.splice(this.currentPointIndex, 0, [gridRef]);
-        currentPointIndex = this.currentPath.length;
+        if (this.selectedPoints.length) {
+            if (this.selectedPoints[0] == 0 ) {
+                console.log("boo");
+                this.reverseAdd = true;
+            } else if (this.selectedPoints[0] == this.currentPath.length-1) {
+                this.reverseAdd = false;
+            }
+        }
+        if(this.reverseAdd) {
+            this.currentPath.unshift([gridRef]);
+        } else {
+            this.currentPointIndex++;
+            this.currentPath.splice(this.currentPointIndex, 0, [gridRef]);
+        }
         return this;
     },
     get currentPath() {

@@ -3,6 +3,8 @@ var paper = require('paper');
 var GridView = require('./grid/GridView.js');
 var RuneView = require('./rune/RuneView.js');
 
+var util = require('../global/util');
+
 /* ========== Render Tablet ========== */
 
 function CanvasController (tabletModel) {
@@ -40,6 +42,10 @@ function CanvasController (tabletModel) {
 	canvasController.draw();
 
 	canvasController.showGrid = true;
+
+    canvasController.canvas.addEventListener('mousedown', function(event) {
+        util.dispatchRuneEvent('deselectAll');
+    });
 
 }
 

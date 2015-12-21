@@ -55,7 +55,7 @@ DataController.prototype = {
     selectPoint: function(data) {
         this.activeRune.selectedPoints.push(data);
         this.activeRune.currentPointIndex = data;
-        console.log("Currnet index: " + this.activeRune.currentPointIndex);
+        console.log("Current index: " + this.activeRune.currentPointIndex);
     },
     deselectPoint: function(data) {
         this.activeRune.selectedPoints = _.without(this.activeRune.selectedPoints, data);

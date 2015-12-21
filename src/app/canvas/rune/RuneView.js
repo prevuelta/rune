@@ -53,7 +53,7 @@ RuneView.prototype = {
             })());
         }
 
-        var path = new paper.Path.Rectangle(paperPoint.subtract([5, 5]), 10);
+        var path = new paper.Path.Rectangle(paperPoint.subtract([7, 7]), 14);
 
         path.isHandle = true;
         path.fillColor = 'white';
@@ -69,17 +69,9 @@ RuneView.prototype = {
         }
 
         path.onMouseDown = function(e) {
+            e.event.stopImmediatePropagation();
             this.selected = !this.selected;
             util.dispatchRuneEvent('selectPoint', [this.selected, e.target.value] );
-        }
-
-        path.onKeyDown = function(e) {
-            console.log(e.key);
-            switch(e.key) {
-                case 'delete' :
-                    console.log('de');
-                break;
-            }
         }
 
         return point;

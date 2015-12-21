@@ -2,6 +2,11 @@ button {
 	padding: $hbu $bu;
 	border: none;
 	border-radius: 2px;
+    cursor: pointer;
+    &:hover {
+        background: white;
+        color: black;
+    }
 }
 
 label {

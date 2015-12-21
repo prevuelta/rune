@@ -37,7 +37,11 @@ header {
 button {
   padding: 6px 12px;
   border: none;
-  border-radius: 2px; }
+  border-radius: 2px;
+  cursor: pointer; }
+  button:hover {
+    background: white;
+    color: black; }
 
 label {
   display: block; }
