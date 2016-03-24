@@ -22,7 +22,7 @@ RuneView.prototype = {
 
         var testPath = new paper.Path({
             segments: runeView.data.currentPath.map(function(point, idx) {
-                var pointWithTransforms = point.reduce(function(prev, current) {
+                var pointWithTransforms = point[0].reduce(function(prev, current) {
                     return [prev[0] + current[0], prev[1] + current[1]];
                 });
                 return runeView.createRuneSegment(
@@ -35,17 +35,32 @@ RuneView.prototype = {
         })
 
         testPath.runePath = true;
-        testPath.strokeColor = '#ff0000';
-
+        testPath.strokeColor = '#000000';
 
     },
     createRuneSegment: function(point, value, selected, transform) {
 
-        var paperPoint = new paper.Point(point);
+        let paperPoint;
+
+        console.log("Point", point);
+
+        if (point.length < 1) {
+            console.log("argh");
+            paperPoint = new paper.Segment({
+                point: point[0],
+                handleIn: point[1],
+                handleOut: point[2]
+            });
+        } else {
+            paperPoint = new paper.Point(point);
+        }
+
+        let p = paperPoint.point || paperPoint;
+
 
         if(transform) {
             console.log(transform);
-            paperPoint.add((function() {
+            p.add((function() {
                 var point = new paper.Point();
                 point.angle = transform[0];
                 point.length = transform[1];
@@ -53,7 +68,7 @@ RuneView.prototype = {
             })());
         }
 
-        var path = new paper.Path.Rectangle(paperPoint.subtract([7, 7]), 14);
+        let path = new paper.Path.Rectangle(p.subtract([7, 7]), 14);
 
         path.isHandle = true;
         path.fillColor = 'white';
@@ -74,7 +89,7 @@ RuneView.prototype = {
             util.dispatchRuneEvent('selectPoint', [this.selected, e.target.value] );
         }
 
-        return point;
+        return paperPoint;
     }
 }
 

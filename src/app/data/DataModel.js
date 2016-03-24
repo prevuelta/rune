@@ -41,6 +41,28 @@ TabletData.prototype = {
     }
 }
 
+/* ========== Point Model ========== */
+
+// {
+//     x: 0,
+//     y: 0,
+//     h1: {x: 0, y: 0},
+//     h2: {x: 0, y: 0},
+//     gridRef: 0,
+//     transforms: [
+//         [0, 1],
+//     ]
+// }
+
+// function Point {
+//     this.p
+// }
+
+// Point.prototype = {
+//     constructor: Point,
+//     isCurve:
+// }
+
 /* ========== Rune Model ========== */
 
 function RuneModel (data) {
@@ -62,17 +84,16 @@ RuneModel.prototype = {
     addPoint: function(gridRef) {
         if (this.selectedPoints.length) {
             if (this.selectedPoints[0] == 0 ) {
-                console.log("boo");
                 this.reverseAdd = true;
             } else if (this.selectedPoints[0] == this.currentPath.length-1) {
                 this.reverseAdd = false;
             }
         }
         if(this.reverseAdd) {
-            this.currentPath.unshift([gridRef]);
+            this.currentPath.unshift([[gridRef], [0, 0], [10, 100]]);
         } else {
             this.currentPointIndex++;
-            this.currentPath.splice(this.currentPointIndex, 0, [gridRef]);
+            this.currentPath.splice(this.currentPointIndex, 0, [[gridRef]]);
         }
         return this;
     },
