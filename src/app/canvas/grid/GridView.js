@@ -1,5 +1,7 @@
-var paper = require('paper');
 var util = require('../../global/util');
+var constants = require('../../global/const');
+
+var paper = require('paper');
 
 
 /* ========== Grid view ========== */
@@ -11,7 +13,7 @@ function GridView(options) {
 
 	this.points = [];
 
-	this.gridColor = 'orange';
+	this.gridColor = constants.BLUE;
 
 	for(var row = 0; row < this.units; row++) {
 

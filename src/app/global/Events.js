@@ -1,5 +1,4 @@
 var util = require('./util');
-var _ = require('lodash');
 
 // Event listeners
 function Events(app) {

@@ -1,6 +1,6 @@
-var React = require('React');
 var util = require('../../global/util.js');
 
+var React = require('react');
 var paper = require('paper');
 
 function ActionBar(app) {

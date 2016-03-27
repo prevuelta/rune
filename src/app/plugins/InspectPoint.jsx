@@ -4,16 +4,23 @@ var React = require('react');
 
 module.exports = function(data) {
     return {
-        title: 'Inspect',
+        title: 'Inspect point',
         panel: React.createClass({
             getInitialState : function() {
-                return {};
+                debugger;
+                return { data: data.selectedPoints };
             },
             render: function() {
                 return (
                     <div>
-                        <h4>Inspect point</h4>
-                        Some point stuff here
+                        <ul>
+                            {
+                                this.state.data.map(function(point) {
+                                    return <li> {point.x}, {point.y}
+                                        { point.isCurve } </li>
+                                })
+                            }
+                        </ul> 
                     </div>
                 );
             }

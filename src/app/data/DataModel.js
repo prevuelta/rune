@@ -43,25 +43,36 @@ TabletData.prototype = {
 
 /* ========== Point Model ========== */
 
-// {
-//     x: 0,
-//     y: 0,
-//     h1: {x: 0, y: 0},
-//     h2: {x: 0, y: 0},
-//     gridRef: 0,
-//     transforms: [
-//         [0, 1],
-//     ]
-// }
+class BasePoint {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+    somfunc() {
+        
+    }
+}
 
-// function Point {
-//     this.p
-// }
+class RunePoint extends BasePoint {
+    
+    constructor(x, y) { 
+        super(x, y); 
+        this.transforms = [];
+        this.handles = [];
+    }
 
-// Point.prototype = {
-//     constructor: Point,
-//     isCurve:
-// }
+    addHandles () {
+        this.handles = [new BasePoint(), new BasePoint()];
+    }
+
+    render (unit) {
+        return [this.x * unit  + (unit / 2), this.y * unit  + (unit / 2)]; 
+    }
+
+    get isCurve () {
+        return 'maybe...';
+    }
+}
 
 /* ========== Rune Model ========== */
 
@@ -90,10 +101,10 @@ RuneModel.prototype = {
             }
         }
         if(this.reverseAdd) {
-            this.currentPath.unshift([[gridRef], [0, 0], [10, 100]]);
+            this.currentPath.unshift(new RunePoint(gridRef[0], gridRef[1]));
         } else {
             this.currentPointIndex++;
-            this.currentPath.splice(this.currentPointIndex, 0, [[gridRef]]);
+            this.currentPath.splice(this.currentPointIndex, 0, new RunePoint(gridRef[0], gridRef[1]));
         }
         return this;
     },

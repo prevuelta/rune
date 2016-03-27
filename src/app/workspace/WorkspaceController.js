@@ -1,6 +1,5 @@
 var ActionBar = require('./actionbar/ActionBarController.jsx');
 var PanelController = require('./../panels/PanelController.jsx');
-var React = require('React');
 
 function WorkSpaceController(app) {
 

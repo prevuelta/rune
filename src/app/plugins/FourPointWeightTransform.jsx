@@ -1,7 +1,7 @@
 'use strict';
 
-var React = require('react');
 var paper = require('paper');
+var React = require('React');
 
 module.exports = function(data) {
 

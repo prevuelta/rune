@@ -1,8 +1,6 @@
 'use strict';
 
 var util = require('../global/util.js');
-var React = require('react'),
-    Draggable = require('react-draggable');
 
 // var getGridPanelComponent = require('./grid/GridPanelComponent.jsx');
 

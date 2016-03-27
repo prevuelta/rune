@@ -1,9 +1,9 @@
-var paper = require('paper');
-
 var GridView = require('./grid/GridView.js');
 var RuneView = require('./rune/RuneView.js');
 
 var util = require('../global/util');
+
+var paper = require('paper');
 
 /* ========== Render Tablet ========== */
 
@@ -11,7 +11,6 @@ function CanvasController (tabletModel) {
 
 	// Canvas
 	var canvasController = this;
-
     canvasController.data = tabletModel;
 
 	canvasController.canvas = document.getElementById('rune-canvas');

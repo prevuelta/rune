@@ -1,5 +1,5 @@
-var paper = require('paper');
 var util = require('../../global/util');
+var paper = require('paper');
 
 /* ========== Tablet ========== */
 
@@ -22,11 +22,13 @@ RuneView.prototype = {
 
         var testPath = new paper.Path({
             segments: runeView.data.currentPath.map(function(point, idx) {
-                var pointWithTransforms = point[0].reduce(function(prev, current) {
-                    return [prev[0] + current[0], prev[1] + current[1]];
-                });
+                // var pointWithTransforms = point.reduce(function(prev, current) {
+                //     return [prev[0] + current[0], prev[1] + current[1]];
+                // });
+                debugger;
                 return runeView.createRuneSegment(
-                    runeView.grid.renderPoint(pointWithTransforms),
+                    point.render(runeView.grid.res),
+                    //runeView.grid.renderPoint(pointWithTransforms),
                     idx,
                     runeView.data.selectedPoints.indexOf(idx) > -1,
                     null
@@ -45,7 +47,6 @@ RuneView.prototype = {
         console.log("Point", point);
 
         if (point.length < 1) {
-            console.log("argh");
             paperPoint = new paper.Segment({
                 point: point[0],
                 handleIn: point[1],
