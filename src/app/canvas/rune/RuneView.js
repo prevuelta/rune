@@ -25,7 +25,6 @@ RuneView.prototype = {
                 // var pointWithTransforms = point.reduce(function(prev, current) {
                 //     return [prev[0] + current[0], prev[1] + current[1]];
                 // });
-                debugger;
                 return runeView.createRuneSegment(
                     point.render(runeView.grid.res),
                     //runeView.grid.renderPoint(pointWithTransforms),

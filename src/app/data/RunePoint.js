@@ -18,9 +18,15 @@ class BasePoint {
 class RunePoint extends BasePoint {
 
     constructor(x, y) {
-        super(x, y);
-        this.transforms = [];
-        this.handles = [];
+        if (typeof x === 'object') {
+            super(x.x, x.y);
+            this.transforms = x.transforms || [];
+            this.handles = x.handles || [];
+        } else {
+            super(x, y);
+            this.transforms = [];
+            this.handles = [];
+        }
     }
 
     addHandles () {
@@ -36,4 +42,4 @@ class RunePoint extends BasePoint {
     }
 }
 
-moudle.exports = RunePoint;
+module.exports = RunePoint;
