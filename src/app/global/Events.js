@@ -20,6 +20,7 @@ function Events(app) {
 			}
             console.log("Selected points:");
 			console.log(app.data.activeRune.selectedPoints);
+            events.app.canvas.draw();
 		},
 		clearGridPoints : function (e) {
 			events.app.data.clearRune();

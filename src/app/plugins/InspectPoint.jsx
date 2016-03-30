@@ -8,19 +8,22 @@ module.exports = function(data) {
         panel: React.createClass({
             getInitialState : function() {
                 debugger;
-                return { data: data.selectedPoints };
+                return { points: data.selectedPoints };
             },
             render: function() {
                 return (
                     <div>
                         <ul>
                             {
-                                this.state.data.map(function(point) {
-                                    return <li> {point.x}, {point.y}
-                                        { point.isCurve } </li>
+                                this.state.points.map(function(point) {
+                                    console.log(point);
+                                    return <li>
+                                        {point.x}, {point.y}
+                                        { point.isCurve }
+                                    </li>
                                 })
                             }
-                        </ul> 
+                        </ul>
                     </div>
                 );
             }

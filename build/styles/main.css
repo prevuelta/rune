@@ -26,8 +26,11 @@ h5 {
 
 header {
   position: fixed;
-  left: 24px;
-  top: 24px; }
+  left: 0;
+  top: 0;
+  right: 0;
+  padding: 12px;
+  background: #f4f4f4; }
   header strong {
     display: inline-block;
     line-height: 1.8em;
@@ -122,12 +125,10 @@ body {
         font-weight: bold; }
 
 .panel {
-  position: fixed;
-  left: 12px;
-  top: 96px;
   height: auto;
   width: 168px;
-  background: #f4f4f4; }
+  background: #f4f4f4;
+  border-bottom: 1px solid black; }
   .panel.ui-draggable-dragging {
     z-index: 9999; }
   .panel .panel-content {
@@ -163,5 +164,14 @@ body {
   background: white; }
   .tool:hover {
     background: #f4f4f4; }
+
+#rune-panels {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-left: 1px solid teal;
+  background: #f4f4f4;
+  width: 168px; }
 
 /*# sourceMappingURL=main.css.map */

@@ -66,11 +66,11 @@ function RuneModel (data) {
 
 RuneModel.prototype = {
     constructor: RuneModel,
-    clearPaths: function() {
+    clearPaths: () => {
         this.data.paths = [[]];
         return this;
     },
-    addPoint: function(gridRef) {
+    addPoint: (gridRef) => {
         if (this.selectedPoints.length) {
             if (this.selectedPoints[0] == 0 ) {
                 this.reverseAdd = true;

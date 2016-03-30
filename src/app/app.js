@@ -23,7 +23,7 @@ function App() {
     app.plugins = require('./plugins')({
         gridOptions: app.data.tablet.gridOptions,
         selectedPoints: app.data.activeRune.selectedPoints,
-        addTransformToSelected: function(data) { app.data.addTransformToSelected(data); },
+        addTransformToSelected: (data) => { app.data.addTransformToSelected(data); },
         util: app.util,
         layers: app.canvas.layerControllers
     });

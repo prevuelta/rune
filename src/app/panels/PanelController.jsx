@@ -12,6 +12,19 @@ function PanelController (app) {
     this.loadPanels();
 }
 
+// <Draggable
+//     start={{x: offsetX + 800, y: offsetY }}
+//     onStart={this.handleStart}
+//     handle=".handle"
+//     >
+//     <div className="panel">
+//         <div className="handle">{ this.props.options.title }</div>
+//         <div className="panel-content">
+//             { this.props.children }
+//         </div>
+//     </div>
+// </Draggable>
+
 PanelController.prototype = {
     constructor: PanelController,
     loadPanels: function() {
@@ -29,18 +42,12 @@ PanelController.prototype = {
                 var offsetY = this.props.offset * 50;
                 var offsetX = this.props.offset * 5;
                 return (
-                    <Draggable
-                        start={{x: offsetX + 800, y: offsetY }}
-                        onStart={this.handleStart}
-                        handle=".handle"
-                        >
-                        <div className="panel">
-                            <div className="handle">{ this.props.options.title }</div>
-                            <div className="panel-content">
-                                { this.props.children }
-                            </div>
+                    <div className="panel">
+                        <div className="handle">{ this.props.options.title }</div>
+                        <div className="panel-content">
+                            { this.props.children }
                         </div>
-                    </Draggable>
+                    </div>
                 );
             }
         });

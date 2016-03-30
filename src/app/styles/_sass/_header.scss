@@ -1,7 +1,10 @@
 header {
-	position: fixed; 
-	left: $bu2;
-	top: $bu2;
+	position: fixed;
+	left: 0;
+	top: 0;
+    right: 0;
+    padding: $bu;
+    background: #f4f4f4;
 	strong{
 		display: inline-block;
 		line-height: 1.8em;

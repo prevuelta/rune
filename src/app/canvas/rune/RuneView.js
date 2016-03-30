@@ -39,7 +39,7 @@ RuneView.prototype = {
         testPath.strokeColor = '#000000';
 
     },
-    createRuneSegment: function(point, value, selected, transform) {
+    createRuneSegment: function(point, value, isSelected, transform) {
 
         let paperPoint;
 
@@ -73,7 +73,10 @@ RuneView.prototype = {
         path.isHandle = true;
         path.fillColor = 'white';
         path.value = value;
-        path.selected = selected || false;
+        path.isSelected = isSelected || false;
+        path.strokeWidth = 4;
+
+        path.strokeColor = path.isSelected ? 'red' : false;
 
         path.onMouseEnter = function(e) {
             // this.fillColor = this.selected ? 'red' : 'orange';
@@ -85,8 +88,8 @@ RuneView.prototype = {
 
         path.onMouseDown = function(e) {
             e.event.stopImmediatePropagation();
-            this.selected = !this.selected;
-            util.dispatchRuneEvent('selectPoint', [this.selected, e.target.value] );
+            this.isSelected = !this.isSelected;
+            util.dispatchRuneEvent('selectPoint', [this.isSelected, e.target.value] );
         }
 
         return paperPoint;
