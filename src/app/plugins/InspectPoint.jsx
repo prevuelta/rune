@@ -18,8 +18,8 @@ module.exports = function(data) {
                                 this.state.points.map(function(point) {
                                     console.log(point);
                                     return <li>
-                                        {point.x}, {point.y}
-                                        { point.isCurve }
+                                        {point.point.x}, {point.point.y}
+                                        { point.point.isCurve }
                                     </li>
                                 })
                             }

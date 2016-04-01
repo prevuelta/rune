@@ -17,9 +17,11 @@ DataController.prototype = {
         return this.tablet.runes[this.currentRune];
     },
     save : function() {
-        this.tablet.data.runes = this.tablet.runes.map(function(entry) {
-            return entry.data;
-        });
+        debugger;
+        this.tablet.data.runes = this.tablet.runes;
+        //.map(function(entry) {
+        //     return entry.data;
+        // });
         localStorage["runeData"] = JSON.stringify(this.tablet.data);
     },
     addRune : function() {
@@ -48,10 +50,11 @@ DataController.prototype = {
         // });
     },
     deleteSelected : function() {
-        var rune = this.activeRune;
-        rune.currentPath = rune.currentPath.filter(function(point, idx) {
-            return !~rune.selectedPoints.indexOf(idx);
-        });
+        // FIX THIS
+        // var rune = this.activeRune;
+        // rune.currentPath = rune.currentPath.filter(function(value, idx) {
+            // return !~rune.selectedPoints.indexOf(idx);
+        // });
     },
     selectPoint: function(data) {
         this.activeRune.selectedPoints.push(data);
@@ -59,7 +62,10 @@ DataController.prototype = {
         console.log("Current index: " + this.activeRune.currentPointIndex);
     },
     deselectPoint: function(data) {
-        this.activeRune.selectedPoints = _.without(this.activeRune.selectedPoints, data);
+        // debugger;
+        this.activeRune.selectedPoints = _.reject(this.activeRune.selectedPoints, (val) => {
+            return val.idx === data.idx;
+        });
     }
 }
 

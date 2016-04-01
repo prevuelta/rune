@@ -26,10 +26,10 @@ RuneView.prototype = {
                 //     return [prev[0] + current[0], prev[1] + current[1]];
                 // });
                 return runeView.createRuneSegment(
-                    point.render(runeView.grid.res),
+                    point,
                     //runeView.grid.renderPoint(pointWithTransforms),
                     idx,
-                    runeView.data.selectedPoints.indexOf(idx) > -1,
+                    runeView.data.selectedPoints.some((point) => point.idx === idx),
                     null
                 );
             })
@@ -39,20 +39,22 @@ RuneView.prototype = {
         testPath.strokeColor = '#000000';
 
     },
-    createRuneSegment: function(point, value, isSelected, transform) {
+    createRuneSegment: function(point, idx, isSelected, transform) {
 
         let paperPoint;
 
-        console.log("Point", point);
+        let renderedPoint = point.render;
+
+        debugger;
 
         if (point.length < 1) {
             paperPoint = new paper.Segment({
-                point: point[0],
-                handleIn: point[1],
-                handleOut: point[2]
+                point: renderedPoint[0],
+                handleIn: renderedPoint[1],
+                handleOut: renderedPoint[2]
             });
         } else {
-            paperPoint = new paper.Point(point);
+            paperPoint = new paper.Point(renderedPoint);
         }
 
         let p = paperPoint.point || paperPoint;
@@ -72,7 +74,7 @@ RuneView.prototype = {
 
         path.isHandle = true;
         path.fillColor = 'white';
-        path.value = value;
+        path.value = { idx: idx, point: point};
         path.isSelected = isSelected || false;
         path.strokeWidth = 4;
 
