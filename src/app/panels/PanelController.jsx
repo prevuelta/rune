@@ -56,14 +56,14 @@ PanelController.prototype = {
 
         var Panels = React.createClass({
             render: function() {
-                console.log(this.props.data);
+                debugger;
                 return (
                     <div>
                         {
                             this.props.data.map(function(panel, idx) {
                                 var Component = panel.panel;
                                 return <PanelWrapper offset={idx} options={{title : panel.title}} >
-                                     <Component />
+                                     <Component data="{panel.data}" />
                                  </PanelWrapper>;
                             })
                         }

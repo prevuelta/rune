@@ -1,4 +1,4 @@
-var util = require('../../global/util');
+var util = require('../global/util');
 var paper = require('paper');
 
 /* ========== Tablet ========== */
@@ -43,9 +43,7 @@ RuneView.prototype = {
 
         let paperPoint;
 
-        let renderedPoint = point.render;
-
-        debugger;
+        let renderedPoint = point.render(this.grid.res);
 
         if (point.length < 1) {
             paperPoint = new paper.Segment({

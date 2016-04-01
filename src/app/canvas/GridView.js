@@ -1,5 +1,5 @@
-var util = require('../../global/util');
-var constants = require('../../global/const');
+var util = require('../global/util');
+var constants = require('../global/const');
 
 var paper = require('paper');
 

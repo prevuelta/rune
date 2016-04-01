@@ -1,4 +1,4 @@
-var TabletData = require('./DataModel');
+var TabletModel = require('./TabletModel');
 var util = require('../global/util');
 
 var _ = require('lodash');
@@ -7,7 +7,7 @@ var _ = require('lodash');
 
 function DataController(tabletModel) {
 
-    this.tablet = new TabletData(tabletModel) || new TabletData(null);
+    this.tablet = new TabletModel(tabletModel);
     this.currentRune = 0;
 }
 

@@ -3,7 +3,7 @@ var RunePoint = require('./RunePoint');
 
 /* ========== Tablet Model ========== */
 
-class TabletData {
+class TabletModel {
     constructor (data) {
 
         var defaultUnits = 10;
@@ -126,4 +126,4 @@ class RuneModel {
     // }
 }
 
-module.exports = TabletData;
+module.exports = TabletModel;
