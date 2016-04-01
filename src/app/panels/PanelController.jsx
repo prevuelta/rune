@@ -4,6 +4,8 @@ var util = require('../global/util.js');
 var React = require('react');
 var Draggable = require('react-draggable');
 
+var React = require('react');
+
 // var getGridPanelComponent = require('./grid/GridPanelComponent.jsx');
 
 
