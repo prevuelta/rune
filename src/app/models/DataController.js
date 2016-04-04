@@ -1,6 +1,5 @@
 var TabletModel = require('./TabletModel');
-var util = require('../global/util');
-
+var Events = require('../global/Events');
 var _ = require('lodash');
 
 /* ========== Data ========== */
@@ -9,6 +8,9 @@ function DataController(tabletModel) {
 
     this.tablet = new TabletModel(tabletModel);
     this.currentRune = 0;
+
+    Events.addPoint.add(this.addPoint);
+
 }
 
 DataController.prototype = {
@@ -19,9 +21,6 @@ DataController.prototype = {
     save : function() {
         debugger;
         this.tablet.data.runes = this.tablet.runes;
-        //.map(function(entry) {
-        //     return entry.data;
-        // });
         localStorage["runeData"] = JSON.stringify(this.tablet.data);
     },
     addRune : function() {
@@ -29,7 +28,7 @@ DataController.prototype = {
     },
     addPoint: function(gridRef) {
         this.activeRune.addPoint(gridRef);
-        util.dispatchRuneEvent('deselectAll')
+        Events.deselectAll.dispatch();
 
     },
     addTransformToSelected: function (transform) {
@@ -37,7 +36,7 @@ DataController.prototype = {
         rune.selectedPoints.forEach(function(pointIndex) {
             rune.currentPath[pointIndex].push(transform);
         });
-        util.dispatchRuneEvent('redraw');
+        Events.redraw.dispatch();
 
     },
     clearRune: function() {

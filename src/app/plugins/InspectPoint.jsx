@@ -3,6 +3,7 @@
 var React = require('react');
 
 module.exports = function(data) {
+    console.log("Data", data);
     return {
         data: data.selectedPoints,
         title: 'Inspect point',
@@ -11,6 +12,7 @@ module.exports = function(data) {
                 // return { points: data.selectedPoints };
             // },
             render: function() {
+                debugger;
                 return (
                     <div>
                         <ul>

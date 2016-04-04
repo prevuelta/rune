@@ -2,49 +2,33 @@
 
 // Rune
 var Events = require('./global/Events');
-var WorkSpaceController = require('./workspace/WorkspaceController');
-var CanvasController = require('./canvas/CanvasController');
-var DataController = require('./data/DataController');
+var Util = require('./global/Util');
+var WorkSpaceController = require('./features/workspace/WorkspaceController');
+var CanvasController = require('./features/canvas/CanvasController');
+var DataController = require('./models/DataController');
 
-// Extensions
-// var FourPointWeightTransform = require('./plugins/FourPointWeightTransform.jsx');
-// var PointTranslate = require('./plugins/PointTranslate.jsx');
+class App {
 
+    constructor () {
 
-function App() {
+        // Setup workspace
+        this.data = new DataController(Util.checkLocal("runeData"));
+        this.canvas = new CanvasController(this.data);
 
-    var app = this;
+        this.plugins = require('./plugins')({
+            gridOptions: this.data.tablet.gridOptions,
+            selectedPoints: this.data.activeRune.selectedPoints,
+            addTransformToSelected: (data) => { this.data.addTransformToSelected(data); },
+            layers: this.canvas.layerControllers
+        });
 
-    // Setup workspace
-    app.util = require('./global/util');
-    app.data = new DataController(app.util.checkLocal("runeData"));
-    app.canvas = new CanvasController(app.data);
+        this.workspace = new WorkSpaceController(this);
 
-    app.plugins = require('./plugins')({
-        gridOptions: app.data.tablet.gridOptions,
-        selectedPoints: app.data.activeRune.selectedPoints,
-        addTransformToSelected: (data) => { app.data.addTransformToSelected(data); },
-        util: app.util,
-        layers: app.canvas.layerControllers
-    });
+    }
 
-    app.workspace = new WorkSpaceController(app);
-
-    // Events
-    var events = new Events(app);
-    events.init();
-
-}
-
-App.prototype = {
-    constructor: App,
-    setup: function() {
-
-    },
-    save : function() {
+    save () {
         this.data.save();
     }
 }
-
 
 var app = new App();

@@ -1,6 +1,6 @@
 'use strict';
 
-var util = require('../global/util.js');
+var Util = require('../../global/Util');
 var React = require('react');
 var Draggable = require('react-draggable');
 
@@ -63,7 +63,7 @@ PanelController.prototype = {
                             this.props.data.map(function(panel, idx) {
                                 var Component = panel.panel;
                                 return <PanelWrapper offset={idx} options={{title : panel.title}} >
-                                     <Component data="{panel.data}" />
+                                     <Component data={panel.data} />
                                  </PanelWrapper>;
                             })
                         }

@@ -1,7 +1,7 @@
 var GridView = require('./GridView.js');
 var RuneView = require('./RuneView.js');
 
-var util = require('../global/util');
+var Util = require('../../global/Util');
 
 var paper = require('paper');
 

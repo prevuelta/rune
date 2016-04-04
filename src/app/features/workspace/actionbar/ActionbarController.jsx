@@ -1,4 +1,4 @@
-var util = require('../../global/util.js');
+let Events = require('../../../global/Events');
 
 var React = require('react');
 var paper = require('paper');
@@ -24,7 +24,8 @@ function ActionBar(app) {
 			title : "Clear",
 			action: function(e) {
 				e.preventDefault();
-				util.dispatchRuneEvent("clearGridPoints");
+				// Util.dispatchRuneEvent("clearGridPoints");
+                Events.clearPoints.dispatch();
 			}
 		},
 		{
@@ -32,7 +33,8 @@ function ActionBar(app) {
 			title: "Preview",
 			action: function(e) {
 				e.preventDefault();
-				util.dispatchRuneEvent("preview");
+				// util.dispatchRuneEvent("preview");
+                Events.preview.dispatch();
 			}
 		},
 		{
