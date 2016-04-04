@@ -42,7 +42,6 @@ class PanelController {
 
         var Panels = React.createClass({
             render: function() {
-                debugger;
                 return (
                     <div>
                         {

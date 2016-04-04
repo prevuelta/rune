@@ -4,67 +4,75 @@ var _ = require('lodash');
 
 /* ========== Data ========== */
 
-function DataController(tabletModel) {
+class DataController {
+    constructor (tabletModel) {
 
-    this.tablet = new TabletModel(tabletModel);
-    this.currentRune = 0;
+        this.tablet = new TabletModel(tabletModel);
+        this.currentRune = 0;
 
-    Events.addPoint.add(this.addPoint);
+        Events.addPoint.add(this.addPoint);
+        Events.selectPoint.add(this.selectPoint);
 
-}
+    }
 
-DataController.prototype = {
-    constructor: DataController,
-    get activeRune() {
+    get activeRune () {
         return this.tablet.runes[this.currentRune];
-    },
-    save : function() {
+    }
+
+    save () {
         debugger;
         this.tablet.data.runes = this.tablet.runes;
         localStorage["runeData"] = JSON.stringify(this.tablet.data);
-    },
-    addRune : function() {
+    }
+
+    addRune () {
         this.tablet.runes.push(new RuneData(null));
-    },
-    addPoint: function(gridRef) {
+    }
+
+    addPoint(gridRef) {
         this.activeRune.addPoint(gridRef);
         Events.deselectAll.dispatch();
 
-    },
-    addTransformToSelected: function (transform) {
+    }
+
+    addTransformToSelected (transform) {
         var rune = this.activeRune;
         rune.selectedPoints.forEach(function(pointIndex) {
             rune.currentPath[pointIndex].push(transform);
         });
         Events.redraw.dispatch();
 
-    },
-    clearRune: function() {
-        this.activeRune.clearPaths().currentPointIndex = 0;
-    },
+    }
 
-    updateGrid : function() {
+    clearRune() {
+        this.activeRune.clearPaths().currentPointIndex = 0;
+    }
+
+    updateGrid () {
         // var rune = this.getactiveRune();
         // rune.letter.gridPoints.forEach(function(entry, i) {
         // });
-    },
-    deleteSelected : function() {
+    }
+
+    deleteSelected () {
         // FIX THIS
         // var rune = this.activeRune;
         // rune.currentPath = rune.currentPath.filter(function(value, idx) {
             // return !~rune.selectedPoints.indexOf(idx);
         // });
-    },
-    selectPoint: function(data) {
-        this.activeRune.selectedPoints.push(data);
-        this.activeRune.currentPointIndex = data;
-        console.log("Current index: " + this.activeRune.currentPointIndex);
-    },
-    deselectPoint: function(data) {
-        // debugger;
-        this.activeRune.selectedPoints = _.reject(this.activeRune.selectedPoints, (val) => {
-            return val.idx === data.idx;
-        });
+    }
+
+    selectPoint(data) {
+        debugger;
+        if(data[0]) {
+            this.tablet.activeRune.selectedPoints.push(data);
+            this.tablet.activeRune.currentPointIndex = data;
+        } else {
+            this.tablet.activeRune.selectedPoints = _.reject(this.tablet.activeRune.selectedPoints, (val) => {
+                return val.idx === data.idx;
+            });
+        }
+        Events.redraw.dispatch();
     }
 }
 

@@ -11,6 +11,7 @@ function CanvasController (tabletModel) {
 
 	// Canvas
 	var canvasController = this;
+
     canvasController.data = tabletModel;
 
 	canvasController.canvas = document.getElementById('rune-canvas');

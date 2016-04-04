@@ -13,7 +13,6 @@ module.exports = function(data) {
             // },
 
             render: function() {
-                debugger;
                 return (
                     <div>
                         <ul>

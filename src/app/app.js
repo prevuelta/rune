@@ -12,7 +12,7 @@ class App {
     constructor () {
 
         // Setup workspace
-        this.data = new DataController(Util.checkLocal("runeData"));
+        this.data = new DataController(Util.getLocalData("runeData"));
         this.canvas = new CanvasController(this.data);
 
         this.plugins = require('./plugins')({

@@ -13,8 +13,8 @@ class Util {
         return new F();
     }
 
-    static checkLocal (ref) {
-    	return (localStorage[ref] && typeof localStorage[ref] === 'string') ? JSON.parse(localStorage[ref]) : false;
+    static getLocalData (ref) {
+    	return (localStorage[ref] && typeof localStorage[ref] === 'string') ? JSON.parse(localStorage[ref]) : null;
     }
 }
 
