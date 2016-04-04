@@ -1,4 +1,4 @@
-var Util = require('../../global/Util');
+var Events = require('../../global/Events');
 var paper = require('paper');
 
 /* ========== Tablet ========== */
@@ -89,7 +89,7 @@ RuneView.prototype = {
         path.onMouseDown = function(e) {
             e.event.stopImmediatePropagation();
             this.isSelected = !this.isSelected;
-            util.dispatchRuneEvent('selectPoint', [this.isSelected, e.target.value] );
+            Events.selectPoint.dispatch(this.isSelected, e.targetValue);
         }
 
         return paperPoint;

@@ -11,6 +11,7 @@ module.exports = function(data) {
             // getInitialState : function() {
                 // return { points: data.selectedPoints };
             // },
+
             render: function() {
                 debugger;
                 return (

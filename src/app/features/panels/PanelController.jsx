@@ -8,28 +8,12 @@ var React = require('react');
 
 // var getGridPanelComponent = require('./grid/GridPanelComponent.jsx');
 
-
-function PanelController (app) {
-    this.app = app;
-    this.loadPanels();
-}
-
-// <Draggable
-//     start={{x: offsetX + 800, y: offsetY }}
-//     onStart={this.handleStart}
-//     handle=".handle"
-//     >
-//     <div className="panel">
-//         <div className="handle">{ this.props.options.title }</div>
-//         <div className="panel-content">
-//             { this.props.children }
-//         </div>
-//     </div>
-// </Draggable>
-
-PanelController.prototype = {
-    constructor: PanelController,
-    loadPanels: function() {
+class PanelController {
+    constructor (app) {
+        this.app = app;
+        this.init();
+    }
+    init () {
 
         var panelController = this;
 
@@ -45,7 +29,9 @@ PanelController.prototype = {
                 var offsetX = this.props.offset * 5;
                 return (
                     <div className="panel">
-                        <div className="handle">{ this.props.options.title }</div>
+                        <div className="handle">
+                            { this.props.options.title }
+                        </div>
                         <div className="panel-content">
                             { this.props.children }
                         </div>
@@ -72,8 +58,6 @@ PanelController.prototype = {
             }
         });
 
-        console.log(panelController.app.plugins);
-
         // Plugin panels
         React.render(
             <Panels data={panelController.app.plugins} />,
@@ -81,10 +65,25 @@ PanelController.prototype = {
         );
 
 
-    },
-    updateProperties : function(model) {
+    }
+
+    updateProperties (model) {
 
     }
 }
+
+// <Draggable
+//     start={{x: offsetX + 800, y: offsetY }}
+//     onStart={this.handleStart}
+//     handle=".handle"
+//     >
+//     <div className="panel">
+//         <div className="handle">{ this.props.options.title }</div>
+//         <div className="panel-content">
+//             { this.props.children }
+//         </div>
+//     </div>
+// </Draggable>
+
 
 module.exports = PanelController;

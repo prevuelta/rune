@@ -1,4 +1,4 @@
-var ActionBar = require('./actionbar/ActionBarController.jsx');
+var ActionBar = require('./ActionBarController.jsx');
 var PanelController = require('./../panels/PanelController.jsx');
 
 function WorkSpaceController(app) {

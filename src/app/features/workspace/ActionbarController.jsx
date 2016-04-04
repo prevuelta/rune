@@ -1,4 +1,4 @@
-let Events = require('../../../global/Events');
+let Events = require('../../global/Events');
 
 var React = require('react');
 var paper = require('paper');
