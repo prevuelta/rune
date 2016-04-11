@@ -10,8 +10,8 @@ class DataController {
         this.tablet = new TabletModel(tabletModel);
         this.currentRune = 0;
 
-        Events.addPoint.add(this.addPoint);
-        Events.selectPoint.add(this.selectPoint);
+        Events.addPoint.add(this.addPoint.bind(this));
+        Events.selectPoint.add(this.selectPoint.bind(this));
 
     }
 
@@ -30,6 +30,7 @@ class DataController {
     }
 
     addPoint(gridRef) {
+        debugger;
         this.activeRune.addPoint(gridRef);
         Events.deselectAll.dispatch();
 

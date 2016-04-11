@@ -1,5 +1,6 @@
 var Util = require('../../global/util');
 var constants = require('../../global/Const');
+var Events = require('../../global/Events');
 
 var paper = require('paper');
 
@@ -90,9 +91,7 @@ GridView.prototype = {
 
 			this.fillColor = 'red';
 
-			// this.active = true;
-
-			util.dispatchRuneEvent('addPoint', e.target.value);
+            Events.addPoint.dispatch(e.target.value);
 		}
 	}
 }

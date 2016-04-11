@@ -1,7 +1,7 @@
 var GridView = require('./GridView.js');
 var RuneView = require('./RuneView.js');
-
 var Util = require('../../global/Util');
+var Events = require('../../global/Events');
 
 var paper = require('paper');
 
@@ -44,7 +44,7 @@ function CanvasController (tabletModel) {
 	canvasController.showGrid = true;
 
     canvasController.canvas.addEventListener('mousedown', function(event) {
-        util.dispatchRuneEvent('deselectAll');
+        Events.deselectAll.dispatch();
     });
 
 }
