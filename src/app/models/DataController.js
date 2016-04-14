@@ -20,7 +20,6 @@ class DataController {
     }
 
     save () {
-        debugger;
         this.tablet.data.runes = this.tablet.runes;
         localStorage["runeData"] = JSON.stringify(this.tablet.data);
     }
@@ -30,7 +29,6 @@ class DataController {
     }
 
     addPoint(gridRef) {
-        debugger;
         this.activeRune.addPoint(gridRef);
         Events.deselectAll.dispatch();
 
@@ -42,7 +40,6 @@ class DataController {
             rune.currentPath[pointIndex].push(transform);
         });
         Events.redraw.dispatch();
-
     }
 
     clearRune() {
@@ -63,17 +60,15 @@ class DataController {
         // });
     }
 
-    selectPoint(data) {
-        debugger;
-        if(data[0]) {
-            this.tablet.activeRune.selectedPoints.push(data);
-            this.tablet.activeRune.currentPointIndex = data;
+    selectPoint(isSelected, point) {
+        if(isSelected) {
+            this.activeRune.selectedPoints.push(point);
+            this.activeRune.currentPointIndex = point.idx;
         } else {
-            this.tablet.activeRune.selectedPoints = _.reject(this.tablet.activeRune.selectedPoints, (val) => {
-                return val.idx === data.idx;
+            this.activeRune.selectedPoints = _.reject(this.activeRune.selectedPoints, (val) => {
+                return val.idx === point.idx;
             });
         }
-        Events.redraw.dispatch();
     }
 }
 

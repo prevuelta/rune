@@ -3,16 +3,15 @@ var paper = require('paper');
 
 /* ========== Tablet ========== */
 
-function RuneView(runeModel, grid) {
+class RuneView {
+    constructor (runeModel, grid) {
 
-    this.points = [];
-    this.data = runeModel;
-    this.grid = grid;
-}
+        this.points = [];
+        this.data = runeModel;
+        this.grid = grid;
+    }
 
-RuneView.prototype = {
-    constructor: RuneView,
-    draw : function() {
+    draw {
 
         var runeView = this;
 
@@ -38,8 +37,9 @@ RuneView.prototype = {
         testPath.runePath = true;
         testPath.strokeColor = '#000000';
 
-    },
-    createRuneSegment: function(point, idx, isSelected, transform) {
+    }
+    
+    createRuneSegment (point, idx, isSelected, transform) {
 
         let paperPoint;
 
@@ -89,7 +89,9 @@ RuneView.prototype = {
         path.onMouseDown = function(e) {
             e.event.stopImmediatePropagation();
             this.isSelected = !this.isSelected;
-            Events.selectPoint.dispatch(this.isSelected, e.targetValue);
+            console.log(this);
+            Events.selectPoint.dispatch(this.isSelected, e.target.value);
+            Events.redraw.dispatch();
         }
 
         return paperPoint;

@@ -18,7 +18,7 @@ module.exports = function(data) {
                         <ul>
                             {
                                 this.props.data.map(function(point) {
-                                    console.log(point);
+                                    console.log("Inspect point", point);
                                     return <li>
                                         {point.point.x}, {point.point.y}
                                         { point.point.isCurve }

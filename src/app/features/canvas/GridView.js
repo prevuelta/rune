@@ -88,10 +88,9 @@ GridView.prototype = {
 		}
 
 		path.onMouseDown = function(e) {
-
 			this.fillColor = 'red';
-
             Events.addPoint.dispatch(e.target.value);
+            Events.redraw.dispatch();
 		}
 	}
 }
