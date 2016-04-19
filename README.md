@@ -1,7 +1,13 @@
 # Rune
-## Work in progress
+## WORK IN PROGRESS
 
-SVG glyph creator using paper.js. Grid based design system to produce letter forms, icons etc then export as SVG from browser.
+Web based drawing tool for people who like to think inside the box.
+
+_Using:_
+React
+PaperJS
+Browserify
+
 
 ## To run:
 
@@ -15,11 +21,6 @@ npm run build:watch
 
 Enjoy :)
 
-###Dev notes:
-
-* Re-jigging to use plugins for most non-core functionality
-* Setup color for a selected point at index.
-* SVG repo of symbols
 
  ####Plugin ideas:
 

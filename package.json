@@ -11,7 +11,7 @@
     "build:html": "cp ./src/app/index.html ./build/index.html",
     "build": "echo 'building app...' && npm run lib && npm run build:js && npm run build:css && npm run copy-statics",
     "build:js": "echo 'compiling javascript...' && browserify -x react -x paper -x lodash ./src/app/app.js > ./build/app.min.js && echo 'Finished compiling.'",
-    "lib" : "echo 'compiling libraries...' && browserify -r react -r react-draggable -r paper -r lodash -r signals -r ./src/extendLibs.js -o ./build/lib.min.js && echo 'Finished lib compile'",
+    "lib": "echo 'compiling libraries...' && browserify -r react -r react-draggable -r paper -r lodash -r signals -r ./src/extendLibs.js -o ./build/lib.min.js && echo 'Finished lib compile'",
     "build:css": "echo 'compiling stylesheets...' && sass ./src/styles/main.scss:./build/styles/main.css",
     "copy-statics": "echo 'Copying statics...' && cp ./src/index.html ./build/index.html"
   },
@@ -40,12 +40,13 @@
   "homepage": "https://github.com/prevuelta/rune",
   "devDependencies": {
     "browserify": "latest",
+    "paper": "~0.9.25",
     "parallelshell": "^2.0.0",
     "react": "^0.13.3",
     "react-draggable": "^0.8.1",
     "reactify": "^1.1.1",
+    "signals": "^1.0.0",
     "uglifyjs": "^2.4.10",
-    "watch": "latest",
-    "paper": "~0.9.25"
+    "watch": "latest"
   }
 }

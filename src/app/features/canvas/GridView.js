@@ -7,7 +7,8 @@ var paper = require('paper');
 
 /* ========== Grid view ========== */
 
-function GridView(options) {
+class GridView {
+	constructor (options) {
 
 	this.res = options.res;
 	this.units = options.units;
@@ -16,11 +17,11 @@ function GridView(options) {
 
 	this.gridColor = constants.BLUE;
 
-	for(var row = 0; row < this.units; row++) {
+	for(var row = -this.units / 2; row < this.units / 2; row++) {
 
 		this.points[row] = [];
 
-		for(var col = 0; col < this.units; col++) {
+		for(var col = -this.units / 2; col < this.units / 2; col++) {
 
 			var point = [row, col];
 			this.points[row].push(point);
@@ -29,11 +30,9 @@ function GridView(options) {
 
 		col = 0;
 	}
-}
 
-GridView.prototype = {
-	constructor: GridView,
-	draw: function() {
+	draw () {
+		// 
 		console.log("Drawing grid");
 
 		var grid = this;
@@ -64,11 +63,13 @@ GridView.prototype = {
 				grid.createGridPoint(paperPoint, point);
 			}
 		}
-	},
-	renderPoint: function(point){
+	}
+
+	renderPoint (point){
 		return [point[0] * this.res + (this.res / 2), point[1] * this.res + (this.res/2)];
-	},
-	createGridPoint : function(point, value) {
+	}
+
+	createGridPoint (point, value) {
 
 		var path = paper.Path.Circle(point, this.res / 2);
 

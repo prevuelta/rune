@@ -11,7 +11,7 @@ class RuneView {
         this.grid = grid;
     }
 
-    draw {
+    draw () {
 
         var runeView = this;
 
