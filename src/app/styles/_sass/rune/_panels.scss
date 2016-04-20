@@ -3,7 +3,7 @@
 	// left: $bu;
 	// top: $bu8;
 	height: auto;//$bu * 16;
-	width: $panel-width;
+	width: 100%;
 	background: #f4f4f4;
     border-bottom: 1px solid black;
 	&.ui-draggable-dragging {
@@ -47,14 +47,4 @@
     &:hover {
         background: #f4f4f4;
     }
-}
-
-#rune-panels {
-    position: fixed;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    border-left: 1px solid teal;
-    background: #f4f4f4;
-    width: $panel-width;
 }

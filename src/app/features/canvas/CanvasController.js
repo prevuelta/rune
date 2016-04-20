@@ -26,11 +26,7 @@ class CanvasController {
             layer: new paper.Layer()
         }];
 
-        console.log('View', paper.view);
-
-        paper.view.onResize = function (e) {
-            Events.redraw.dispatch();
-        };
+        paper.view.onResize = this.resizeHandler.bind(this);
 
     	// Setup grid
 
@@ -46,15 +42,15 @@ class CanvasController {
 
     	this.currentLayerIndex = 1;
 
-    	this.draw();
-
     	this.showGrid = true;
 
         this.canvas.addEventListener('mousedown', function(event) {
             Events.deselectAll.dispatch();
         });
 
-        Events.redraw.add(this.redraw.bind(_this));
+        Events.redraw.add(this.drawCanvas.bind(this));
+
+        Events.redraw.dispatch();
 
     }
 
@@ -82,46 +78,59 @@ class CanvasController {
 
         this._displayMode = displayMode;
 
-        this.redraw();
+        Events.redraw.dispatch();
     }
 
     get gridLayer() {
         return this.layerControllers[0].layer;
     }
 
-	draw () {
-		// Draw active layer
-		this.layerControllers[this.currentLayerIndex].layer.removeChildren();
-		this.layerControllers[this.currentLayerIndex].layer.activate();
-		this.layerControllers[this.currentLayerIndex].view.draw();
-		this.redraw();
-	}
 
 	setupGrid () {
 		this.grid = new GridView(this.data.tablet.gridOptions);
-		this.drawGrid();
+		this.redrawGrid();
 	}
 
-	drawGrid () {
+    toggleGrid (showGrid) {
+        this.showGrid = !this.showGrid;
+        this.gridLayer.visible = this.showGrid;
+        Events.redraw.dispatch();
+    }
+
+    resizeHandler () {
+        this.redrawAllLayers();
+    }
+
+    redrawAllLayers () {
+        this.redrawGrid();
+        this.layerControllers.forEach((ctrl) => {
+            if (ctrl.view) {
+                ctrl.view.draw();
+            }
+        });
+    }
+
+    redrawCurrentLayer () {
+        // Draw active layer
+        this.layerControllers[this.currentLayerIndex].layer.removeChildren();
+        this.layerControllers[this.currentLayerIndex].layer.activate();
+        this.layerControllers[this.currentLayerIndex].view.draw();
+        // this.redraw();
+    }
+
+	redrawGrid () {
 
 		this.gridLayer.removeChildren();
 		this.gridLayer.activate();
-
 		this.grid.draw();
-
-		this.redraw();
+		// this.redraw();
 
 	}
 
-	toggleGrid (showGrid) {
-		this.showGrid = !this.showGrid;
-		this.gridLayer.visible = this.showGrid;
-		this.redraw();
-	}
-
-	redraw () {
-        console.log("Canvas redrawing...");
-		paper.view.draw();
+	drawCanvas () {
+        console.log("Redrawing canvas...");
+		// paper.view.draw();
+        this.redrawCurrentLayer();
 	}
 }
 

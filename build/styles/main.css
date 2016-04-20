@@ -1,13 +1,12 @@
 /* ------ Base Units ------ */
-.cf:before, #main #rune-toolbar .tools:before,
-.cf:after,
-#main #rune-toolbar .tools:after {
+.cf:before,
+.cf:after {
   content: " ";
   /* 1 */
   display: table;
   /* 2 */ }
 
-.cf:after, #main #rune-toolbar .tools:after {
+.cf:after {
   clear: both; }
 
 .shadow {
@@ -63,41 +62,21 @@ body {
   padding: 0;
   margin: 0; }
 
-#main #rune-toolbar {
+#rune-panels {
   position: fixed;
-  left: 12px;
-  top: 96px;
-  height: 192px;
-  width: 120px;
-  background: #e0e0e0;
-  padding: 12px; }
-  #main #rune-toolbar h4 {
-    margin: 6px 0 12px 0; }
-  #main #rune-toolbar .tools {
-    margin-bottom: 12px; }
-    #main #rune-toolbar .tools .tool {
-      float: left;
-      width: 46px;
-      height: 46px;
-      text-align: center;
-      line-height: 48px;
-      font-weight: bold;
-      background: white;
-      margin: 1px;
-      box-sizing: border-box;
-      cursor: pointer; }
-      #main #rune-toolbar .tools .tool:hover {
-        background: #def5f5; }
-      #main #rune-toolbar .tools .tool.active {
-        background: #b7f2f1; }
-#main #rune-board {
-  background: white;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-left: 1px solid teal;
+  background: #f4f4f4;
+  width: 20%; }
+
+#rune-canvas-panel {
+  width: 80%;
+  height: 100%;
   position: fixed;
-  top: 36px;
-  width: 360px;
-  height: 360px;
-  left: 145px;
-  z-index: 0; }
+  left: 0;
+  top: 0; }
 
 #rune-canvas {
   height: 100%;
@@ -120,7 +99,7 @@ body {
 
 .panel {
   height: auto;
-  width: 168px;
+  width: 100%;
   background: #f4f4f4;
   border-bottom: 1px solid black; }
   .panel.ui-draggable-dragging {
@@ -158,14 +137,5 @@ body {
   background: white; }
   .tool:hover {
     background: #f4f4f4; }
-
-#rune-panels {
-  position: fixed;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  border-left: 1px solid teal;
-  background: #f4f4f4;
-  width: 168px; }
 
 /*# sourceMappingURL=main.css.map */
