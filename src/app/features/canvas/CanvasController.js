@@ -11,50 +11,59 @@ class CanvasController {
     constructor (tabletModel) {
 
     	// Canvas
-    	var canvasController = this;
+        let _this = this;
 
-        canvasController.data = tabletModel;
+        this.data = tabletModel;
 
-    	canvasController.canvas = document.getElementById('rune-canvas');
+    	this.canvas = document.getElementById('rune-canvas');
 
-    	paper.setup(canvasController.canvas).install(window);
+    	paper.setup(this.canvas).install(window);
 
         paper.settings.handleSize = 8;
 
-    	canvasController.layerControllers = [{
+    	this.layerControllers = [{
             name: 'Grid',
             layer: new paper.Layer()
         }];
 
+        console.log('View', paper.view);
+
+        paper.view.onResize = function (e) {
+            Events.redraw.dispatch();
+        };
+
     	// Setup grid
 
-    	canvasController.setupGrid();
+    	this.setupGrid();
 
     	tabletModel.tablet.runes.forEach(function(val, idx) {
-    		canvasController.layerControllers.push({
+    		_this.layerControllers.push({
                 name: 'Rune ' + idx,
                 layer: new paper.Layer(),
-                view: new RuneView(val, canvasController.grid)
+                view: new RuneView(val, _this.grid)
             });
     	});
 
-    	canvasController.currentLayerIndex = 1;
+    	this.currentLayerIndex = 1;
 
-    	canvasController.draw();
+    	this.draw();
 
-    	canvasController.showGrid = true;
+    	this.showGrid = true;
 
-        canvasController.canvas.addEventListener('mousedown', function(event) {
+        this.canvas.addEventListener('mousedown', function(event) {
             Events.deselectAll.dispatch();
         });
 
-        Events.redraw.add(this.redraw.bind(this));
+        Events.redraw.add(this.redraw.bind(_this));
 
     }
 
     set displayMode(displayMode) {
+
         this.toggleGrid();
+
         var isPreview = displayMode === 'preview';
+
         this.layerControllers.forEach(function(layerController, index) {
             if (index) {
                 console.log(layerController.layer);
@@ -70,7 +79,9 @@ class CanvasController {
                 });
             }
         });
+
         this._displayMode = displayMode;
+
         this.redraw();
     }
 

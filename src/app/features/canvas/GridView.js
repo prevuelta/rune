@@ -10,52 +10,55 @@ var paper = require('paper');
 class GridView {
 	constructor (options) {
 
-	this.res = options.res;
-	this.units = options.units;
+    	this.res = options.res;
+    	this.units = options.units;
 
-	this.points = [];
+    	this.points = [];
 
-	this.gridColor = constants.BLUE;
+    	this.gridColor = constants.BLUE;
 
-	for(var row = -this.units / 2; row < this.units / 2; row++) {
+    	for(var row = -this.units / 2; row < this.units / 2; row++) {
 
-		this.points[row] = [];
+    		this.points[row] = [];
 
-		for(var col = -this.units / 2; col < this.units / 2; col++) {
+    		for(var col = -this.units / 2; col < this.units / 2; col++) {
 
-			var point = [row, col];
-			this.points[row].push(point);
+    			var point = [row, col];
+    			this.points[row].push(point);
+    		}
 
-		}
-
-		col = 0;
-	}
+    		col = 0;
+    	}
+    }
 
 	draw () {
-		// 
-		console.log("Drawing grid");
 
 		var grid = this;
 
         var gridColor = new paper.Color(grid.gridColor, 100);
 
 		// Draw lines
-		var gridGrid = new paper.Raster();
-		gridGrid.setImageData(gridGrid.createImageData(200));
-		gridGrid.setPixel(10, 10, 'black');
+		// var gridGrid = new paper.Raster();
+		// gridGrid.setImageData(gridGrid.createImageData(200));
+		// gridGrid.setPixel(10, 10, 'black');
 
-		for(var i = this.res / 2; i < 2000; i+= this.res) {
-			var p1 = new paper.Point(i, 0);
-			var p2 = new paper.Point(i, 2000);
-			var rec = new paper.Path.Rectangle([i, 0], 1, 2000);
-			rec.fillColor = gridColor;
-			for(var j = this.res / 2; j < 2000; j+= this.res) {
-				var p1 = new paper.Point(0, i);
-				var p2 = new paper.Point(2000, i);
-				var rec = new paper.Path.Rectangle([0, i], 2000, 1);
-				rec.fillColor = gridColor;
-			}
-		}
+		// for(var i = this.res / 2; i < 2000; i+= this.res) {
+		// 	var p1 = new paper.Point(i, 0);
+		// 	var p2 = new paper.Point(i, 2000);
+		// 	var rec = new paper.Path.Rectangle([i, 0], 1, 2000);
+		// 	rec.fillColor = gridColor;
+		// 	for(var j = this.res / 2; j < 2000; j+= this.res) {
+		// 		var p1 = new paper.Point(0, i);
+		// 		var p2 = new paper.Point(2000, i);
+		// 		var rec = new paper.Path.Rectangle([0, i], 2000, 1);
+		// 		rec.fillColor = gridColor;
+		// 	}
+		// }
+
+        console.log("view", paper.view);
+
+        var rec = new paper.Path.Rectangle([0, paper.view.center.y], 2000, 1);
+        rec.fillColor = constants.RED;
 
 		for(var i = 0, arr; arr = grid.points[i++];) {
 			for( var j = 0, point; point = arr[j++];) {

@@ -99,7 +99,7 @@ body {
   left: 145px;
   z-index: 0; }
 
-#rune-canvas-panel #rune-canvas {
+#rune-canvas {
   height: 100%;
   width: 100%;
   background: #e4e4e4; }
