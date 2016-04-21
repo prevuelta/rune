@@ -35,15 +35,18 @@ class GridView {
 
         let gridColor = new paper.Color(_this.gridColor, 100);
 
-		for (let i = 0; i < 100; i += this.res) {
-			this.vLine(paper.view.center.x + i)
-			this.vLine(paper.view.center.x - i)
+		for (let i = 0; i < this.res * 8; i += this.res) {
+			this.yLine(paper.view.center.x + i)
+			this.yLine(paper.view.center.x - i)
 		}
 
-        let midX = new paper.Path.Rectangle([0, paper.view.center.y], 2000, 1);
-        midX.fillColor = constants.RED;
+        for (let i = 0; i < this.res * 8; i += this.res) {
+            this.xLine(paper.view.center.y + i)
+            this.xLine(paper.view.center.y - i)
+        }
 
-        this.vLine(paper.view.center.x, constants.RED);
+        this.xLine(paper.view.center.y, constants.RED);
+        this.yLine(paper.view.center.x, constants.RED);
 	}
 
 	yLine (xLoc, color) {
