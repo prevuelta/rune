@@ -5,14 +5,15 @@ var React = require('react');
 var Draggable = require('react-draggable');
 
 var React = require('react');
-
-// var getGridPanelComponent = require('./grid/GridPanelComponent.jsx');
+var Events = require('../../global/Events');
 
 class PanelController {
+
     constructor (app) {
         this.app = app;
         this.init();
     }
+
     init () {
 
         var panelController = this;
@@ -58,10 +59,15 @@ class PanelController {
         });
 
         // Plugin panels
-        React.render(
+        let panels = React.render(
             <Panels data={panelController.app.plugins} />,
             document.getElementById('rune-panels')
         );
+
+        Events.selectPoint.add(() => {
+            console.log("doing stuff");
+            panels.forceUpdate();
+        });
 
 
     }

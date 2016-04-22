@@ -69,6 +69,7 @@ class DataController {
                 return val.idx === point.idx;
             });
         }
+        console.log("Selected points:", this.activeRune.selectedPoints);
     }
 }
 

@@ -26,10 +26,10 @@ class RuneModel {
             }
         }
         if(this.reverseAdd) {
-            this.currentPath.unshift(new RunePoint(gridRef[0], gridRef[1]));
+            this.currentPath.unshift(new RunePoint(gridRef.x, gridRef.y));
         } else {
             this.currentPointIndex++;
-            this.currentPath.splice(this.currentPointIndex, 0, new RunePoint(gridRef[0], gridRef[1]));
+            this.currentPath.splice(this.currentPointIndex, 0, new RunePoint(gridRef.x, gridRef.y));
         }
         return this;
     }

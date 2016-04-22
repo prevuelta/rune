@@ -43,7 +43,7 @@ class RuneView {
 
         let paperPoint;
 
-        let renderedPoint = point.render(this.grid.res);
+        let renderedPoint = point.render(this.grid.res, paper.view.center);
 
         if (point.length < 1) {
             paperPoint = new paper.Segment({
@@ -56,7 +56,6 @@ class RuneView {
         }
 
         let p = paperPoint.point || paperPoint;
-
 
         if(transform) {
             console.log(transform);

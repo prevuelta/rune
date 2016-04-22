@@ -9,9 +9,12 @@ module.exports = function(data) {
         title: 'Inspect point',
         panel: React.createClass({
             // getInitialState : function() {
-                // return { points: data.selectedPoints };
+            //     var _this = this;
+            //     Events.selectPoint.add(() => {
+            //         this.setState(data);
+            //     });
+            //     return { points: data.selectedPoints };
             // },
-
             render: function() {
                 return (
                     <div>
@@ -20,8 +23,8 @@ module.exports = function(data) {
                                 this.props.data.map(function(point) {
                                     console.log("Inspect point", point);
                                     return <li>
-                                        {point.point.x}, {point.point.y}
-                                        { point.point.isCurve }
+                                        {point.point.x}, {point.point.y}<br/>
+                                        Iscurve: { point.point.isCurve }
                                     </li>
                                 })
                             }

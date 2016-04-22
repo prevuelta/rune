@@ -8,7 +8,9 @@ class TabletModel {
     constructor (data) {
 
         var defaultUnits = 10;
-        var defaultRes = constants.CANVAS_SIZE / defaultUnits
+        defaultUnits = defaultUnits % 2 == 0  ? defaultUnits : defaultUnits++;
+
+        var defaultRes = constants.CANVAS_SIZE / defaultUnits;
 
         var tablet = this;
 

@@ -49,6 +49,7 @@ class CanvasController {
         });
 
         Events.redraw.add(this.drawCanvas.bind(this));
+        Events.refreshCanvas.add(this.refreshCanvas.bind(this));
 
         Events.redraw.dispatch();
 
@@ -101,20 +102,32 @@ class CanvasController {
         this.redrawAllLayers();
     }
 
+    refreshCanvas () {
+        this.setupGrid();
+        this.redrawAllLayers();
+        this.drawCanvas();
+    }
+
     redrawAllLayers () {
+        console.log("Refreshing canvas...");
         this.redrawGrid();
         this.layerControllers.forEach((ctrl) => {
             if (ctrl.view) {
+                ctrl.layer.removeChildren();
+                ctrl.layer.activate();
                 ctrl.view.draw();
+                ctrl.layer.translate(paper.view.center);
             }
         });
     }
 
     redrawCurrentLayer () {
         // Draw active layer
-        this.layerControllers[this.currentLayerIndex].layer.removeChildren();
-        this.layerControllers[this.currentLayerIndex].layer.activate();
-        this.layerControllers[this.currentLayerIndex].view.draw();
+        let ctrl = this.layerControllers[this.currentLayerIndex];
+        ctrl.layer.removeChildren();
+        ctrl.layer.activate();
+        ctrl.view.draw();
+        ctrl.layer.translate(paper.view.center);
         // this.redraw();
     }
 
@@ -129,8 +142,8 @@ class CanvasController {
 
 	drawCanvas () {
         console.log("Redrawing canvas...");
-		// paper.view.draw();
         this.redrawCurrentLayer();
+		paper.view.draw();
 	}
 }
 

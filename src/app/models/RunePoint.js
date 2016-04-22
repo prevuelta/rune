@@ -5,14 +5,6 @@ class BasePoint {
         this.x = x;
         this.y = y;
     }
-
-    getActual () {
-
-    }
-
-    getRelative () {
-
-    }
 }
 
 class RunePoint extends BasePoint {
@@ -34,7 +26,10 @@ class RunePoint extends BasePoint {
     }
 
     render (unit) {
-        return [this.x * unit  + (unit / 2), this.y * unit  + (unit / 2)]; 
+        return [
+            this.x * unit, 
+            this.y * unit
+        ]; 
     }
 
     get isCurve () {

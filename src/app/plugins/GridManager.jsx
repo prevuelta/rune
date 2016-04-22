@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var Events = require('../global/Events');
 
 module.exports = function(data) {
     return {
@@ -15,7 +16,7 @@ module.exports = function(data) {
                 this.state.data.res = +res;
                 this.state.data.units = +units;
                 this.forceUpdate();
-                data.util.dispatchRuneEvent('refreshCanvas');
+                Events.refreshCanvas.dispatch();
             },
             render: function() {
                 return (
