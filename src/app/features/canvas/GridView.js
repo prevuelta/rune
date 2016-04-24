@@ -11,7 +11,7 @@ var paper = require('paper');
 var gridPointFactory = (point, size) => {
 
     let paperPoint = new paper.Point( point.render(size) );
-    let path = new paper.Path.Circle(paperPoint, size/4);
+    let path = new paper.Path.Circle( paperPoint, size/4 );
 
     path.value = point;
     path.active = false;
@@ -74,8 +74,8 @@ class GridView {
             colLines.addChild(this.yLine(i * this.res));
         }
 
-        rowLines.translate([0, paper.view.center.y]);
-        colLines.translate([paper.view.center.x, 0]);
+        rowLines.translate([0, paper.view.center.y + (this.res/2)]);
+        colLines.translate([paper.view.center.x + (this.res/2), 0]);
 
         this.xLine(paper.view.center.y, constants.RED);
         this.yLine(paper.view.center.x, constants.RED);
@@ -94,7 +94,7 @@ class GridView {
             _this.gridPoints.addChild(gridPointFactory(point, this.res));
         });
 
-        this.gridPoints.translate(paper.view.center);
+        this.gridPoints.translate(paper.view.center.add(this.res/2));
     }
 
 	yLine (xLoc, color) {

@@ -19,6 +19,7 @@ body {
     border-left: 1px solid teal;
     background: #f4f4f4;
     width: $panel-width;
+    overflow-y: scroll;
 }
 
 #rune-canvas-panel {

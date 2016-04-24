@@ -28,7 +28,8 @@ class RuneView {
                     point,
                     //runeView.grid.renderPoint(pointWithTransforms),
                     idx,
-                    runeView.data.selectedPoints.some((point) => point.idx === idx),
+                    //runeView.data.selectedPoints.some((point) => point.idx === idx),
+                    !!runeView.data.selectedPoints[idx],
                     null
                 );
             })
@@ -43,7 +44,7 @@ class RuneView {
 
         let paperPoint;
 
-        let renderedPoint = point.render(this.grid.res, paper.view.center);
+        let renderedPoint = point.render(this.grid.res);
 
         if (point.length < 1) {
             paperPoint = new paper.Segment({
@@ -57,25 +58,27 @@ class RuneView {
 
         let p = paperPoint.point || paperPoint;
 
-        if(transform) {
-            console.log(transform);
-            p.add((function() {
-                var point = new paper.Point();
-                point.angle = transform[0];
-                point.length = transform[1];
-                return point;
-            })());
+        if(point.transforms) {
+            point.transforms.forEach((transform) => {
+                p.add((function() {
+                    var point = new paper.Point();
+                    point.angle = transform[0];
+                    point.length = transform[1];
+                    return point;
+                })());
+            });
         }
 
         let path = new paper.Path.Rectangle(p.subtract([7, 7]), 14);
 
         path.isHandle = true;
         path.fillColor = 'white';
+        // path.value = { idx: idx, point: point};
         path.value = { idx: idx, point: point};
         path.isSelected = isSelected || false;
         path.strokeWidth = 4;
-
         path.strokeColor = path.isSelected ? 'red' : false;
+
 
         path.onMouseEnter = function(e) {
             // this.fillColor = this.selected ? 'red' : 'orange';
@@ -88,7 +91,6 @@ class RuneView {
         path.onMouseDown = function(e) {
             e.event.stopImmediatePropagation();
             this.isSelected = !this.isSelected;
-            console.log(this);
             Events.selectPoint.dispatch(this.isSelected, e.target.value);
             Events.redraw.dispatch();
         }

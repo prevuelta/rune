@@ -6,15 +6,28 @@ class RuneModel {
 
     constructor (data) {
         this.paths = data && data.paths || [ [] ];
-        this.selectedPoints = data && data.selectedPoints || [];
+        this.selectedPoints = data && data.selectedPoints || {};
         this.currentPointIndex = data && data.currentPointIndex || 0;
         this.currentPathIndex = data && data.currentPathIndex || 0;
         this.reverseAdd = false;
+
+        // Events.
     }
 
     clearPaths ()  {
         this.paths = [ [] ];
         return this;
+    }
+
+    selectHandler (isSelected, point) {
+        console.log(this);
+        if(isSelected) {
+            this.selectedPoints[point.idx] = point.point;
+            this.currentPointIndex = point.idx;
+        } else {
+            delete this.selectedPoints[point.idx];
+        }
+        console.log("Updated selected", this.selectedPoints);
     }
 
     addPoint (gridRef) {
@@ -51,6 +64,13 @@ class RuneModel {
         this.currentPointIndex = arr[1];
     }
 
+    deleteSelected () {
+        // FIX THIS
+        // var rune = this.activeRune;
+        // this.currentPath = this.currentPath.filter(function(value, idx) {
+            // return !~rune.selectedPoints.indexOf(idx);
+        // });
+    }
 
     // set selectedPoints(selectedPoints) {
     //     this.data.selectedPoints = selectedPoints;

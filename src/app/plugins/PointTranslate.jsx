@@ -16,7 +16,12 @@ module.exports = function(exposedData) {
             exposedData.addTransformToSelected(directionVectors[this.props.direction]);
         },
         render: function() {
-            return <span onClick={this.translate} data-direction="{this.props.direction}" className="tool">{this.props.glyph}</span>
+            return <span 
+                onClick={this.translate} 
+                data-direction="{this.props.direction}" 
+                className="tool">
+                    {this.props.glyph}
+                </span>
         }
     });
 

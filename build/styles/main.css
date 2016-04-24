@@ -23,6 +23,11 @@ h1 {
 h5 {
   margin: 0; }
 
+ul, li {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+
 header {
   position: fixed;
   left: 0;
@@ -69,7 +74,8 @@ body {
   bottom: 0;
   border-left: 1px solid teal;
   background: #f4f4f4;
-  width: 20%; }
+  width: 20%;
+  overflow-y: scroll; }
 
 #rune-canvas-panel {
   width: 80%;

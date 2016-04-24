@@ -12,6 +12,7 @@ class DataController {
 
         Events.addPoint.add(this.addPoint.bind(this));
         Events.selectPoint.add(this.selectPoint.bind(this));
+        Events.clearPoints.add(this.clearRune.bind(this));
 
     }
 
@@ -36,14 +37,15 @@ class DataController {
 
     addTransformToSelected (transform) {
         var rune = this.activeRune;
-        rune.selectedPoints.forEach(function(pointIndex) {
-            rune.currentPath[pointIndex].push(transform);
+        Object.keys(rune.selectedPoints).forEach((key) => {
+            rune.currentPath[key].transforms.push(transform);
         });
         Events.redraw.dispatch();
     }
 
     clearRune() {
         this.activeRune.clearPaths().currentPointIndex = 0;
+        Events.refreshCanvas.dispatch();
     }
 
     updateGrid () {
@@ -52,24 +54,8 @@ class DataController {
         // });
     }
 
-    deleteSelected () {
-        // FIX THIS
-        // var rune = this.activeRune;
-        // rune.currentPath = rune.currentPath.filter(function(value, idx) {
-            // return !~rune.selectedPoints.indexOf(idx);
-        // });
-    }
-
     selectPoint(isSelected, point) {
-        if(isSelected) {
-            this.activeRune.selectedPoints.push(point);
-            this.activeRune.currentPointIndex = point.idx;
-        } else {
-            this.activeRune.selectedPoints = _.reject(this.activeRune.selectedPoints, (val) => {
-                return val.idx === point.idx;
-            });
-        }
-        console.log("Selected points:", this.activeRune.selectedPoints);
+        this.activeRune.selectHandler(isSelected, point);
     }
 }
 

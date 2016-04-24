@@ -2,6 +2,7 @@
 
 // Rune
 var Events = require('./global/Events');
+var keys = require('./global/keys');
 var Util = require('./global/Util');
 var WorkSpaceController = require('./features/workspace/WorkspaceController');
 var CanvasController = require('./features/canvas/CanvasController');

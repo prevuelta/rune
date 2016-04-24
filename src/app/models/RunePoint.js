@@ -19,6 +19,7 @@ class RunePoint extends BasePoint {
             this.transforms = [];
             this.handles = [];
         }
+        this.isCurve = false;
     }
 
     addHandles () {
@@ -30,10 +31,6 @@ class RunePoint extends BasePoint {
             this.x * unit, 
             this.y * unit
         ]; 
-    }
-
-    get isCurve () {
-        return 'maybe...';
     }
 }
 

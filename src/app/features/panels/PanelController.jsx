@@ -65,8 +65,7 @@ class PanelController {
         );
 
         Events.selectPoint.add(() => {
-            console.log("doing stuff");
-            panels.forceUpdate();
+            panels.setState({'data' : panelController.app.plugins});
         });
 
 

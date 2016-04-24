@@ -116,7 +116,7 @@ class CanvasController {
                 ctrl.layer.removeChildren();
                 ctrl.layer.activate();
                 ctrl.view.draw();
-                ctrl.layer.translate(paper.view.center);
+                ctrl.layer.translate(paper.view.center.add(this.data.tablet.gridOptions.res/2));
             }
         });
     }
@@ -127,7 +127,7 @@ class CanvasController {
         ctrl.layer.removeChildren();
         ctrl.layer.activate();
         ctrl.view.draw();
-        ctrl.layer.translate(paper.view.center);
+        ctrl.layer.translate(paper.view.center.add(this.data.tablet.gridOptions.res/2));
         // this.redraw();
     }
 

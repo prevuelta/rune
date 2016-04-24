@@ -15,7 +15,7 @@ module.exports = function(data) {
                 var units = this.refs.units.getDOMNode().value;
                 this.state.data.res = +res;
                 this.state.data.units = +units;
-                this.forceUpdate();
+                // this.forceUpdate();
                 Events.refreshCanvas.dispatch();
             },
             render: function() {
