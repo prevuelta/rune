@@ -107,6 +107,25 @@ body {
         text-decoration: underline;
         font-weight: bold; }
 
+.switch {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  border-radius: 2px;
+  background: #666;
+  text-align: center;
+  display: inline-block;
+  color: white;
+  font-size: 12px;
+  line-height: 18px;
+  box-sizing: border-box;
+  border: 1px solid;
+  font-family: 'Courier New'; }
+  .switch:hover {
+    border-color: red; }
+  .switch.on {
+    background: red; }
+
 .panel {
   height: auto;
   width: 100%;

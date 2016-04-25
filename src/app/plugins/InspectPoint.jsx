@@ -36,6 +36,7 @@ module.exports = function(data) {
     return {
         data: data.selectedPoints,
         title: 'Inspect point',
+        collapsed: true,
         panel: React.createClass({
             // getInitialState : function() {
             //     let _this = this;

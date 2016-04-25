@@ -96,6 +96,7 @@ module.exports = function(data) {
     return {
         title: 'Weight Transform',
         icon: '',
+        collapsed: true,
         panel: React.createClass({
             getInitialState : function() {
                 return {data: data.gridOptions };

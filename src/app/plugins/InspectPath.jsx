@@ -2,10 +2,12 @@
 
 let React = require('react');
 let Events = require('../global/Events');
+let Switch = require('../components/Switch.jsx');
 
 module.exports = function(data) {
     return {
         title: 'Inspect path',
+        collapsed: false,
         panel: React.createClass({
             getInitialState: function () {
                 return {path: data.path};
@@ -16,17 +18,12 @@ module.exports = function(data) {
                 Events.redraw.dispatch();
             },
             render: function() {
+                // debugger;
                 return (
-                    <label for="closedPath">
-                        {this.state.path.points.map((p) => `[${p.x},${p.y}]`).join(' ')}
-                        <input 
-                        type="checkbox" 
-                        id="closedPath"
-                        defaultValue={this.state.path.isClosed}
-                        checked={this.state.path.isClosed}
-                        onClick={this.changeHandler} />
-                        Closed
-                    </label>
+                    <div>
+                        { this.state.path.points.map((p) => `[${p.x},${p.y}]`).join(' ') }
+                        <Switch onToggle={this.changeHandler} symbol="&"></Switch>
+                    </div>
                 );
             }
         })

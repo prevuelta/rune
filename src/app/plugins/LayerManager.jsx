@@ -5,6 +5,7 @@ var React = require('react');
 module.exports = function(data) {
     return {
         title: 'Layers',
+        collapsed: true,
         panel: React.createClass({
             getInitialState : function() {
                 return {layers: data.layers };

@@ -9,6 +9,7 @@ module.exports = function(exposedData) {
     return {
         title: 'Shapes',
         icon: '',
+        collapsed: true,
         panel: React.createClass({
             render: function () {
                 return  <div>{

@@ -26,10 +26,10 @@ class PanelController {
 
             },
             toggleShow: function () {
-                this.setState({show: !this.state.show});
+                this.setState({collapsed: !this.state.collapsed});
             },
             getInitialState: function () {
-                return { show : false };
+                return { collapsed : this.props.options.collapsed };
             },
             render: function() {
                 var offsetY = this.props.offset * 50;
@@ -38,9 +38,9 @@ class PanelController {
                     <div className="panel">
                         <div className="handle" onClick={this.toggleShow}>
                             { this.props.options.title }
-                            <span className="toggle">{this.state.show ? '-' : '+'}</span>
+                            <span className="toggle">{this.state.collapsed ? '-' : '+'}</span>
                         </div>
-                        { this.state.show ? 
+                        { !this.state.collapsed ? 
                         <div className="panel-content">
                             { this.props.children }
                         </div> : null }
@@ -56,7 +56,7 @@ class PanelController {
                         {
                             this.props.data.map(function(panel, idx) {
                                 var Component = panel.panel;
-                                return <PanelWrapper offset={idx} options={{title : panel.title}} >
+                                return <PanelWrapper offset={idx} options={{title : panel.title, collapsed: panel.collapsed }} >
                                      <Component data={panel.data} />
                                  </PanelWrapper>;
                             })

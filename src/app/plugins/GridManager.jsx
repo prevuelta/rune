@@ -6,6 +6,7 @@ var Events = require('../global/Events');
 module.exports = function(data) {
     return {
         title: 'Grid',
+        collapsed: true,
         panel: React.createClass({
             getInitialState : function() {
                 return {data: data.gridOptions };

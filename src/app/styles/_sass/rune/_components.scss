@@ -1,0 +1,22 @@
+.switch {
+	width: $buh;
+	height: $buh;
+	// border: 1px solid red;
+	cursor: pointer;
+	border-radius: 2px;
+	background: #666;
+	text-align: center;
+	display: inline-block;
+	color: white;
+	font-size: $bu;
+	line-height: $buh;
+	box-sizing: border-box;
+	border: 1px solid;
+	font-family: 'Courier New';
+	&:hover {
+		border-color: red;
+	}
+	&.on {
+		background: red;
+	}
+}

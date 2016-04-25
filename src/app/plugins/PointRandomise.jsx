@@ -7,6 +7,7 @@ module.exports = function(exposedData) {
     return {
         title: 'Randomise points',
         icon: '',
+        collapsed: true,
         panel: React.createClass({
             getRandom: function() {
                 return Math.floor((Math.random() * 6)) - 3;

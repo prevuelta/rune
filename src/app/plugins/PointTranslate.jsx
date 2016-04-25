@@ -28,6 +28,7 @@ module.exports = function(exposedData) {
     return {
         title: 'Nudge',
         icon: '',
+        collapsed: true,
         panel: React.createClass({
             render: function () {
                 return  <div>
