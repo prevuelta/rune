@@ -50,12 +50,13 @@ class CanvasController {
 
         Events.redraw.add(this.drawCanvas.bind(this));
         Events.refreshCanvas.add(this.refreshCanvas.bind(this));
+        Events.display.add(this.displayMode.bind(this));
 
         Events.redraw.dispatch();
 
     }
 
-    set displayMode(displayMode) {
+    displayMode(displayMode) {
 
         this.toggleGrid();
 
@@ -76,8 +77,6 @@ class CanvasController {
                 });
             }
         });
-
-        this._displayMode = displayMode;
 
         Events.redraw.dispatch();
     }
@@ -102,21 +101,14 @@ class CanvasController {
         this.redrawAllLayers();
     }
 
-    refreshCanvas () {
-        this.setupGrid();
-        this.redrawAllLayers();
-        this.drawCanvas();
-    }
-
     redrawAllLayers () {
-        console.log("Refreshing canvas...");
         this.redrawGrid();
         this.layerControllers.forEach((ctrl) => {
             if (ctrl.view) {
                 ctrl.layer.removeChildren();
                 ctrl.layer.activate();
                 ctrl.view.draw();
-                ctrl.layer.translate(paper.view.center.add(this.data.tablet.gridOptions.res/2));
+                ctrl.layer.translate(paper.view.center);
             }
         });
     }
@@ -127,21 +119,23 @@ class CanvasController {
         ctrl.layer.removeChildren();
         ctrl.layer.activate();
         ctrl.view.draw();
-        ctrl.layer.translate(paper.view.center.add(this.data.tablet.gridOptions.res/2));
-        // this.redraw();
+        ctrl.layer.translate(paper.view.center);
     }
 
 	redrawGrid () {
-
 		this.gridLayer.removeChildren();
 		this.gridLayer.activate();
 		this.grid.draw();
-		// this.redraw();
-
 	}
 
+    refreshCanvas () {
+        this.setupGrid();
+        this.redrawAllLayers();
+        paper.view.draw();
+
+    }
+
 	drawCanvas () {
-        console.log("Redrawing canvas...");
         this.redrawCurrentLayer();
 		paper.view.draw();
 	}

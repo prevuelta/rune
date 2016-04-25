@@ -19,23 +19,31 @@ class PanelController {
         var panelController = this;
 
         var PanelWrapper = React.createClass({
-            handleStart: function() {
+            handleStart: function () {
 
             },
-            handleDrag: function() {
+            handleDrag: function () {
 
+            },
+            toggleShow: function () {
+                this.setState({show: !this.state.show});
+            },
+            getInitialState: function () {
+                return { show : false };
             },
             render: function() {
                 var offsetY = this.props.offset * 50;
                 var offsetX = this.props.offset * 5;
                 return (
                     <div className="panel">
-                        <div className="handle">
+                        <div className="handle" onClick={this.toggleShow}>
                             { this.props.options.title }
+                            <span className="toggle">{this.state.show ? '-' : '+'}</span>
                         </div>
+                        { this.state.show ? 
                         <div className="panel-content">
                             { this.props.children }
-                        </div>
+                        </div> : null }
                     </div>
                 );
             }
@@ -64,7 +72,7 @@ class PanelController {
             document.getElementById('rune-panels')
         );
 
-        Events.selectPoint.add(() => {
+        Events.reloadPanels.add(() => {
             panels.setState({'data' : panelController.app.plugins});
         });
 
@@ -82,7 +90,7 @@ class PanelController {
 //     handle=".handle"
 //     >
 //     <div className="panel">
-//         <div className="handle">{ this.props.options.title }</div>
+//         <div className="handle">{ this.props.options.title }<span className="toggle">-</span></div>
 //         <div className="panel-content">
 //             { this.props.children }
 //         </div>

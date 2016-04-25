@@ -33,8 +33,7 @@ function ActionBar(app) {
 			title: "Preview",
 			action: function(e) {
 				e.preventDefault();
-				// util.dispatchRuneEvent("preview");
-                Events.preview.dispatch();
+                Events.display.dispatch('preview');
 			}
 		},
 		{

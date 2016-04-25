@@ -129,6 +129,8 @@ body {
     box-sizing: border-box; }
     .panel .handle:active {
       background: red; }
+  .panel .toggle {
+    float: right; }
 
 .tool {
   display: inline-block;

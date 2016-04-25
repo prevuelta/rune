@@ -2,7 +2,7 @@
 
 var Events = require('./Events');
 
-module.exports = function() {
+module.exports = (function() {
 	document.addEventListener('keydown', function(e) {
 	    if(e.target.tagName !== 'INPUT') {
 			switch(e.keyCode) {
@@ -15,4 +15,4 @@ module.exports = function() {
 			}
 	    }
 	});
-}
+})();

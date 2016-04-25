@@ -26,7 +26,7 @@ module.exports = function(exposedData) {
     });
 
     return {
-        title: 'Point Translate',
+        title: 'Nudge',
         icon: '',
         panel: React.createClass({
             render: function () {

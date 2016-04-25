@@ -19,6 +19,7 @@ class App {
         this.plugins = require('./plugins')({
             gridOptions: this.data.tablet.gridOptions,
             selectedPoints: this.data.activeRune.selectedPoints,
+            path: this.data.activeRune.currentPath,
             addTransformToSelected: (data) => { this.data.addTransformToSelected(data); },
             layers: this.canvas.layerControllers
         });

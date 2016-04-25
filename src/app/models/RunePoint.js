@@ -26,10 +26,10 @@ class RunePoint extends BasePoint {
         this.handles = [new BasePoint(), new BasePoint()];
     }
 
-    render (unit) {
+    render (res) {
         return [
-            this.x * unit, 
-            this.y * unit
+            this.x * res.x, 
+            this.y * res.y
         ]; 
     }
 }

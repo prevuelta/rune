@@ -11,9 +11,11 @@ module.exports = function(data) {
                 return {data: data.gridOptions };
             },
             updateData: function(e) {
-                var res = this.refs.res.getDOMNode().value;
+                var x = this.refs.resX.getDOMNode().value;
+                var y = this.refs.resY.getDOMNode().value;
                 var units = this.refs.units.getDOMNode().value;
-                this.state.data.res = +res;
+                this.state.data.res.x = +x;
+                this.state.data.res.y = +y;
                 this.state.data.units = +units;
                 // this.forceUpdate();
                 Events.refreshCanvas.dispatch();
@@ -22,7 +24,8 @@ module.exports = function(data) {
                 return (
                     <div>
                         <label>Resolution:</label>
-                        <input type="text" ref="res" defaultValue={ this.state.data.res} />
+                        <input type="text" ref="resX" defaultValue={ this.state.data.res.x} />
+                        <input type="text" ref="resY" defaultValue={ this.state.data.res.y} />
                         <label>Units</label>
                         <input type="text" ref="units" defaultValue={this.state.data.units} />
                         <button onClick={this.updateData}>Update</button>

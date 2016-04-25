@@ -38,14 +38,14 @@ class DataController {
     addTransformToSelected (transform) {
         var rune = this.activeRune;
         Object.keys(rune.selectedPoints).forEach((key) => {
-            rune.currentPath[key].transforms.push(transform);
+            rune.currentPath.points[key].transforms.push(transform);
         });
         Events.redraw.dispatch();
     }
 
     clearRune() {
         this.activeRune.clearPaths().currentPointIndex = 0;
-        Events.refreshCanvas.dispatch();
+        Events.redraw.dispatch();
     }
 
     updateGrid () {

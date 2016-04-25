@@ -6,7 +6,7 @@ var paper = require('paper');
 class RuneView {
     constructor (runeModel, grid) {
 
-        this.points = [];
+        // this.points = [];
         this.data = runeModel;
         this.grid = grid;
     }
@@ -15,28 +15,23 @@ class RuneView {
 
         var runeView = this;
 
-        runeView.runePoints = [];
-        runeView.path = new paper.Path();
-        runeView.path.strokeColor = 'black';
-
-        var testPath = new paper.Path({
-            segments: runeView.data.currentPath.map(function(point, idx) {
-                // var pointWithTransforms = point.reduce(function(prev, current) {
-                //     return [prev[0] + current[0], prev[1] + current[1]];
-                // });
+        runeView.path = new paper.Path({
+            segments: runeView.data.currentPath.points.map(function(point, idx) {
                 return runeView.createRuneSegment(
                     point,
-                    //runeView.grid.renderPoint(pointWithTransforms),
                     idx,
-                    //runeView.data.selectedPoints.some((point) => point.idx === idx),
                     !!runeView.data.selectedPoints[idx],
                     null
                 );
-            })
-        })
+            }),
+            closed: runeView.data.currentPath.isClosed,
+            style: (runeView.data.currentPath.isClosed ? {fillColor: 'black'} : {strokeColor: 'black'}),
+            opacity: 0.6
+        });
 
-        testPath.runePath = true;
-        testPath.strokeColor = '#000000';
+        console.log(runeView.path);
+
+        runeView.path.runePath = true;
 
     }
     
@@ -46,7 +41,7 @@ class RuneView {
 
         let renderedPoint = point.render(this.grid.res);
 
-        if (point.length < 1) {
+        if (point.isCurve) {
             paperPoint = new paper.Segment({
                 point: renderedPoint[0],
                 handleIn: renderedPoint[1],
@@ -58,14 +53,15 @@ class RuneView {
 
         let p = paperPoint.point || paperPoint;
 
+        p = p.add(new paper.Point(this.grid.res.x/2, this.grid.res.y/2));
+
         if(point.transforms) {
             point.transforms.forEach((transform) => {
-                p.add((function() {
-                    var point = new paper.Point();
-                    point.angle = transform[0];
-                    point.length = transform[1];
-                    return point;
-                })());
+                console.log("T:", transform);
+                p = p.add(new paper.Point(
+                    transform[0] * this.grid.res,
+                    transform[1] * this.grid.res
+                ));
             });
         }
 
@@ -73,7 +69,6 @@ class RuneView {
 
         path.isHandle = true;
         path.fillColor = 'white';
-        // path.value = { idx: idx, point: point};
         path.value = { idx: idx, point: point};
         path.isSelected = isSelected || false;
         path.strokeWidth = 4;
@@ -95,7 +90,7 @@ class RuneView {
             Events.redraw.dispatch();
         }
 
-        return paperPoint;
+        return p;
     }
 }
 

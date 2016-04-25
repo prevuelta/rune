@@ -18,7 +18,8 @@ let PointData = React.createClass({
         let y = this.props.point.y;
         return (
             <li>
-                <small>x: {x}, y:{y}</small><br/>
+                <small>x: {x}, y:{y}</small>
+                {this.state.point.transforms}
                 <input 
                     type="checkbox" 
                     defaultValue={this.state.point.isCurve}

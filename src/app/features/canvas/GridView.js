@@ -8,10 +8,10 @@ var paper = require('paper');
 
 /* ========== Grid view ========== */
 
-var gridPointFactory = (point, size) => {
+var gridPointFactory = (point, res) => {
 
-    let paperPoint = new paper.Point( point.render(size) );
-    let path = new paper.Path.Circle( paperPoint, size/4 );
+    let paperPoint = new paper.Point( point.render(res) );
+    let path = new paper.Path.Ellipse({point: paperPoint, size: [res.x, res.y]});
 
     path.value = point;
     path.active = false;
@@ -70,12 +70,12 @@ class GridView {
         let colLines = new paper.Group();
 
         for (let i = -this.units/2; i < this.units/2; i++) {
-            rowLines.addChild(this.xLine(i * this.res));
-            colLines.addChild(this.yLine(i * this.res));
+            rowLines.addChild(this.xLine(i * this.res.y));
+            colLines.addChild(this.yLine(i * this.res.x));
         }
 
-        rowLines.translate([0, paper.view.center.y + (this.res/2)]);
-        colLines.translate([paper.view.center.x + (this.res/2), 0]);
+        rowLines.translate([0, paper.view.center.y + (this.res.y/2)]);
+        colLines.translate([paper.view.center.x + (this.res.x/2), 0]);
 
         this.xLine(paper.view.center.y, constants.RED);
         this.yLine(paper.view.center.x, constants.RED);
@@ -94,7 +94,7 @@ class GridView {
             _this.gridPoints.addChild(gridPointFactory(point, this.res));
         });
 
-        this.gridPoints.translate(paper.view.center.add(this.res/2));
+        this.gridPoints.translate(paper.view.center);
     }
 
 	yLine (xLoc, color) {
@@ -103,8 +103,8 @@ class GridView {
         return line;
 	}
 
-	xLine (xLoc, color) {
-		let line = new paper.Path.Rectangle([0, xLoc], 2000, 1);
+	xLine (yLoc, color) {
+		let line = new paper.Path.Rectangle([0, yLoc], 2000, 1);
 		line.fillColor = color ? color : constants.BLUE;
         return line;
 	}

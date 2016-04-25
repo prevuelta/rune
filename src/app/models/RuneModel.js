@@ -2,10 +2,17 @@ var RunePoint = require('./RunePoint');
 
 /* ========== Rune Model ========== */
 
-class RuneModel {
+class RunePath {
+    constructor () {
+        this.points = [];
+        this.isClosed = false;
+    }
+}
 
+class RuneModel {
     constructor (data) {
-        this.paths = data && data.paths || [ [] ];
+
+        this.paths = data && data.paths || [new RunePath()];
         this.selectedPoints = data && data.selectedPoints || {};
         this.currentPointIndex = data && data.currentPointIndex || 0;
         this.currentPathIndex = data && data.currentPathIndex || 0;
@@ -15,7 +22,8 @@ class RuneModel {
     }
 
     clearPaths ()  {
-        this.paths = [ [] ];
+        this.paths = [new RunePath()];
+        Events.reloadPanels.dispatch();
         return this;
     }
 
@@ -27,6 +35,7 @@ class RuneModel {
         } else {
             delete this.selectedPoints[point.idx];
         }
+        Events.reloadPanels.dispatch();
         console.log("Updated selected", this.selectedPoints);
     }
 
@@ -39,10 +48,10 @@ class RuneModel {
             }
         }
         if(this.reverseAdd) {
-            this.currentPath.unshift(new RunePoint(gridRef.x, gridRef.y));
+            this.currentPath.points.unshift(new RunePoint(gridRef.x, gridRef.y));
         } else {
             this.currentPointIndex++;
-            this.currentPath.splice(this.currentPointIndex, 0, new RunePoint(gridRef.x, gridRef.y));
+            this.currentPath.points.splice(this.currentPointIndex, 0, new RunePoint(gridRef.x, gridRef.y));
         }
         return this;
     }
@@ -51,8 +60,8 @@ class RuneModel {
         return this.paths[this.currentPathIndex];
     }
 
-    set currentPath(arr) {
-        this.paths[this.currentPathIndex] = arr;
+    set currentPath(obj) {
+        this.paths[this.currentPathIndex] = obj;
     }
 
     get currentPoint() {

@@ -8,6 +8,7 @@ class TabletModel {
     constructor (data) {
 
         var defaultUnits = 10;
+
         defaultUnits = defaultUnits % 2 == 0  ? defaultUnits : defaultUnits++;
 
         var defaultRes = constants.CANVAS_SIZE / defaultUnits;
@@ -17,8 +18,8 @@ class TabletModel {
         if (data) {
             data.runes.forEach(function(rune, i, runes) {
                 rune.paths.forEach(function(path, i2, paths) {
-                    path.forEach(function(point, i3, points) {
-                        data.runes[i].paths[i2][i3] = new RunePoint(point);
+                    path.points.forEach(function(point, i3, points) {
+                        data.runes[i].paths[i2].points[i3] = new RunePoint(point);
                     });
                 });
             });
@@ -27,7 +28,10 @@ class TabletModel {
         tablet.data = data || {
             gridOptions: {
                 units: defaultUnits,
-                res: defaultRes
+                res: {
+                    x: defaultRes,
+                    y: defaultRes
+                }
             },
             renderedSVG: '',
             currentPathIndex: 0
@@ -37,7 +41,6 @@ class TabletModel {
 
         if(data) {
             data.runes.forEach(function(entry) {
-                console.log(entry);
                 tablet.runes.push(new RuneModel(entry));
             });
         } else {

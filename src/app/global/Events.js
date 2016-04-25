@@ -88,11 +88,13 @@ let signals = require('signals');
 let events = [
     'addPoint',
     'selectPoint',
+    'deleteSelected',
     'clearPoints',
-    'preview',
+    'display',
     'deselectAll',
     'refreshCanvas',
-    'redraw'
+    'redraw',
+    'reloadPanels'
 ];
 
 Events = {};
