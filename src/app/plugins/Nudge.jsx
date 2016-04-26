@@ -1,8 +1,14 @@
 'use strict';
 
 var React = require('react');
+var Keys = require('../global/Keys');
+
+// Keys.addKey('shift+')
+
 
 module.exports = function(exposedData) {
+
+
 
     var directionVectors = {
         'up' : [0,1],
