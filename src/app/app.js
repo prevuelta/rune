@@ -12,6 +12,13 @@ class App {
 
     constructor () {
 
+        this.config = {
+            nudge: {
+                normal: 1,
+                super : 10,
+            }
+        }
+
         // Setup workspace
         this.data = new DataController(Util.getLocalData("runeData"));
         this.canvas = new CanvasController(this.data);
@@ -21,7 +28,8 @@ class App {
             selectedPoints: this.data.activeRune.selectedPoints,
             path: this.data.activeRune.currentPath,
             addTransformToSelected: (data) => { this.data.addTransformToSelected(data); },
-            layers: this.canvas.layerControllers
+            layers: this.canvas.layerControllers,
+            config: this.config
         });
 
         this.workspace = new WorkSpaceController(this);

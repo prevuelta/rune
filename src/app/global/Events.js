@@ -87,6 +87,7 @@ let signals = require('signals');
 
 let events = [
     'addPoint',
+    'addPath',
     'selectPoint',
     'deleteSelected',
     'clearPoints',

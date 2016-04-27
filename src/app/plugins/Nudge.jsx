@@ -3,16 +3,22 @@
 var React = require('react');
 var Keys = require('../global/Keys');
 
-// Keys.addKey('shift+')
-
-
 module.exports = function(exposedData) {
 
-
+    Object.keys({
+        'up' : Keys.key.up,
+        'down' : Keys.key.down,
+        'left' : Keys.key.left,
+        'right' : Keys.key.right,
+    }).forEach(key => {
+        Keys.mapKey(`shiftKey+${Keys.key[key]}`, () => {
+            exposedData.addTransformToSelected(directionVectors[key]);
+        });
+    });
 
     var directionVectors = {
-        'up' : [0,1],
-        'down': [0,-1],
+        'up' : [0,-1],
+        'down': [0,1],
         'left' : [-1,0],
         'right' : [1,0]
     };

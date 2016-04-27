@@ -15,18 +15,25 @@ module.exports = function(data) {
                 this.setState({path: this.state.path});
                 Events.redraw.dispatch();
             },
+            addPath: () => {
+                console.log("Adding path");
+                Events.addPath.dispatch();
+            },
             render: function() {
                 return (
-                    <label for="closedPath">
-                        {this.state.path.points.map((p) => `[${p.x},${p.y}]`).join(' ')}
-                        <input 
-                        type="checkbox" 
-                        id="closedPath"
-                        defaultValue={this.state.path.isClosed}
-                        checked={this.state.path.isClosed}
-                        onClick={this.changeHandler} />
-                        Closed
-                    </label>
+                    <div>
+                        <span onClick={this.addPath}>New path</span>
+                        <label for="closedPath">
+                            {this.state.path.points.map((p) => `[${p.x},${p.y}]`).join(' ')}
+                            <input 
+                            type="checkbox" 
+                            id="closedPath"
+                            defaultValue={this.state.path.isClosed}
+                            checked={this.state.path.isClosed}
+                            onClick={this.changeHandler} />
+                            Closed
+                        </label>
+                    </div>
                 );
             }
         })

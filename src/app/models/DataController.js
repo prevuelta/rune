@@ -13,6 +13,7 @@ class DataController {
         Events.addPoint.add(this.addPoint.bind(this));
         Events.selectPoint.add(this.selectPoint.bind(this));
         Events.clearPoints.add(this.clearRune.bind(this));
+        Events.addPath.add(this.addPath.bind(this));
 
     }
 
@@ -29,10 +30,14 @@ class DataController {
         this.tablet.runes.push(new RuneData(null));
     }
 
-    addPoint(gridRef) {
+    addPoint (gridRef) {
         this.activeRune.addPoint(gridRef);
         Events.deselectAll.dispatch();
+    }
 
+    addPath () {
+        this.activeRune.addPath();
+        Events.redraw.dispatch();
     }
 
     addTransformToSelected (transform) {

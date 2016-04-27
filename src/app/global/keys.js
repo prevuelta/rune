@@ -2,35 +2,52 @@
 
 let Events = require('./Events');
 
-const MODIFIERS = {
-    'shift',
-    'ctrl'
+const MODIFIERS = [
+    'shiftKey',
+    'ctrlKey'
+];
+
+const keyMap = {
+    delete: 8,
+    tab: 9,
+    enter: 13,
+    esc: 27,
+    space: 32,
+    left: 37,
+    up: 38,
+    right: 39,
+    down: 40
 };
 
-let Keys {
-    init: () => {
+let Keys = {
+    key: keyMap,
+    maps: {},
+    mapKey (key, callback) {
+        if (this.maps[key]) {
+            throw new Error('Key already mapped, soz bro.');
+        }
+        this.maps[key] = callback;
+    },
+    init () {
+        let _this = this;
         document.addEventListener('keydown', function(e) {
-            console.log(e);
-            if (this.keys[e.keyCode] && e.target.tagName !== 'INPUT') {
-                this.keys[e.keyCode]();
+            console.log("Key down: ", e.keyCode);
+            let hasModifier = MODIFIERS.find(mod => e[mod]);
+
+            let ref = `${hasModifier || ''}+${e.keyCode}`;
+
+            if (_this.maps[ref] && e.target.tagName !== 'INPUT') {
+                e.preventDefault();
+                _this.maps[ref]();
             }
         });
 
-        this.addKey(8, () => {
+        this.mapKey(this.key.delete, () => {
             Events.deleteSelected.dispatch();
         });
-    },
-    addKey: (key, callback) => {
-        if (!isNaN(parseFloat(key) && isFinite(key)) {
 
-        } else {
-            let [modifier, keyCode] = key.split('+');
-        }
-        if (key) {
-            throw new Error('Key already mapped, soz bro.');
-        }
-        this.keys[key] = callback;
+        return this;
     }
 };
 
-module.exports = Keys;
+module.exports = Keys.init();

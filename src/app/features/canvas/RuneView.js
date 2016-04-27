@@ -5,8 +5,6 @@ var paper = require('paper');
 
 class RuneView {
     constructor (runeModel, grid) {
-
-        // this.points = [];
         this.data = runeModel;
         this.grid = grid;
     }
@@ -35,51 +33,46 @@ class RuneView {
     
     createRuneSegment (point, idx, isSelected, transform) {
 
-        let paperPoint;
+        let segment;
 
-        let renderedPoint = point.render(this.grid.res);
-
-        if (point.isCurve) {
-            paperPoint = new paper.Segment({
-                point: renderedPoint[0],
-                handleIn: renderedPoint[1],
-                handleOut: renderedPoint[2]
-            });
-        } else {
-            paperPoint = new paper.Point(renderedPoint);
-        }
-
-        let p = paperPoint.point || paperPoint;
-
-        p = p.add(new paper.Point(this.grid.res.x/2, this.grid.res.y/2));
+        let renderedPoint = new paper.Point(
+            point.render(this.grid.res)
+        ).add(
+            new paper.Point(this.grid.res.x/2, this.grid.res.y/2)
+        );
 
         if(point.transforms) {
             point.transforms.forEach((transform) => {
                 console.log("T:", transform);
-                p = p.add(new paper.Point(
+                renderedPoint = renderedPoint.add(new paper.Point(
                     transform[0] * this.grid.res.x,
                     transform[1] * this.grid.res.y
                 ));
             });
         }
 
-        let path = new paper.Path.Rectangle(p.subtract([7, 7]), 14);
 
+        if (point.isCurve) {
+            segment = new paper.Segment({
+                point: renderedPoint,
+                handleIn: new paper.Point(point.handles[0]),
+                handleOut: new paper.Point(point.handles[1])
+            });
+        }
+
+        if (point.handles.length > 0 && isSelected) {
+            let h1 = new paper.Path.Circle(new paper.Point(point.handles[1]), 5);
+            let h2 = new paper.Path.Circle(new paper.Point(point.handles[1]), 5);
+            h1.strokeColor = 'red';
+        }
+
+        let path = new paper.Path.Circle(renderedPoint, 8);
         path.isHandle = true;
         path.fillColor = 'white';
         path.value = { idx: idx, point: point};
         path.isSelected = isSelected || false;
         path.strokeWidth = 4;
         path.strokeColor = path.isSelected ? 'red' : false;
-
-
-        path.onMouseEnter = function(e) {
-            // this.fillColor = this.selected ? 'red' : 'orange';
-        }
-
-        path.onMouseLeave = function(e) {
-            // this.fillColor = 'white';
-        }
 
         path.onMouseDown = function(e) {
             e.event.stopImmediatePropagation();
@@ -88,7 +81,7 @@ class RuneView {
             Events.redraw.dispatch();
         }
 
-        return p;
+        return segment || renderedPoint;
     }
 }
 
