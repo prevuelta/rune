@@ -29,8 +29,6 @@ class RuneView {
             opacity: 0.6
         });
 
-        console.log(runeView.path);
-
         runeView.path.runePath = true;
 
     }
@@ -59,8 +57,8 @@ class RuneView {
             point.transforms.forEach((transform) => {
                 console.log("T:", transform);
                 p = p.add(new paper.Point(
-                    transform[0] * this.grid.res,
-                    transform[1] * this.grid.res
+                    transform[0] * this.grid.res.x,
+                    transform[1] * this.grid.res.y
                 ));
             });
         }
