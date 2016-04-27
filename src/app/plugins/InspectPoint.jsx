@@ -1,6 +1,7 @@
 'use strict';
 
 let React = require('react');
+let Events = require('../global/Events');
 
 let PointData = React.createClass({
     getInitialState: function () {
@@ -8,7 +9,9 @@ let PointData = React.createClass({
     },
     changeHandler: function (point) {
         point.isCurve = !point.isCurve;
+        point.handles = point.isCurve ? [[-132, 200], [100, -100]] : [];
         this.setState({point: point});
+        Events.redraw.dispatch();
     },
     componentWillReceiveProps : function (nextProps) {
       return {point: nextProps};
@@ -20,12 +23,24 @@ let PointData = React.createClass({
             <li>
                 <small>x: {x}, y:{y}</small>
                 {this.state.point.transforms}
+                <label for={this.state.point.x+this.state.point.y}>
                 <input 
-                    type="checkbox" 
+                    type="checkbox"
+                    id={this.state.point.x+this.state.point.y} 
                     defaultValue={this.state.point.isCurve}
                     checked={this.state.point.isCurve}
-                    onClick={this.changeHandler.bind(this, this.state.point)} />
-                isCurve
+                    onClick={this.changeHandler.bind(this, this.state.point)} />isCurve
+                </label>
+                {
+                    this.state.point.isCurve ? 
+                        <div>
+                            Handle
+                            <input
+                                type="text"
+                                defaultValue={this.state.point.handles} />
+                        </div>
+                    : null
+                }   
             </li>
         );
     }
@@ -36,7 +51,7 @@ module.exports = function(data) {
     return {
         data: data.selectedPoints,
         title: 'Inspect point',
-        collapsed: true,
+        collapsed: false,
         panel: React.createClass({
             // getInitialState : function() {
             //     let _this = this;

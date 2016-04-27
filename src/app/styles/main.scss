@@ -3,16 +3,13 @@
 //= require lib/normalize.css
 
 @import
-"_sass/base",
-"_sass/helpers",
-"_sass/type",
-"_sass/header",
-"_sass/form",
-"_sass/layout";
-
-@import
-"_sass/rune/colors",
-"_sass/rune/canvas",
-"_sass/rune/action-bar",
-"_sass/rune/components",
-"_sass/rune/panels";
+"base/base",
+"base/colors",
+"base/helpers",
+"base/type",
+"layout/header",
+"layout/layout",
+"layout/panels",
+"components/form",
+"components/canvas",
+"components/action-bar";

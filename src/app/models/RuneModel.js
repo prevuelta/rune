@@ -39,6 +39,13 @@ class RuneModel {
         console.log("Updated selected", this.selectedPoints);
     }
 
+    addPath () {
+        this.paths.push(new RunePath());
+        this.currentPathIndex++;
+
+        debugger;
+    }
+
     addPoint (gridRef) {
         if (this.selectedPoints.length) {
             if (this.selectedPoints[0] == 0 ) {

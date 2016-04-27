@@ -14,12 +14,13 @@ class RunePoint extends BasePoint {
             super(x.x, x.y);
             this.transforms = x.transforms || [];
             this.handles = x.handles || [];
+            this.isCurve = x.isCurve || false;
         } else {
             super(x, y);
             this.transforms = [];
             this.handles = [];
+            this.isCurve = false;
         }
-        this.isCurve = false;
     }
 
     addHandles () {

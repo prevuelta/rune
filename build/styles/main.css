@@ -13,7 +13,7 @@
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); }
 
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Inconsolata", sans-serif;
   font-weight: 400; }
 
 h1 {
@@ -41,24 +41,6 @@ header {
     margin-right: 12px;
     font-size: 2rem; }
 
-button {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 2px;
-  cursor: pointer; }
-  button:hover {
-    background: white;
-    color: black; }
-
-label {
-  display: block; }
-
-input {
-  padding: 6px;
-  border-radius: 3px;
-  margin: 6px 0;
-  border: 1px solid #e4e4e4; }
-
 html, body {
   height: 100%;
   width: 100%; }
@@ -84,6 +66,7 @@ body {
   left: 0;
   top: 0; }
 
+<<<<<<< HEAD
 #rune-canvas {
   height: 100%;
   width: 100%;
@@ -126,6 +109,8 @@ body {
   .switch.on {
     background: red; }
 
+=======
+>>>>>>> 15c11564e11b0a093b79100b0986b1aa90c8b7bc
 .panel {
   height: auto;
   width: 100%;
@@ -135,7 +120,7 @@ body {
     z-index: 9999; }
   .panel .panel-content {
     padding: 12px;
-    font-size: 12px; }
+    font-size: 14px; }
   .panel .handle {
     cursor: pointer;
     background: #d4d4d4;
@@ -168,5 +153,47 @@ body {
   background: white; }
   .tool:hover {
     background: #f4f4f4; }
+
+button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer; }
+  button:hover {
+    background: white;
+    color: black; }
+
+label {
+  display: block; }
+
+input {
+  padding: 6px;
+  border-radius: 3px;
+  margin: 6px 0;
+  border: 1px solid #e4e4e4;
+  font-family: "Inconsolata", sans-serif; }
+
+#rune-canvas {
+  height: 100%;
+  width: 100%;
+  background: #e4e4e4; }
+
+#rune-actionbar {
+  display: inline-block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999; }
+  #rune-actionbar ul {
+    padding: 0;
+    margin: 0; }
+    #rune-actionbar ul li {
+      display: inline-block;
+      padding-right: 12px; }
+      #rune-actionbar ul li a {
+        font-size: 14px;
+        cursor: pointer;
+        text-decoration: underline;
+        font-weight: bold; }
 
 /*# sourceMappingURL=main.css.map */

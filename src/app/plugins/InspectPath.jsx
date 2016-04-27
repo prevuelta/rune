@@ -17,12 +17,18 @@ module.exports = function(data) {
                 this.setState({path: this.state.path});
                 Events.redraw.dispatch();
             },
+            addPath: () => {
+                console.log("Adding path");
+                Events.addPath.dispatch();
+            },
             render: function() {
                 // debugger;
                 return (
                     <div>
                         { this.state.path.points.map((p) => `[${p.x},${p.y}]`).join(' ') }
+                        <span onClick={this.addPath}>New path</span>
                         <Switch onToggle={this.changeHandler} symbol="&"></Switch>
+                        
                     </div>
                 );
             }
