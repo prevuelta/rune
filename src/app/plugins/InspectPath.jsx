@@ -4,6 +4,60 @@ let React = require('react');
 let Events = require('../global/Events');
 let Switch = require('../components/Switch.jsx');
 
+let PointData = React.createClass({
+    getInitialState: function () {
+        return {point: this.props.point};
+    },
+    setIsCurve: function (point) {
+        point.isCurve = !point.isCurve;
+        this.setState({point: point});
+        Events.redraw.dispatch();
+    },
+    componentWillReceiveProps : function (nextProps) {
+      return {point: nextProps};
+    },
+    changeHandle: function (ref, event) {
+        let coords = event.target.value.split(',');
+        let p = this.state.point;
+        p[ref] = coords.length === 2 ? coords.map(c => +c) : null;
+        this.setState({point: p});
+        Events.redraw.dispatch();
+    },
+    deletePoint: (point) => {
+        Events.deletePoint.dispatch(point);
+    },
+    render: function() {
+        let x = this.props.point.x;
+        let y = this.props.point.y;
+        let classNames = this.state.point.isSelected ? 'sheet active' : 'null';
+        return (
+            <div className={classNames}>
+                <small>
+                    <span>x: {x}, y:{y}</span>
+                </small>
+                {this.state.point.transforms}
+                <Switch onToggle={this.setIsCurve.bind(this, this.state.point)} symbol="S"></Switch>
+                <Switch onToggle={this.deletePoint.bind(this, this.state.point)} symbol="D"></Switch>
+                {
+                    this.state.point.isCurve ? 
+                        <div>
+                            Handles<br/>
+                            <input
+                                type="text"
+                                defaultValue={this.state.point.handle1}
+                                onChange={this.changeHandle.bind(this, 'handle1')} />
+                            <input
+                                type="text"
+                                defaultValue={this.state.point.handle2}
+                                onChange={this.changeHandle.bind(this, 'handle2')} />
+                        </div>
+                    : null
+                }   
+            </div>
+        );
+    }
+});
+
 module.exports = function(data) {
     return {
         title: 'Inspect path',
@@ -25,10 +79,9 @@ module.exports = function(data) {
                 // debugger;
                 return (
                     <div>
-                        { this.state.path.points.map((p) => `[${p.x},${p.y}]`).join(' ') }
                         <span onClick={this.addPath}>New path</span>
                         <Switch onToggle={this.changeHandler} symbol="&"></Switch>
-                        
+                        { this.state.path.points.map((p) => <PointData point={p}></PointData> ) }
                     </div>
                 );
             }

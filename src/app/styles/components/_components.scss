@@ -14,9 +14,16 @@
 	border: 1px solid;
 	font-family: 'Courier New';
 	&:hover {
-		border-color: red;
+		border-color: $cream;
 	}
 	&.on {
-		background: red;
+		background: $rust;
+	}
+}
+
+.sheet {
+	&.active {
+		background: $cream;
+		border-bottom: 1px solid #ccc;
 	}
 }

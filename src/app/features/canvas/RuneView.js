@@ -31,7 +31,7 @@ class RuneView {
 
     }
     
-    createRuneSegment (point, idx, isSelected, transform) {
+    createRuneSegment (point, idx, transform) {
 
         let segment;
 
@@ -53,31 +53,45 @@ class RuneView {
 
 
         if (point.isCurve) {
+
+            let h1 = point.handle1 ? new paper.Point(point.handle1[0], point.handle1[1]) : null; 
+            let h2 = point.handle2 ? new paper.Point(point.handle2[0], point.handle2[1]) : null; 
+
+            if (point.handle1) {
+                let h1p = new paper.Path.Circle(renderedPoint.add(h1), 5);
+                h1p.strokeColor = 'red';
+                let p1 = new paper.Path.Line(renderedPoint.add(h1), renderedPoint);
+                p1.strokeColor = 'red';
+            }
+
+            if (point.handle2) {
+                let h2p = new paper.Path.Circle(renderedPoint.add(h2), 5);
+                h2p.strokeColor = 'red';
+                let p2 = new paper.Path.Line(renderedPoint.add(h2), renderedPoint);
+                p2.strokeColor = 'red';
+            }
+
             segment = new paper.Segment({
                 point: renderedPoint,
-                handleIn: new paper.Point(point.handles[0]),
-                handleOut: new paper.Point(point.handles[1])
+                handleIn: h1,
+                handleOut: h2
             });
         }
 
-        if (point.handles.length > 0 && isSelected) {
-            let h1 = new paper.Path.Circle(new paper.Point(point.handles[1]), 5);
-            let h2 = new paper.Path.Circle(new paper.Point(point.handles[1]), 5);
-            h1.strokeColor = 'red';
-        }
+        
 
         let path = new paper.Path.Circle(renderedPoint, 8);
         path.isHandle = true;
         path.fillColor = 'white';
         path.value = { idx: idx, point: point};
-        path.isSelected = isSelected || false;
+        path.isSelected = point.isSelected || false;
         path.strokeWidth = 4;
         path.strokeColor = path.isSelected ? 'red' : false;
 
         path.onMouseDown = function(e) {
             e.event.stopImmediatePropagation();
             this.isSelected = !this.isSelected;
-            Events.selectPoint.dispatch(this.isSelected, e.target.value);
+            Events.selectPoint.dispatch(e.target.value);
             Events.redraw.dispatch();
         }
 

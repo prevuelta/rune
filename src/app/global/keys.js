@@ -31,10 +31,11 @@ let Keys = {
     init () {
         let _this = this;
         document.addEventListener('keydown', function(e) {
-            console.log("Key down: ", e.keyCode);
             let hasModifier = MODIFIERS.find(mod => e[mod]);
 
-            let ref = `${hasModifier || ''}+${e.keyCode}`;
+            let ref = `${hasModifier && hasModifier + '+' || ''}${e.keyCode}`;
+
+            console.log(ref);
 
             if (_this.maps[ref] && e.target.tagName !== 'INPUT') {
                 e.preventDefault();

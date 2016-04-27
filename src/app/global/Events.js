@@ -90,6 +90,7 @@ let events = [
     'addPath',
     'selectPoint',
     'deleteSelected',
+    'deletePoint',
     'clearPoints',
     'display',
     'deselectAll',

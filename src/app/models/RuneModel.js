@@ -27,9 +27,9 @@ class RuneModel {
         return this;
     }
 
-    selectHandler (isSelected, point) {
-        console.log(this);
-        if(isSelected) {
+    selectHandler (point) {
+        point.point.isSelected = !point.point.isSelected;
+        if(point.point.isSelected) {
             this.selectedPoints[point.idx] = point.point;
             this.currentPointIndex = point.idx;
         } else {
@@ -42,8 +42,7 @@ class RuneModel {
     addPath () {
         this.paths.push(new RunePath());
         this.currentPathIndex++;
-
-        debugger;
+        Events.reloadPanels.dispatch();
     }
 
     addPoint (gridRef) {
@@ -60,6 +59,9 @@ class RuneModel {
             this.currentPointIndex++;
             this.currentPath.points.splice(this.currentPointIndex, 0, new RunePoint(gridRef.x, gridRef.y));
         }
+        
+        Events.reloadPanels.dispatch();
+
         return this;
     }
 
@@ -86,6 +88,18 @@ class RuneModel {
         // this.currentPath = this.currentPath.filter(function(value, idx) {
             // return !~rune.selectedPoints.indexOf(idx);
         // });
+    }
+
+    deletePoint (p) {
+
+        this.currentPath.points.forEach((point, i) => {
+            debugger;
+            if (point === p) {
+            //     delete this.currentPath.points[i];
+            }
+        });
+        Events.redraw.dispatch();
+        // Events.refreshPanels.dispatch();
     }
 
     // set selectedPoints(selectedPoints) {

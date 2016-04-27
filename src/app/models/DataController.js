@@ -14,6 +14,7 @@ class DataController {
         Events.selectPoint.add(this.selectPoint.bind(this));
         Events.clearPoints.add(this.clearRune.bind(this));
         Events.addPath.add(this.addPath.bind(this));
+        Events.deletePoint.add(this.deletePoint.bind(this));
 
     }
 
@@ -61,6 +62,10 @@ class DataController {
 
     selectPoint(isSelected, point) {
         this.activeRune.selectHandler(isSelected, point);
+    }
+
+    deletePoint (p) {
+        this.activeRune.deletePoint(p);
     }
 }
 

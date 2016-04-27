@@ -31,23 +31,3 @@
 		float: right;
 	}
 }
-
-.tool {
-    display: inline-block;
-    margin: 0 $hbu $hbu 0;
-    padding: $hbu;
-    text-align: center;
-    box-sizing: border-box;
-    width: $bu2;
-    height: $bu2;
-    line-height: $bu;
-    border-radius: $qbu;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    border: 1px solid #ccc;
-    background: white;
-    &:hover {
-        background: #f4f4f4;
-    }
-}
