@@ -13,7 +13,7 @@ class RuneModel {
     constructor (data) {
 
         this.paths = data && data.paths || [new RunePath()];
-        this.selectedPoints = data && data.selectedPoints || {};
+        this.selectedPoints = data && data.selectedPoints || [];
         this.currentPointIndex = data && data.currentPointIndex || 0;
         this.currentPathIndex = data && data.currentPathIndex || 0;
         this.reverseAdd = false;
@@ -28,14 +28,19 @@ class RuneModel {
     }
 
     selectHandler (point) {
-        point.point.isSelected = !point.point.isSelected;
-        if(point.point.isSelected) {
-            this.selectedPoints[point.idx] = point.point;
-            this.currentPointIndex = point.idx;
-        } else {
-            delete this.selectedPoints[point.idx];
+        point.isSelected = !point.isSelected;
+        if(point.isSelected) {
+            this.selectedPoints.push(point);
+            // this.currentPointIndex = point.idx; ???
+        } else { 
+            this.selectedPoints.forEach((p, i) => {
+                if (point == p) {
+                    this.selectedPoints.splice(i, 1);
+                }
+            });
         }
         Events.reloadPanels.dispatch();
+        Events.redraw.dispatch();
         console.log("Updated selected", this.selectedPoints);
     }
 

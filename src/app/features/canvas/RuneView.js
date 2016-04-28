@@ -14,11 +14,9 @@ class RuneView {
         var runeView = this;
 
         runeView.path = new paper.Path({
-            segments: runeView.data.currentPath.points.map(function(point, idx) {
+            segments: runeView.data.currentPath.points.map(function(point) {
                 return runeView.createRuneSegment(
                     point,
-                    idx,
-                    !!runeView.data.selectedPoints[idx],
                     null
                 );
             }),
@@ -31,7 +29,7 @@ class RuneView {
 
     }
     
-    createRuneSegment (point, idx, transform) {
+    createRuneSegment (point, transform) {
 
         let segment;
 
@@ -43,7 +41,6 @@ class RuneView {
 
         if(point.transforms) {
             point.transforms.forEach((transform) => {
-                console.log("T:", transform);
                 renderedPoint = renderedPoint.add(new paper.Point(
                     transform[0] * this.grid.res.x,
                     transform[1] * this.grid.res.y
@@ -83,7 +80,7 @@ class RuneView {
         let path = new paper.Path.Circle(renderedPoint, 8);
         path.isHandle = true;
         path.fillColor = 'white';
-        path.value = { idx: idx, point: point};
+        path.value = point;
         path.isSelected = point.isSelected || false;
         path.strokeWidth = 4;
         path.strokeColor = path.isSelected ? 'red' : false;

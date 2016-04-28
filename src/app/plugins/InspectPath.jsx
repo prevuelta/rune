@@ -13,10 +13,9 @@ let PointData = React.createClass({
         this.setState({point: point});
         Events.redraw.dispatch();
     },
-    setActive : function () {
-        this.state.point.isSelected = true;
+    toggleActive : function () {
+        Events.selectPoint.dispatch(this.state.point);
         this.setState({point: this.state.point});
-        Events.selectPoint.dispatch({point: this.state.point});
     },
     componentWillReceiveProps : function (nextProps) {
       return {point: nextProps};
@@ -37,7 +36,7 @@ let PointData = React.createClass({
         let classNames = this.state.point.isSelected ? 'sheet active' : 'sheet';
         return (
             <div 
-                onClick={this.setActive.bind(this)}
+                onClick={this.toggleActive.bind(this)}
                 className={classNames}>
                 <small>
                     <span>x: {x}, y:{y}</span>
