@@ -92,6 +92,12 @@ class RuneView {
             Events.redraw.dispatch();
         }
 
+        Events.display.add((mode)=> {
+            if (mode === 'preview') {
+                path.visible = false;
+            }
+        });
+
         return segment || renderedPoint;
     }
 }

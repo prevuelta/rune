@@ -77,11 +77,12 @@ class PanelController {
 
         Events.reloadPanels.add(() => {
             // panels.setState({'data' : panelController.app.plugins});
-            console.log("Reloading panels...");
-            panels = React.render(
-                <Panels data={panelController.app.plugins} />,
-                document.getElementById('rune-panels')
-            );
+            // console.log("Reloading panels...");
+            // panels = React.render(
+            //     <Panels data={panelController.app.plugins} />,
+            //     document.getElementById('rune-panels')
+            // );
+            panels.replaceState({'data' : panelController.app.plugins});
         });
 
         Events.refreshPanels.add(() => {
