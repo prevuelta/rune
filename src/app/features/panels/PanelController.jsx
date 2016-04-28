@@ -50,11 +50,14 @@ class PanelController {
         });
 
         var Panels = React.createClass({
+            getInitialState: function () {
+                return { 'data' : this.props.data };
+            },
             render: function() {
                 return (
                     <div>
                         {
-                            this.props.data.map(function(panel, idx) {
+                            this.state.data.map(function(panel, idx) {
                                 var Component = panel.panel;
                                 return <PanelWrapper offset={idx} options={{title : panel.title, collapsed: panel.collapsed }} >
                                      <Component data={panel.data} />
@@ -73,15 +76,21 @@ class PanelController {
         );
 
         Events.reloadPanels.add(() => {
+            // panels.setState({'data' : panelController.app.plugins});
+            console.log("Reloading panels...");
+            panels = React.render(
+                <Panels data={panelController.app.plugins} />,
+                document.getElementById('rune-panels')
+            );
+        });
+
+        Events.refreshPanels.add(() => {
+            console.log("Refreshing panels...");
             panels.setState({'data' : panelController.app.plugins});
         });
 
-
     }
 
-    updateProperties (model) {
-
-    }
 }
 
 // <Draggable

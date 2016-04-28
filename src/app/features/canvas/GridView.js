@@ -40,19 +40,17 @@ var gridPointFactory = (point, res) => {
 class GridView {
 	constructor (options) {
 
-    	this.res = options.res;
-    	this.units = options.units;
-
+    	this.options = options;
     	this.points = [];
 
         let col, row;
-        col = row = -this.units/2;
+        col = row = -this.options.units/2;
 
-        for (let i = 1; i <= this.units * this.units; i++) {
+        for (let i = 1; i <= this.options.units * this.options.units; i++) {
             this.points.push(new RunePoint(row, col));
-            if (i && i % this.units == 0) {
+            if (i && i % this.options.units == 0) {
                 row++;
-                col = -this.units/2;
+                col = -this.options.units/2;
             } else {
                 col++;
             }
@@ -66,16 +64,19 @@ class GridView {
 
         let gridColor = new paper.Color(_this.gridColor, 100);
 
+        let {x,y} = this.options.res;
+
         let rowLines = new paper.Group();
         let colLines = new paper.Group();
 
-        for (let i = -this.units/2; i < this.units/2; i++) {
-            rowLines.addChild(this.xLine(i * this.res.y));
-            colLines.addChild(this.yLine(i * this.res.x));
+        for (let i = -this.options.units/2; i < this.options.units/2; i++) {
+            rowLines.addChild(this.xLine(i * y));
+            colLines.addChild(this.yLine(i * x));
         }
 
-        rowLines.translate([0, paper.view.center.y + (this.res.y/2)]);
-        colLines.translate([paper.view.center.x + (this.res.x/2), 0]);
+
+        colLines.translate([paper.view.center.x + (x/2), 0]);
+        rowLines.translate([0, paper.view.center.y + (y/2)]);
 
         this.xLine(paper.view.center.y, constants.RED);
         this.yLine(paper.view.center.x, constants.RED);
@@ -91,7 +92,7 @@ class GridView {
         let _this = this;
 
         this.points.forEach((point) => {
-            _this.gridPoints.addChild(gridPointFactory(point, this.res));
+            _this.gridPoints.addChild(gridPointFactory(point, this.options.res));
         });
 
         this.gridPoints.translate(paper.view.center);

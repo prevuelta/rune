@@ -42,9 +42,8 @@ class DataController {
     }
 
     addTransformToSelected (transform) {
-        var rune = this.activeRune;
-        Object.keys(rune.selectedPoints).forEach((key) => {
-            rune.currentPath.points[key].transforms.push(transform);
+        this.activeRune.selectedPoints.forEach((point) => {
+            point.transforms.push(transform);
         });
         Events.redraw.dispatch();
     }

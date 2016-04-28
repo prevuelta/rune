@@ -1,7 +1,7 @@
 'use strict';
 
-var React = require('react');
-var Events = require('../global/Events');
+let React = require('react');
+let Events = require('../global/Events');
 
 module.exports = function(data) {
     return {
@@ -12,21 +12,21 @@ module.exports = function(data) {
                 return {data: data.gridOptions };
             },
             updateData: function(e) {
-                var x = this.refs.resX.getDOMNode().value;
-                var y = this.refs.resY.getDOMNode().value;
-                var units = this.refs.units.getDOMNode().value;
-                this.state.data.res.x = +x;
-                this.state.data.res.y = +y;
+                let baseUnit = this.refs.baseUnit.getDOMNode().value;
+                let ratio = this.refs.ratio.getDOMNode().value;
+                let units = this.refs.units.getDOMNode().value;
+                this.state.data.baseUnit = +baseUnit;
+                this.state.data.ratio = +ratio;
                 this.state.data.units = +units;
-                // this.forceUpdate();
                 Events.refreshCanvas.dispatch();
             },
             render: function() {
                 return (
                     <div>
-                        <label>Resolution:</label>
-                        <input type="text" ref="resX" defaultValue={ this.state.data.res.x} />
-                        <input type="text" ref="resY" defaultValue={ this.state.data.res.y} />
+                        <label>Zoom level</label>
+                        <input type="text" ref="baseUnit" defaultValue={ this.state.data.baseUnit} />
+                        <label>Ratio</label>
+                        <input type="text" ref="ratio" defaultValue={ this.state.data.ratio} />
                         <label>Units</label>
                         <input type="text" ref="units" defaultValue={this.state.data.units} />
                         <button onClick={this.updateData}>Update</button>

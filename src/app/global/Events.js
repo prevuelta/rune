@@ -12,6 +12,7 @@ let events = [
     'refreshCanvas',
     'redraw',
     'reloadPanels',
+    'refreshPanels',
     'zoomIn',
     'zoomOut'
 ];

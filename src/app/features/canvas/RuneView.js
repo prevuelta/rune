@@ -6,7 +6,7 @@ var paper = require('paper');
 class RuneView {
     constructor (runeModel, grid) {
         this.data = runeModel;
-        this.grid = grid;
+        this.grid = grid.options;
     }
 
     draw () {

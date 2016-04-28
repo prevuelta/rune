@@ -12,6 +12,8 @@ class RunePath {
 class RuneModel {
     constructor (data) {
 
+        console.log(data);
+
         this.paths = data && data.paths || [new RunePath()];
         this.selectedPoints = data && data.selectedPoints || [];
         this.currentPointIndex = data && data.currentPointIndex || 0;
@@ -28,9 +30,11 @@ class RuneModel {
     }
 
     selectHandler (point) {
+        console.log("Selecting poiint", point);
         point.isSelected = !point.isSelected;
         if(point.isSelected) {
             this.selectedPoints.push(point);
+            console.log("Selectedpoints", this.selectedPoints);
             // this.currentPointIndex = point.idx; ???
         } else { 
             this.selectedPoints.forEach((p, i) => {
@@ -39,15 +43,14 @@ class RuneModel {
                 }
             });
         }
-        Events.reloadPanels.dispatch();
+        Events.refreshPanels.dispatch();
         Events.redraw.dispatch();
-        console.log("Updated selected", this.selectedPoints);
     }
 
     addPath () {
         this.paths.push(new RunePath());
         this.currentPathIndex++;
-        Events.reloadPanels.dispatch();
+        Events.refreshPanels.dispatch();
     }
 
     addPoint (gridRef) {
@@ -65,7 +68,7 @@ class RuneModel {
             this.currentPath.points.splice(this.currentPointIndex, 0, new RunePoint(gridRef.x, gridRef.y));
         }
         
-        Events.reloadPanels.dispatch();
+        Events.refreshPanels.dispatch();
 
         return this;
     }
@@ -98,9 +101,8 @@ class RuneModel {
     deletePoint (p) {
 
         this.currentPath.points.forEach((point, i) => {
-            debugger;
             if (point === p) {
-            //     delete this.currentPath.points[i];
+                this.currentPath.points.splice(i, 1);
             }
         });
         Events.redraw.dispatch();

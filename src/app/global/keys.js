@@ -35,8 +35,6 @@ let Keys = {
 
             let ref = `${hasModifier && hasModifier + '+' || ''}${e.keyCode}`;
 
-            console.log(ref);
-
             if (_this.maps[ref] && e.target.tagName !== 'INPUT') {
                 e.preventDefault();
                 _this.maps[ref]();

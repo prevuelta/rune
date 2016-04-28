@@ -3,6 +3,7 @@
 let React = require('react');
 let Events = require('../global/Events');
 let Switch = require('../components/Switch.jsx');
+let Button = require('../components/Button.jsx');
 
 let PointData = React.createClass({
     getInitialState: function () {
@@ -36,14 +37,14 @@ let PointData = React.createClass({
         let classNames = this.state.point.isSelected ? 'sheet active' : 'sheet';
         return (
             <div 
-                onClick={this.toggleActive.bind(this)}
+                onClick={this.toggleActive}
                 className={classNames}>
                 <small>
                     <span>x: {x}, y:{y}</span>
                 </small>
                 {this.state.point.transforms}
                 <Switch onToggle={this.setIsCurve.bind(this, this.state.point)} symbol="S"></Switch>
-                <Switch onToggle={this.deletePoint.bind(this, this.state.point)} symbol="D"></Switch>
+                <Button point={this.state.point} symbol="X"></Button>
                 {
                     this.state.point.isCurve ? 
                         <div>
@@ -66,11 +67,13 @@ let PointData = React.createClass({
 
 module.exports = function(data) {
     return {
+        data: data,
         title: 'Inspect path',
         collapsed: false,
         panel: React.createClass({
             getInitialState: function () {
-                return {path: data.path};
+                console.log("Path", this.props.data.path);
+                return {path: this.props.data.path};
             },
             changeHandler: function () {
                 this.state.path.isClosed = !this.state.path.isClosed;

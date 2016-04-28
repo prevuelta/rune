@@ -19,10 +19,10 @@ class TabletModel {
             });
         }
 
-        tablet.data = data || {
+        tablet.data = {
             gridOptions: new GridModel(data),
-            renderedSVG: '',
-            currentPathIndex: 0
+            renderedSVG: data && data.renderedSVG || '',
+            currentPathIndex: data && data.currentPathIndex || 0
         };
 
         tablet.runes = [];
