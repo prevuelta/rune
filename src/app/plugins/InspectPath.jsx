@@ -13,6 +13,11 @@ let PointData = React.createClass({
         this.setState({point: point});
         Events.redraw.dispatch();
     },
+    setActive : function () {
+        this.state.point.isSelected = true;
+        this.setState({point: this.state.point});
+        Events.selectPoint.dispatch({point: this.state.point});
+    },
     componentWillReceiveProps : function (nextProps) {
       return {point: nextProps};
     },
@@ -29,9 +34,11 @@ let PointData = React.createClass({
     render: function() {
         let x = this.props.point.x;
         let y = this.props.point.y;
-        let classNames = this.state.point.isSelected ? 'sheet active' : 'null';
+        let classNames = this.state.point.isSelected ? 'sheet active' : 'sheet';
         return (
-            <div className={classNames}>
+            <div 
+                onClick={this.setActive.bind(this)}
+                className={classNames}>
                 <small>
                     <span>x: {x}, y:{y}</span>
                 </small>
@@ -78,7 +85,7 @@ module.exports = function(data) {
             render: function() {
                 // debugger;
                 return (
-                    <div>
+                    <div className="sheet">
                         <span onClick={this.addPath}>New path</span>
                         <Switch onToggle={this.changeHandler} symbol="&"></Switch>
                         { this.state.path.points.map((p) => <PointData point={p}></PointData> ) }

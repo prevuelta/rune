@@ -13,6 +13,7 @@
 	box-sizing: border-box;
 	border: 1px solid;
 	font-family: 'Courier New';
+    margin: 2px;
 	&:hover {
 		border-color: $cream;
 	}
@@ -22,8 +23,18 @@
 }
 
 .sheet {
-	&.active {
-		background: $cream;
-		border-bottom: 1px solid #ccc;
-	}
+    // height: $bu2;
+    background: $cream;
+    .sheet {
+        background: $sky;
+        margin-left: $hbu;
+        &:before {
+            content: '↳ | ';
+            font-size: 10px;
+        }
+    }
+    margin: 0 0 $qbu 0;
+    &.active {
+        background: $rust;
+    }
 }

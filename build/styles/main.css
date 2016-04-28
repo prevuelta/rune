@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* ------ Base Units ------ */
 .cf:before,
 .cf:after {
@@ -146,14 +147,23 @@ input {
   line-height: 18px;
   box-sizing: border-box;
   border: 1px solid;
-  font-family: 'Courier New'; }
+  font-family: 'Courier New';
+  margin: 2px; }
   .switch:hover {
     border-color: #ece5d4; }
   .switch.on {
     background: #e13d1c; }
 
-.sheet.active {
+.sheet {
   background: #ece5d4;
-  border-bottom: 1px solid #ccc; }
+  margin: 0 0 3px 0; }
+  .sheet .sheet {
+    background: #27dded;
+    margin-left: 6px; }
+    .sheet .sheet:before {
+      content: '↳ | ';
+      font-size: 10px; }
+  .sheet.active {
+    background: #e13d1c; }
 
 /*# sourceMappingURL=main.css.map */
