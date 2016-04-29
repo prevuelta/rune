@@ -12,16 +12,27 @@ module.exports = function(exposedData) {
         'right' : Keys.key.right,
     }).forEach(key => {
         Keys.mapKey(`shiftKey+${Keys.key[key]}`, () => {
-            exposedData.addTransformToSelected(directionVectors[key]);
+            exposedData.addTransformToSelected(superNudgeVectors[key]);
+        });
+        Keys.mapKey(`${Keys.key[key]}`, () => {
+            exposedData.addTransformToSelected(nudgeVectors[key]);
         });
     });
 
-    var directionVectors = {
+    var superNudgeVectors = {
         'up' : [0,-1],
         'down': [0,1],
         'left' : [-1,0],
         'right' : [1,0]
     };
+
+    var nudgeVectors = {
+        'up' : [0,-0.1],
+        'down': [0,0.1],
+        'left' : [-0.1,0],
+        'right' : [0.1,0]
+    };
+
 
     var TranslateLink = React.createClass({
         translate: function () {

@@ -3,9 +3,7 @@
 var paper = require('paper');
 var React = require('react');
 
-module.exports = function(data) {
-
-    console.log(data);
+module.exports = function() {
 
     var transformPoints = function () {
             var points = data.selectedPoints;

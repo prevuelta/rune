@@ -1,11 +1,11 @@
-module.exports = function(exposedData) {
+module.exports = function (exposedData) {
     return [
-    	require('./InspectPath.jsx')(exposedData),
-        require('./GridManager.jsx')(exposedData),
+    	require('./InspectPath.jsx'),
+        require('./GridManager.jsx'),
         require('./Nudge.jsx')(exposedData),
-        require('./LayerManager.jsx')(exposedData),
-        require('./PointRandomise.jsx')(exposedData),
-        require('./Shapes.jsx')(exposedData),
-        require('./FourPointWeightTransform.jsx')(exposedData)
+        require('./LayerManager.jsx')
+        // require('./PointRandomise.jsx'),
+        // require('./Shapes.jsx'),
+        // require('./FourPointWeightTransform.jsx')
     ];
 };

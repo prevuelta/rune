@@ -14,11 +14,10 @@ class CanvasController {
         let _this = this;
 
         this.data = tabletModel;
-
     	this.canvas = document.getElementById('rune-canvas');
+        this.isPreview = false;
 
     	paper.setup(this.canvas).install(window);
-
         paper.settings.handleSize = 8;
 
     	this.layerControllers = [{
@@ -51,7 +50,6 @@ class CanvasController {
         Events.redraw.add(this.drawCanvas.bind(this));
         Events.refreshCanvas.add(this.refreshCanvas.bind(this));
         Events.display.add(this.displayMode.bind(this));
-
         Events.redraw.dispatch();
 
     }
@@ -60,19 +58,21 @@ class CanvasController {
 
         this.toggleGrid();
 
-        var isPreview = displayMode === 'preview';
+        console.log("Display mode", displayMode);
+
+        this.isPreview = displayMode === 'preview';
+
+        let _this = this;
 
         this.layerControllers.forEach(function(layerController, index) {
             if (index) {
-                console.log(layerController.layer);
                 layerController.layer.children.forEach(function(child){
-                    console.log(child);
                     if (child.isHandle) {
-                        child.visible = !isPreview;
+                        child.visible = !_this.isPreview;
                     } else if (child.runePath) {
-                        child.fillColor = isPreview ? 'black' : null;
-                        child.strokeColor = isPreview ? null : 'red';
-                        child.closed = isPreview;
+                        child.fillColor = _this.isPreview ? 'black' : null;
+                        child.strokeColor = _this.isPreview ? null : 'red';
+                        child.closed = _this.isPreview;
                     }
                 });
             }
@@ -102,12 +102,13 @@ class CanvasController {
     }
 
     redrawAllLayers () {
+        let _this = this;
         this.redrawGrid();
         this.layerControllers.forEach((ctrl) => {
             if (ctrl.view) {
                 ctrl.layer.removeChildren();
                 ctrl.layer.activate();
-                ctrl.view.draw();
+                ctrl.view.draw(_this.isPreview);
                 ctrl.layer.translate(paper.view.center);
             }
         });
@@ -118,7 +119,7 @@ class CanvasController {
         let ctrl = this.layerControllers[this.currentLayerIndex];
         ctrl.layer.removeChildren();
         ctrl.layer.activate();
-        ctrl.view.draw();
+        ctrl.view.draw(this.isPreview);
         ctrl.layer.translate(paper.view.center);
     }
 

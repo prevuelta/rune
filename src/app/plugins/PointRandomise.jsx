@@ -14,7 +14,7 @@ module.exports = function(exposedData) {
             },
             randomise: function() {
                 console.log("thing happening");
-                return exposedData.addTransformToSelected([
+                return this.props.data.addTransformToSelected([
                     this.getRandom(),
                     this.getRandom()
                 ]);

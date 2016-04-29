@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-module.exports = function(exposedData) {
+module.exports = function () {
 
     var shapes = [{},{},{}];
 

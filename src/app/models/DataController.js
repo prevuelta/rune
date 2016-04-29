@@ -39,18 +39,25 @@ class DataController {
     addPath () {
         this.activeRune.addPath();
         Events.redraw.dispatch();
+
     }
 
     addTransformToSelected (transform) {
         this.activeRune.selectedPoints.forEach((point) => {
-            point.transforms.push(transform);
+            point[0] += transform[0],
+            point[1] += transform[1]
         });
+        // this.activeRune.selectedPoints.forEach((point) => {
+        //     point.transforms.push(transform);
+        // });
         Events.redraw.dispatch();
     }
 
     clearRune() {
         this.activeRune.clearPaths().currentPointIndex = 0;
-        Events.redraw.dispatch();
+        debugger;
+        Events.reloadPanels.dispatch();
+        // Events.redraw.dispatch();
     }
 
     updateGrid () {

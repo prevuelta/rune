@@ -13,6 +13,7 @@ class RunePoint extends BasePoint {
         if (typeof x === 'object') {
             super(x.x, x.y);
             this.transforms = x.transforms || [];
+            this.transform = x.transform || [0,0];
             this.handle1 = x.handle1 || null;
             this.handle2 = x.handle2 || null;
             this.isCurve = x.isCurve || false;

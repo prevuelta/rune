@@ -65,35 +65,32 @@ let PointData = React.createClass({
     }
 });
 
-module.exports = function(data) {
-    return {
-        data: data,
-        title: 'Inspect path',
-        collapsed: false,
-        panel: React.createClass({
-            getInitialState: function () {
-                console.log("Path", this.props.data.path);
-                return {path: this.props.data.path};
-            },
-            changeHandler: function () {
-                this.state.path.isClosed = !this.state.path.isClosed;
-                this.setState({path: this.state.path});
-                Events.redraw.dispatch();
-            },
-            addPath: () => {
-                console.log("Adding path");
-                Events.addPath.dispatch();
-            },
-            render: function() {
-                // debugger;
-                return (
-                    <div className="sheet">
-                        <span onClick={this.addPath}>New path</span>
-                        <Switch onToggle={this.changeHandler} symbol="&"></Switch>
-                        { this.state.path.points.map((p) => <PointData point={p}></PointData> ) }
-                    </div>
-                );
-            }
-        })
-    };
-}
+module.exports = {
+    title: 'Inspect path',
+    collapsed: false,
+    panel: React.createClass({
+        getInitialState: function () {
+            console.log("Path", this.props.data.path);
+            return {path: this.props.data.path};
+        },
+        changeHandler: function () {
+            this.state.path.isClosed = !this.state.path.isClosed;
+            this.setState({path: this.state.path});
+            Events.redraw.dispatch();
+        },
+        addPath: () => {
+            console.log("Adding path");
+            Events.addPath.dispatch();
+        },
+        render: function() {
+            // debugger;
+            return (
+                <div className="sheet">
+                    <span onClick={this.addPath}>New path</span>
+                    <Switch onToggle={this.changeHandler} symbol="&"></Switch>
+                    { this.state.path.points.map((p) => <PointData point={p}></PointData> ) }
+                </div>
+            );
+        }
+    })
+};

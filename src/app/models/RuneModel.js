@@ -25,12 +25,10 @@ class RuneModel {
 
     clearPaths ()  {
         this.paths = [new RunePath()];
-        Events.reloadPanels.dispatch();
         return this;
     }
 
     selectHandler (point) {
-        console.log("Selecting poiint", point);
         point.isSelected = !point.isSelected;
         if(point.isSelected) {
             this.selectedPoints.push(point);

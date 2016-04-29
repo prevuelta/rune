@@ -9,7 +9,7 @@ class RuneView {
         this.grid = grid.options;
     }
 
-    draw () {
+    draw (isPreview) {
 
         var runeView = this;
 
@@ -17,7 +17,8 @@ class RuneView {
             segments: runeView.data.currentPath.points.map(function(point) {
                 return runeView.createRuneSegment(
                     point,
-                    null
+                    null,
+                    isPreview
                 );
             }),
             closed: runeView.data.currentPath.isClosed,
@@ -29,7 +30,9 @@ class RuneView {
 
     }
     
-    createRuneSegment (point, transform) {
+    createRuneSegment (point, transform, isPreview) {
+
+        console.log("Is Preview", isPreview);
 
         let segment;
 
@@ -39,16 +42,21 @@ class RuneView {
             new paper.Point(this.grid.res.x/2, this.grid.res.y/2)
         );
 
-        if(point.transforms) {
-            point.transforms.forEach((transform) => {
-                renderedPoint = renderedPoint.add(new paper.Point(
-                    transform[0] * this.grid.res.x,
-                    transform[1] * this.grid.res.y
-                ));
-            });
+        // if(point.transforms) {
+        //     point.transforms.forEach((transform) => {
+        //         renderedPoint = renderedPoint.add(new paper.Point(
+        //             transform[0] * this.grid.res.x,
+        //             transform[1] * this.grid.res.y
+        //         ));
+        //     });
+        // }
+
+        if(point.transform) {
+            renderedPoint = renderedPoint.add(new paper.Point(
+                point.transform[0],
+                point.transform[1] 
+            ));
         }
-
-
         if (point.isCurve) {
 
             let h1 = point.handle1 ? new paper.Point(point.handle1[0], point.handle1[1]) : null; 
@@ -75,28 +83,23 @@ class RuneView {
             });
         }
 
-        
+        if (!isPreview) {
 
-        let path = new paper.Path.Circle(renderedPoint, 8);
-        path.isHandle = true;
-        path.fillColor = 'white';
-        path.value = point;
-        path.isSelected = point.isSelected || false;
-        path.strokeWidth = 4;
-        path.strokeColor = path.isSelected ? 'red' : false;
+            let node = new paper.Path.Circle(renderedPoint, 8);
+            node.isHandle = true;
+            node.fillColor = 'white';
+            node.value = point;
+            node.isSelected = point.isSelected || false;
+            node.strokeWidth = 4;
+            node.strokeColor = node.isSelected ? 'red' : false;
 
-        path.onMouseDown = function(e) {
-            e.event.stopImmediatePropagation();
-            this.isSelected = !this.isSelected;
-            Events.selectPoint.dispatch(e.target.value);
-            Events.redraw.dispatch();
-        }
-
-        Events.display.add((mode)=> {
-            if (mode === 'preview') {
-                path.visible = false;
+            node.onMouseDown = function(e) {
+                e.event.stopImmediatePropagation();
+                this.isSelected = !this.isSelected;
+                Events.selectPoint.dispatch(e.target.value);
+                Events.redraw.dispatch();
             }
-        });
+        }
 
         return segment || renderedPoint;
     }

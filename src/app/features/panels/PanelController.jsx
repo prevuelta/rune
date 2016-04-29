@@ -16,7 +16,7 @@ class PanelController {
 
     init () {
 
-        var panelController = this;
+        var _this = this;
 
         var PanelWrapper = React.createClass({
             handleStart: function () {
@@ -51,16 +51,17 @@ class PanelController {
 
         var Panels = React.createClass({
             getInitialState: function () {
-                return { 'data' : this.props.data };
+                return { 'panels' : this.props.panels, 'data' : this.props.data };
             },
             render: function() {
+                let _this = this;
                 return (
                     <div>
                         {
-                            this.state.data.map(function(panel, idx) {
+                            this.state.panels.map(function(panel, idx) {
                                 var Component = panel.panel;
                                 return <PanelWrapper offset={idx} options={{title : panel.title, collapsed: panel.collapsed }} >
-                                     <Component data={panel.data} />
+                                     <Component data={_this.state.data} />
                                  </PanelWrapper>;
                             })
                         }
@@ -71,23 +72,21 @@ class PanelController {
 
         // Plugin panels
         let panels = React.render(
-            <Panels data={panelController.app.plugins} />,
+            <Panels panels={_this.app.plugins} data={_this.app.exposedData} />,
             document.getElementById('rune-panels')
         );
 
-        Events.reloadPanels.add(() => {
-            // panels.setState({'data' : panelController.app.plugins});
-            // console.log("Reloading panels...");
-            // panels = React.render(
-            //     <Panels data={panelController.app.plugins} />,
-            //     document.getElementById('rune-panels')
-            // );
-            panels.replaceState({'data' : panelController.app.plugins});
-        });
+        function reloadHandler () {
+            console.log("Reloading panels...");
+            debugger;
+            panels.replaceState({'data' : this.app.exposedData, 'panels' : this.app.plugins});
+        };
+
+        Events.reloadPanels.add(reloadHandler.bind(_this));
 
         Events.refreshPanels.add(() => {
             console.log("Refreshing panels...");
-            panels.setState({'data' : panelController.app.plugins});
+            panels.setState({'data' : _this.app.exposedData});
         });
 
     }
