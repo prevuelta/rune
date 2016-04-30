@@ -14,15 +14,15 @@ class RuneView {
         var runeView = this;
 
         runeView.path = new paper.Path({
-            segments: runeView.data.currentPath.points.map(function(point) {
+            segments: runeView.data.activePath.points.map(function(point) {
                 return runeView.createRuneSegment(
                     point,
                     null,
                     isPreview
                 );
             }),
-            closed: runeView.data.currentPath.isClosed,
-            style: (runeView.data.currentPath.isClosed ? {fillColor: 'black'} : {strokeColor: 'black'}),
+            closed: runeView.data.activePath.isClosed,
+            style: (runeView.data.activePath.isClosed ? {fillColor: 'black'} : {strokeColor: 'black'}),
             opacity: 0.6
         });
 
@@ -32,7 +32,7 @@ class RuneView {
     
     createRuneSegment (point, transform, isPreview) {
 
-        console.log("Is Preview", isPreview);
+        console.log("Creating segment");
 
         let segment;
 
@@ -53,29 +53,16 @@ class RuneView {
 
         if(point.transform) {
             renderedPoint = renderedPoint.add(new paper.Point(
-                point.transform[0],
-                point.transform[1] 
+                point.transform[0] * this.grid.res.x,
+                point.transform[1] * this.grid.res.y
             ));
         }
+
+        let h1 = point.handle1 ? new paper.Point(point.handle1[0], point.handle1[1]) : null; 
+        let h2 = point.handle2 ? new paper.Point(point.handle2[0], point.handle2[1]) : null; 
+
+
         if (point.isCurve) {
-
-            let h1 = point.handle1 ? new paper.Point(point.handle1[0], point.handle1[1]) : null; 
-            let h2 = point.handle2 ? new paper.Point(point.handle2[0], point.handle2[1]) : null; 
-
-            if (point.handle1) {
-                let h1p = new paper.Path.Circle(renderedPoint.add(h1), 5);
-                h1p.strokeColor = 'red';
-                let p1 = new paper.Path.Line(renderedPoint.add(h1), renderedPoint);
-                p1.strokeColor = 'red';
-            }
-
-            if (point.handle2) {
-                let h2p = new paper.Path.Circle(renderedPoint.add(h2), 5);
-                h2p.strokeColor = 'red';
-                let p2 = new paper.Path.Line(renderedPoint.add(h2), renderedPoint);
-                p2.strokeColor = 'red';
-            }
-
             segment = new paper.Segment({
                 point: renderedPoint,
                 handleIn: h1,
@@ -99,6 +86,24 @@ class RuneView {
                 Events.selectPoint.dispatch(e.target.value);
                 Events.redraw.dispatch();
             }
+
+            if (point.isCurve) {
+
+                if (point.handle1) {
+                    let h1p = new paper.Path.Circle(renderedPoint.add(h1), 5);
+                    h1p.strokeColor = 'red';
+                    let p1 = new paper.Path.Line(renderedPoint.add(h1), renderedPoint);
+                    p1.strokeColor = 'red';
+                }
+
+                if (point.handle2) {
+                    let h2p = new paper.Path.Circle(renderedPoint.add(h2), 5);
+                    h2p.strokeColor = 'red';
+                    let p2 = new paper.Path.Line(renderedPoint.add(h2), renderedPoint);
+                    p2.strokeColor = 'red';
+                }
+            }
+
         }
 
         return segment || renderedPoint;

@@ -4,7 +4,7 @@ let React = require('react');
 
 module.exports = React.createClass({
     getInitialState: function () {
-        return {toggle: false};
+        return {toggle: this.props.toggle};
     },
     toggle: function () {
         this.props.onToggle();

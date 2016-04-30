@@ -43,7 +43,7 @@ class CanvasController {
 
     	this.showGrid = true;
 
-        this.canvas.addEventListener('mousedown', function(event) {
+        this.canvas.addEventListener('mouseDown', function(event) {
             Events.deselectAll.dispatch();
         });
 
@@ -54,13 +54,11 @@ class CanvasController {
 
     }
 
-    displayMode(displayMode) {
+    displayMode() {
 
-        this.toggleGrid();
+        this.isPreview = !this.isPreview;
 
-        console.log("Display mode", displayMode);
-
-        this.isPreview = displayMode === 'preview';
+        this.toggleGrid(this.isPreview);
 
         let _this = this;
 
@@ -91,8 +89,8 @@ class CanvasController {
 		this.redrawGrid();
 	}
 
-    toggleGrid (showGrid) {
-        this.showGrid = !this.showGrid;
+    toggleGrid (isPreview) {
+        this.showGrid = !isPreview;
         this.gridLayer.visible = this.showGrid;
         Events.redraw.dispatch();
     }

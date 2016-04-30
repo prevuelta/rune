@@ -21,6 +21,7 @@ class RunePoint extends BasePoint {
         } else {
             super(x, y);
             this.transforms = [];
+            this.transform = [0,0];
             this.handle1 = null;
             this.handle2 = null;
             this.isCurve = false;

@@ -23,18 +23,16 @@ class App {
         this.data = new DataController(Util.getLocalData("runeData"));
         this.canvas = new CanvasController(this.data);
 
-        this.exposedData = {
-            gridOptions: this.data.tablet.gridOptions,
-            selectedPoints: this.data.activeRune.selectedPoints,
-            path: this.data.activeRune.currentPath,
-            addTransformToSelected: (data) => { this.data.addTransformToSelected(data); },
-            layers: this.canvas.layerControllers,
-            config: this.config
-        };
-
-        this.plugins = require('./plugins')(this.exposedData);
+        this.plugins = require('./plugins');
 
         this.workspace = new WorkSpaceController(this);
+
+        let app = this;
+
+        setInterval(() => {
+            console.log("Auto-saving...");
+            app.save();
+        }, 20000);
 
     }
 

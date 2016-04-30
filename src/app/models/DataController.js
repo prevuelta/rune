@@ -16,6 +16,8 @@ class DataController {
         Events.addPath.add(this.addPath.bind(this));
         Events.deletePoint.add(this.deletePoint.bind(this));
 
+        Events.nudge.add(this.addTransformToSelected.bind(this));
+
     }
 
     get activeRune () {
@@ -23,8 +25,7 @@ class DataController {
     }
 
     save () {
-        this.tablet.data.runes = this.tablet.runes;
-        localStorage["runeData"] = JSON.stringify(this.tablet.data);
+        localStorage["runeData"] = JSON.stringify(this.tablet);
     }
 
     addRune () {
@@ -43,10 +44,17 @@ class DataController {
     }
 
     addTransformToSelected (transform) {
-        this.activeRune.selectedPoints.forEach((point) => {
-            point[0] += transform[0],
-            point[1] += transform[1]
-        });
+
+        console.log(transform);
+
+        // this.activeRune.selectedPoints.forEach((point) => {
+        //     point.transform[0] += transform[0],
+        //     point.transform[1] += transform[1]
+        // });
+
+        this.activeRune.selectedPoint[0] += transform[0];
+        this.activeRune.selectedPoint[1] += transform[1];
+        
         // this.activeRune.selectedPoints.forEach((point) => {
         //     point.transforms.push(transform);
         // });
@@ -55,9 +63,8 @@ class DataController {
 
     clearRune() {
         this.activeRune.clearPaths().currentPointIndex = 0;
-        debugger;
         Events.reloadPanels.dispatch();
-        // Events.redraw.dispatch();
+        Events.redraw.dispatch();
     }
 
     updateGrid () {

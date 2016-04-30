@@ -28,20 +28,12 @@ function ActionBar(app) {
                 Events.clearPoints.dispatch();
 			}
 		},
-        {
-            id: "wip",
-            title: "WIP",
-            action: function(e) {
-                e.preventDefault();
-                Events.display.dispatch('wip');
-            }
-        },
 		{
 			id: "grid",
 			title: "Preview",
 			action: function(e) {
 				e.preventDefault();
-                Events.display.dispatch('preview');
+                Events.display.dispatch();
 			}
 		},
 		{

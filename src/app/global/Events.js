@@ -7,6 +7,8 @@ let events = [
     'deleteSelected',
     'deletePoint',
     'clearPoints',
+    'superNudge',
+    'nudge',
     'display',
     'deselectAll',
     'refreshCanvas',

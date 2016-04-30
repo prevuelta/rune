@@ -43,7 +43,11 @@ let PointData = React.createClass({
                     <span>x: {x}, y:{y}</span>
                 </small>
                 {this.state.point.transforms}
-                <Switch onToggle={this.setIsCurve.bind(this, this.state.point)} symbol="S"></Switch>
+                <Switch
+                    onToggle={this.setIsCurve.bind(this, this.state.point)}
+                    toggle={this.state.point.isCurve}
+                    symbol="S">
+                </Switch>
                 <Button point={this.state.point} symbol="X"></Button>
                 {
                     this.state.point.isCurve ? 
@@ -70,8 +74,12 @@ module.exports = {
     collapsed: false,
     panel: React.createClass({
         getInitialState: function () {
-            console.log("Path", this.props.data.path);
-            return {path: this.props.data.path};
+            return {path: this.props.data.activeRune.activePath};
+        },
+        componentWillReceiveProps: function(nextProps) {
+            this.setState({
+                path: nextProps.data.activeRune.activePath
+            });
         },
         changeHandler: function () {
             this.state.path.isClosed = !this.state.path.isClosed;

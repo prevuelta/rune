@@ -72,21 +72,21 @@ class PanelController {
 
         // Plugin panels
         let panels = React.render(
-            <Panels panels={_this.app.plugins} data={_this.app.exposedData} />,
+            <Panels panels={_this.app.plugins} data={_this.app.data} />,
             document.getElementById('rune-panels')
         );
 
         function reloadHandler () {
             console.log("Reloading panels...");
             debugger;
-            panels.replaceState({'data' : this.app.exposedData, 'panels' : this.app.plugins});
+            panels.replaceState({'data' : _this.app.data, 'panels' : _this.app.plugins});
         };
 
         Events.reloadPanels.add(reloadHandler.bind(_this));
 
         Events.refreshPanels.add(() => {
             console.log("Refreshing panels...");
-            panels.setState({'data' : _this.app.exposedData});
+            panels.setState({'data' : _this.app.data});
         });
 
     }
