@@ -51,7 +51,7 @@ class PanelController {
 
         var Panels = React.createClass({
             getInitialState: function () {
-                return { 'panels' : this.props.panels, 'data' : this.props.data };
+                return { panels : this.props.panels, data : this.props.data, canvas: this.props.canvas };
             },
             render: function() {
                 let _this = this;
@@ -61,7 +61,7 @@ class PanelController {
                             this.state.panels.map(function(panel, idx) {
                                 var Component = panel.panel;
                                 return <PanelWrapper offset={idx} options={{title : panel.title, collapsed: panel.collapsed }} >
-                                     <Component data={_this.state.data} />
+                                     <Component data={_this.state.data} canvas={_this.state.canvas} />
                                  </PanelWrapper>;
                             })
                         }
@@ -72,7 +72,10 @@ class PanelController {
 
         // Plugin panels
         let panels = React.render(
-            <Panels panels={_this.app.plugins} data={_this.app.data} />,
+            <Panels
+                panels={_this.app.plugins}
+                data={_this.app.data}
+                canvas={_this.app.canvas} />,
             document.getElementById('rune-panels')
         );
 

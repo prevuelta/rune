@@ -3,7 +3,7 @@ var paper = require('paper');
 
 /* ========== Tablet ========== */
 
-class RuneView {
+class _this {
     constructor (runeModel, grid) {
         this.data = runeModel;
         this.grid = grid.options;
@@ -11,23 +11,22 @@ class RuneView {
 
     draw (isPreview) {
 
-        var runeView = this;
+        var _this = this;
 
-        runeView.path = new paper.Path({
-            segments: runeView.data.activePath.points.map(function(point) {
-                return runeView.createRuneSegment(
-                    point,
-                    null,
-                    isPreview
-                );
-            }),
-            closed: runeView.data.activePath.isClosed,
-            style: (runeView.data.activePath.isClosed ? {fillColor: 'black'} : {strokeColor: 'black'}),
-            opacity: 0.6
+        this.paths = _this.data.paths.map((path) => {
+            new paper.Path({
+                segments: path.points.map(function(point) {
+                    return _this.createRuneSegment(
+                        point,
+                        null,
+                        isPreview
+                    );
+                }),
+                closed: path.isClosed,
+                style: (path.isClosed ? {fillColor: 'black'} : {strokeColor: path.isActive ? 'red' :'black'}),
+                opacity: 0.6
+            })
         });
-
-        runeView.path.runePath = true;
-
     }
     
     createRuneSegment (point, transform, isPreview) {
@@ -110,4 +109,4 @@ class RuneView {
     }
 }
 
-module.exports = RuneView;
+module.exports = _this;

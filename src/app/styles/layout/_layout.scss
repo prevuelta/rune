@@ -11,10 +11,12 @@ body {
 }
 
 .logo {
-	fill: $rust;
-	width: $bu2;
+	border-radius: $qbu;
+	width: $buh;
 	z-index: 9999;
-	margin: $hbu 0 0 $bu;
+	margin: $hbu 0 0 $hbu;
+	padding: $hbu;
+	background: $field;
 	position: fixed;
 }
 

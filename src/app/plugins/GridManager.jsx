@@ -3,6 +3,8 @@
 let React = require('react');
 let Events = require('../global/Events');
 
+let Button = require('../components/Button.jsx');
+
 module.exports = {
     title: 'Grid',
     collapsed: true,
@@ -28,8 +30,9 @@ module.exports = {
                     <input type="text" ref="ratio" defaultValue={ this.state.data.ratio} />
                     <label>Units</label>
                     <input type="text" ref="units" defaultValue={this.state.data.units} />
-                    <Button handler={this.updateData} symbol="Update">
-                    </Button>
+                    <button onClick={this.updateData}>
+                        Update
+                    </button>
                 </div>
             );
         }

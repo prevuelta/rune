@@ -8,7 +8,7 @@ class TabletModel {
 
         let _this = this;
 
-        _this.gridOptions = new GridModel(data.gridOptions);
+        _this.gridOptions = new GridModel(data && data.gridOptions);
 
         _this.renderedSVG = data && data.renderedSVG || '';
         _this.activePathIndex = data && data.activePathIndex || 0;

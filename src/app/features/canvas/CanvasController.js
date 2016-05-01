@@ -7,6 +7,14 @@ var paper = require('paper');
 
 /* ========== Render Tablet ========== */
 
+class RuneLayer {
+    constructor (name, view) {
+        this.name = name;
+        this.view = view;
+        this.layer = new paper.Layer();
+    }
+}
+
 class CanvasController {
     constructor (tabletModel) {
 
@@ -20,10 +28,7 @@ class CanvasController {
     	paper.setup(this.canvas).install(window);
         paper.settings.handleSize = 8;
 
-    	this.layerControllers = [{
-            name: 'Grid',
-            layer: new paper.Layer()
-        }];
+    	this.layers = [new RuneLayer('grid')];
 
         paper.view.onResize = this.resizeHandler.bind(this);
 
@@ -32,11 +37,12 @@ class CanvasController {
     	this.setupGrid();
 
     	tabletModel.tablet.runes.forEach(function(val, idx) {
-    		_this.layerControllers.push({
-                name: 'Rune ' + idx,
-                layer: new paper.Layer(),
-                view: new RuneView(val, _this.grid)
-            });
+    		_this.layers.push(
+                new RuneLayer(
+                    'Rune ' + idx,
+                    new RuneView(val, _this.grid)
+                )
+            );
     	});
 
     	this.currentLayerIndex = 1;
@@ -62,7 +68,7 @@ class CanvasController {
 
         let _this = this;
 
-        this.layerControllers.forEach(function(layerController, index) {
+        this.layers.forEach(function(layerController, index) {
             if (index) {
                 layerController.layer.children.forEach(function(child){
                     if (child.isHandle) {
@@ -80,7 +86,7 @@ class CanvasController {
     }
 
     get gridLayer() {
-        return this.layerControllers[0].layer;
+        return this.layers[0].layer;
     }
 
 
@@ -102,7 +108,7 @@ class CanvasController {
     redrawAllLayers () {
         let _this = this;
         this.redrawGrid();
-        this.layerControllers.forEach((ctrl) => {
+        this.layers.forEach((ctrl) => {
             if (ctrl.view) {
                 ctrl.layer.removeChildren();
                 ctrl.layer.activate();
@@ -114,7 +120,7 @@ class CanvasController {
 
     redrawCurrentLayer () {
         // Draw active layer
-        let ctrl = this.layerControllers[this.currentLayerIndex];
+        let ctrl = this.layers[this.currentLayerIndex];
         ctrl.layer.removeChildren();
         ctrl.layer.activate();
         ctrl.view.draw(this.isPreview);

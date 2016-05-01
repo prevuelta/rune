@@ -10,10 +10,15 @@ module.exports = React.createClass({
     // clickHandler : function () {
     //     this.props.handler();
     // },
+    click: function () {
+        console.log("Button handler...");
+        this.props.handler();
+    },
     render: function() {
         return (
             <div
-                className="switch">
+                className="button"
+                onClick={this.click}>
                 { this.props.symbol }
             </div>
         );

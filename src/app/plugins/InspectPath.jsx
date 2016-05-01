@@ -48,7 +48,10 @@ let PointData = React.createClass({
                     toggle={this.state.point.isCurve}
                     symbol="S">
                 </Switch>
-                <Button handler={this.deletePoint} symbol="X"></Button>
+                <Button
+                    handler={this.deletePoint.bind(this, this.state.point)}
+                    symbol="X">
+                </Button>
                 {
                     this.state.point.isCurve ? 
                         <div>
@@ -69,34 +72,54 @@ let PointData = React.createClass({
     }
 });
 
+let Path = React.createClass({
+    getInitialState: function () {
+        return {path: this.props.path};
+    },
+    changeHandler: function () {
+        this.state.path.isClosed = !this.state.path.isClosed;
+        this.setState({path: this.state.path});
+        Events.redraw.dispatch();
+    },
+    render: function () {
+        return (
+            <div className="sheet">
+                Path 
+                <Switch onToggle={this.changeHandler} symbol="&"></Switch>
+                { this.state.path.points.map((p) => <PointData point={p}></PointData> ) }
+            </div>
+        );
+    }
+});
+
 module.exports = {
     title: 'Inspect path',
     collapsed: false,
     panel: React.createClass({
         getInitialState: function () {
-            return {path: this.props.data.activeRune.activePath};
+            return {paths: this.props.data.activeRune.paths};
         },
         componentWillReceiveProps: function(nextProps) {
             this.setState({
-                path: nextProps.data.activeRune.activePath
+                paths: nextProps.data.activeRune.paths
             });
         },
-        changeHandler: function () {
-            this.state.path.isClosed = !this.state.path.isClosed;
-            this.setState({path: this.state.path});
-            Events.redraw.dispatch();
-        },
         addPath: () => {
-            console.log("Adding path...");
             Events.addPath.dispatch();
         },
         render: function() {
+            let _this = this;
             return (
-                <div className="sheet">
-                    Path
-                    <Button handler={this.addPath} symbol="+"></Button>
-                    <Switch onToggle={this.changeHandler} symbol="&"></Switch>
-                    { this.state.path.points.map((p) => <PointData point={p}></PointData> ) }
+                <div>
+                    <Button
+                        handler={this.addPath.bind(this)}
+                        symbol="+">
+                    </Button>
+                    {
+                        this.state.paths.map((path) => {
+                            return <Path path={path}></Path>
+                        })
+                    }
                 </div>
             );
         }

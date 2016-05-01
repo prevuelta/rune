@@ -1,4 +1,5 @@
-.switch {
+.switch,
+.button {
 	width: $buh;
 	height: $buh;
 	// border: 1px solid red;
@@ -20,6 +21,11 @@
 	&.on {
 		background: $rust;
 	}
+}
+
+.button {
+	min-width: $buh; 
+	width: auto;
 }
 
 .sheet {

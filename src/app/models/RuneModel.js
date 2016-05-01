@@ -109,6 +109,7 @@ class RuneModel {
                 this.activePath.points.splice(i, 1);
             }
         });
+        console.log(this.activePath);
         Events.redraw.dispatch();
         // Events.refreshPanels.dispatch();
     }

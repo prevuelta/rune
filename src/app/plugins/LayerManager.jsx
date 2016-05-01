@@ -1,25 +1,28 @@
 'use strict';
 
-var React = require('react');
+let React = require('react');
+let paper = require('paper');
 
 module.exports = {
     title: 'Layers',
-    collapsed: true,
+    collapsed: false,
     panel: React.createClass({
         getInitialState : function() {
-            return {layers: data.layers };
+            return {layers: this.props.canvas.layers };
         },
         render: function() {
             return (
                 <div>
                     <h4>Layers</h4>
-                    <ul>
+                    <div>
                         {
                             this.state.layers.map(function(layer) {
-                                return <li>{layer.name}</li>
+                                return <div className="sheet">
+                                    {layer.name}
+                                </div>
                             })
                         }
-                    </ul>
+                    </div>
                 </div>
             );
         }

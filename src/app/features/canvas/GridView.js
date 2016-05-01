@@ -11,7 +11,8 @@ var paper = require('paper');
 var gridPointFactory = (point, res) => {
 
     let paperPoint = new paper.Point( point.render(res) );
-    let path = new paper.Path.Ellipse({point: paperPoint, size: [res.x, res.y]});
+    // let path = new paper.Path.Ellipse({point: paperPoint, size: [res.x, res.y]});
+    let path = new paper.Path.Rectangle(paperPoint, res.x, res.y);
 
     path.value = point;
     path.active = false;
