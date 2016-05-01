@@ -2,10 +2,10 @@
 	display: inline-block;
     position: fixed;
     top: 0;
-    left: 0;
+    left: $bu4;
     z-index: 999;
 	ul {
-		padding: 0;
+		padding: $bu 0 0 0;
 		margin: 0;
 		li {
 			display: inline-block;

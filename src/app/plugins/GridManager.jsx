@@ -8,7 +8,7 @@ module.exports = {
     collapsed: true,
     panel: React.createClass({
         getInitialState : function() {
-            return {data: this.props.data.gridOptions };
+            return {data: this.props.data.tablet.gridOptions };
         },
         updateData: function(e) {
             let baseUnit = this.refs.baseUnit.getDOMNode().value;
@@ -28,7 +28,8 @@ module.exports = {
                     <input type="text" ref="ratio" defaultValue={ this.state.data.ratio} />
                     <label>Units</label>
                     <input type="text" ref="units" defaultValue={this.state.data.units} />
-                    <button onClick={this.updateData}>Update</button>
+                    <Button handler={this.updateData} symbol="Update">
+                    </Button>
                 </div>
             );
         }

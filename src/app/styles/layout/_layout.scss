@@ -10,6 +10,13 @@ body {
 	margin: 0;
 }
 
+.logo {
+	fill: $rust;
+	width: $bu2;
+	z-index: 9999;
+	margin: $hbu 0 0 $bu;
+	position: fixed;
+}
 
 #rune-panels {
     position: fixed;

@@ -3,17 +3,17 @@
 let React = require('react');
 
 module.exports = React.createClass({
-    getInitialState: function () {
-        return {point: this.props.point};
-    },
-    deletePoint: function () {
-        Events.deletePoint.dispatch(this.props.point);
-    },
+    // getInitialState: function () {
+        // debugger;
+        // return null;   
+    // },
+    // clickHandler : function () {
+    //     this.props.handler();
+    // },
     render: function() {
         return (
             <div
-                className="switch"
-                onClick={this.deletePoint}>
+                className="switch">
                 { this.props.symbol }
             </div>
         );

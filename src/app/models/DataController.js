@@ -1,4 +1,5 @@
 var TabletModel = require('./TabletModel');
+var RuneModel = require('./RuneModel');
 var Events = require('../global/Events');
 var _ = require('lodash');
 
@@ -29,7 +30,7 @@ class DataController {
     }
 
     addRune () {
-        this.tablet.runes.push(new RuneData(null));
+        this.tablet.runes.push(new RuneModel(null));
     }
 
     addPoint (gridRef) {
@@ -52,9 +53,9 @@ class DataController {
         //     point.transform[1] += transform[1]
         // });
 
-        this.activeRune.selectedPoint[0] += transform[0];
-        this.activeRune.selectedPoint[1] += transform[1];
-        
+        this.activeRune.selectedPoint.x += transform[0];
+        this.activeRune.selectedPoint.y += transform[1];
+
         // this.activeRune.selectedPoints.forEach((point) => {
         //     point.transforms.push(transform);
         // });

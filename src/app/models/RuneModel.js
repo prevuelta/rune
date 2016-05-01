@@ -46,25 +46,31 @@ class RuneModel {
     }
 
     addPath () {
-        this.paths.push(new RunePath());
+        this.paths.push(new RunePathModel());
         this.activePathIndex++;
         Events.refreshPanels.dispatch();
     }
 
-    addPoint (gridRef) {
-        if (this.selectedPoints.length) {
-            if (this.selectedPoints[0] == 0 ) {
-                this.reverseAdd = true;
-            } else if (this.selectedPoints[0] == this.activePath.length-1) {
-                this.reverseAdd = false;
-            }
-        }
-        if(this.reverseAdd) {
-            this.activePath.points.unshift(new RunePoint(gridRef.x, gridRef.y));
-        } else {
-            this.currentPointIndex++;
-            this.activePath.points.splice(this.currentPointIndex, 0, new RunePoint(gridRef.x, gridRef.y));
-        }
+    addPoint (gridPoint) {
+        // if (this.selectedPoints.length) {
+        //     if (this.selectedPoints[0] == 0 ) {
+        //         this.reverseAdd = true;
+        //     } else if (this.selectedPoints[0] == this.activePath.length-1) {
+        //         this.reverseAdd = false;
+        //     }
+        // }
+        // if(this.reverseAdd) {
+        //     this.activePath.points.unshift(new RunePoint(gridRef.x, gridRef.y));
+        // } else {
+        //     this.currentPointIndex++;
+        //     this.activePath.points.splice(this.currentPointIndex, 0, new RunePoint(gridRef.x, gridRef.y));
+        // }
+
+        let point = new RunePoint(gridPoint.x, gridPoint.y);
+
+        point.gridPoint = gridPoint;
+
+        this.activePath.points.push(point);
         
         Events.refreshPanels.dispatch();
 

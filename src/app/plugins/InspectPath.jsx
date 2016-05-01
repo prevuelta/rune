@@ -48,7 +48,7 @@ let PointData = React.createClass({
                     toggle={this.state.point.isCurve}
                     symbol="S">
                 </Switch>
-                <Button point={this.state.point} symbol="X"></Button>
+                <Button handler={this.deletePoint} symbol="X"></Button>
                 {
                     this.state.point.isCurve ? 
                         <div>
@@ -87,14 +87,14 @@ module.exports = {
             Events.redraw.dispatch();
         },
         addPath: () => {
-            console.log("Adding path");
+            console.log("Adding path...");
             Events.addPath.dispatch();
         },
         render: function() {
-            // debugger;
             return (
                 <div className="sheet">
-                    <span onClick={this.addPath}>New path</span>
+                    Path
+                    <Button handler={this.addPath} symbol="+"></Button>
                     <Switch onToggle={this.changeHandler} symbol="&"></Switch>
                     { this.state.path.points.map((p) => <PointData point={p}></PointData> ) }
                 </div>

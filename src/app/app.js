@@ -29,10 +29,7 @@ class App {
 
         let app = this;
 
-        setInterval(() => {
-            console.log("Auto-saving...");
-            app.save();
-        }, 20000);
+        setInterval(this.save.bind(this), 20000);
 
     }
 
