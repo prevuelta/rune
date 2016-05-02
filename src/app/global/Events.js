@@ -4,6 +4,7 @@ let events = [
     'addPoint',
     'addPath',
     'selectPoint',
+    'selectPath',
     'deleteSelected',
     'deletePoint',
     'clearPoints',

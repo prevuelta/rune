@@ -6,6 +6,7 @@ class RunePathModel {
     constructor (data) {
         this.points = data && data.points.map(p => new RunePoint(p)) || [];
         this.isClosed = data && data.isClosed || false;
+        this.isActive = data && data.isActive || false;
     }
 }
 
@@ -13,9 +14,9 @@ class RuneModel {
     constructor (data) {
 
         this.paths = data && data.paths.map(p => new RunePathModel(p)) || [new RunePathModel()];
+        this.activePath = this.paths[0];
         this.selectedPoints = data && data.selectedPoints || [];
         this.currentPointIndex = data && data.currentPointIndex || 0;
-        this.activePathIndex = data && data.activePathIndex || 0;
         this.reverseAdd = false;
         this.selectedPoint = null;
 
@@ -46,9 +47,17 @@ class RuneModel {
     }
 
     addPath () {
-        this.paths.push(new RunePathModel());
-        this.activePathIndex++;
+        let path = new RunePathModel();
+        path.isActive = true;
+        this.paths.push(path);
+        this.activePath = path;
         Events.refreshPanels.dispatch();
+    }
+
+    selectPath (path) {
+        path.isActive = true;
+        this.activePath.isActive = false;
+        this.activePath = path;
     }
 
     addPoint (gridPoint) {
@@ -77,14 +86,6 @@ class RuneModel {
         return this;
     }
 
-    get activePath() {
-        return this.paths[this.activePathIndex];
-    }
-
-    set activePath(obj) {
-        this.paths[this.activePathIndex] = obj;
-    }
-
     get currentPoint() {
         return this.paths[this.activePathIndex][this.currentPointIndex];
     }
@@ -104,14 +105,15 @@ class RuneModel {
 
     deletePoint (p) {
 
+        debugger;
+
         this.activePath.points.forEach((point, i) => {
             if (point === p) {
                 this.activePath.points.splice(i, 1);
             }
         });
-        console.log(this.activePath);
         Events.redraw.dispatch();
-        // Events.refreshPanels.dispatch();
+        Events.refreshPanels.dispatch();
     }
 
     // set selectedPoints(selectedPoints) {

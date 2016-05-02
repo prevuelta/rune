@@ -37,8 +37,11 @@ let PointData = React.createClass({
         let classNames = this.state.point.isSelected ? 'sheet active' : 'sheet';
         return (
             <div 
-                onClick={this.toggleActive}
                 className={classNames}>
+                <span
+                    onClick={this.toggleActive}>
+                    [&#8226;]
+                </span>
                 <small>
                     <span>x: {x}, y:{y}</span>
                 </small>
@@ -81,10 +84,18 @@ let Path = React.createClass({
         this.setState({path: this.state.path});
         Events.redraw.dispatch();
     },
+    selectPath : function (path) {
+        Events.selectPath.dispatch(path);
+    },
     render: function () {
+        let classNames = this.state.path.isActive ? 'sheet active' : 'sheet';
         return (
-            <div className="sheet">
-                Path 
+            <div className={classNames}>
+                <span onClick={this.selectPath.bind(this, this.state.path)}>
+                    <strong>
+                        Path
+                    </strong>
+                </span>
                 <Switch onToggle={this.changeHandler} symbol="&"></Switch>
                 { this.state.path.points.map((p) => <PointData point={p}></PointData> ) }
             </div>
