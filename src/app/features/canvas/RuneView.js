@@ -17,11 +17,15 @@ class _this {
             let style = (path.isClosed ? {fillColor: 'black'} : {strokeColor: path.isActive ? 'red' :'black'});
             let paperPath;
             if (path.hasChildren) {
-                debugger;
+                let paths = [path].concat(path.children);
+            
                 paperPath = new paper.CompoundPath({
-                    children: [this.getPathSegment(path)].concat(path.children.map(p => _this.getPathSegment(p, isPreview))),
-                    style: style,
-                    closed: true
+                    children: paths.map((p) => {
+                        return new paper.Path({
+                            segments: _this.getPathSegment(p, isPreview)
+                        });
+                    }),
+                    style: style
                 })
             } else {
                 paperPath = new paper.Path({

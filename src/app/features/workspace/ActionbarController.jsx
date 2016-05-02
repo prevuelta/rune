@@ -52,13 +52,14 @@ function ActionBar(app) {
                 actionBar.app.canvas.displayMode = 'preview';
                 console.log("here");
 				var svgString = paper.project.exportSVG({asString:true, layerIndex: 1});
-				var url = "data:image/svg+xml;utf8," + encodeURIComponent(svgString);
-				var link = document.createElement("a");
-                console.log("and here");
-				link.download = 'rune_export.svg';
-				link.href = url;
-				link.click();
-                actionBar.app.canvas.displayMode = 'working';
+				
+				// var url = "data:image/svg+xml;utf8," + encodeURIComponent(svgString);
+				// var link = document.createElement("a");
+    //             console.log("and here");
+				// link.download = 'rune_export.svg';
+				// link.href = url;
+				// link.click();
+    //             actionBar.app.canvas.displayMode = 'working';
 			}
 		}
 	];

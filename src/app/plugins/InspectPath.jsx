@@ -89,6 +89,9 @@ let Path = React.createClass({
             Events.selectPath.dispatch(path);
         }
     },
+    addSubPath: (path) => {
+        Events.addSubPath.dispatch(path);
+    },
     render: function () {
         let classNames = this.state.path.isActive ? 'sheet active' : 'sheet';
         return (
@@ -98,7 +101,18 @@ let Path = React.createClass({
                         Path
                     </strong>
                 </span>
+                <Button
+                    handler={this.addSubPath.bind(this, this.state.path)}
+                    symbol="+S">
+                </Button>
                 <Switch onToggle={this.changeHandler} symbol="&"></Switch>
+                { 
+                    this.state.path.hasChildren ?
+                        this.state.path.children.map((p) => {
+                            return <Path path={p}></Path>;
+                        })
+                    : null
+                }
                 { this.state.path.points.map((p) => <PointData point={p}></PointData> ) }
             </div>
         );
@@ -126,7 +140,7 @@ module.exports = {
                 <div>
                     <Button
                         handler={this.addPath.bind(this)}
-                        symbol="+">
+                        symbol="+P">
                     </Button>
                     {
                         this.state.paths.map((path) => {

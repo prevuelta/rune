@@ -17,6 +17,7 @@ class DataController {
         Events.clearPoints.add(this.clearRune.bind(this));
         Events.addPath.add(this.addPath.bind(this));
         Events.deletePoint.add(this.deletePoint.bind(this));
+        Events.addSubPath.add(this.addSubPath.bind(this));
 
         Events.nudge.add(this.addTransformToSelected.bind(this));
 
@@ -42,7 +43,11 @@ class DataController {
     addPath () {
         this.activeRune.addPath();
         Events.redraw.dispatch();
+    }
 
+    addSubPath (path) {
+        this.activeRune.addSubPath(path);
+        Events.redraw.dispatch();
     }
 
     addTransformToSelected (transform) {

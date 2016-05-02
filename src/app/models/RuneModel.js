@@ -8,6 +8,7 @@ class RunePathModel {
         this.isClosed = data && data.isClosed || false;
         this.isActive = data && data.isActive || false;
         this.children = data && data.children || [];
+        this.children.map(c => new RunePathModel(c));
     }
 
     addChild (path) {
@@ -63,9 +64,17 @@ class RuneModel {
         Events.refreshPanels.dispatch();
     }
 
-    addChildPath () {
-        this.activePath.addChild(new RunePathModel());
+    addSubPath (path) {
+        let subPath = new RunePathModel();
+        subPath.isActive = true;
+        path.addChild(subPath);
+        this.activePath = subPath;
+        Events.refreshPanels.dispatch();
     }
+
+    // addChildPath () {
+        // this.activePath.addChild(new RunePathModel());
+    // }
 
     selectPath (path) {
         path.isActive = true;
