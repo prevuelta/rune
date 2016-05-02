@@ -38,9 +38,12 @@
             content: '↳ | ';
             font-size: 10px;
         }
+        &.active {
+            background: $sky;
+        }
     }
     margin: 0 0 $qbu 0;
     &.active {
-        background: $rust;
+        background: $field;
     }
 }

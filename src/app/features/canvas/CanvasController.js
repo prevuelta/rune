@@ -28,7 +28,8 @@ class CanvasController {
     	paper.setup(this.canvas).install(window);
         paper.settings.handleSize = 8;
 
-    	this.layers = [new RuneLayer('grid')];
+    	this.layers = [new RuneLayer('Grid')];
+        this.overLayer = new RuneLayer('Overlay');
 
         paper.view.onResize = this.resizeHandler.bind(this);
 

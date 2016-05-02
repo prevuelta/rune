@@ -8,6 +8,7 @@ let events = [
     'deleteSelected',
     'deletePoint',
     'clearPoints',
+    'drawToOverlayer',
     'superNudge',
     'nudge',
     'display',
@@ -27,7 +28,3 @@ events.forEach((event) => {
 });
 
 module.exports = Events;
-
-
-
-

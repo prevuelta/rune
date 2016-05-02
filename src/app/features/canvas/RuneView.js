@@ -14,24 +14,41 @@ class _this {
         var _this = this;
 
         this.paths = _this.data.paths.map((path) => {
-            new paper.Path({
-                segments: path.points.map(function(point) {
-                    return _this.createRuneSegment(
-                        point,
-                        null,
-                        isPreview
-                    );
-                }),
-                closed: path.isClosed,
-                style: (path.isClosed ? {fillColor: 'black'} : {strokeColor: path.isActive ? 'red' :'black'}),
-                opacity: 0.6
-            })
+            let style = (path.isClosed ? {fillColor: 'black'} : {strokeColor: path.isActive ? 'red' :'black'});
+            let paperPath;
+            if (path.hasChildren) {
+                debugger;
+                paperPath = new paper.CompoundPath({
+                    children: [this.getPathSegment(path)].concat(path.children.map(p => _this.getPathSegment(p, isPreview))),
+                    style: style,
+                    closed: true
+                })
+            } else {
+                paperPath = new paper.Path({
+                    segments: this.getPathSegment(path, isPreview),
+                    style: style,
+                    closed: path.isClosed
+                });
+            }
+
+            paperPath.opacity = 0.6;
+
+            return paperPath;
         });
+    }
+
+    getPathSegment (path, isPreview) {
+        let _this = this;
+        return path.points.map(function(point) {
+            return _this.createRuneSegment(
+                point,
+                null,
+                isPreview
+            );
+        })
     }
     
     createRuneSegment (point, transform, isPreview) {
-
-        console.log("Creating segment");
 
         let segment;
 

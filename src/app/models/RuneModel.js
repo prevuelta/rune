@@ -7,6 +7,15 @@ class RunePathModel {
         this.points = data && data.points.map(p => new RunePoint(p)) || [];
         this.isClosed = data && data.isClosed || false;
         this.isActive = data && data.isActive || false;
+        this.children = data && data.children || [];
+    }
+
+    addChild (path) {
+        this.children.push(path);
+    }
+
+    get hasChildren () {
+        return !!this.children.length; 
     }
 }
 
@@ -52,6 +61,10 @@ class RuneModel {
         this.paths.push(path);
         this.activePath = path;
         Events.refreshPanels.dispatch();
+    }
+
+    addChildPath () {
+        this.activePath.addChild(new RunePathModel());
     }
 
     selectPath (path) {

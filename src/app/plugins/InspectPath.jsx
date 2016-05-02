@@ -85,7 +85,9 @@ let Path = React.createClass({
         Events.redraw.dispatch();
     },
     selectPath : function (path) {
-        Events.selectPath.dispatch(path);
+        if (!this.state.path.isActive) {
+            Events.selectPath.dispatch(path);
+        }
     },
     render: function () {
         let classNames = this.state.path.isActive ? 'sheet active' : 'sheet';

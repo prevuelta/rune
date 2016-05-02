@@ -178,7 +178,9 @@ input {
     .sheet .sheet:before {
       content: '↳ | ';
       font-size: 10px; }
+    .sheet .sheet.active {
+      background: #27dded; }
   .sheet.active {
-    background: #e13d1c; }
+    background: #14bb5b; }
 
 /*# sourceMappingURL=main.css.map */
