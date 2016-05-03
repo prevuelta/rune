@@ -1,7 +1,13 @@
+'use strict';
+
 let Events = require('../../global/Events');
 
-var React = require('react');
-var paper = require('paper');
+let React = require('react');
+let paper = require('paper');
+
+// React components:
+let Dialogue = require('../../components/Dialogue.jsx');
+let Button = require('../../components/Button.jsx');
 
 function ActionBar(app) {
 
@@ -51,8 +57,16 @@ function ActionBar(app) {
 				e.preventDefault();
                 actionBar.app.canvas.displayMode = 'preview';
                 console.log("here");
-				var svgString = paper.project.exportSVG({asString:true, layerIndex: 1});
-				
+				let svgString = paper.project.exportSVG({asString:true, layerIndex: 1});
+                let element = document.getElementById('rune-overlay');
+                let dialogue = React.render(
+                    <Dialogue
+                        element={element}>
+                        <h2>SVG code:</h2>
+                        <textarea>{ svgString }</textarea>
+                    </Dialogue>,
+                    element
+                );
 				// var url = "data:image/svg+xml;utf8," + encodeURIComponent(svgString);
 				// var link = document.createElement("a");
     //             console.log("and here");

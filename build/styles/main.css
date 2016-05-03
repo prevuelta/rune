@@ -183,4 +183,24 @@ input {
   .sheet.active {
     background: #14bb5b; }
 
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.2); }
+  .overlay .dialogue {
+    min-width: 30%;
+    min-height: 30%;
+    border: 1px solid #27dded;
+    padding: 12px;
+    background: #fff; }
+    .overlay .dialogue textarea {
+      width: 100%;
+      min-height: 72px; }
+
 /*# sourceMappingURL=main.css.map */

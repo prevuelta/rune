@@ -19,7 +19,7 @@ let PointData = React.createClass({
         this.setState({point: this.state.point});
     },
     componentWillReceiveProps : function (nextProps) {
-      return {point: nextProps};
+      return nextProps;
     },
     changeHandle: function (ref, event) {
         let coords = event.target.value.split(',');
@@ -56,7 +56,7 @@ let PointData = React.createClass({
                     symbol="X">
                 </Button>
                 {
-                    this.state.point.isCurve ? 
+                    this.state.point.isCurve ?
                         <div>
                             Handles<br/>
                             <input
@@ -69,7 +69,7 @@ let PointData = React.createClass({
                                 onChange={this.changeHandle.bind(this, 'handle2')} />
                         </div>
                     : null
-                }   
+                }
             </div>
         );
     }
@@ -83,6 +83,9 @@ let Path = React.createClass({
         this.state.path.isClosed = !this.state.path.isClosed;
         this.setState({path: this.state.path});
         Events.redraw.dispatch();
+    },
+    componentWillReceiveProps : function (nextProps) {
+      return nextProps;
     },
     selectPath : function (path) {
         if (!this.state.path.isActive) {

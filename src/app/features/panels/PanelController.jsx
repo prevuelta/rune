@@ -53,6 +53,9 @@ class PanelController {
             getInitialState: function () {
                 return { panels : this.props.panels, data : this.props.data, canvas: this.props.canvas };
             },
+            componentWillReceiveProps: function (nextProps) {
+                return nextProps;
+            },
             render: function() {
                 let _this = this;
                 return (
@@ -81,7 +84,8 @@ class PanelController {
 
         function reloadHandler () {
             console.log("Reloading panels...");
-            panels.replaceState({'data' : _this.app.data, 'panels' : _this.app.plugins});
+            debugger;
+            panels.replaceState({'data' : _this.app.data, 'panels' : _this.app.plugins, canvas: _this.app.canvas });
         };
 
         Events.reloadPanels.add(reloadHandler.bind(_this));

@@ -18,7 +18,7 @@ class _this {
             let paperPath;
             if (path.hasChildren) {
                 let paths = [path].concat(path.children);
-            
+
                 paperPath = new paper.CompoundPath({
                     children: paths.map((p) => {
                         return new paper.Path({
@@ -51,7 +51,7 @@ class _this {
             );
         })
     }
-    
+
     createRuneSegment (point, transform, isPreview) {
 
         let segment;
