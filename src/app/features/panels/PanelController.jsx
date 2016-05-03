@@ -84,7 +84,6 @@ class PanelController {
 
         function reloadHandler () {
             console.log("Reloading panels...");
-            debugger;
             panels.replaceState({'data' : _this.app.data, 'panels' : _this.app.plugins, canvas: _this.app.canvas });
         };
 

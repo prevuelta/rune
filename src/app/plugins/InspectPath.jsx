@@ -85,7 +85,8 @@ let Path = React.createClass({
         Events.redraw.dispatch();
     },
     componentWillReceiveProps : function (nextProps) {
-      return nextProps;
+        this.setState({path :nextProps.path });
+        return nextProps;
     },
     selectPath : function (path) {
         if (!this.state.path.isActive) {
