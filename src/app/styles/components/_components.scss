@@ -32,7 +32,8 @@
     // height: $bu2;
     background: $cream;
     .sheet {
-        background: $sky;
+        background: darken($cream, 20);
+        // background: $sky;
         margin-left: $hbu;
         &:before {
             content: '↳ | ';

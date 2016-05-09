@@ -1,9 +1,8 @@
 'use strict';
 
 let React = require('react');
-let Events = require('../global/Events');
-
-let Button = require('../components/Button.jsx');
+let Events = require('../../global/Events');
+let Button = require('../../components/Button.jsx');
 
 module.exports = {
     title: 'Grid',

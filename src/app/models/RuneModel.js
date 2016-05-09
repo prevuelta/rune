@@ -1,4 +1,5 @@
-var RunePoint = require('./RunePoint');
+let RunePoint = require('./RunePoint');
+let Events = require('../global/Events');
 
 /* ========== Rune Model ========== */
 
@@ -16,7 +17,7 @@ class RunePathModel {
     }
 
     get hasChildren () {
-        return !!this.children.length; 
+        return !!this.children.length;
     }
 }
 
@@ -30,21 +31,34 @@ class RuneModel {
         this.reverseAdd = false;
         this.selectedPoint = null;
 
+        let _this = this;
+
+        // Get selected point
+        this.paths.forEach((p) => {
+            if (p.points.some(pt => pt.isSelected)) {
+                _this.selectedPoint = p.points.find(pt => pt.isSelected);
+            }
+        });
+
         // Events.
     }
 
     clearPaths ()  {
         this.paths = [new RunePathModel()];
+        this.activePath = this.paths[0];
         return this;
     }
 
     selectHandler (point) {
+        if (this.selectedPoint ) {
+            this.selectedPoint.isSelected = false;
+        }
         point.isSelected = !point.isSelected;
+        // Events.deselectAll.dispatch();1
         if(point.isSelected) {
             this.selectedPoint = point;
-            console.log("Selectedpoint", this.selectedPoint);
             // this.currentPointIndex = point.idx; ???
-        } else { 
+        } else {
             this.selectedPoint = null;
             // this.selectedPoints.forEach((p, i) => {
                 // if (point == p) {
@@ -98,7 +112,6 @@ class RuneModel {
         // }
 
         let point = new RunePoint(gridPoint.x, gridPoint.y);
-
         point.gridPoint = gridPoint;
 
         this.activePath.points.push(point);
@@ -126,8 +139,6 @@ class RuneModel {
     }
 
     deletePoint (p) {
-
-        debugger;
 
         this.activePath.points.forEach((point, i) => {
             if (point === p) {

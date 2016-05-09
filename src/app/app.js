@@ -23,7 +23,7 @@ class App {
         this.data = new DataController(Util.getLocalData("runeData"));
         this.canvas = new CanvasController(this.data);
 
-        this.plugins = require('./plugins');
+        //this.plugins = require('./plugins');
 
         this.workspace = new WorkSpaceController(this);
 
