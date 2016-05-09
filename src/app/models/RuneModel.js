@@ -112,10 +112,17 @@ class RuneModel {
         // }
 
         let point = new RunePoint(gridPoint.x, gridPoint.y);
+
         point.gridPoint = gridPoint;
 
-        this.activePath.points.push(point);
-        
+        let selectedIndex = this.activePath.points.indexOf(this.selectedPoint);
+
+        if (selectedIndex > -1) {
+            this.activePath.points.splice(selectedIndex, 0, point);
+        } else {
+            this.activePath.points.push(point);
+        }
+
         Events.refreshPanels.dispatch();
 
         return this;
