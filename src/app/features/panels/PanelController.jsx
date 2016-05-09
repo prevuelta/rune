@@ -1,11 +1,16 @@
 'use strict';
 
-var Util = require('../../global/Util');
-var React = require('react');
-var Draggable = require('react-draggable');
+let Util = require('../../global/Util');
+let Draggable = require('react-draggable');
 
-var React = require('react');
-var Events = require('../../global/Events');
+let React = require('react');
+let Events = require('../../global/Events');
+
+let allPanels = [
+    require('./InspectPath.jsx'),
+    require('./GridManager.jsx'),
+    require('./LayerManager.jsx')
+];
 
 class PanelController {
 
@@ -16,9 +21,9 @@ class PanelController {
 
     init () {
 
-        var _this = this;
+        let _this = this;
 
-        var PanelWrapper = React.createClass({
+        let PanelWrapper = React.createClass({
             handleStart: function () {
 
             },
@@ -32,8 +37,8 @@ class PanelController {
                 return { collapsed : this.props.options.collapsed };
             },
             render: function() {
-                var offsetY = this.props.offset * 50;
-                var offsetX = this.props.offset * 5;
+                let offsetY = this.props.offset * 50;
+                let offsetX = this.props.offset * 5;
                 return (
                     <div className="panel">
                         <div className="handle" onClick={this.toggleShow}>
@@ -49,7 +54,7 @@ class PanelController {
             }
         });
 
-        var Panels = React.createClass({
+        let Panels = React.createClass({
             getInitialState: function () {
                 return { panels : this.props.panels, data : this.props.data, canvas: this.props.canvas };
             },
@@ -62,7 +67,7 @@ class PanelController {
                     <div>
                         {
                             this.state.panels.map(function(panel, idx) {
-                                var Component = panel.panel;
+                                let Component = panel.panel;
                                 return <PanelWrapper offset={idx} options={{title : panel.title, collapsed: panel.collapsed }} >
                                      <Component data={_this.state.data} canvas={_this.state.canvas} />
                                  </PanelWrapper>;
@@ -76,7 +81,7 @@ class PanelController {
         // Plugin panels
         let panels = React.render(
             <Panels
-                panels={_this.app.plugins}
+                panels={ allPanels}
                 data={_this.app.data}
                 canvas={_this.app.canvas} />,
             document.getElementById('rune-panels')
@@ -84,7 +89,7 @@ class PanelController {
 
         function reloadHandler () {
             console.log("Reloading panels...");
-            panels.replaceState({'data' : _this.app.data, 'panels' : _this.app.plugins, canvas: _this.app.canvas });
+            panels.replaceState({'data' : _this.app.data, 'panels' : allPanels, canvas: _this.app.canvas });
         };
 
         Events.reloadPanels.add(reloadHandler.bind(_this));

@@ -1,9 +1,9 @@
 'use strict';
 
 let React = require('react');
-let Events = require('../global/Events');
-let Switch = require('../components/Switch.jsx');
-let Button = require('../components/Button.jsx');
+let Events = require('../../global/Events');
+let Switch = require('../../components/Switch.jsx');
+let Button = require('../../components/Button.jsx');
 
 let PointData = React.createClass({
     getInitialState: function () {

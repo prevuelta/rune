@@ -57,7 +57,7 @@ function ActionBar(app) {
 				e.preventDefault();
                 actionBar.app.canvas.displayMode = 'preview';
                 console.log("here");
-				let svgString = paper.project.exportSVG({asString:true, layerIndex: 1});
+				let svgString = paper.project.exportSVG({asString:true, layerIndex: 2});
                 let element = document.getElementById('rune-overlay');
                 let dialogue = React.render(
                     <Dialogue
