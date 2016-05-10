@@ -142,6 +142,7 @@ class CanvasController {
     }
 
 	drawCanvas () {
+        console.log("Redrawing...");
         this.redrawCurrentLayer();
 		paper.view.draw();
 	}

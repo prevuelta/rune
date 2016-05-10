@@ -31,13 +31,17 @@ let PointData = React.createClass({
     deletePoint: (point) => {
         Events.deletePoint.dispatch(point);
     },
+    selectPoint: (point) => {
+        Events.selectPoint.dispatch(point);
+    },  
     render: function() {
         let x = this.props.point.x;
         let y = this.props.point.y;
         let classNames = this.state.point.isSelected ? 'sheet active' : 'sheet';
         return (
             <div 
-                className={classNames}>
+                className={classNames}
+                onClick={this.selectPoint.bind(this, this.state.point)}>
                 <span
                     onClick={this.toggleActive}>
                     [&#8226;]
@@ -50,6 +54,11 @@ let PointData = React.createClass({
                     onToggle={this.setIsCurve.bind(this, this.state.point)}
                     toggle={this.state.point.isCurve}
                     symbol="S">
+                </Switch>
+                <Switch
+                    onToggle={this.state.point.setIsArc.bind(this.state.point, !this.state.point.isArc)}
+                    toggle={this.state.point.isArc}
+                    symbol="⌒">
                 </Switch>
                 <Button
                     handler={this.deletePoint.bind(this, this.state.point)}

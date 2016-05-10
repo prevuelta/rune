@@ -1,4 +1,5 @@
 var Events = require('../../global/Events');
+var constants = require('../../global/const');
 var paper = require('paper');
 
 /* ========== Tablet ========== */
@@ -54,6 +55,8 @@ class _this {
 
     createRuneSegment (point, transform, isPreview) {
 
+        console.log("creating segment");
+
         let segment;
 
         let renderedPoint = new paper.Point(
@@ -61,15 +64,6 @@ class _this {
         ).add(
             new paper.Point(this.grid.res.x/2, this.grid.res.y/2)
         );
-
-        // if(point.transforms) {
-        //     point.transforms.forEach((transform) => {
-        //         renderedPoint = renderedPoint.add(new paper.Point(
-        //             transform[0] * this.grid.res.x,
-        //             transform[1] * this.grid.res.y
-        //         ));
-        //     });
-        // }
 
         if(point.transform) {
             renderedPoint = renderedPoint.add(new paper.Point(
@@ -88,24 +82,49 @@ class _this {
                 handleIn: h1,
                 handleOut: h2
             });
+        } else if (point.isArc) {
+            segment = new paper.Path.Arc({
+                from: renderedPoint,
+                through: [30, 20],
+                to: [80, 80],
+                strokeColor: 'black'
+            });
+            let c1 = new paper.Path.Line([55,20],[65,20]);
+            c1.strokeColor = 'red';
+            let c2 = new paper.Path.Line([60,15],[60,25]);
+            c2.strokeColor = 'red';
         }
 
         if (!isPreview) {
 
             let node = new paper.Path.Circle(renderedPoint, 8);
+
             node.isHandle = true;
             node.fillColor = 'white';
             node.value = point;
             node.isSelected = point.isSelected || false;
             node.strokeWidth = 4;
             node.strokeColor = node.isSelected ? 'red' : false;
+            
+            node.focus = function () {
+                console.log("focus");
+                node.fillColor = constants.BLUE;
+                Events.redraw.dispatch();
+            };
+
+            node.blur = function () {
+                node.fillColor = 'white';
+                Events.redraw.dispatch();
+            };
 
             node.onMouseDown = function(e) {
                 e.event.stopImmediatePropagation();
                 this.isSelected = !this.isSelected;
                 Events.selectPoint.dispatch(e.target.value);
                 Events.redraw.dispatch();
-            }
+            };
+
+            point.node = node;
 
             if (point.isCurve) {
 
