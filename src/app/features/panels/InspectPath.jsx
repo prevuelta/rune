@@ -12,7 +12,7 @@ let PointData = React.createClass({
     setIsCurve: function (point) {
         point.isCurve = !point.isCurve;
         this.setState({point: point});
-        Events.draw.dispatch();
+        Events.redrawCanvas.dispatch();
     },
     toggleActive : function () {
         Events.selectPoint.dispatch(this.state.point);
@@ -26,26 +26,13 @@ let PointData = React.createClass({
         let p = this.state.point;
         p[ref] = coords.length === 2 ? coords.map(c => +c) : null;
         this.setState({point: p});
-        Events.draw.dispatch();
+        Events.redrawCanvas.dispatch();
     },
     deletePoint: (point) => {
         Events.deletePoint.dispatch(point);
     },
     selectPoint: (point) => {
         Events.selectPoint.dispatch(point);
-    },
-    updateArcCenter: function (point, event) {
-        let center = event.target.value.split(',');
-        point.arcCenter = center;
-        this.setState({point: point});
-        Events.redrawCanvas.dispatch();
-        debugger;
-    },
-    updateArcSize: function (point, event) {
-        let size = event.target.value;
-        point.arcLength = size;
-        this.setState({point: point});
-        Events.redrawCanvas.dispatch();
     },
     render: function() {
         let x = this.props.point.x;
@@ -69,9 +56,14 @@ let PointData = React.createClass({
                     symbol="S">
                 </Switch>
                 <Switch
-                    onToggle={this.state.point.setIsArc.bind(this.state.point, !this.state.point.isArc)}
+                    onToggle={this.state.point.setArcIn.bind(this.state.point)}
                     toggle={this.state.point.isArc}
-                    symbol="⌒">
+                    symbol="╮">
+                </Switch>
+                <Switch
+                    onToggle={this.state.point.setArcIn.bind(this.state.point)}
+                    toggle={this.state.point.hasArcIn}
+                    symbol="╭">
                 </Switch>
                 <Button
                     handler={this.deletePoint.bind(this, this.state.point)}
@@ -93,19 +85,19 @@ let PointData = React.createClass({
                     : null
                 }
                 {
-                    this.state.point.isArc ?
+                    this.state.point.arcIn ?
                         <div>
                             Arc<br/>
                             Size: <strong>π/</strong>
                             <input
                                 type="text"
-                                defaultValue={this.state.point.arcLength}
-                                onChange={this.updateArcSize.bind(this, this.state.point)} />
+                                defaultValue={this.state.point.arcIn.size}
+                                />
                             Center
                             <input
                                 type="text"
-                                defaultValue={this.state.point.arcCenter.join(',')}
-                                onChange={this.updateArcCenter.bind(this, this.state.point)} />
+                                defaultValue={this.state.point.arcIn.center.join(',')}
+                               />
                         </div>
                     : null
                 }

@@ -7,6 +7,20 @@ class BasePoint {
     }
 }
 
+class RuneArc {
+    constructor (obj) {
+        if (typeof x === 'object') {
+            this.size = obj.size || 0;
+            this.center = obj.center || [0, 0];
+            this.endPoint = new RunePoint(obj.endPoint) || new RunePoint(0, 0);
+        } else {
+            this.size = 0;
+            this.center = [0,0];
+            this.endPoint = new RunePoint(0,0);
+        }
+    }
+}
+
 class RunePoint extends BasePoint {
 
     constructor(x, y) {
@@ -18,9 +32,8 @@ class RunePoint extends BasePoint {
             this.handle2 = x.handle2 || null;
             this.isCurve = x.isCurve || false;
             this.isSelected = x.isSelected || false;
-            this.isArc = x.isArc || false;
-            this.arcCenter = x.arcCenter || null;
-            this.arcLength = x.arcLength || null;
+            this.arcIn = new RuneArc(x.arcIn) || null;
+            this.arcOut = new RuneArc(x.arcOut) || null;
         } else {
             super(x, y);
             this.transforms = [];
@@ -29,20 +42,29 @@ class RunePoint extends BasePoint {
             this.handle2 = null;
             this.isCurve = false;
             this.isSelected = false
-            this.isArc = false;
-            this.arcCenter = null;
-            this.arcLength = null;
+            this.arcIn = null;
+            this.arcOut = null;
         }
+    }
 
-        this.arcLength = Math.PI / 2;
+    get hasArcIn () {
+        return !!this.arcIn;
+    }
+
+    get hasArcOut () {
+        return !!this.arcIn;
+    }
+
+    setArcIn () {
+        this.arcIn = this.hasArcIn ? null : new RuneArc();
+    }
+
+    setArcOut () {
+        this.arcOut = this.hasArcOut ? null : new RuneArc();
     }
 
     addHandles () {
         this.handles = [new BasePoint(), new BasePoint()];
-    }
-
-    setIsArc (isArc) {
-        this.isArc = isArc;
     }
 
     render (res) {
