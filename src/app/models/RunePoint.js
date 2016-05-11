@@ -19,6 +19,8 @@ class RunePoint extends BasePoint {
             this.isCurve = x.isCurve || false;
             this.isSelected = x.isSelected || false;
             this.isArc = x.isArc || false;
+            this.arcCenter = x.arcCenter || null;
+            this.arcLength = x.arcLength || null;
         } else {
             super(x, y);
             this.transforms = [];
@@ -28,7 +30,11 @@ class RunePoint extends BasePoint {
             this.isCurve = false;
             this.isSelected = false
             this.isArc = false;
+            this.arcCenter = null;
+            this.arcLength = null;
         }
+
+        this.arcLength = Math.PI / 2;
     }
 
     addHandles () {
@@ -41,9 +47,9 @@ class RunePoint extends BasePoint {
 
     render (res) {
         return [
-            this.x * res.x, 
+            this.x * res.x,
             this.y * res.y
-        ]; 
+        ];
     }
 
     focusNode () {
@@ -55,7 +61,14 @@ class RunePoint extends BasePoint {
     blurNode () {
         if (this.node) {
             this.node.blur();
-        }   
+        }
+    }
+
+    setSelected (selected) {
+        this.isSelected = selected;
+        if (this.node) {
+            this.node.setSelected(selected);
+        }
     }
 }
 

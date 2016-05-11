@@ -54,10 +54,12 @@ class CanvasController {
             Events.deselectAll.dispatch();
         });
 
-        Events.redraw.add(this.drawCanvas.bind(this));
-        Events.refreshCanvas.add(this.refreshCanvas.bind(this));
+        Events.draw.add(this.drawCanvas.bind(this));
+        Events.redrawCanvas.add(this.redrawCanvas.bind(this));
+        Events.redrawActiveLayer.add(this.redrawActiveLayer.bind(this));
         Events.display.add(this.displayMode.bind(this));
-        Events.redraw.dispatch();
+
+        Events.redrawCanvas.dispatch();
 
     }
 
@@ -83,7 +85,7 @@ class CanvasController {
             }
         });
 
-        Events.redraw.dispatch();
+        Events.draw.dispatch();
     }
 
     get gridLayer() {
@@ -99,11 +101,21 @@ class CanvasController {
     toggleGrid (isPreview) {
         this.showGrid = !isPreview;
         this.gridLayer.visible = this.showGrid;
-        Events.redraw.dispatch();
+        this.drawCanvas();
     }
 
     resizeHandler () {
         this.redrawAllLayers();
+    }
+
+    redrawActiveLayer () {
+        // Draw active layer
+        let ctrl = this.layers[this.currentLayerIndex];
+        ctrl.layer.removeChildren();
+        ctrl.layer.activate();
+        ctrl.view.draw(this.isPreview);
+        ctrl.layer.translate(paper.view.center);
+        this.drawCanvas();
     }
 
     redrawAllLayers () {
@@ -119,31 +131,20 @@ class CanvasController {
         });
     }
 
-    redrawCurrentLayer () {
-        // Draw active layer
-        let ctrl = this.layers[this.currentLayerIndex];
-        ctrl.layer.removeChildren();
-        ctrl.layer.activate();
-        ctrl.view.draw(this.isPreview);
-        ctrl.layer.translate(paper.view.center);
-    }
-
 	redrawGrid () {
 		this.gridLayer.removeChildren();
 		this.gridLayer.activate();
 		this.grid.draw();
 	}
 
-    refreshCanvas () {
+    redrawCanvas () {
         this.setupGrid();
         this.redrawAllLayers();
-        paper.view.draw();
-
+        this.drawCanvas();
     }
 
 	drawCanvas () {
         console.log("Redrawing...");
-        this.redrawCurrentLayer();
 		paper.view.draw();
 	}
 }

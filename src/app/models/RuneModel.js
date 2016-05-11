@@ -51,23 +51,20 @@ class RuneModel {
 
     selectHandler (point) {
         if (this.selectedPoint ) {
-            this.selectedPoint.isSelected = false;
+            this.selectedPoint.setSelected(false);
         }
-        point.isSelected = !point.isSelected;
-        // Events.deselectAll.dispatch();1
+        point.setSelected(!point.isSelected);
         if(point.isSelected) {
             this.selectedPoint = point;
-            // this.currentPointIndex = point.idx; ???
         } else {
             this.selectedPoint = null;
-            // this.selectedPoints.forEach((p, i) => {
-                // if (point == p) {
-                    // this.selectedPoints.splice(i, 1);
-                // }
-            // });
         }
-        Events.refreshPanels.dispatch();
-        Events.redraw.dispatch();
+    }
+
+    selectPath (path) {
+        path.isActive = true;
+        this.activePath.isActive = false;
+        this.activePath = path;
     }
 
     addPath () {
@@ -75,7 +72,6 @@ class RuneModel {
         path.isActive = true;
         this.paths.push(path);
         this.activePath = path;
-        Events.refreshPanels.dispatch();
     }
 
     addSubPath (path) {
@@ -83,18 +79,8 @@ class RuneModel {
         subPath.isActive = true;
         path.addChild(subPath);
         this.activePath = subPath;
-        Events.refreshPanels.dispatch();
     }
 
-    // addChildPath () {
-        // this.activePath.addChild(new RunePathModel());
-    // }
-
-    selectPath (path) {
-        path.isActive = true;
-        this.activePath.isActive = false;
-        this.activePath = path;
-    }
 
     addPoint (gridPoint) {
         // if (this.selectedPoints.length) {
@@ -123,8 +109,6 @@ class RuneModel {
             this.activePath.points.push(point);
         }
 
-        Events.refreshPanels.dispatch();
-
         return this;
     }
 
@@ -152,8 +136,6 @@ class RuneModel {
                 this.activePath.points.splice(i, 1);
             }
         });
-        Events.redraw.dispatch();
-        Events.refreshPanels.dispatch();
     }
 
     // set selectedPoints(selectedPoints) {

@@ -12,7 +12,7 @@ let PointData = React.createClass({
     setIsCurve: function (point) {
         point.isCurve = !point.isCurve;
         this.setState({point: point});
-        Events.redraw.dispatch();
+        Events.draw.dispatch();
     },
     toggleActive : function () {
         Events.selectPoint.dispatch(this.state.point);
@@ -26,20 +26,33 @@ let PointData = React.createClass({
         let p = this.state.point;
         p[ref] = coords.length === 2 ? coords.map(c => +c) : null;
         this.setState({point: p});
-        Events.redraw.dispatch();
+        Events.draw.dispatch();
     },
     deletePoint: (point) => {
         Events.deletePoint.dispatch(point);
     },
     selectPoint: (point) => {
         Events.selectPoint.dispatch(point);
-    },  
+    },
+    updateArcCenter: function (point, event) {
+        let center = event.target.value.split(',');
+        point.arcCenter = center;
+        this.setState({point: point});
+        Events.redrawCanvas.dispatch();
+        debugger;
+    },
+    updateArcSize: function (point, event) {
+        let size = event.target.value;
+        point.arcLength = size;
+        this.setState({point: point});
+        Events.redrawCanvas.dispatch();
+    },
     render: function() {
         let x = this.props.point.x;
         let y = this.props.point.y;
         let classNames = this.state.point.isSelected ? 'sheet active' : 'sheet';
         return (
-            <div 
+            <div
                 className={classNames}
                 onClick={this.selectPoint.bind(this, this.state.point)}>
                 <span
@@ -79,6 +92,23 @@ let PointData = React.createClass({
                         </div>
                     : null
                 }
+                {
+                    this.state.point.isArc ?
+                        <div>
+                            Arc<br/>
+                            Size: <strong>π/</strong>
+                            <input
+                                type="text"
+                                defaultValue={this.state.point.arcLength}
+                                onChange={this.updateArcSize.bind(this, this.state.point)} />
+                            Center
+                            <input
+                                type="text"
+                                defaultValue={this.state.point.arcCenter.join(',')}
+                                onChange={this.updateArcCenter.bind(this, this.state.point)} />
+                        </div>
+                    : null
+                }
             </div>
         );
     }
@@ -91,7 +121,7 @@ let Path = React.createClass({
     changeHandler: function () {
         this.state.path.isClosed = !this.state.path.isClosed;
         this.setState({path: this.state.path});
-        Events.redraw.dispatch();
+        Events.draw.dispatch();
     },
     componentWillReceiveProps : function (nextProps) {
         this.setState({path :nextProps.path });

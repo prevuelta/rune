@@ -40,38 +40,38 @@ class DataController {
         Events.deselectAll.dispatch();
     }
 
+    deletePoint (p) {
+        this.activeRune.deletePoint(p);
+        Events.draw.dispatch();
+        Events.refreshPanels.dispatch();
+    }
+
     addPath () {
         this.activeRune.addPath();
-        Events.redraw.dispatch();
+        Events.reloadPanels.dispatch();
+        Events.redrawActiveLayer.dispatch();
     }
 
     addSubPath (path) {
         this.activeRune.addSubPath(path);
-        Events.redraw.dispatch();
+        Events.reloadPanels.dispatch();
+        Events.redrawActiveLayer.dispatch();
+    }
+
+    clearRune() {
+        this.activeRune.clearPaths().currentPointIndex = 0;
+        Events.reloadPanels.dispatch();
+        Events.redrawActiveLayer.dispatch();
     }
 
     addTransformToSelected (transform) {
 
         console.log(transform);
 
-        // this.activeRune.selectedPoints.forEach((point) => {
-        //     point.transform[0] += transform[0],
-        //     point.transform[1] += transform[1]
-        // });
-
         this.activeRune.selectedPoint.x += transform[0];
         this.activeRune.selectedPoint.y += transform[1];
 
-        // this.activeRune.selectedPoints.forEach((point) => {
-        //     point.transforms.push(transform);
-        // });
-        Events.redraw.dispatch();
-    }
-
-    clearRune() {
-        this.activeRune.clearPaths().currentPointIndex = 0;
-        Events.reloadPanels.dispatch();
-        Events.redraw.dispatch();
+        Events.redrawActiveLayer.dispatch();
     }
 
     updateGrid () {
@@ -82,16 +82,14 @@ class DataController {
 
     selectPoint(isSelected, point) {
         this.activeRune.selectHandler(isSelected, point);
+        Events.refreshPanels.dispatch();
+        Events.draw.dispatch();
     }
 
     selectPath (path) {
         this.activeRune.selectPath(path);
         Events.refreshPanels.dispatch();
-        Events.redraw.dispatch();
-    }
-
-    deletePoint (p) {
-        this.activeRune.deletePoint(p);
+        Events.draw.dispatch();
     }
 }
 

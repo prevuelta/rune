@@ -1,6 +1,8 @@
-var Events = require('../../global/Events');
-var constants = require('../../global/const');
-var paper = require('paper');
+let Events = require('../../global/Events');
+let constants = require('../../global/const');
+let styles = require('../../global/styles');
+let paper = require('paper');
+let Trig = require('../../global/Trig');
 
 /* ========== Tablet ========== */
 
@@ -83,16 +85,31 @@ class _this {
                 handleOut: h2
             });
         } else if (point.isArc) {
+            let center = new paper.Point(point.arcCenter);
+            let radius = renderedPoint.getDistance(center);
+            let rotation = new paper.Point(0, 0);
+            let midRotation = new paper.Point(0, 0);
+
+            rotation.length = radius;
+            midRotation.length = radius;
+            rotation.angle = renderedPoint.angle + Trig.radToDeg(point.arcLength);
+            midRotation.angle = renderedPoint.angle + (Trig.radToDeg(point.arcLength) / 2);
+
+            console.log('length', rotation.length);
+            console.log('angle', rotation.angle);
+
             segment = new paper.Path.Arc({
                 from: renderedPoint,
-                through: [30, 20],
-                to: [80, 80],
+                through: center.add(midRotation),
+                to: center.add(rotation),
                 strokeColor: 'black'
             });
-            let c1 = new paper.Path.Line([55,20],[65,20]);
-            c1.strokeColor = 'red';
-            let c2 = new paper.Path.Line([60,15],[60,25]);
-            c2.strokeColor = 'red';
+            let c1 = new paper.Path.Circle(center, 10);
+            c1.strokeColor = 'orange';
+            let c2 = new paper.Path.Circle(center.add(rotation), 10);
+            c2.strokeColor = 'pink';
+            let c3 = new paper.Path.Circle(center.add(midRotation), 10);
+            c3.strokeColor = 'blue';
         }
 
         if (!isPreview) {
@@ -100,28 +117,29 @@ class _this {
             let node = new paper.Path.Circle(renderedPoint, 8);
 
             node.isHandle = true;
-            node.fillColor = 'white';
             node.value = point;
             node.isSelected = point.isSelected || false;
-            node.strokeWidth = 4;
-            node.strokeColor = node.isSelected ? 'red' : false;
-            
+            node.style = point.isSelected ? styles.node.selected : styles.node.normal;
+
             node.focus = function () {
-                console.log("focus");
-                node.fillColor = constants.BLUE;
-                Events.redraw.dispatch();
+                Events.draw.dispatch();
             };
 
             node.blur = function () {
                 node.fillColor = 'white';
-                Events.redraw.dispatch();
+                Events.draw.dispatch();
+            };
+
+            node.setSelected = function (selected) {
+                node.style = selected ? styles.node.selected : styles.node.normal;
             };
 
             node.onMouseDown = function(e) {
                 e.event.stopImmediatePropagation();
                 this.isSelected = !this.isSelected;
+                this.style = this.isSelected ? styles.node.selected : styles.node.normal;
                 Events.selectPoint.dispatch(e.target.value);
-                Events.redraw.dispatch();
+                Events.draw.dispatch();
             };
 
             point.node = node;
