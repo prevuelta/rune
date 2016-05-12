@@ -1,8 +1,11 @@
+'use strict';
+
 let Events = require('../../global/Events');
 let constants = require('../../global/const');
 let styles = require('../../global/styles');
 let paper = require('paper');
 let Trig = require('../../global/Trig');
+let RuneArcView = require('./RuneArcView');
 
 /* ========== Tablet ========== */
 
@@ -57,8 +60,6 @@ class _this {
 
     createRuneSegment (point, transform, isPreview) {
 
-        console.log("creating segment");
-
         let segment;
 
         let renderedPoint = new paper.Point(
@@ -74,8 +75,8 @@ class _this {
             ));
         }
 
-        let h1 = point.handle1 ? new paper.Point(point.handle1[0], point.handle1[1]) : null; 
-        let h2 = point.handle2 ? new paper.Point(point.handle2[0], point.handle2[1]) : null; 
+        let h1 = point.handle1 ? new paper.Point(point.handle1[0], point.handle1[1]) : null;
+        let h2 = point.handle2 ? new paper.Point(point.handle2[0], point.handle2[1]) : null;
 
 
         if (point.isCurve) {
@@ -84,32 +85,9 @@ class _this {
                 handleIn: h1,
                 handleOut: h2
             });
-        } else if (point.isArc) {
-            let center = new paper.Point(point.arcCenter);
-            let radius = renderedPoint.getDistance(center);
-            let rotation = new paper.Point(0, 0);
-            let midRotation = new paper.Point(0, 0);
-
-            rotation.length = radius;
-            midRotation.length = radius;
-            rotation.angle = renderedPoint.angle + Trig.radToDeg(point.arcLength);
-            midRotation.angle = renderedPoint.angle + (Trig.radToDeg(point.arcLength) / 2);
-
-            console.log('length', rotation.length);
-            console.log('angle', rotation.angle);
-
-            segment = new paper.Path.Arc({
-                from: renderedPoint,
-                through: center.add(midRotation),
-                to: center.add(rotation),
-                strokeColor: 'black'
-            });
-            let c1 = new paper.Path.Circle(center, 10);
-            c1.strokeColor = 'orange';
-            let c2 = new paper.Path.Circle(center.add(rotation), 10);
-            c2.strokeColor = 'pink';
-            let c3 = new paper.Path.Circle(center.add(midRotation), 10);
-            c3.strokeColor = 'blue';
+        } else if (point.hasArcIn) {
+            console.log(point.arcIn);
+            segment = new RuneArcView(point, renderedPoint).segment;
         }
 
         if (!isPreview) {

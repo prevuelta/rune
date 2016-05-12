@@ -39,6 +39,7 @@ class DataController {
         this.activeRune.addPoint(gridRef);
         Events.deselectAll.dispatch();
         Events.redrawCanvas.dispatch();
+        Events.refreshPanels.dispatch();
     }
 
     deletePoint (p) {

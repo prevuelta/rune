@@ -32,8 +32,8 @@ class RunePoint extends BasePoint {
             this.handle2 = x.handle2 || null;
             this.isCurve = x.isCurve || false;
             this.isSelected = x.isSelected || false;
-            this.arcIn = new RuneArc(x.arcIn) || null;
-            this.arcOut = new RuneArc(x.arcOut) || null;
+            this.arcIn = x.arcIn && new RuneArc(x.arcIn) || null;
+            this.arcOut = x.arcOut && new RuneArc(x.arcOut) || null;
         } else {
             super(x, y);
             this.transforms = [];
@@ -56,6 +56,7 @@ class RunePoint extends BasePoint {
     }
 
     setArcIn () {
+        console.log("setting arc in");
         this.arcIn = this.hasArcIn ? null : new RuneArc();
     }
 
