@@ -18,7 +18,7 @@ module.exports = {
             this.state.data.baseUnit = +baseUnit;
             this.state.data.ratio = +ratio;
             this.state.data.units = +units;
-            Events.refreshCanvas.dispatch();
+            Events.redrawCanvas.dispatch();
         },
         render: function() {
             return (

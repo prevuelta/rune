@@ -6,6 +6,7 @@ let styles = require('../../global/styles');
 let paper = require('paper');
 let Trig = require('../../global/Trig');
 let RuneArcView = require('./RuneArcView');
+let RuneNodeFactory = require('./RuneNodeFactory');
 
 /* ========== Tablet ========== */
 
@@ -35,12 +36,11 @@ class RuneView {
                 })
             } else {
                 paperPath = this.generatePath(path, style, isPreview);
-                paperPath.style = style;
-                paperPath.isClosed = path.isClosed;
-                debugger;
+                if (paperPath) {
+                    paperPath.style = style;
+                    paperPath.isClosed = path.isClosed;
+                }
             }
-
-            paperPath.opacity = 0.6;
 
             return paperPath;
         });
@@ -67,18 +67,19 @@ class RuneView {
             }
         });
 
-        debugger;
+        // debugger;
 
         if (segments.length > 0) {
            paths.push(new paper.Path(segments));
         }
 
         if (paths.length > 1) {
-            paths = paths.reduce((p, c) => c.join(p));
+            return paths.reduce((p, c) => c.join(p));
+        } else if (paths[0]) {
+            return paths[0];
+        } else {
+            return null;
         }
-
-        return paths == [] ? null || paths;
-
     }
 
     getPathSegment (path, isPreview) {
@@ -119,42 +120,11 @@ class RuneView {
                 handleIn: h1,
                 handleOut: h2
             });
-        } else if (point.hasArcIn) {
-            // console.log(point.arcIn);
-            // segment = new RuneArcView(point, renderedPoint).segment;
         }
 
         if (!isPreview) {
 
-            let node = new paper.Path.Circle(renderedPoint, 8);
-
-            node.isHandle = true;
-            node.value = point;
-            node.isSelected = point.isSelected || false;
-            node.style = point.isSelected ? styles.node.selected : styles.node.normal;
-
-            node.focus = function () {
-                Events.draw.dispatch();
-            };
-
-            node.blur = function () {
-                node.fillColor = 'white';
-                Events.draw.dispatch();
-            };
-
-            node.setSelected = function (selected) {
-                node.style = selected ? styles.node.selected : styles.node.normal;
-            };
-
-            node.onMouseDown = function(e) {
-                e.event.stopImmediatePropagation();
-                this.isSelected = !this.isSelected;
-                this.style = this.isSelected ? styles.node.selected : styles.node.normal;
-                Events.selectPoint.dispatch(e.target.value);
-                Events.draw.dispatch();
-            };
-
-            point.node = node;
+            point.node = RuneNodeFactory(point, renderedPoint);
 
             if (point.isCurve) {
 

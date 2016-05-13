@@ -3,6 +3,7 @@
 let paper = require('paper');
 let Trig = require('../../global/Trig');
 let styles = require('../../global/styles');
+let RuneNodeFactory = require('./RuneNodeFactory');
 
 class RuneArcView {
     constructor (point, renderedPoint) {
@@ -14,8 +15,12 @@ class RuneArcView {
 
         rotation.length = radius;
         midRotation.length = radius;
-        rotation.angle = renderedPoint.angle + Trig.radToDeg(Math.PI/+point.arcIn.size);
-        midRotation.angle = renderedPoint.angle + (Trig.radToDeg(Math.PI/+point.arcIn.size) / 2);
+
+        let dirVec = point.arcIn.direction ? -1 : 1; 
+        let angle = Trig.radToDeg(Math.PI/+point.arcIn.size);
+
+        rotation.angle = renderedPoint.angle + angle;
+        midRotation.angle = renderedPoint.angle + (angle / 2);
 
         console.log('length', rotation.length);
         console.log('angle', rotation.angle);
@@ -26,6 +31,9 @@ class RuneArcView {
             to: center.add(rotation),
             strokeColor: 'black'
         });
+
+        this.node = RuneNodeFactory(point, renderedPoint);
+        this.endNode = RuneNodeFactory(null, center.add(rotation));
 
         let c1 = new paper.Path.Circle(center, 10);
         c1.strokeColor = 'black';

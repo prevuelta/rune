@@ -78,6 +78,10 @@ let PointData = React.createClass({
     deletePoint: (point) => {
         Events.deletePoint.dispatch(point);
     },
+    toggleArcIn: function () {
+        this.state.point.setArcIn();
+        Events.redrawCanvas.dispatch();
+    },
     selectPoint: (point) => {
         Events.selectPoint.dispatch(point);
     },
@@ -103,7 +107,7 @@ let PointData = React.createClass({
                     symbol="S">
                 </Switch>
                 <Switch
-                    onToggle={this.state.point.setArcIn.bind(this.state.point)}
+                    onToggle={this.toggleArcIn}
                     toggle={this.state.point.hasArcIn}
                     symbol="╭">
                 </Switch>
@@ -150,7 +154,7 @@ let Path = React.createClass({
     changeHandler: function () {
         this.state.path.isClosed = !this.state.path.isClosed;
         this.setState({path: this.state.path});
-        Events.draw.dispatch();
+        Events.redrawCanvas.dispatch();
     },
     componentWillReceiveProps : function (nextProps) {
         this.setState({path :nextProps.path });

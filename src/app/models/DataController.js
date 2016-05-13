@@ -44,7 +44,7 @@ class DataController {
 
     deletePoint (p) {
         this.activeRune.deletePoint(p);
-        Events.draw.dispatch();
+        Events.redrawCanvas.dispatch();
         Events.refreshPanels.dispatch();
     }
 
