@@ -13,10 +13,12 @@ class RuneArc {
             this.size = obj.size || 0;
             this.center = obj.center || [0, 0];
             this.endPoint = new RunePoint(obj.endPoint) || new RunePoint(0, 0);
+            this.direction = obj.direction || false;
         } else {
             this.size = 0;
             this.center = [0,0];
             this.endPoint = new RunePoint(0,0);
+            this.direction = false;
         }
     }
 }
@@ -25,7 +27,7 @@ class RunePoint extends BasePoint {
 
     constructor(x, y) {
         if (typeof x === 'object') {
-            super(x.x, x.y);
+            super(x.x, x.y);;
             this.transforms = x.transforms || [];
             this.transform = x.transform || [0,0];
             this.handle1 = x.handle1 || null;
@@ -53,6 +55,10 @@ class RunePoint extends BasePoint {
 
     get hasArcOut () {
         return !!this.arcIn;
+    }
+
+    get hasArc () {
+        return this.hasArcIn || this.hasArcOut;
     }
 
     setArcIn () {

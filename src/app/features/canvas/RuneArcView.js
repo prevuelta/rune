@@ -20,7 +20,7 @@ class RuneArcView {
         console.log('length', rotation.length);
         console.log('angle', rotation.angle);
 
-        this.segment = new paper.Path.Arc({
+        this.path = new paper.Path.Arc({
             from: renderedPoint,
             through: center.add(midRotation),
             to: center.add(rotation),
@@ -28,9 +28,9 @@ class RuneArcView {
         });
 
         let c1 = new paper.Path.Circle(center, 10);
-        c1.strokeColor = 'orange';
+        c1.strokeColor = 'black';
         let c2 = new paper.Path.Circle(center.add(rotation), 10);
-        c2.strokeColor = 'pink';
+        c2.strokeColor = 'red';
         let c3 = new paper.Path.Circle(center.add(midRotation), 10);
         c3.strokeColor = 'blue';
     }

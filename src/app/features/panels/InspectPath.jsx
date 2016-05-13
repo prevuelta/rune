@@ -5,6 +5,53 @@ let Events = require('../../global/Events');
 let Switch = require('../../components/Switch.jsx');
 let Button = require('../../components/Button.jsx');
 
+let Arc = React.createClass({
+    getInitialState: function () {
+        return {arc: this.props.arc};
+    },
+    updateArc: function (prop, arc, event) {
+        if (prop !== 'direction') {
+            let {value} = event.target;
+            if (value.indexOf(',') > -1) {
+                value = value.split(',');
+            }
+            arc[prop] = value;
+        } else {
+            arc.direction = !arc.direction;
+        }
+        this.setState({arc: arc});
+        Events.redrawCanvas.dispatch();
+    },
+    render: function () {
+        let arc = this.state.arc;
+        return  <div>
+                    Arc<br/>
+                    Size: <strong>π/</strong>
+                    <input
+                        type="text"
+                        defaultValue={arc.size}
+                        onChange={this.updateArc.bind(this, 'size', arc)}
+                        />
+                    Center
+                    <input
+                        type="text"
+                        defaultValue={arc.center.join(',')}
+                        onChange={this.updateArc.bind(this, 'center', arc)}
+                       />
+                    <Switch
+                        onToggle={this.updateArc.bind(this, 'direction', arc)}
+                        toggle={arc.direction}
+                        symbol="⤿">
+                    </Switch>
+                    <Switch
+                        onToggle={this.updateArc.bind(this, 'direction', arc)}
+                        toggle={arc.direction}
+                        symbol="⤾">
+                    </Switch>
+                </div>
+    }
+});
+
 let PointData = React.createClass({
     getInitialState: function () {
         return {point: this.props.point};
@@ -33,17 +80,6 @@ let PointData = React.createClass({
     },
     selectPoint: (point) => {
         Events.selectPoint.dispatch(point);
-    },
-    updateArc: function (type, prop, point, event) {
-        let {value} = event.target;
-        if (value.indexOf(',') > -1) {
-            value = value.split(',');
-        }
-        console.log("Value", value);
-        point[type][prop] = value;
-        console.log(point);
-        this.setState({point: point});
-        Events.redrawCanvas.dispatch();
     },
     render: function() {
         let x = this.props.point.x;
@@ -97,21 +133,9 @@ let PointData = React.createClass({
                 }
                 {
                     this.state.point.hasArcIn ?
-                        <div>
-                            Arc<br/>
-                            Size: <strong>π/</strong>
-                            <input
-                                type="text"
-                                defaultValue={this.state.point.arcIn.size}
-                                onChange={this.updateArc.bind(this, 'arcIn', 'size', this.state.point)}
-                                />
-                            Center
-                            <input
-                                type="text"
-                                defaultValue={this.state.point.arcIn.center.join(',')}
-                                onChange={this.updateArc.bind(this, 'arcIn', 'center', this.state.point)}
-                               />
-                        </div>
+                        <Arc arc={this.state.point.arcIn}></Arc>
+                    : this.state.point.hasArcOut ?
+                        <Arc arc={this.state.point.arcOut}></Arc>
                     : null
                 }
             </div>

@@ -9,7 +9,7 @@ let RuneArcView = require('./RuneArcView');
 
 /* ========== Tablet ========== */
 
-class _this {
+class RuneView {
     constructor (runeModel, grid) {
         this.data = runeModel;
         this.grid = grid.options;
@@ -20,7 +20,7 @@ class _this {
         var _this = this;
 
         this.paths = _this.data.paths.map((path) => {
-            let style = (path.isClosed ? {fillColor: 'black'} : {strokeColor: path.isActive ? 'red' :'black'});
+            let style = path.isClosed ? styles.path.filled : path.isActive ? styles.path.active : styles.path.outline;
             let paperPath;
             if (path.hasChildren) {
                 let paths = [path].concat(path.children);
@@ -34,11 +34,10 @@ class _this {
                     style: style
                 })
             } else {
-                paperPath = new paper.Path({
-                    segments: this.getPathSegment(path, isPreview),
-                    style: style,
-                    closed: path.isClosed
-                });
+                paperPath = this.generatePath(path, style, isPreview);
+                paperPath.style = style;
+                paperPath.isClosed = path.isClosed;
+                debugger;
             }
 
             paperPath.opacity = 0.6;
@@ -47,8 +46,43 @@ class _this {
         });
     }
 
-    getPathSegment (path, isPreview) {
+    generatePath (path, style, isPreview) {
         let _this = this;
+        let paths = [];
+        let segments = [];
+
+        path.points.forEach(p => {
+            console.log(p.hasArc);
+            if (p.hasArc) {
+                paths.push(new paper.Path(segments));
+                segments = [];
+                let renderedPoint = new paper.Point(
+                    p.render(_this.grid.res)
+                ).add(
+                    new paper.Point(_this.grid.res.x/2, _this.grid.res.y/2)
+                );
+                paths.push(new RuneArcView(p, renderedPoint).path);
+            } else {
+                segments.push(_this.createRuneSegment(p, null, isPreview));
+            }
+        });
+
+        debugger;
+
+        if (segments.length > 0) {
+           paths.push(new paper.Path(segments));
+        }
+
+        if (paths.length > 1) {
+            paths = paths.reduce((p, c) => c.join(p));
+        }
+
+        return paths == [] ? null || paths;
+
+    }
+
+    getPathSegment (path, isPreview) {
+        let _this = this;s
         return path.points.map(function(point) {
             return _this.createRuneSegment(
                 point,
@@ -86,8 +120,8 @@ class _this {
                 handleOut: h2
             });
         } else if (point.hasArcIn) {
-            console.log(point.arcIn);
-            segment = new RuneArcView(point, renderedPoint).segment;
+            // console.log(point.arcIn);
+            // segment = new RuneArcView(point, renderedPoint).segment;
         }
 
         if (!isPreview) {
@@ -145,4 +179,4 @@ class _this {
     }
 }
 
-module.exports = _this;
+module.exports = RuneView;

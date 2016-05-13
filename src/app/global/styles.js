@@ -14,6 +14,17 @@ module.exports = {
             strokeColor: 'black',
             fillColor: constants.BLUE
         }
+    },
+    path: {
+        filled: {
+            fillColor: 'black'
+        },
+        outline: {
+            strokeColor: 'black'
+        },
+        active: {
+            strokeColor: constants.RED
+        }
     }
 
 }

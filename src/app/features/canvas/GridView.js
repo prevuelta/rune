@@ -12,7 +12,7 @@ var gridPointFactory = (point, res) => {
 
     let paperPoint = new paper.Point( point.render(res) );
     // let path = new paper.Path.Ellipse({point: paperPoint, size: [res.x, res.y]});
-    let path = new paper.Path.Rectangle(paperPoint, res.x, res.y);
+    let path = new paper.Path.Rectangle(paperPoint, res.x-2, res.y-2);
 
     path.value = point;
     path.active = false;
