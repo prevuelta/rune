@@ -23,10 +23,8 @@ class RuneArcView {
     }
 
     createArc (arc, isIn) {
-        let cX = arc.center[0] * this.res.x;
-        let cY = arc.center[1] * this.res.y;
 
-        let center = new paper.Point(cX, cY);
+        let center = new paper.Point(arc.center.render(this.res));
         let radius = this.renderedPoint.getDistance(center);
         let rotation = this.renderedPoint.subtract(center);
         let midRotation = this.renderedPoint.subtract(center);
@@ -58,6 +56,7 @@ class RuneArcView {
         }
 
         RuneNodeFactory(this.point, this.renderedPoint);
+        RuneNodeFactory(arc.center, center);
         RuneNodeFactory(null, center.add(rotation));
 
         let c1 = new paper.Path.Circle(center, 10);

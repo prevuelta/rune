@@ -11,12 +11,12 @@ class RuneArc {
     constructor (obj) {
         if (typeof obj === 'object') {
             this.size = obj.size || 2;
-            this.center = obj.center || [0, 0];
+            this.center = new RunePoint(obj.center) || new RunePoint(0,0);
             this.endPoint = new RunePoint(obj.endPoint) || new RunePoint(0, 0);
             this.direction = obj.direction || false;
         } else {
             this.size = 2;
-            this.center = [0,0];
+            this.center = new RunePoint(0,0);
             this.endPoint = new RunePoint(0,0);
             this.direction = false;
         }

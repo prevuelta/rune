@@ -95,7 +95,6 @@ class PanelController {
         Events.reloadPanels.add(reloadHandler.bind(_this));
 
         Events.refreshPanels.add(() => {
-            console.log("Refreshing panels...");
             panels.setState({'data' : _this.app.data});
         });
 

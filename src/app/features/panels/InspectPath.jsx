@@ -10,14 +10,17 @@ let Arc = React.createClass({
         return {arc: this.props.arc};
     },
     updateArc: function (prop, arc, event) {
-        if (prop !== 'direction') {
-            let {value} = event.target;
+        let {value} = event.target;
+        if (prop === 'direction') {
+            arc.direction = !arc.direction;
+        } else if (prop === 'center') {
             if (value.indexOf(',') > -1) {
                 value = value.split(',');
             }
-            arc[prop] = value;
-        } else {
-            arc.direction = !arc.direction;
+            arc.center.x = value[0];
+            arc.center.y = value[1];
+        } else if (prop === 'size') {
+            arc.size = value;
         }
         this.setState({arc: arc});
         Events.redrawCanvas.dispatch();
@@ -36,7 +39,7 @@ let Arc = React.createClass({
                     Center
                     <input
                         type="text"
-                        defaultValue={arc.center.join(',')}
+                        defaultValue={arc.center.x + ',' + arc.center.y}
                         onChange={this.updateArc.bind(this, 'center', arc)}
                        />
                     <Button
@@ -49,12 +52,16 @@ let Arc = React.createClass({
 
 let PointData = React.createClass({
     getInitialState: function () {
-        return {point: this.props.point};
+        return {point: this.props.point, show: false};
     },
     setIsCurve: function (point) {
         point.isCurve = !point.isCurve;
         this.setState({point: point});
         Events.redrawCanvas.dispatch();
+    },
+    toggle: function () {
+        this.state.show = !this.state.show;
+        // this.setState();
     },
     toggleActive : function () {
         Events.selectPoint.dispatch(this.state.point);
@@ -88,22 +95,22 @@ let PointData = React.createClass({
         let x = this.props.point.x;
         let y = this.props.point.y;
         let classNames = this.state.point.isSelected ? 'sheet active' : 'sheet';
+        let showHide = this.state.show ? '-' : '+';
         return (
             <div
                 className={classNames}
                 onClick={this.selectPoint.bind(this, this.state.point)}>
                 <span
-                    onClick={this.toggleActive}>
-                    [&#8226;]
+                    onClick={this.toggle}>
+                    [{showHide}]
                 </span>
                 <small>
-                    <span>x: {x}, y:{y}</span>
+                    <span>x: {x.toFixed(2)}, y:{y.toFixed(2)}</span>
                 </small>
-                {this.state.point.transforms}
                 <Switch
                     onToggle={this.setIsCurve.bind(this, this.state.point)}
                     toggle={this.state.point.isCurve}
-                    symbol="S">
+                    symbol="∩">
                 </Switch>
                 <Switch
                     onToggle={this.toggleArcIn}
@@ -119,29 +126,34 @@ let PointData = React.createClass({
                     handler={this.deletePoint.bind(this, this.state.point)}
                     symbol="X">
                 </Button>
-                {
-                    this.state.point.isCurve ?
-                        <div>
-                            Handles<br/>
-                            <input
-                                type="text"
-                                defaultValue={this.state.point.handle1}
-                                onChange={this.changeHandle.bind(this, 'handle1')} />
-                            <input
-                                type="text"
-                                defaultValue={this.state.point.handle2}
-                                onChange={this.changeHandle.bind(this, 'handle2')} />
-                        </div>
-                    : null
-                }
-                {
-                    this.state.point.hasArcIn ?
-                        <Arc arc={this.state.point.arcIn}></Arc>
-                    : null
-                }
-                {   
-                    this.state.point.hasArcOut ?
-                        <Arc arc={this.state.point.arcOut}></Arc>
+                { this.state.show ?
+                    <div>
+                    {
+                        this.state.point.isCurve ?
+                            <div>
+                                Handles<br/>
+                                <input
+                                    type="text"
+                                    defaultValue={this.state.point.handle1}
+                                    onChange={this.changeHandle.bind(this, 'handle1')} />
+                                <input
+                                    type="text"
+                                    defaultValue={this.state.point.handle2}
+                                    onChange={this.changeHandle.bind(this, 'handle2')} />
+                            </div>
+                        : null
+                    }
+                    {
+                        this.state.point.hasArcIn ?
+                            <Arc arc={this.state.point.arcIn}></Arc>
+                        : null
+                    }
+                    {   
+                        this.state.point.hasArcOut ?
+                            <Arc arc={this.state.point.arcOut}></Arc>
+                        : null
+                    }
+                    </div>
                     : null
                 }
             </div>

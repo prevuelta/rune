@@ -10,9 +10,8 @@ module.exports = React.createClass({
     // clickHandler : function () {
     //     this.props.handler();
     // },
-    click: function () {
-        console.log("Button handler...");
-        this.props.handler();
+    click: function (event) {
+        this.props.handler(event);
     },
     render: function() {
         return (

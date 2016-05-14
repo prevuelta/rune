@@ -25,7 +25,7 @@ class RuneModel {
     constructor (data) {
 
         this.paths = data && data.paths.map(p => new RunePathModel(p)) || [new RunePathModel()];
-        this.activePath = this.paths[0];
+        this.activePath = this.paths.find(p => p.isActive) || this.paths[0];
         this.selectedPoints = data && data.selectedPoints || [];
         this.currentPointIndex = data && data.currentPointIndex || 0;
         this.reverseAdd = false;
@@ -50,13 +50,18 @@ class RuneModel {
     }
 
     selectHandler (point) {
-        if (this.selectedPoint ) {
-            this.selectedPoint.setSelected(false);
-        }
-        point.setSelected(!point.isSelected);
-        if(point.isSelected) {
-            this.selectedPoint = point;
+        debugger;
+        if (this.selectedPoint === point) {
+            this.deselect();
         } else {
+            this.selectedPoint = point;
+            point.setSelected(true);
+        }
+    }
+
+    deselect () {
+        if (this.selectedPoint) {
+            this.selectedPoint.setSelected(false);
             this.selectedPoint = null;
         }
     }
@@ -83,19 +88,6 @@ class RuneModel {
 
 
     addPoint (gridPoint) {
-        // if (this.selectedPoints.length) {
-        //     if (this.selectedPoints[0] == 0 ) {
-        //         this.reverseAdd = true;
-        //     } else if (this.selectedPoints[0] == this.activePath.length-1) {
-        //         this.reverseAdd = false;
-        //     }
-        // }
-        // if(this.reverseAdd) {
-        //     this.activePath.points.unshift(new RunePoint(gridRef.x, gridRef.y));
-        // } else {
-        //     this.currentPointIndex++;
-        //     this.activePath.points.splice(this.currentPointIndex, 0, new RunePoint(gridRef.x, gridRef.y));
-        // }
 
         let point = new RunePoint(gridPoint.x, gridPoint.y);
 
@@ -104,10 +96,18 @@ class RuneModel {
         let selectedIndex = this.activePath.points.indexOf(this.selectedPoint);
 
         if (selectedIndex > -1) {
-            this.activePath.points.splice(selectedIndex, 0, point);
+            if (selectedIndex === 0) {
+                this.activePath.points.unshift(point);
+            } else if (selectedIndex === this.activePath.points.length -1) {
+                this.activePath.points.push(point);
+            } else {
+                this.activePath.points.splice(selectedIndex, 0, point);
+            }
         } else {
             this.activePath.points.push(point);
         }
+
+        this.selectHandler(point);
 
         return this;
     }
