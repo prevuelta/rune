@@ -40,6 +40,7 @@ class RuneView {
                     paperPath.style = style;
                     paperPath.isClosed = path.isClosed;
                 }
+                console.log(paperPath);
             }
 
             return paperPath;
@@ -52,7 +53,6 @@ class RuneView {
         let segments = [];
 
         path.points.forEach(p => {
-            console.log(p.hasArc);
             if (p.hasArc) {
                 paths.push(new paper.Path(segments));
                 segments = [];
@@ -61,7 +61,7 @@ class RuneView {
                 ).add(
                     new paper.Point(_this.grid.res.x/2, _this.grid.res.y/2)
                 );
-                paths.push(new RuneArcView(p, renderedPoint).path);
+                paths = paths.concat(new RuneArcView(p, renderedPoint, _this.grid.res).paths);
             } else {
                 segments.push(_this.createRuneSegment(p, null, isPreview));
             }
@@ -74,7 +74,9 @@ class RuneView {
         }
 
         if (paths.length > 1) {
-            return paths.reduce((p, c) => c.join(p));
+            let newPath = new paper.Path();
+            paths.forEach(p => newPath.join(p));
+            return newPath;
         } else if (paths[0]) {
             return paths[0];
         } else {
@@ -83,7 +85,7 @@ class RuneView {
     }
 
     getPathSegment (path, isPreview) {
-        let _this = this;s
+        let _this = this;
         return path.points.map(function(point) {
             return _this.createRuneSegment(
                 point,

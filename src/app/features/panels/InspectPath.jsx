@@ -24,6 +24,7 @@ let Arc = React.createClass({
     },
     render: function () {
         let arc = this.state.arc;
+        let directionSymbol = this.state.arc.direction ? "⤿" : "⤾";
         return  <div>
                     Arc<br/>
                     Size: <strong>π/</strong>
@@ -38,16 +39,10 @@ let Arc = React.createClass({
                         defaultValue={arc.center.join(',')}
                         onChange={this.updateArc.bind(this, 'center', arc)}
                        />
-                    <Switch
-                        onToggle={this.updateArc.bind(this, 'direction', arc)}
-                        toggle={arc.direction}
-                        symbol="⤿">
-                    </Switch>
-                    <Switch
-                        onToggle={this.updateArc.bind(this, 'direction', arc)}
-                        toggle={arc.direction}
-                        symbol="⤾">
-                    </Switch>
+                    <Button
+                        handler={this.updateArc.bind(this, 'direction', arc)}
+                        symbol={directionSymbol}>
+                    </Button>
                 </div>
     }
 });
@@ -82,6 +77,10 @@ let PointData = React.createClass({
         this.state.point.setArcIn();
         Events.redrawCanvas.dispatch();
     },
+    toggleArcOut: function () {
+        this.state.point.setArcOut();
+        Events.redrawCanvas.dispatch();
+    },
     selectPoint: (point) => {
         Events.selectPoint.dispatch(point);
     },
@@ -112,7 +111,7 @@ let PointData = React.createClass({
                     symbol="╭">
                 </Switch>
                 <Switch
-                    onToggle={this.state.point.setArcOut.bind(this.state.point)}
+                    onToggle={this.toggleArcOut}
                     toggle={this.state.point.hasArcOut}
                     symbol="╮">
                 </Switch>
@@ -138,7 +137,10 @@ let PointData = React.createClass({
                 {
                     this.state.point.hasArcIn ?
                         <Arc arc={this.state.point.arcIn}></Arc>
-                    : this.state.point.hasArcOut ?
+                    : null
+                }
+                {   
+                    this.state.point.hasArcOut ?
                         <Arc arc={this.state.point.arcOut}></Arc>
                     : null
                 }

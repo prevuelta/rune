@@ -1,6 +1,7 @@
-let constants = require('./const');
-
 'use strict';
+
+let constants = require('./const');
+let paper = require('paper');
 
 module.exports = {
     node : {
@@ -11,8 +12,8 @@ module.exports = {
         },
         generated: {
             strokeWidth: 3,
-            strokeColor: 'gray',
-            fillColor: 'white'
+            strokeColor: '#cccccc',
+            fillColor: '#f4f4f4'
         },
         selected: {
             strokeWidth: 4,
@@ -22,8 +23,7 @@ module.exports = {
     },
     path: {
         filled: {
-            fillColor: 'black',
-            opacity: 0.6
+            fillColor: new paper.Color(0,0,0,0.6),
         },
         outline: {
             strokeColor: 'black'

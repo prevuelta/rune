@@ -6,34 +6,59 @@ let styles = require('../../global/styles');
 let RuneNodeFactory = require('./RuneNodeFactory');
 
 class RuneArcView {
-    constructor (point, renderedPoint) {
+    constructor (point, renderedPoint, res) {
 
-        let center = new paper.Point(point.arcIn.center.map(v => +v));
-        let radius = renderedPoint.getDistance(center);
-        let rotation = new paper.Point(0, 0);
-        let midRotation = new paper.Point(0, 0);
+        this.point = point;
+        this.renderedPoint = renderedPoint;
+        this.res = res;
+        this.paths = [];
+
+        if (point.hasArcIn) {
+            this.createArc(point.arcIn, true);
+        }
+
+        if (point.hasArcOut) {
+            this.createArc(point.arcOut, false);
+        }
+    }
+
+    createArc (arc, isIn) {
+        let cX = arc.center[0] * this.res.x;
+        let cY = arc.center[1] * this.res.y;
+
+        let center = new paper.Point(cX, cY);
+        let radius = this.renderedPoint.getDistance(center);
+        let rotation = this.renderedPoint.subtract(center);
+        let midRotation = this.renderedPoint.subtract(center);
 
         rotation.length = radius;
         midRotation.length = radius;
 
-        let dirVec = point.arcIn.direction ? -1 : 1; 
-        let angle = Trig.radToDeg(Math.PI/+point.arcIn.size);
+        let dirVec = arc.direction ? -1 : 1; 
+        let angle = Trig.radToDeg(Math.PI/+arc.size) * dirVec;
+        let angleVec = this.renderedPoint.angle - center.angle - 90;
 
-        rotation.angle = renderedPoint.angle + angle;
-        midRotation.angle = renderedPoint.angle + (angle / 2);
+        rotation.angle += angle;
+        midRotation.angle += angle / 2;
 
-        console.log('length', rotation.length);
-        console.log('angle', rotation.angle);
+        if (isIn) {
+            this.paths.push(new paper.Path.Arc({
+                from: center.add(rotation),
+                through: center.add(midRotation),
+                to: this.renderedPoint,
+                strokeColor: 'black'
+            }));
+        } else {
+            this.paths.push(new paper.Path.Arc({
+                from: this.renderedPoint,
+                through: center.add(midRotation),
+                to: center.add(rotation),
+                strokeColor: 'black'
+            }));   
+        }
 
-        this.path = new paper.Path.Arc({
-            from: renderedPoint,
-            through: center.add(midRotation),
-            to: center.add(rotation),
-            strokeColor: 'black'
-        });
-
-        this.node = RuneNodeFactory(point, renderedPoint);
-        this.endNode = RuneNodeFactory(null, center.add(rotation));
+        RuneNodeFactory(this.point, this.renderedPoint);
+        RuneNodeFactory(null, center.add(rotation));
 
         let c1 = new paper.Path.Circle(center, 10);
         c1.strokeColor = 'black';

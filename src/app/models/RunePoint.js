@@ -9,13 +9,13 @@ class BasePoint {
 
 class RuneArc {
     constructor (obj) {
-        if (typeof x === 'object') {
-            this.size = obj.size || 0;
+        if (typeof obj === 'object') {
+            this.size = obj.size || 2;
             this.center = obj.center || [0, 0];
             this.endPoint = new RunePoint(obj.endPoint) || new RunePoint(0, 0);
             this.direction = obj.direction || false;
         } else {
-            this.size = 0;
+            this.size = 2;
             this.center = [0,0];
             this.endPoint = new RunePoint(0,0);
             this.direction = false;
@@ -54,7 +54,7 @@ class RunePoint extends BasePoint {
     }
 
     get hasArcOut () {
-        return !!this.arcIn;
+        return !!this.arcOut;
     }
 
     get hasArc () {

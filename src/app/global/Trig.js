@@ -27,10 +27,10 @@ class Trig {
 
     }
     static radToDeg (radians) {
-        return radians * (180 / Math.PI)
+        return radians / (Math.PI / 180)
     }
     static degToRad (degrees) {
-        return degrees / (180 / Math.PI);
+        return degrees * (Math.PI / 180);
     }
 }
 
