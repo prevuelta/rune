@@ -30,7 +30,7 @@ class DataController {
     }
 
     save () {
-        localStorage["runeData"] = JSON.stringify(this.tablet);
+        localStorage[this.tablet.id] = JSON.stringify(this.tablet);
     }
 
     addRune () {
@@ -38,9 +38,8 @@ class DataController {
     }
 
     addPoint (gridRef) {
-        Events.deselectAll.dispatch();
+        
         this.activeRune.addPoint(gridRef);
-
         Events.redrawCanvas.dispatch();
         Events.refreshPanels.dispatch();
         // Events.reloadPanels.dispatch();
@@ -89,7 +88,7 @@ class DataController {
     selectPoint(point) {
         this.activeRune.selectHandler(point);
         Events.refreshPanels.dispatch();
-        Events.draw.dispatch();
+        Events.redrawCanvas.dispatch();
     }
 
     deselectAll () {

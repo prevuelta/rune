@@ -8,8 +8,7 @@ class RunePathModel {
         this.points = data && data.points.map(p => new RunePoint(p)) || [];
         this.isClosed = data && data.isClosed || false;
         this.isActive = data && data.isActive || false;
-        this.children = data && data.children || [];
-        this.children.map(c => new RunePathModel(c));
+        this.children = data && data.children.map(c => new RunePathModel(c)) || [];
     }
 
     addChild (path) {
@@ -50,13 +49,16 @@ class RuneModel {
     }
 
     selectHandler (point) {
-        debugger;
         if (this.selectedPoint === point) {
             this.deselect();
-        } else {
-            this.selectedPoint = point;
-            point.setSelected(true);
+            return;
         }
+        if (this.selectedPoint) {
+            this.selectedPoint.setSelected(false);
+        }
+        point.setSelected(true);
+        this.selectedPoint = point;
+
     }
 
     deselect () {
@@ -90,7 +92,6 @@ class RuneModel {
     addPoint (gridPoint) {
 
         let point = new RunePoint(gridPoint.x, gridPoint.y);
-
         point.gridPoint = gridPoint;
 
         let selectedIndex = this.activePath.points.indexOf(this.selectedPoint);

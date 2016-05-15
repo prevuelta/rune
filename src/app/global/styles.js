@@ -6,12 +6,12 @@ let paper = require('paper');
 module.exports = {
     node : {
         normal: {
-            strokeWidth: 3,
+            strokeWidth: 2,
             strokeColor: 'black',
             fillColor: 'white'
         },
         generated: {
-            strokeWidth: 3,
+            strokeWidth: 2,
             strokeColor: '#cccccc',
             fillColor: '#f4f4f4'
         },
@@ -19,6 +19,11 @@ module.exports = {
             strokeWidth: 4,
             strokeColor: 'black',
             fillColor: constants.BLUE
+        }
+    },
+    grid: {
+        fill: {
+            fillColor: new paper.Color(constants.BLUE, 0.2)
         }
     },
     path: {

@@ -62,7 +62,6 @@ class RunePoint extends BasePoint {
     }
 
     setArcIn () {
-        console.log("setting arc in");
         this.arcIn = this.hasArcIn ? null : new RuneArc();
     }
 

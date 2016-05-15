@@ -20,17 +20,23 @@ class App {
         }
 
         // Setup workspace
-        this.data = new DataController(Util.getLocalData("runeData"));
+        let savedRunes = Object.keys(localStorage);
+        
+        this.loadRune(Util.getLocalData(savedRunes[0]));
+
+    }
+
+    loadRune (data) {
+        this.data = new DataController(data);
         this.canvas = new CanvasController(this.data);
 
-        //this.plugins = require('./plugins');
+        this.plugins = require('./plugins');
 
         this.workspace = new WorkSpaceController(this);
 
         let app = this;
 
         setInterval(this.save.bind(this), 20000);
-
     }
 
     save () {

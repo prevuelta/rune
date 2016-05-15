@@ -1,6 +1,7 @@
 var Util = require('../../global/util');
 var constants = require('../../global/Const');
 var Events = require('../../global/Events');
+var styles = require('../../global/styles');
 var RunePoint = require('../../models/RunePoint');
 
 var paper = require('paper');
@@ -17,20 +18,19 @@ var gridPointFactory = (point, res) => {
     path.value = point;
     path.active = false;
 
-    var opaque = new paper.Color(255, 0, 0, 0.2);
-
-    path.fillColor = opaque;
+    path.style = styles.grid.fill;
+    path.opacity = 0.2;
 
     path.onMouseEnter = function (e) {
-        this.fillColor = 'orange';
+        this.opacity = 0.4;
     };
 
     path.onMouseLeave = function (e) {
-        this.fillColor = this.active ? 'red' : opaque;
+        this.opacity = 0.2;
     };
 
     path.onMouseDown = function (e) {
-        this.fillColor = 'red';
+        this.opacity = 0.6;
         Events.addPoint.dispatch(e.target.value);
         Events.draw.dispatch();
     };

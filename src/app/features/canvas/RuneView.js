@@ -25,12 +25,9 @@ class RuneView {
             let paperPath;
             if (path.hasChildren) {
                 let paths = [path].concat(path.children);
-
                 paperPath = new paper.CompoundPath({
                     children: paths.map((p) => {
-                        return new paper.Path({
-                            segments: _this.getPathSegment(p, isPreview)
-                        });
+                        return this.generatePath(p, style, isPreview);
                     }),
                     style: style
                 })
@@ -40,7 +37,6 @@ class RuneView {
                     paperPath.style = style;
                     paperPath.isClosed = path.isClosed;
                 }
-                console.log(paperPath);
             }
 
             return paperPath;
@@ -54,8 +50,10 @@ class RuneView {
 
         path.points.forEach(p => {
             if (p.hasArc) {
-                paths.push(new paper.Path(segments));
-                segments = [];
+                if (segments.length > 0) {
+                    paths.push(new paper.Path(segments));
+                    segments = [];
+                }
                 let renderedPoint = new paper.Point(
                     p.render(_this.grid.res)
                 ).add(

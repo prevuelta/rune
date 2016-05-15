@@ -63,11 +63,8 @@ let PointData = React.createClass({
         this.state.show = !this.state.show;
         // this.setState();
     },
-    toggleActive : function () {
-        Events.selectPoint.dispatch(this.state.point);
-        this.setState({point: this.state.point});
-    },
     componentWillReceiveProps : function (nextProps) {
+      this.setState({point: nextProps.point});
       return nextProps;
     },
     changeHandle: function (ref, event) {
@@ -94,6 +91,7 @@ let PointData = React.createClass({
     render: function() {
         let x = this.props.point.x;
         let y = this.props.point.y;
+        // debugger;
         let classNames = this.state.point.isSelected ? 'sheet active' : 'sheet';
         let showHide = this.state.show ? '-' : '+';
         return (

@@ -59,12 +59,8 @@ class RuneArcView {
         RuneNodeFactory(arc.center, center);
         RuneNodeFactory(null, center.add(rotation));
 
-        let c1 = new paper.Path.Circle(center, 10);
-        c1.strokeColor = 'black';
-        let c2 = new paper.Path.Circle(center.add(rotation), 10);
-        c2.strokeColor = 'red';
-        let c3 = new paper.Path.Circle(center.add(midRotation), 10);
-        c3.strokeColor = 'blue';
+        // let c3 = new paper.Path.Circle(center.add(midRotation), 10);
+        // c3.strokeColor = 'blue';
     }
 }
 
