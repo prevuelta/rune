@@ -21,6 +21,8 @@ class DataController {
         Events.addSubPath.add(this.addSubPath.bind(this));
         Events.deselectAll.add(this.deselectAll.bind(this));
 
+        Events.gridUpdate.add(this.updateGrid.bind(this));
+
         Events.nudge.add(this.addTransformToSelected.bind(this));
 
     }
@@ -69,6 +71,10 @@ class DataController {
         Events.redrawActiveLayer.dispatch();
     }
 
+    updateGrid (grid) {
+        this.tablet.runes.forEach(r => r.updateGrid(grid));
+    }
+
     addTransformToSelected (transform) {
 
         console.log(transform);
@@ -77,12 +83,6 @@ class DataController {
         this.activeRune.selectedPoint.y += transform[1];
 
         Events.redrawActiveLayer.dispatch();
-    }
-
-    updateGrid () {
-        // var rune = this.getactiveRune();
-        // rune.letter.gridPoints.forEach(function(entry, i) {
-        // });
     }
 
     selectPoint(point) {

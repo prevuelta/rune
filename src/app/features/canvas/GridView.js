@@ -11,7 +11,8 @@ var paper = require('paper');
 
 var gridPointFactory = (point, res) => {
 
-    let paperPoint = new paper.Point( point.render(res) );
+    let p = point.render(res);
+    let paperPoint = new paper.Point( p[0] - (res.x/2), p[1] - (res.y/2) );
     // let path = new paper.Path.Ellipse({point: paperPoint, size: [res.x, res.y]});
     let path = new paper.Path.Rectangle(paperPoint, res.x-2, res.y-2);
 
@@ -45,13 +46,13 @@ class GridView {
     	this.points = [];
 
         let col, row;
-        col = row = -this.options.units/2;
+        col = row = -(this.options.units/2) + 0.5;
 
         for (let i = 1; i <= this.options.units * this.options.units; i++) {
             this.points.push(new RunePoint(row, col));
             if (i && i % this.options.units == 0) {
                 row++;
-                col = -this.options.units/2;
+                col = -(this.options.units/2) + 0.5;
             } else {
                 col++;
             }

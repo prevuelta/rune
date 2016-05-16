@@ -56,8 +56,6 @@ class RuneView {
                 }
                 let renderedPoint = new paper.Point(
                     p.render(_this.grid.res)
-                ).add(
-                    new paper.Point(_this.grid.res.x/2, _this.grid.res.y/2)
                 );
                 paths = paths.concat(new RuneArcView(p, renderedPoint, _this.grid.res).paths);
             } else {
@@ -99,8 +97,6 @@ class RuneView {
 
         let renderedPoint = new paper.Point(
             point.render(this.grid.res)
-        ).add(
-            new paper.Point(this.grid.res.x/2, this.grid.res.y/2)
         );
 
         if(point.transform) {

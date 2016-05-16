@@ -18,6 +18,7 @@ class RunePathModel {
     get hasChildren () {
         return !!this.children.length;
     }
+
 }
 
 class RuneModel {
@@ -61,6 +62,16 @@ class RuneModel {
 
     }
 
+    updateGrid (grid) {
+        this.paths.forEach(path => {
+            path.points.forEach(p => {
+                debugger;
+                let x= p.x / grid.old.units;
+                // p.x = grid.units
+            });
+        });
+    }
+
     deselect () {
         if (this.selectedPoint) {
             this.selectedPoint.setSelected(false);
@@ -92,7 +103,7 @@ class RuneModel {
     addPoint (gridPoint) {
 
         let point = new RunePoint(gridPoint.x, gridPoint.y);
-        point.gridPoint = gridPoint;
+        // point.gridPoint = gridPoint;
 
         let selectedIndex = this.activePath.points.indexOf(this.selectedPoint);
 

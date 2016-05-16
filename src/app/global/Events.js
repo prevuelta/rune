@@ -4,6 +4,7 @@ let events = [
     'addPoint',
     'addPath',
     'addSubPath',
+    'gridUpdate',
     'selectPoint',
     'selectPath',
     'deleteSelected',
