@@ -30,8 +30,6 @@ class App {
 
     loadTablet (data) {
 
-        data.isActive = true;
-
         this.data = new DataController(data);
         this.canvas = new CanvasController(this.data);
 

@@ -65,9 +65,23 @@ class RuneModel {
     updateGrid (grid) {
         this.paths.forEach(path => {
             path.points.forEach(p => {
-                debugger;
-                let x= p.x / grid.old.units;
-                // p.x = grid.units
+                // eg: grid units = 4, point is 1.5 | 1.5
+                // we want 4 | 4
+                // -1.5 | -0.5 | 0.5 | 1.5
+                // 1,2,3,4 
+                // + 2.5
+                // Eg. grid units = 3, point is -1 | 1
+                // we want 1 | 3
+                // -1 | 0 | 1
+                // + 2
+                // == (+ 1/2 + 0.5)
+                console.log("p", p);
+                let rX =  p.x + ((grid.old.units/2) + 0.5);
+                rX = rX / grid.old.units;
+                let nX = grid.new.units * rX;
+                nX = nX - ((grid.new.units/2) + 0.5);
+                p.x = nX;
+                console.log(rX,nX);
             });
         });
     }

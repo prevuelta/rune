@@ -14,11 +14,14 @@ body {
 	// border-radius: $qu;
     position: fixed;
     z-index: 9999;
+    // display: flex;
+    height: $u3;
     img {
        width: $uh;
 	   margin: 0;
 	   padding: $qu;
-	   background: $field;
+	   background: black;
+       display: block;
 	}
 }
 
@@ -43,7 +46,6 @@ body {
 
 #rune-tabs {
     position: fixed;
-    border-top: 1px solid $rust;
     background: #f4f4f4;
     bottom: 0;
     left: 0;
