@@ -11,13 +11,15 @@ body {
 }
 
 .logo {
-	border-radius: $qbu;
-	width: $buh;
-	z-index: 9999;
-	margin: $hbu 0 0 $hbu;
-	padding: $hbu;
-	background: $field;
-	position: fixed;
+	// border-radius: $qu;
+    position: fixed;
+    z-index: 9999;
+    img {
+       width: $uh;
+	   margin: 0;
+	   padding: $qu;
+	   background: $field;
+	}
 }
 
 #rune-panels {
@@ -25,7 +27,6 @@ body {
     right: 0;
     top: 0;
     bottom: 0;
-    border-left: 1px solid teal;
     background: #f4f4f4;
     width: $panel-width;
     overflow-y: scroll;
@@ -37,6 +38,20 @@ body {
 	position: fixed;
 	left: 0;
 	top: 0;
-	
 	// margin-top:
+}
+
+#rune-tabs {
+    position: fixed;
+    border-top: 1px solid $rust;
+    background: #f4f4f4;
+    bottom: 0;
+    left: 0;
+    right: $panel-width;
+    height: $u10;
+    .panel {
+        width: $panel-width;
+        height: 100%;
+        overflow-y: scroll;
+    }
 }

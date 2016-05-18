@@ -1,8 +1,8 @@
 .panel {
 	// position: fixed;
-	// left: $bu;
-	// top: $bu8;
-	height: auto;//$bu * 16;
+	// left: $u;
+	// top: $u8;
+	height: auto;//$u * 16;
 	width: 100%;
 	background: #f4f4f4;
     border-bottom: 1px solid black;
@@ -10,18 +10,18 @@
 		z-index: 9999;
 	}
 	.panel-content {
-		// padding: $bu;
+		// padding: $u;
 		font-size: 14px;
 	}
 	.handle {
         cursor: pointer;
 		background: #d4d4d4;
 		width: 100%;
-		height: $bu2;
+		height: $u2;
 		font-weight: bold;
 		font-size: 12px;
-		padding: 0 $hbu;
-		line-height: $bu2;
+		padding: 0 $hu;
+		line-height: $u2;
 		box-sizing: border-box;
         &:active {
             background: red;

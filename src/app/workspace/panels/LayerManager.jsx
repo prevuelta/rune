@@ -13,7 +13,6 @@ module.exports = {
         render: function() {
             return (
                 <div>
-                    <h4>Layers</h4>
                     <div>
                         {
                             this.state.layers.map(function(layer) {

@@ -1,7 +1,7 @@
 .switch,
 .button {
-	width: $buh;
-	height: $buh;
+	width: $uh;
+	height: $uh;
 	// border: 1px solid red;
 	cursor: pointer;
 	border-radius: 2px;
@@ -9,8 +9,8 @@
 	text-align: center;
 	display: inline-block;
 	color: white;
-	font-size: $bu;
-	line-height: $buh;
+	font-size: $u;
+	line-height: $uh;
 	box-sizing: border-box;
 	font-family: 'Courier New';
     margin: 2px;
@@ -23,17 +23,17 @@
 }
 
 .button {
-	min-width: $buh;
+	min-width: $uh;
 	width: auto;
 }
 
 .sheet {
-    // height: $bu2;
+    // height: $u2;
     background: $cream;
     .sheet {
         background: darken($cream, 20);
         // background: $sky;
-        margin-left: $hbu;
+        margin-left: $hu;
         &:before {
             content: '↳ | ';
             font-size: 10px;
@@ -42,7 +42,7 @@
             background: $sky;
         }
     }
-    margin: 0 0 $qbu 0;
+    margin: 0 0 $qu 0;
     &.active {
         background: $field;
     }

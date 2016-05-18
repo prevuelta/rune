@@ -5,7 +5,7 @@ var _ = require('lodash');
 
 /* ========== Data ========== */
 
-class DataController {
+class ModelController {
     constructor (tabletModel) {
 
         this.tablet = new TabletModel(tabletModel);
@@ -102,4 +102,4 @@ class DataController {
     }
 }
 
-module.exports = DataController;
+module.exports = ModelController;

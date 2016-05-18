@@ -1,5 +1,5 @@
 button {
-	padding: $hbu $bu;
+	padding: $hu $u;
 	border: none;
 	border-radius: 2px;
     cursor: pointer;
@@ -14,9 +14,9 @@ label {
 }
 
 input {
-	padding: $hbu;
-    border-radius: $qbu;
-	margin: $hbu 0;
+	padding: $hu;
+    border-radius: $qu;
+	margin: $hu 0;
 	border: 1px solid #e4e4e4;
     font-family: $primary-font;
 }

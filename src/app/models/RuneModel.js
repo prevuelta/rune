@@ -1,4 +1,4 @@
-let RunePoint = require('./RunePoint');
+let RunePoint = require('./RunePointModel');
 let Events = require('../global/Events');
 
 /* ========== Rune Model ========== */

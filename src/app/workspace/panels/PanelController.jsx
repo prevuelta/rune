@@ -5,6 +5,8 @@ let Draggable = require('react-draggable');
 
 let React = require('react');
 let Events = require('../../global/Events');
+let PanelWrapper = require('./PanelWrapper.jsx');
+let TabletList = require('./TabletList.jsx');
 
 let allPanels = [
     require('./InspectPath.jsx'),
@@ -14,45 +16,15 @@ let allPanels = [
 
 class PanelController {
 
-    constructor (app) {
+    constructor (app, tablets) {
         this.app = app;
+        this.tablets = tablets;
         this.init();
     }
 
     init () {
 
         let _this = this;
-
-        let PanelWrapper = React.createClass({
-            handleStart: function () {
-
-            },
-            handleDrag: function () {
-
-            },
-            toggleShow: function () {
-                this.setState({collapsed: !this.state.collapsed});
-            },
-            getInitialState: function () {
-                return { collapsed : this.props.options.collapsed };
-            },
-            render: function() {
-                let offsetY = this.props.offset * 50;
-                let offsetX = this.props.offset * 5;
-                return (
-                    <div className="panel">
-                        <div className="handle" onClick={this.toggleShow}>
-                            { this.props.options.title }
-                            <span className="toggle">{this.state.collapsed ? '-' : '+'}</span>
-                        </div>
-                        { !this.state.collapsed ? 
-                        <div className="panel-content">
-                            { this.props.children }
-                        </div> : null }
-                    </div>
-                );
-            }
-        });
 
         let Panels = React.createClass({
             getInitialState: function () {
@@ -66,9 +38,9 @@ class PanelController {
                 return (
                     <div>
                         {
-                            this.state.panels.map(function(panel, idx) {
+                            this.state.panels.map((panel) => {
                                 let Component = panel.panel;
-                                return <PanelWrapper offset={idx} options={{title : panel.title, collapsed: panel.collapsed }} >
+                                return <PanelWrapper options={{title : panel.title, collapsed: panel.collapsed }} >
                                      <Component data={_this.state.data} canvas={_this.state.canvas} />
                                  </PanelWrapper>;
                             })
@@ -87,6 +59,15 @@ class PanelController {
             document.getElementById('rune-panels')
         );
 
+        let TabletListPanel = TabletList.panel;
+
+        let tabletPanel = React.render(
+            <PanelWrapper options={{title : TabletList.title, collapsed: TabletList.collapsed }} >
+                 <TabletListPanel tablets={_this.tablets} />
+             </PanelWrapper>,
+             document.getElementById('rune-tabs')
+        );
+
         function reloadHandler () {
             console.log("Reloading panels...");
             panels.replaceState({'data' : _this.app.data, 'panels' : allPanels, canvas: _this.app.canvas });
@@ -99,7 +80,6 @@ class PanelController {
         });
 
     }
-
 }
 
 // <Draggable

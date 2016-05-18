@@ -6,16 +6,12 @@ let GridModel = require('./GridModel');
 class TabletModel {
     constructor (data) {
 
-        let _this = this;
-
+        this.isActive = false;
         this.id = data && data.id || this.guid();
-
-        _this.gridOptions = new GridModel(data && data.gridOptions);
-
-        _this.renderedSVG = data && data.renderedSVG || '';
-        _this.activePathIndex = data && data.activePathIndex || 0;
-
-        _this.runes = data && data.runes.map(rune => new RuneModel(rune)) || [new RuneModel()];
+        this.gridOptions = new GridModel(data && data.gridOptions);
+        this.renderedSVG = data && data.renderedSVG || '';
+        this.activePathIndex = data && data.activePathIndex || 0;
+        this.runes = data && data.runes.map(rune => new RuneModel(rune)) || [new RuneModel()];
     }
 
      guid () {

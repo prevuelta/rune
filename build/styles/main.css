@@ -51,20 +51,19 @@ body {
   margin: 0; }
 
 .logo {
-  border-radius: 3px;
-  width: 18px;
-  z-index: 9999;
-  margin: 6px 0 0 6px;
-  padding: 6px;
-  background: #14bb5b;
-  position: fixed; }
+  position: fixed;
+  z-index: 9999; }
+  .logo img {
+    width: 18px;
+    margin: 0;
+    padding: 3px;
+    background: #14bb5b; }
 
 #rune-panels {
   position: fixed;
   right: 0;
   top: 0;
   bottom: 0;
-  border-left: 1px solid teal;
   background: #f4f4f4;
   width: 20%;
   overflow-y: scroll; }
@@ -75,6 +74,19 @@ body {
   position: fixed;
   left: 0;
   top: 0; }
+
+#rune-tabs {
+  position: fixed;
+  border-top: 1px solid #e13d1c;
+  background: #f4f4f4;
+  bottom: 0;
+  left: 0;
+  right: 20%;
+  height: 120px; }
+  #rune-tabs .panel {
+    width: 20%;
+    height: 100%;
+    overflow-y: scroll; }
 
 .panel {
   height: auto;

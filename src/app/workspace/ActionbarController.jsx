@@ -1,13 +1,13 @@
 'use strict';
 
-let Events = require('../../global/Events');
+let Events = require('../global/Events');
 
 let React = require('react');
 let paper = require('paper');
 
 // React components:
-let Dialogue = require('../../components/Dialogue.jsx');
-let Button = require('../../components/Button.jsx');
+let Dialogue = require('../components/Dialogue.jsx');
+let Button = require('../components/Button.jsx');
 
 function ActionBar(app) {
 

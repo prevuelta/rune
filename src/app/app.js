@@ -4,9 +4,9 @@
 var Events = require('./global/Events');
 var keys = require('./global/keys');
 var Util = require('./global/Util');
-var WorkSpaceController = require('./features/workspace/WorkspaceController');
-var CanvasController = require('./features/canvas/CanvasController');
-var DataController = require('./models/DataController');
+var WorkSpaceController = require('./workspace/WorkspaceController');
+var CanvasController = require('./workspace/canvas/CanvasController');
+var DataController = require('./models/ModelController');
 
 class App {
 
@@ -20,19 +20,24 @@ class App {
         }
 
         // Setup workspace
-        let savedRunes = Object.keys(localStorage);
-        
-        this.loadRune(Util.getLocalData(savedRunes[0]));
+        this.savedTablets = Object.keys(localStorage);
+
+        this.loadTablet(Util.getLocalData(this.savedTablets[0]));
+
+        Events.loadTablet.add(this.loadTablet.bind(this));
 
     }
 
-    loadRune (data) {
+    loadTablet (data) {
+
+        data.isActive = true;
+
         this.data = new DataController(data);
         this.canvas = new CanvasController(this.data);
 
         this.plugins = require('./plugins');
 
-        this.workspace = new WorkSpaceController(this);
+        this.workspace = new WorkSpaceController(this, this.savedTablets);
 
         let app = this;
 

@@ -1,10 +1,10 @@
 var ActionBar = require('./ActionBarController.jsx');
-var PanelController = require('./../panels/PanelController.jsx');
+var PanelController = require('./panels/PanelController.jsx');
 
-function WorkSpaceController(app) {
+function WorkSpaceController(app, tablets) {
 
 	this.actionBar = new ActionBar(app);
-	this.panels = new PanelController(app);
+	this.panels = new PanelController(app, tablets);
 }
 
 WorkSpaceController.prototype = {
