@@ -32,6 +32,7 @@ class RunePathView {
             if (paperPath) {
                 paperPath.style = style;
                 paperPath.isClosed = path.isClosed;
+                paperPath.closed = path.isClosed;
             }
         }
 
