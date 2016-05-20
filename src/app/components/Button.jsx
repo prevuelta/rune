@@ -18,7 +18,7 @@ module.exports = React.createClass({
             <div
                 className="button"
                 onClick={this.click}>
-                { this.props.symbol }
+                { this.props.children || this.props.symbol }
             </div>
         );
     }

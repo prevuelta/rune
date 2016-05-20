@@ -16,7 +16,7 @@ module.exports = React.createClass({
             <div
                 className={classes}
                 onClick={this.toggle}>
-                { this.props.symbol }
+                { this.props.children || this.props.symbol }
             </div>
         );
     }

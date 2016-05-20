@@ -2,6 +2,7 @@
 .button {
 	width: $uh;
 	height: $uh;
+    padding: $qu;
 	// border: 1px solid red;
 	cursor: pointer;
 	border-radius: 2px;
@@ -14,17 +15,17 @@
 	box-sizing: border-box;
 	font-family: 'Courier New';
     margin: 2px;
+    svg {
+        width: $u;
+        height: $u;
+        fill: white;
+    }
 	&:hover {
 		border-color: $cream;
 	}
 	&.on {
 		background: $rust;
 	}
-}
-
-.button {
-	min-width: $uh;
-	width: auto;
 }
 
 .sheet {

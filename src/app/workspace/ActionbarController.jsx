@@ -5,6 +5,16 @@ let Events = require('../global/Events');
 let React = require('react');
 let paper = require('paper');
 
+var SVGO = require('svgo'),
+    svgo = new SVGO({
+         plugins: [
+            'cleanupAttrs',
+            'removeDoctype'
+         ],
+         multipass: true,
+         full: true
+    });
+
 // React components:
 let Dialogue = require('../components/Dialogue.jsx');
 let Button = require('../components/Button.jsx');
@@ -55,25 +65,44 @@ function ActionBar(app) {
 			title: "Export as SVG",
 			action: function(e) {
 				e.preventDefault();
-                actionBar.app.canvas.displayMode = 'preview';
-                console.log("here");
-				let svgString = paper.project.exportSVG({asString:true, layerIndex: 2});
-                let element = document.getElementById('rune-overlay');
-                let dialogue = React.render(
-                    <Dialogue
-                        element={element}>
-                        <h2>SVG code:</h2>
-                        <textarea>{ svgString }</textarea>
-                    </Dialogue>,
-                    element
-                );
-				// var url = "data:image/svg+xml;utf8," + encodeURIComponent(svgString);
+
+                let renderCanvas = new paper.Project(document.getElementById('rune-render'));
+                renderCanvas.addChild(actionBar.app.canvas.layers.render);
+
+                let bounds = renderCanvas.layers[0].bounds;
+                renderCanvas.layers[0].translate(-bounds.x, -bounds.y);
+                renderCanvas.view.viewSize = new paper.Size(bounds.width, bounds.height);
+
+                let svgString = renderCanvas.exportSVG({asString: true, layerIndex: 0});
+
+                svgString = svgString.replace(/\<svg/, `<svg viewBox="0,0,${bounds.width},${bounds.height}" `);
+
+                svgo.optimize(svgString, (result) => {
+
+
+                    let element = document.getElementById('rune-overlay');
+                    let dialogue = React.render(
+                        <Dialogue
+                            element={element}>
+                            <h2>SVG code:</h2>
+                            <textarea>{ svgString }</textarea>
+                        </Dialogue>,
+                        element
+                    );
+                });
+
+                // actionBar.app.canvas.displayMode = 'preview';
+                // console.log("here");
+
+				// let svgString = paper.project.exportSVG({asString: true, layerIndex: 1}});
+
 				// var link = document.createElement("a");
-    //             console.log("and here");
+                // console.log("and here");
 				// link.download = 'rune_export.svg';
 				// link.href = url;
 				// link.click();
-    //             actionBar.app.canvas.displayMode = 'working';
+                // actionBar.app.canvas.displayMode = 'working';
+                // var url = "data:image/svg+xml;utf8," + encodeURIComponent(svgString);
 			}
 		}
 	];

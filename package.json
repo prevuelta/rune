@@ -46,6 +46,7 @@
     "react-draggable": "^0.8.1",
     "reactify": "^1.1.1",
     "signals": "^1.0.0",
+    "svgo": "^0.6.6",
     "uglifyjs": "^2.4.10",
     "watch": "latest",
     "reload": "^0.7.0"

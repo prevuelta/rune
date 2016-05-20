@@ -190,10 +190,12 @@ let Path = React.createClass({
                     </strong>
                 </span>
                 <Button
-                    handler={this.addSubPath.bind(this, this.state.path)}
-                    symbol="+S">
-                </Button>
-                <Switch onToggle={this.changeHandler} symbol="&"></Switch>
+                    handler={this.addSubPath.bind(this, this.state.path)}>
+                    <svg viewBox="0,0,200,200" width="200" height="200" xmlns="http://www.w3.org/2000/svg"><path d="M0 120V80h80V0h40v80h80v40h-80v80H80v-80" fill-opacity=".6" stroke-miterlimit="10" font-family="sans-serif" font-size="12"/></svg>
+                 </Button>
+                <Switch onToggle={this.changeHandler} symbol="&">
+                   <svg viewBox="0 0 200 200" width="200" height="200" xmlns="http://www.w3.org/2000/svg"><path d="M120 0h80v200H0V0h80v40H40v120h120V40h-40" fill-opacity=".6" stroke-miterlimit="10" font-family="sans-serif" font-size="12"/></svg>
+                </Switch>
                 {
                     this.state.path.hasChildren ?
                         this.state.path.children.map((p) => {
