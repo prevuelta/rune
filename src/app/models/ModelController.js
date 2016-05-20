@@ -40,7 +40,6 @@ class ModelController {
     }
 
     addPoint (gridRef) {
-        
         this.activeRune.addPoint(gridRef);
         Events.redrawCanvas.dispatch();
         Events.refreshPanels.dispatch();
@@ -56,33 +55,32 @@ class ModelController {
     addPath () {
         this.activeRune.addPath();
         Events.reloadPanels.dispatch();
-        Events.redrawActiveLayer.dispatch();
+        Events.redrawCanvas.dispatch();
     }
 
     addSubPath (path) {
         this.activeRune.addSubPath(path);
         Events.reloadPanels.dispatch();
-        Events.redrawActiveLayer.dispatch();
+        Events.redrawCanvas.dispatch();
     }
 
     clearRune() {
         this.activeRune.clearPaths().currentPointIndex = 0;
         Events.reloadPanels.dispatch();
-        Events.redrawActiveLayer.dispatch();
+        Events.redrawCanvas.dispatch();
     }
 
     updateGrid (grid) {
         this.tablet.runes.forEach(r => r.updateGrid(grid));
+        Events.updateGridView.dispatch();
     }
 
     addTransformToSelected (transform) {
 
-        console.log(transform);
-
         this.activeRune.selectedPoint.x += transform[0];
         this.activeRune.selectedPoint.y += transform[1];
 
-        Events.redrawActiveLayer.dispatch();
+        Events.redrawCanvas.dispatch();
     }
 
     selectPoint(point) {

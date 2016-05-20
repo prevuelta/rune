@@ -7,46 +7,33 @@ var paper = require('paper');
 
 /* ========== Render Tablet ========== */
 
-class RuneLayer {
-    constructor (name, view) {
-        this.name = name;
-        this.view = view;
-        this.layer = new paper.Layer();
-    }
-}
-
 class CanvasController {
     constructor (tabletModel) {
 
     	// Canvas
-        let _this = this;
-
         this.data = tabletModel;
-    	this.canvas = document.getElementById('rune-canvas');
         this.isPreview = false;
 
+        // Setup paper
+        this.canvas = document.getElementById('rune-canvas');
     	paper.setup(this.canvas).install(window);
         paper.settings.handleSize = 8;
 
-    	this.layers = [new RuneLayer('Grid')];
-        this.overLayer = new RuneLayer('Overlay');
+        this.layers = {
+            grid: new paper.Layer(),
+            render: new paper.Layer(),
+            interactive: new paper.Layer(),
+            overlay: new paper.Layer()
+        };
 
-        paper.view.onResize = this.resizeHandler.bind(this);
+        this.runeView = new RuneView(
+            this.data.activeRune,
+            this.data.tablet.gridOptions,
+            this.layers.interactive,
+            this.layers.render
+        );
 
-    	// Setup grid
-
-    	this.setupGrid();
-
-    	tabletModel.tablet.runes.forEach(function(val, idx) {
-    		_this.layers.push(
-                new RuneLayer(
-                    'Rune ' + idx,
-                    new RuneView(val, _this.grid)
-                )
-            );
-    	});
-
-    	this.currentLayerIndex = 1;
+        this.setupGridView();
 
     	this.showGrid = true;
 
@@ -54,9 +41,11 @@ class CanvasController {
             Events.deselectAll.dispatch();
         });
 
+        paper.view.onResize = this.resizeHandler.bind(this);
+
         Events.draw.add(this.drawCanvas.bind(this));
         Events.redrawCanvas.add(this.redrawCanvas.bind(this));
-        Events.redrawActiveLayer.add(this.redrawActiveLayer.bind(this));
+        Events.updateGridView.add(this.setupGridView.bind(this));
         Events.display.add(this.displayMode.bind(this));
 
         Events.redrawCanvas.dispatch();
@@ -67,79 +56,43 @@ class CanvasController {
 
         this.isPreview = !this.isPreview;
 
-        this.toggleGrid(this.isPreview);
+        this.redrawCanvas();
 
-        let _this = this;
-
-        this.layers.forEach(function(layerController, index) {
-            if (index) {
-                layerController.layer.children.forEach(function(child){
-                    if (child.isHandle) {
-                        child.visible = !_this.isPreview;
-                    } else if (child.runePath) {
-                        child.fillColor = _this.isPreview ? 'black' : null;
-                        child.strokeColor = _this.isPreview ? null : 'red';
-                        child.closed = _this.isPreview;
-                    }
-                });
-            }
-        });
+        if (this.isPreview) {
+            this.layers.interactive.removeChildren();
+            this.layers.grid.removeChildren();
+            this.layers.overlay.removeChildren();
+        }
 
         Events.draw.dispatch();
     }
 
-    get gridLayer() {
-        return this.layers[0].layer;
-    }
-
-
-	setupGrid () {
-		this.grid = new GridView(this.data.tablet.gridOptions);
-		this.redrawGrid();
+	setupGridView () {
+		this.gridView = new GridView(this.data.tablet.gridOptions, this.layers.grid);
+        this.redrawCanvas();
 	}
-
-    toggleGrid (isPreview) {
-        this.showGrid = !isPreview;
-        this.gridLayer.visible = this.showGrid;
-        this.drawCanvas();
-    }
 
     resizeHandler () {
-        this.redrawAllLayers();
+        this.redrawCanvas();
     }
 
-    redrawActiveLayer () {
-        // Draw active layer
-        let ctrl = this.layers[this.currentLayerIndex];
-        ctrl.layer.removeChildren();
-        ctrl.layer.activate();
-        ctrl.view.draw(this.isPreview);
-        ctrl.layer.translate(paper.view.center);
-        this.drawCanvas();
-    }
-
-    redrawAllLayers () {
-        let _this = this;
-        this.redrawGrid();
-        this.layers.forEach((ctrl) => {
-            if (ctrl.view) {
-                ctrl.layer.removeChildren();
-                ctrl.layer.activate();
-                ctrl.view.draw(_this.isPreview);
-                ctrl.layer.translate(paper.view.center);
-            }
-        });
-    }
-
-	redrawGrid () {
-		this.gridLayer.removeChildren();
-		this.gridLayer.activate();
-		this.grid.draw();
+	redrawGridLayer () {
+		this.gridView.draw();
 	}
 
-    redrawCanvas () {
+    refreshGrid () {
         this.setupGrid();
-        this.redrawAllLayers();
+        this.redrawCanvas();
+    }
+
+    redrawCanvas () {
+        this.gridView.draw();
+        this.runeView.draw();
+
+        this.layers.interactive.translate(paper.view.center);
+        this.layers.render.translate(paper.view.center);
+        this.layers.overlay.translate(paper.view.center);
+
         this.drawCanvas();
     }
 

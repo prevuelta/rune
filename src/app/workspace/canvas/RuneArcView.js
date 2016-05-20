@@ -6,7 +6,7 @@ let styles = require('../../global/styles');
 let RuneNodeFactory = require('./RuneNodeFactory');
 
 class RuneArcView {
-    constructor (point, renderedPoint, res) {
+    constructor (point, renderedPoint, res, iLayer, rLayer) {
 
         this.point = point;
         this.renderedPoint = renderedPoint;
@@ -52,7 +52,7 @@ class RuneArcView {
                 through: center.add(midRotation),
                 to: center.add(rotation),
                 strokeColor: 'black'
-            }));   
+            }));
         }
 
         RuneNodeFactory(this.point, this.renderedPoint);

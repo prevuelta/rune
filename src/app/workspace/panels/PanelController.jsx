@@ -10,8 +10,7 @@ let TabletList = require('./TabletList.jsx');
 
 let allPanels = [
     require('./InspectPath.jsx'),
-    require('./GridManager.jsx'),
-    require('./LayerManager.jsx')
+    require('./GridManager.jsx')
 ];
 
 class PanelController {

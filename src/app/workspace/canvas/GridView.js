@@ -40,7 +40,9 @@ var gridPointFactory = (point, res) => {
 }
 
 class GridView {
-	constructor (options) {
+	constructor (options, layer) {
+
+        this.layer = layer;
 
     	this.options = options;
     	this.points = [];
@@ -62,6 +64,9 @@ class GridView {
 
 	draw () {
 
+        this.layer.removeChildren();
+        this.layer.activate();
+
 		let _this = this;
 
         let gridColor = new paper.Color(_this.gridColor, 100);
@@ -75,7 +80,6 @@ class GridView {
             rowLines.addChild(this.xLine(i * y));
             colLines.addChild(this.yLine(i * x));
         }
-
 
         colLines.translate([paper.view.center.x + (x/2), 0]);
         rowLines.translate([0, paper.view.center.y + (y/2)]);
