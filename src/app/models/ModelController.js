@@ -20,6 +20,7 @@ class ModelController {
         Events.deletePoint.add(this.deletePoint.bind(this));
         Events.addSubPath.add(this.addSubPath.bind(this));
         Events.deselectAll.add(this.deselectAll.bind(this));
+        Events.addTablet.add(this.newTablet.bind(this));
 
         Events.gridUpdate.add(this.updateGrid.bind(this));
 
@@ -29,6 +30,13 @@ class ModelController {
 
     get activeRune () {
         return this.tablet.runes[this.currentRune];
+    }
+
+    newTablet () {
+        this.save();
+        this.tablet = new TabletModel();
+        Events.redrawCanvas.dispatch();
+        Events.refreshPanels.dispatch();
     }
 
     save () {

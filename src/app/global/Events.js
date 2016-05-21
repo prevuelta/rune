@@ -3,6 +3,7 @@ let signals = require('signals');
 let events = [
     'addPath',
     'addPoint',
+    'addTablet',
     'addSubPath',
     'clearPoints',
     'deletePoint',

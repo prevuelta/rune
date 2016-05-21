@@ -5,6 +5,24 @@ let Events = require('../../global/Events');
 let Switch = require('../../components/Switch.jsx');
 let Button = require('../../components/Button.jsx');
 
+// Components:
+let Cross = require('../../icons/Cross.jsx');
+let X = require('../../icons/X.jsx');
+
+let Sheet = React.createClass({
+    render: function () {
+        return (
+            <div className="sheet">
+                {this.props.name}
+                <span className="toggle">{this.state.collapsed ? '-' : '+'}</span>;
+                <div className="content">
+                    {this.props.children}
+                </div>
+            </div>
+        );
+    }
+})
+
 let Arc = React.createClass({
     getInitialState: function () {
         return {arc: this.props.arc};
@@ -119,10 +137,11 @@ let PointData = React.createClass({
                     onToggle={this.toggleArcOut}
                     toggle={this.state.point.hasArcOut}
                     symbol="╮">
+                    <svg viewBox="0,0,220,224.0000000000001" width="220" height="224" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="sans-serif" font-size="12"><path d="M4 56c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8-8-3.582-8-8zM0 212c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8-8-3.582-8-8z" fill="#fff" stroke="#000" stroke-width="2"/><path d="M156 216c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8-8-3.582-8-8z" fill="#f4f4f4" stroke="#ccc" stroke-width="2"/><path d="M204 216c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8-8-3.582-8-8z" fill="#fff" stroke="#000" stroke-width="2"/><path d="M0 212c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8-8-3.582-8-8z" fill="#27dded" stroke="#000" stroke-width="4"/><path d="M4 8c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8-8-3.582-8-8z" fill="#f4f4f4" stroke="#ccc" stroke-width="2"/><path d="M12 56c86.156 2.21 154.21 73.844 152 160h48C214.21 103.334 124.666 10.21 12 8z" fill-opacity=".6" fill="#000"/></g></svg>
                 </Switch>
                 <Button
-                    handler={this.deletePoint.bind(this, this.state.point)}
-                    symbol="X">
+                    handler={this.deletePoint.bind(this, this.state.point)}>
+                    <X />
                 </Button>
                 { this.state.show ?
                     <div>
@@ -228,10 +247,13 @@ module.exports = {
             let _this = this;
             return (
                 <div>
-                    <Button
-                        handler={this.addPath.bind(this)}
-                        symbol="+P">
-                    </Button>
+                    <div className="sheet">
+                        Paths
+                        <Button
+                            handler={this.addPath.bind(this)}>
+                            <Cross />
+                        </Button>
+                    </div>
                     {
                         this.state.paths.map((path) => {
                             return <Path path={path}></Path>

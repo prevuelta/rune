@@ -85,7 +85,7 @@ body {
   right: 20%;
   height: 120px; }
   #rune-tabs .panel {
-    width: 20%;
+    width: 40%;
     height: 100%;
     overflow-y: scroll; }
 
@@ -174,7 +174,8 @@ input {
   line-height: 18px;
   box-sizing: border-box;
   font-family: 'Courier New';
-  margin: 2px; }
+  margin-left: 1px;
+  float: right; }
   .switch svg,
   .button svg {
     width: 12px;
@@ -188,18 +189,33 @@ input {
     background: #e13d1c; }
 
 .sheet {
+  cursor: pointer;
   background: #ece5d4;
-  margin: 0 0 3px 0; }
-  .sheet .sheet {
-    background: #cdba8d;
-    margin-left: 6px; }
-    .sheet .sheet:before {
-      content: '↳ | ';
-      font-size: 10px; }
-    .sheet .sheet.active {
-      background: #27dded; }
-  .sheet.active {
-    background: #14bb5b; }
+  border-bottom: 1px solid white;
+  width: 100%;
+  min-height: 24px;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 0 6px;
+  line-height: 24px;
+  box-sizing: border-box; }
+  .sheet:active {
+    background: #27dded; }
+  .sheet .sheet:before {
+    content: '↳ ';
+    font-size: 10px; }
+  .sheet .toggle {
+    float: right; }
+
+.svg-preview {
+  background: #27dded;
+  padding: 3px;
+  display: inline-block;
+  cursor: pointer;
+  margin: 0 3px 3px 0; }
+  .svg-preview svg {
+    width: 36px;
+    height: auto; }
 
 .overlay {
   position: fixed;

@@ -52,7 +52,7 @@ body {
     right: $panel-width;
     height: $u10;
     .panel {
-        width: $panel-width;
+        width: $panel-width * 2;
         height: 100%;
         overflow-y: scroll;
     }

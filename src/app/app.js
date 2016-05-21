@@ -20,9 +20,11 @@ class App {
         }
 
         // Setup workspace
-        this.savedTablets = Object.keys(localStorage);
+        this.savedTablets = Object.keys(localStorage).map(ref => {
+            return Util.getLocalData(ref);
+        });
 
-        this.loadTablet(Util.getLocalData(this.savedTablets[0]));
+        this.loadTablet(this.savedTablets[0]);
 
         Events.loadTablet.add(this.loadTablet.bind(this));
 

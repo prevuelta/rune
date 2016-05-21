@@ -1,0 +1,11 @@
+.svg-preview {
+	background: $sky;
+	padding: $qu;
+	display: inline-block;
+	cursor: pointer;
+	margin: 0 $qu $qu 0;
+	svg {
+		width: $u3;
+		height: auto;
+	}
+}

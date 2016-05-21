@@ -1,0 +1,46 @@
+.sheet {
+	cursor: pointer;
+	background: $cream;
+	border-bottom: 1px solid white;
+	width: 100%;
+	min-height: $u2;
+	font-weight: bold;
+	font-size: 12px;
+	padding: 0 $hu;
+	line-height: $u2;
+	box-sizing: border-box;
+    &:active {
+        background: $sky;
+    }
+    .sheet {
+	    &:before {
+    	    content: '↳ ';
+        	font-size: 10px;
+    	}
+    }
+	.toggle {
+		float: right;
+	}
+}
+
+
+// .sheet {
+//     // height: $u2;
+//     background: $cream;
+//     .sheet {
+//         background: darken($cream, 20);
+//         // background: $sky;
+//         margin-left: $hu;
+//         &:before {
+//             content: '↳ | ';
+//             font-size: 10px;
+//         }
+//         &.active {
+//             background: $sky;
+//         }
+//     }
+//     margin: 0 0 $qu 0;
+//     &.active {
+//         background: $field;
+//     }
+// }

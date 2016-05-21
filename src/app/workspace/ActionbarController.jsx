@@ -5,15 +5,12 @@ let Events = require('../global/Events');
 let React = require('react');
 let paper = require('paper');
 
-var SVGO = require('svgo'),
-    svgo = new SVGO({
-         plugins: [
-            'cleanupAttrs',
-            'removeDoctype'
-         ],
-         multipass: true,
-         full: true
-    });
+// var SVGO = require('svgo'),
+//     svgo = new SVGO({
+//          plugins: [
+//          ],
+//          multipass: true
+//     });
 
 // React components:
 let Dialogue = require('../components/Dialogue.jsx');
@@ -77,19 +74,20 @@ function ActionBar(app) {
 
                 svgString = svgString.replace(/\<svg/, `<svg viewBox="0,0,${bounds.width},${bounds.height}" `);
 
-                svgo.optimize(svgString, (result) => {
+                actionBar.app.data.tablet.renderedSVG = svgString;
 
+                let element = document.getElementById('rune-overlay');
+                let dialogue = React.render(
+                    <Dialogue
+                        element={element}>
+                        <h2>SVG code:</h2>
+                        <textarea>{ svgString }</textarea>
+                    </Dialogue>,
+                    element
+                );
 
-                    let element = document.getElementById('rune-overlay');
-                    let dialogue = React.render(
-                        <Dialogue
-                            element={element}>
-                            <h2>SVG code:</h2>
-                            <textarea>{ svgString }</textarea>
-                        </Dialogue>,
-                        element
-                    );
-                });
+				// svgo.optimize(svgString, (result) => {
+                // });
 
                 // actionBar.app.canvas.displayMode = 'preview';
                 // console.log("here");

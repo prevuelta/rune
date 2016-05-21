@@ -14,7 +14,8 @@
 	line-height: $uh;
 	box-sizing: border-box;
 	font-family: 'Courier New';
-    margin: 2px;
+    margin-left: 1px;
+    float: right;
     svg {
         width: $u;
         height: $u;
@@ -26,25 +27,4 @@
 	&.on {
 		background: $rust;
 	}
-}
-
-.sheet {
-    // height: $u2;
-    background: $cream;
-    .sheet {
-        background: darken($cream, 20);
-        // background: $sky;
-        margin-left: $hu;
-        &:before {
-            content: '↳ | ';
-            font-size: 10px;
-        }
-        &.active {
-            background: $sky;
-        }
-    }
-    margin: 0 0 $qu 0;
-    &.active {
-        background: $field;
-    }
 }
