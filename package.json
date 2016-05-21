@@ -4,16 +4,16 @@
   "description": "SVG glyph creator using paper.js. Grid based design system to produce letter forms, icons etc then export as SVG from browser.",
   "main": "index.js",
   "scripts": {
-    "build:watch": "parallelshell 'npm run copy-statics' 'npm run watch:js -s' 'npm run watch:css -s' 'npm run build:html -s' 'http-server ./build -p 8000 -d false'",
+    "build:watch": "parallelshell 'npm run copy-statics' 'npm run watch:js -s' 'npm run watch:css -s' 'npm run build:html -s' 'http-server ./dist -p 8000 -d false'",
     "watch:js": "watch 'npm run build:js' ./src/app/",
-    "watch:css": "sass --watch ./src/app/styles/main.scss:./build/styles/main.css",
+    "watch:css": "sass --watch ./src/app/styles/main.scss:./dist/styles/main.css",
     "watch:html": "watch 'npm run build:html'",
-    "build:html": "cp ./src/app/index.html ./build/index.html",
+    "build:html": "cp ./src/app/index.html ./dist/index.html",
     "build": "echo 'building app...' && npm run lib && npm run build:js && npm run build:css && npm run copy-statics",
-    "build:js": "echo 'compiling javascript...' && browserify -x react -x paper -x lodash ./src/app/app.js > ./build/app.min.js && echo 'Finished compiling.'",
-    "lib": "echo 'compiling libraries...' && browserify -r react -r react-draggable -r paper -r lodash -r signals -r ./src/extendLibs.js -o ./build/lib.min.js && echo 'Finished lib compile'",
-    "build:css": "echo 'compiling stylesheets...' && sass ./src/styles/main.scss:./build/styles/main.css",
-    "copy-statics": "echo 'Copying statics...' && cp -R ./src/app/assets/ ./build/assets/"
+    "build:js": "echo 'compiling javascript...' && browserify -x react -x paper -x lodash ./src/app/app.js > ./dist/app.min.js && echo 'Finished compiling.'",
+    "lib": "echo 'compiling libraries...' && browserify -r react -r react-draggable -r paper -r lodash -r signals -r ./src/extendLibs.js -o ./dist/lib.min.js && echo 'Finished lib compile'",
+    "build:css": "echo 'compiling stylesheets...' && sass ./src/styles/main.scss:./dist/styles/main.css",
+    "copy-statics": "echo 'Copying statics...' && cp -R ./src/app/assets/ ./dist/assets/"
   },
   "repository": {
     "type": "git",
