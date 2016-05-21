@@ -1,5 +1,6 @@
 log/
 node_modules/
 .sass-cache
-/build/
-/build/*
+.sass-cache/*
+build
+build/*
