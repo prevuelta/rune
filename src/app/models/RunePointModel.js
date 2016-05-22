@@ -69,8 +69,24 @@ class RunePoint extends BasePoint {
         this.arcOut = this.hasArcOut ? null : new RuneArc();
     }
 
-    addHandles () {
-        this.handles = [new BasePoint(), new BasePoint()];
+    set handleIn (coords) {
+        this._handleIn = this.addHandle(coords);
+    }
+
+    set handleOut (coords) {
+        this._handleOut = this.addHandle(coords);
+    }
+
+    get handleIn () {
+        return this._handleIn;
+    }
+
+    get handleOut () {
+        return this._handleOut;
+    }
+
+    addHandle (coords) {
+        return new BasePoint(coords[0], coords[1]);
     }
 
     render (res) {

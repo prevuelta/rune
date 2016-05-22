@@ -12,6 +12,8 @@ class RuneArcView {
         this.renderedPoint = renderedPoint;
         this.res = res;
         this.paths = [];
+        this.iLayer = iLayer;
+        this.rLayer = rLayer;
 
         if (point.hasArcIn) {
             this.createArc(point.arcIn, true);
@@ -39,6 +41,7 @@ class RuneArcView {
         rotation.angle += angle;
         midRotation.angle += angle / 2;
 
+        this.rLayer.activate();
         if (isIn) {
             this.paths.push(new paper.Path.Arc({
                 from: center.add(rotation),
@@ -55,6 +58,7 @@ class RuneArcView {
             }));
         }
 
+        this.iLayer.activate();
         RuneNodeFactory(this.point, this.renderedPoint);
         RuneNodeFactory(arc.center, center);
         RuneNodeFactory(null, center.add(rotation));

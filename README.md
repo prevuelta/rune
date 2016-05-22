@@ -1,4 +1,4 @@
-# Rune
+# Rüne
 ## WORK IN PROGRESS
 
 Web based drawing tool for people who like to think inside the box.

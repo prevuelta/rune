@@ -19,6 +19,9 @@ module.exports = {
             strokeWidth: 4,
             strokeColor: 'black',
             fillColor: constants.BLUE
+        },
+        handle: {
+            strokeColor: constants.RED
         }
     },
     grid: {
@@ -37,5 +40,4 @@ module.exports = {
             strokeColor: constants.RED
         }
     }
-
 }

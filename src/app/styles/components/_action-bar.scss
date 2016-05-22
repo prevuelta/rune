@@ -2,7 +2,7 @@
 	display: inline-block;
     position: fixed;
     top: 0;
-    left: $u2;
+    left: $u4;
     z-index: 999;
 	ul {
 		padding: 0 0 0 0;
@@ -10,12 +10,14 @@
 		li {
 			display: inline-block;
 			// padding-right: $u;
-			border-right: 1px solid black;
+			margin-right: $hu;
 			a {
-				font-size: 14px;
+				font-size: 13px;
 				cursor: pointer;
 				padding: $hu $u;
-				background: $cream;
+				background: black;
+				color: $cream;
+				border-radius: 0 0 $qu $qu;
 				text-decoration: none;
 				&:hover {
 					text-decoration: underline;

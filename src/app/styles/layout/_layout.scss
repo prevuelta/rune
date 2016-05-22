@@ -15,7 +15,11 @@ body {
     position: fixed;
     z-index: 9999;
     // display: flex;
-    height: $u3;
+    // height: $u3;
+    height: auto;
+    text-direction: ttb;
+    // font-size: 13px;
+    padding: $hu;
     img {
        width: $uh;
 	   margin: 0;
