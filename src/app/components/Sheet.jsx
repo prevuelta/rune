@@ -2,7 +2,7 @@
 
 let React = require('react');
 
-let Sheet = React.createClass({
+module.exports = React.createClass({
     getInitialState: function () {
         return {active: this.props.active};
     },

@@ -12,9 +12,23 @@ let X = require('../../icons/X.jsx');
 
 
 let Point = React.createClass({
+    selectPoint: (point) => {
+        debugger;
+        Events.selectPoint.dispatch(point);
+    },
+    deletePoint: (point) => {
+        Events.deletePoint.dispatch(point);
+    },
     render: function () {
         return (
-            <Sheet name="Point">
+            <Sheet
+                name="Point"
+                active={this.props.point.isSelected}
+                onClick={this.selectPoint.bind(this, this.props.point)}>
+                <Button
+                    onClick={this.deletePoint.bind(this, this.props.point)}>
+                    <X />
+                </Button>
             </Sheet>
         );
     }
@@ -52,8 +66,8 @@ let Path = React.createClass({
                 </span>
                 <Button
                     handler={this.addSubPath.bind(this, this.state.path)}>
-                    <svg viewBox="0,0,200,200" width="200" height="200" xmlns="http://www.w3.org/2000/svg"><path d="M0 120V80h80V0h40v80h80v40h-80v80H80v-80" fill-opacity=".6" stroke-miterlimit="10" font-family="sans-serif" font-size="12"/></svg>
-                 </Button>
+                    <Cross />
+                </Button>
                 <Switch onToggle={this.changeHandler} symbol="&">
                    <svg viewBox="0 0 200 200" width="200" height="200" xmlns="http://www.w3.org/2000/svg"><path d="M120 0h80v200H0V0h80v40H40v120h120V40h-40" fill-opacity=".6" stroke-miterlimit="10" font-family="sans-serif" font-size="12"/></svg>
                 </Switch>

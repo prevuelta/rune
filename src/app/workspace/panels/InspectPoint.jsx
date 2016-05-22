@@ -1,6 +1,9 @@
 'use strict';
 
 let React = require('react');
+let Events = require('../../global/Events');
+
+// Components
 let Sheet = require('../../components/Sheet.jsx');
 let Switch = require('../../components/Switch.jsx');
 let Button = require('../../components/Button.jsx');
