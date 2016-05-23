@@ -8,7 +8,8 @@ class BasePoint {
 }
 
 class RuneArc {
-    constructor (obj) {
+    constructor (path, obj) {
+
         if (typeof obj === 'object') {
             this.size = obj.size || 2;
             this.center = new RunePoint(obj.center) || new RunePoint(0,0);
@@ -25,7 +26,15 @@ class RuneArc {
 
 class RunePoint extends BasePoint {
 
-    constructor(x, y) {
+    constructor(path, x, y) {
+
+        Object.defineProperty(this, 'path', {
+            value: path,
+            writable: true,
+            configurable: true
+        });
+
+        this.path = path;
         if (typeof x === 'object') {
             super(x.x, x.y);;
             this.transforms = x.transforms || [];

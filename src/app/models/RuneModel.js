@@ -5,7 +5,8 @@ let Events = require('../global/Events');
 
 class RunePathModel {
     constructor (data) {
-        this.points = data && data.points.map(p => new RunePoint(p)) || [];
+        let _this = this;
+        this.points = data && data.points.map(p => new RunePoint(p, this)) || [];
         this.isClosed = data && data.isClosed || false;
         this.isActive = data && data.isActive || false;
         this.children = data && data.children.map(c => new RunePathModel(c)) || [];
@@ -17,6 +18,10 @@ class RunePathModel {
 
     get hasChildren () {
         return !!this.children.length;
+    }
+
+    get hasPoints () {
+        return !!this.points.length;
     }
 
 }
@@ -66,7 +71,7 @@ class RuneModel {
         }
     }
 
-    selectHandler (point) {
+    selectHandler (point, dontSelectPath) {
         if (this.selectedPoint === point) {
             this.deselect();
             return;
@@ -74,6 +79,10 @@ class RuneModel {
         if (this.selectedPoint) {
             this.selectedPoint.setSelected(false);
         }
+        if (!dontSelectPath) {
+            this.selectPath(point.path, true);
+        }
+        debugger;
         point.setSelected(true);
         this.selectedPoint = point;
 
@@ -110,10 +119,13 @@ class RuneModel {
         }
     }
 
-    selectPath (path) {
+    selectPath (path, dontSelectPoint) {
         path.isActive = true;
         this.activePath.isActive = false;
         this.activePath = path;
+        if (path.hasPoints && !dontSelectPoint) {
+            this.selectHandler(path.points[0], true);
+        }
     }
 
     addPath () {
@@ -134,7 +146,7 @@ class RuneModel {
 
     addPoint (gridPoint) {
 
-        let point = new RunePoint(gridPoint.x, gridPoint.y);
+        let point = new RunePoint(this.activePath, gridPoint.x, gridPoint.y);
         // point.gridPoint = gridPoint;
 
         let selectedIndex = this.activePath.points.indexOf(this.selectedPoint);
@@ -165,43 +177,13 @@ class RuneModel {
         this.currentPointIndex = arr[1];
     }
 
-    deleteSelected () {
-        // FIX THIS
-        // var rune = this.activeRune;
-        // this.activePath = this.activePath.filter(function(value, idx) {
-            // return !~rune.selectedPoints.indexOf(idx);
-        // });
-    }
-
     deletePoint (p) {
-
         this.activePath.points.forEach((point, i) => {
             if (point === p) {
                 this.activePath.points.splice(i, 1);
             }
         });
     }
-
-    // set selectedPoints(selectedPoints) {
-    //     this.data.selectedPoints = selectedPoints;
-    // }
-
-    // get selectedPoints() {
-    //     return this.data.selectedPoints;
-    // }
-
-
-    // get activePathIndex() {
-    //     return this.data.activePathIndex;
-    // }
-
-    // get currentPointIndex() {
-    //     return this.data.currentPointIndex;
-    // }
-
-    // set currentPointIndex(currentPointIndex) {
-    //     this.data.currentPointIndex = currentPointIndex;
-    // }
 }
 
 module.exports = RuneModel;

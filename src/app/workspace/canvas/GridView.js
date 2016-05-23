@@ -51,7 +51,7 @@ class GridView {
         col = row = -(this.options.units/2) + 0.5;
 
         for (let i = 1; i <= this.options.units * this.options.units; i++) {
-            this.points.push(new RunePoint(row, col));
+            this.points.push(new RunePoint(null, row, col));
             if (i && i % this.options.units == 0) {
                 row++;
                 col = -(this.options.units/2) + 0.5;

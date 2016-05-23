@@ -45,7 +45,7 @@ class ModelController {
     }
 
     addRune () {
-        this.tablet.runes.push(new RuneModel(null));
+        this.tablet.runes.push(new RuneModel());
     }
 
     addPoint (gridRef) {
@@ -62,7 +62,6 @@ class ModelController {
     }
 
     deletePath (p) {
-        debugger;
         this.activeRune.deletePath(p);
         Events.redrawCanvas.dispatch();
         Events.refreshPanels.dispatch();

@@ -9,8 +9,8 @@ let PanelWrapper = require('./PanelWrapper.jsx');
 let TabletList = require('./TabletList.jsx');
 
 let allPanels = [
-    require('./InspectPoint.jsx'),
     require('./InspectPath.jsx'),
+    require('./InspectPoint.jsx'),
     require('./GridManager.jsx')
 ];
 
