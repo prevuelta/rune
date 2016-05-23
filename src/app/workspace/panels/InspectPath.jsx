@@ -7,28 +7,33 @@ let Events = require('../../global/Events');
 let Switch = require('../../components/Switch.jsx');
 let Sheet = require('../../components/Sheet.jsx');
 let Button = require('../../components/Button.jsx');
+let ButtonGroup = require('../../components/ButtonGroup.jsx');
 let Cross = require('../../icons/Cross.jsx');
 let X = require('../../icons/X.jsx');
 
 
 let Point = React.createClass({
     selectPoint: (point) => {
-        debugger;
         Events.selectPoint.dispatch(point);
     },
     deletePoint: (point) => {
         Events.deletePoint.dispatch(point);
     },
+    // componentWillReceiveProps : function (nextProps) {
+    //     this.setState({point: nextProps.point});
+    // },
     render: function () {
         return (
             <Sheet
-                name="Point"
+                name="•"
                 active={this.props.point.isSelected}
                 onClick={this.selectPoint.bind(this, this.props.point)}>
-                <Button
-                    onClick={this.deletePoint.bind(this, this.props.point)}>
-                    <X />
-                </Button>
+                <ButtonGroup>
+                    <Button
+                        onClick={this.deletePoint.bind(this, this.props.point)}>
+                        <X/>
+                    </Button>
+                </ButtonGroup>
             </Sheet>
         );
     }
@@ -52,25 +57,34 @@ let Path = React.createClass({
             Events.selectPath.dispatch(path);
         }
     },
+    removePath: function (path) {
+        Events.deletePath.dispatch(path);
+    },
     addSubPath: (path) => {
         Events.addSubPath.dispatch(path);
     },
     render: function () {
-        let classNames = this.state.path.isActive ? 'sheet active' : 'sheet';
         return (
-            <div className={classNames}>
-                <span onClick={this.selectPath.bind(this, this.state.path)}>
-                    <strong>
-                        Path
-                    </strong>
-                </span>
-                <Button
-                    handler={this.addSubPath.bind(this, this.state.path)}>
-                    <Cross />
-                </Button>
-                <Switch onToggle={this.changeHandler} symbol="&">
-                   <svg viewBox="0 0 200 200" width="200" height="200" xmlns="http://www.w3.org/2000/svg"><path d="M120 0h80v200H0V0h80v40H40v120h120V40h-40" fill-opacity=".6" stroke-miterlimit="10" font-family="sans-serif" font-size="12"/></svg>
-                </Switch>
+            <div className="path">
+                <Sheet
+                    name="––––"
+                    active={this.state.path.isActive}
+                    onClick={this.selectPath.bind(this, this.state.path)}>
+                    <ButtonGroup>
+                        <Button
+                            handler={this.addSubPath.bind(this, this.state.path)}>
+                            <Cross />
+                        </Button>
+                        <Switch onToggle={this.changeHandler} symbol="&">
+                           <svg viewBox="0 0 200 200" width="200" height="200" xmlns="http://www.w3.org/2000/svg"><path d="M120 0h80v200H0V0h80v40H40v120h120V40h-40" fill-opacity=".6" stroke-miterlimit="10" font-family="sans-serif" font-size="12"/></svg>
+                        </Switch>
+                        <Button
+                            handler={this.removePath.bind(this, this.state.path)}>
+                            <X/>
+                        </Button>
+                    </ButtonGroup>
+                </Sheet>
+                { this.state.path.points.map((p) => <Point point={p}></Point> ) }
                 {
                     this.state.path.hasChildren ?
                         this.state.path.children.map((p) => {
@@ -78,7 +92,6 @@ let Path = React.createClass({
                         })
                     : null
                 }
-                { this.state.path.points.map((p) => <Point point={p}></Point> ) }
             </div>
         );
     }
@@ -103,7 +116,8 @@ module.exports = {
             let _this = this;
             return (
                 <div>
-                    <Sheet name="Paths">
+                    <Sheet
+                        name="Paths">
                         <Button
                             handler={this.addPath.bind(this)}>
                             <Cross />

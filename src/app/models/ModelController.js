@@ -21,6 +21,7 @@ class ModelController {
         Events.addSubPath.add(this.addSubPath.bind(this));
         Events.deselectAll.add(this.deselectAll.bind(this));
         Events.addTablet.add(this.newTablet.bind(this));
+        Events.deletePath.add(this.deletePath.bind(this));
 
         Events.gridUpdate.add(this.updateGrid.bind(this));
 
@@ -56,6 +57,13 @@ class ModelController {
 
     deletePoint (p) {
         this.activeRune.deletePoint(p);
+        Events.redrawCanvas.dispatch();
+        Events.refreshPanels.dispatch();
+    }
+
+    deletePath (p) {
+        debugger;
+        this.activeRune.deletePath(p);
         Events.redrawCanvas.dispatch();
         Events.refreshPanels.dispatch();
     }

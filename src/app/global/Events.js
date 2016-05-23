@@ -8,6 +8,7 @@ let events = [
     'clearPoints',
     'deletePoint',
     'deleteSelected',
+    'deletePath',
     'deselectAll',
     'display',
     'draw',

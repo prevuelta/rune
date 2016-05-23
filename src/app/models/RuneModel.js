@@ -49,6 +49,23 @@ class RuneModel {
         return this;
     }
 
+    deletePath (path) {
+        let _this = this;
+
+        del(path, this.paths);
+
+        function del (path, paths) {
+            paths.forEach((p, i) => {
+                if (p.children) {
+                    del(path, p.children);
+                }
+                if (p === path) {
+                    paths.splice(i, 1);
+                }
+            });
+        }
+    }
+
     selectHandler (point) {
         if (this.selectedPoint === point) {
             this.deselect();
@@ -101,6 +118,7 @@ class RuneModel {
 
     addPath () {
         let path = new RunePathModel();
+        this.activePath.isActive = false;
         path.isActive = true;
         this.paths.push(path);
         this.activePath = path;
