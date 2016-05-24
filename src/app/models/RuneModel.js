@@ -6,7 +6,7 @@ let Events = require('../global/Events');
 class RunePathModel {
     constructor (data) {
         let _this = this;
-        this.points = data && data.points.map(p => new RunePoint(p, this)) || [];
+        this.points = data && data.points.map(p => new RunePoint(this, p)) || [];
         this.isClosed = data && data.isClosed || false;
         this.isActive = data && data.isActive || false;
         this.children = data && data.children.map(c => new RunePathModel(c)) || [];
@@ -82,7 +82,6 @@ class RuneModel {
         if (!dontSelectPath) {
             this.selectPath(point.path, true);
         }
-        debugger;
         point.setSelected(true);
         this.selectedPoint = point;
 
@@ -120,11 +119,18 @@ class RuneModel {
     }
 
     selectPath (path, dontSelectPoint) {
-        path.isActive = true;
-        this.activePath.isActive = false;
-        this.activePath = path;
-        if (path.hasPoints && !dontSelectPoint) {
-            this.selectHandler(path.points[0], true);
+        debugger;
+        if (path !== this.activePath) {
+            path.isActive = true;
+            if (this.activePath) {
+                this.activePath.isActive = false;
+            }
+            this.activePath = path;
+            if (path.hasPoints && !dontSelectPoint) {
+                this.selectHandler(path.points[0], true);
+            } else if (!path.hasPoints) {
+                this.selectedPoint = null;
+            }
         }
     }
 
@@ -134,21 +140,19 @@ class RuneModel {
         path.isActive = true;
         this.paths.push(path);
         this.activePath = path;
+        this.selectedPoint = null;
     }
 
     addSubPath (path) {
         let subPath = new RunePathModel();
-        subPath.isActive = true;
         path.addChild(subPath);
-        this.activePath = subPath;
+        this.selectPath(subPath);
     }
-
 
     addPoint (gridPoint) {
 
         let point = new RunePoint(this.activePath, gridPoint.x, gridPoint.y);
         // point.gridPoint = gridPoint;
-
         let selectedIndex = this.activePath.points.indexOf(this.selectedPoint);
 
         if (selectedIndex > -1) {

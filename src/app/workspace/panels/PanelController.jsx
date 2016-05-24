@@ -40,7 +40,7 @@ class PanelController {
                         {
                             this.state.panels.map((panel) => {
                                 let Component = panel.panel;
-                                return <PanelWrapper options={{title : panel.title, collapsed: panel.collapsed }} >
+                                return <PanelWrapper key={panel.title} options={{title : panel.title, collapsed: panel.collapsed }} >
                                      <Component data={_this.state.data} canvas={_this.state.canvas} />
                                  </PanelWrapper>;
                             })

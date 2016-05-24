@@ -116,17 +116,14 @@ ActionBar.prototype.addEvents = function(container) {
 };
 
 ActionBar.prototype.render = function() {
-	console.log("this is working");
-
 	var actions = this.actions;
-
 	var ActionBarComponent = React.createClass({
 	    render: function() {
 	        return (
 				<ul>
 					{
 						this.props.actions.map(function(action, i) {
-							return <li><a className="action" data-action={ action.id }>{ action.title }</a></li>;
+							return <li key={action.id}><a className="action" data-action={ action.id }>{ action.title }</a></li>;
 						})
 					}
 				</ul>
