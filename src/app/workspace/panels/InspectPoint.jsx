@@ -7,6 +7,7 @@ let Events = require('../../global/Events');
 let Sheet = require('../../components/Sheet.jsx');
 let Switch = require('../../components/Switch.jsx');
 let Button = require('../../components/Button.jsx');
+let ButtonGroup = require('../../components/ButtonGroup.jsx');
 
 let Handle = React.createClass({
     getInitialState: function () {
@@ -145,43 +146,49 @@ module.exports = {
                 let y = this.state.point.y;
                 return (
                     <div>
-                        <small>
-                            <span>x: {x.toFixed(2)}, y:{y.toFixed(2)}</span>
-                        </small>
-                        <Switch
-                            onToggle={this.setIsCurve.bind(this, this.state.point)}
-                            toggle={this.state.point.isCurve}
-                            symbol="∩">
-                        </Switch>
-                        <Switch
-                            onToggle={this.toggleArcIn}
-                            toggle={this.state.point.hasArcIn}
-                            symbol="╭">
-                        </Switch>
-                        <Switch
-                            onToggle={this.toggleArcOut}
-                            toggle={this.state.point.hasArcOut}
-                            symbol="╮">
-                        </Switch>
-                        <div>
-                            {
-                                this.state.point.isCurve ?
-                                    <div>
-                                        <Handle handle={this.state.point.handle1} />
-                                        <Handle handle={this.state.point.handle2} />
-                                    </div>
-                                : null
-                            }
-                            {
-                                this.state.point.hasArcIn ?
-                                    <Arc arc={this.state.point.arcIn}></Arc>
-                                : null
-                            }
-                            {
-                                this.state.point.hasArcOut ?
-                                    <Arc arc={this.state.point.arcOut}></Arc>
-                                : null
-                            }
+                        <div className="pane">
+                            <small>
+                                <span>x: {x.toFixed(2)}, y:{y.toFixed(2)}</span>
+                            </small>
+                            <ButtonGroup>
+                                <Switch
+                                    onToggle={this.setIsCurve.bind(this, this.state.point)}
+                                    toggle={this.state.point.isCurve}
+                                    symbol="∩">
+                                </Switch>
+                                <Switch
+                                    onToggle={this.toggleArcIn}
+                                    toggle={this.state.point.hasArcIn}
+                                    symbol="╭">
+                                </Switch>
+                                <Switch
+                                    onToggle={this.toggleArcOut}
+                                    toggle={this.state.point.hasArcOut}
+                                    symbol="╮">
+                                </Switch>
+                            </ButtonGroup>
+                        </div>
+                        <div className="pane">
+                            <div>
+                                {
+                                    this.state.point.isCurve ?
+                                        <div>
+                                            <Handle handle={this.state.point.handle1} />
+                                            <Handle handle={this.state.point.handle2} />
+                                        </div>
+                                    : null
+                                }
+                                {
+                                    this.state.point.hasArcIn ?
+                                        <Arc arc={this.state.point.arcIn}></Arc>
+                                    : null
+                                }
+                                {
+                                    this.state.point.hasArcOut ?
+                                        <Arc arc={this.state.point.arcOut}></Arc>
+                                    : null
+                                }
+                            </div>
                         </div>
                     </div>
                 );

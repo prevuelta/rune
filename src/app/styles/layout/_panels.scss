@@ -10,7 +10,6 @@
 		z-index: 9999;
 	}
 	.panel-content {
-		// padding: $u;
 		font-size: 14px;
 	}
 	.handle {
@@ -30,4 +29,9 @@
 	.toggle {
 		float: right;
 	}
+    .pane {
+        padding: $u;
+        background: $cream-dark;
+        color: white;
+    }
 }

@@ -119,7 +119,6 @@ class RuneModel {
     }
 
     selectPath (path, dontSelectPoint) {
-        debugger;
         if (path !== this.activePath) {
             path.isActive = true;
             if (this.activePath) {

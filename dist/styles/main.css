@@ -113,6 +113,10 @@ body {
       background: red; }
   .panel .toggle {
     float: right; }
+  .panel .pane {
+    padding: 12px;
+    background: #3b3935;
+    color: white; }
 
 button {
   padding: 6px 12px;
