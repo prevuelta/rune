@@ -8,17 +8,17 @@ class BasePoint {
 }
 
 class RuneArc {
-    constructor (path, obj) {
+    constructor (obj) {
 
         if (typeof obj === 'object') {
             this.size = obj.size || 2;
-            this.center = new RunePoint(obj.center) || new RunePoint(0,0);
-            this.endPoint = new RunePoint(obj.endPoint) || new RunePoint(0, 0);
+            this.center = new RunePoint(null, obj.center) || new RunePoint(null, 0,0);
+            this.endPoint = new RunePoint(null, obj.endPoint) || new RunePoint(null, 0, 0);
             this.direction = obj.direction || false;
         } else {
             this.size = 2;
-            this.center = new RunePoint(0,0);
-            this.endPoint = new RunePoint(0,0);
+            this.center = new RunePoint(null, 0,0);
+            this.endPoint = new RunePoint(null, 0,0);
             this.direction = false;
         }
     }
@@ -28,13 +28,15 @@ class RunePoint extends BasePoint {
 
     constructor(path, x, y) {
 
-        Object.defineProperty(this, 'path', {
-            value: path,
-            writable: true,
-            configurable: true
-        });
+        if (path) {
+            Object.defineProperty(this, 'path', {
+                value: path,
+                writable: true,
+                configurable: true
+            });
+            this.path = path;
+        }
 
-        this.path = path;
         if (typeof x === 'object') {
             super(x.x, x.y);;
             this.transforms = x.transforms || [];

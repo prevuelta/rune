@@ -20,7 +20,6 @@ function RunePointViewFactory (point, res, rLayer, iLayer) {
     let handleIn = point.handleIn ? new paper.Point(point.handleIn[0], point.handleIn[1]) : null;
     let handleOut = point.handleOut ? new paper.Point(point.handleOut[0], point.handleOut[1]) : null;
 
-
     iLayer.activate();
 
     point.node = RuneNodeFactory(point, paperPoint);

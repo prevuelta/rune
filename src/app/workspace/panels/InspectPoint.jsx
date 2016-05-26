@@ -50,8 +50,8 @@ let Arc = React.createClass({
             if (value.indexOf(',') > -1) {
                 value = value.split(',');
             }
-            arc.center.x = value[0];
-            arc.center.y = value[1];
+            arc.center.x = +value[0];
+            arc.center.y = +value[1];
         } else if (prop === 'size') {
             arc.size = value;
         }
@@ -148,10 +148,12 @@ module.exports = {
         },
         toggleArcIn: function () {
             this.state.point.setArcIn();
+            this.setState({point: this.state.point});
             Events.redrawCanvas.dispatch();
         },
         toggleArcOut: function () {
             this.state.point.setArcOut();
+            this.setState({point: this.state.point});
             Events.redrawCanvas.dispatch();
         },
         updateHandleIn: function (val) {

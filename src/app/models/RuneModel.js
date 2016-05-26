@@ -82,7 +82,6 @@ class RuneModel {
         if (!dontSelectPath && point.path) {
             this.selectPath(point.path, true);
         }
-        debugger;
         point.setSelected(true);
         this.selectedPoint = point;
 
@@ -182,6 +181,10 @@ class RuneModel {
     }
 
     deletePoint (p) {
+
+        if (this.selectedPoint = p) {
+            this.selectedPoint = null;
+        }
         this.activePath.points.forEach((point, i) => {
             if (point === p) {
                 this.activePath.points.splice(i, 1);
