@@ -79,9 +79,10 @@ class RuneModel {
         if (this.selectedPoint) {
             this.selectedPoint.setSelected(false);
         }
-        if (!dontSelectPath) {
+        if (!dontSelectPath && point.path) {
             this.selectPath(point.path, true);
         }
+        debugger;
         point.setSelected(true);
         this.selectedPoint = point;
 

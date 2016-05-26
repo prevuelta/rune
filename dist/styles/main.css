@@ -132,10 +132,12 @@ label {
 
 input {
   padding: 6px;
-  border-radius: 3px;
   margin: 6px 0;
-  border: 1px solid #e4e4e4;
-  font-family: "Inconsolata", sans-serif; }
+  border: 1px solid black;
+  font-family: "Inconsolata", sans-serif;
+  color: white;
+  display: inline-block;
+  background: #42494a; }
 
 #rune-canvas {
   height: 100%;
@@ -184,9 +186,9 @@ input {
     width: 12px;
     height: 12px;
     fill: white; }
-  .switch:hover,
-  .button:hover {
-    border-color: #ece5d4; }
+  .switch:hover svg,
+  .button:hover svg {
+    fill: #e13d1c; }
   .switch.on svg,
   .button.on svg {
     fill: #14bb5b; }

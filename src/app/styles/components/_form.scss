@@ -15,8 +15,10 @@ label {
 
 input {
 	padding: $hu;
-    border-radius: $qu;
 	margin: $hu 0;
-	border: 1px solid #e4e4e4;
+	border: 1px solid black;
     font-family: $primary-font;
+    color: white;
+    display: inline-block;
+    background: $sky-dark;
 }

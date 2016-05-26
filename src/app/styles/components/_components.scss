@@ -3,7 +3,6 @@
 	width: $uh;
 	height: $uh;
     margin-top: $hu;
-	// border: 1px solid red;
 	cursor: pointer;
 	border-radius: 2px;
 	text-align: center;
@@ -18,7 +17,9 @@
         fill: white;
     }
     &:hover {
-        border-color: $cream;
+        svg {
+            fill: $rust;
+        }
     }
     &.on {
         svg {

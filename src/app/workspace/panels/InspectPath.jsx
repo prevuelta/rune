@@ -30,7 +30,7 @@ let Point = React.createClass({
                 onClick={this.selectPoint.bind(this, this.props.point)}>
                 <ButtonGroup>
                     <Button
-                        onClick={this.deletePoint.bind(this, this.props.point)}>
+                        handler={this.deletePoint.bind(this, this.props.point)}>
                         <X/>
                     </Button>
                 </ButtonGroup>

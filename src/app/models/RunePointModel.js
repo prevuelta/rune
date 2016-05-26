@@ -39,8 +39,8 @@ class RunePoint extends BasePoint {
             super(x.x, x.y);;
             this.transforms = x.transforms || [];
             this.transform = x.transform || [0,0];
-            this.handle1 = x.handle1 || null;
-            this.handle2 = x.handle2 || null;
+            this.handleIn = x.handleIn || null;
+            this.handleOut = x.handleOut || null;
             this.isCurve = x.isCurve || false;
             this.isSelected = x.isSelected || false;
             this.arcIn = x.arcIn && new RuneArc(x.arcIn) || null;
@@ -49,13 +49,17 @@ class RunePoint extends BasePoint {
             super(x, y);
             this.transforms = [];
             this.transform = [0,0];
-            this.handle1 = null;
-            this.handle2 = null;
+            this.handleIn = null;
+            this.handleOut = null;
             this.isCurve = false;
             this.isSelected = false
             this.arcIn = null;
             this.arcOut = null;
         }
+    }
+
+    toggleCurve (isCurve) {
+        this.isCurve = !this.isCurve;
     }
 
     get hasArcIn () {
@@ -91,7 +95,7 @@ class RunePoint extends BasePoint {
     // }
 
     // get handleOut () {
-    //     return this._handleOut;
+    //     return this._handleOut;100,10
     // }
 
     // addHandle (coords) {

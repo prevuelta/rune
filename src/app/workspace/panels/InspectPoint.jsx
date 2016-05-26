@@ -13,19 +13,26 @@ let Handle = React.createClass({
     getInitialState: function () {
         return {handle: this.props.handle};
     },
-    changeHandle: function (handle, event) {
+    componentWillReceiveProps: function(nextProps) {
+        this.setState({
+            handle: nextProps.handle
+        });
+    },
+    changeHandle: function (event) {
         let coords = event.target.value.split(',');
-        this.state.handle = coords.length === 2 ? coords.map(c => +c) : null;
-        this.setState({handle: this.state.handle});
-        Events.redrawCanvas.dispatch();
+        if (coords.length === 2) {
+            this.props.onUpdate(coords.map(c => +c));
+        }
+        // this.setState({handle: this.state.handle});
+        // Events.redrawCanvas.dispatch();
     },
     render: function () {
         return (
             <div>
                 <input
                     type="text"
-                    defaultValue={this.state.handle}
-                    onChange={this.changeHandle.bind(this, this.state.handle)} />
+                    defaultValue={this.state.handle ? this.state.handle.join(',') : null}
+                    onChange={this.changeHandle} />
             </div>
         );
     }
@@ -130,7 +137,7 @@ module.exports = {
             return {point: this.props.data.activeRune.selectedPoint};
         },
         setIsCurve: function (point) {
-            point.isCurve = !point.isCurve;
+            point.toggleCurve();
             this.setState({point: point});
             Events.redrawCanvas.dispatch();
         },
@@ -138,6 +145,24 @@ module.exports = {
             this.setState({
                 point: nextProps.data.activeRune.selectedPoint
             });
+        },
+        toggleArcIn: function () {
+            this.state.point.setArcIn();
+            Events.redrawCanvas.dispatch();
+        },
+        toggleArcOut: function () {
+            this.state.point.setArcOut();
+            Events.redrawCanvas.dispatch();
+        },
+        updateHandleIn: function (val) {
+            this.state.point.handleIn = val;
+            this.setState({point: this.state.point});
+            Events.redrawCanvas.dispatch();
+        },
+        updateHandleOut: function (val) {
+            this.state.point.handleOut = val;
+            this.setState({point: this.state.point});
+            Events.redrawCanvas.dispatch();
         },
         render: function() {
             if (this.state.point) {
@@ -173,8 +198,8 @@ module.exports = {
                                 {
                                     this.state.point.isCurve ?
                                         <div>
-                                            <Handle handle={this.state.point.handle1} />
-                                            <Handle handle={this.state.point.handle2} />
+                                            <Handle handle={this.state.point.handleIn} onUpdate={this.updateHandleIn}/>
+                                            <Handle handle={this.state.point.handleOut} onUpdate={this.updateHandleOut} />
                                         </div>
                                     : null
                                 }
