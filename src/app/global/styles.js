@@ -29,6 +29,9 @@ module.exports = {
             fillColor: new paper.Color(constants.BLUE, 0.2)
         }
     },
+    overlay: {
+        strokeColor: constants.BLUE
+    },
     path: {
         filled: {
             fillColor: new paper.Color(0,0,0,0.6),

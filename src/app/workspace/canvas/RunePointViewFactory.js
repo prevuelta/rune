@@ -4,23 +4,23 @@ let paper = require('paper');
 let RuneNodeFactory = require('./RuneNodeFactory');
 let styles = require('../../global/styles');
 
-function RunePointViewFactory (point, res, rLayer, iLayer) {
+function RunePointViewFactory (point, res, layers) {
 
     let paperPoint = new paper.Point(
         point.render(res)
     );
 
-    if (point.transform) {
-        paperPoint = paperPoint.add(new paper.Point(
-            point.transform[0] * res.x,
-            point.transform[1] * res.y
-        ));
-    }
+    // if (point.transform) {
+    //     paperPoint = paperPoint.add(new paper.Point(
+    //         point.transform[0] * res.x,
+    //         point.transform[1] * res.y
+    //     ));
+    // }
 
     let handleIn = point.handleIn ? new paper.Point(point.handleIn[0], point.handleIn[1]) : null;
     let handleOut = point.handleOut ? new paper.Point(point.handleOut[0], point.handleOut[1]) : null;
 
-    iLayer.activate();
+    layers.interactive.activate();
 
     point.node = RuneNodeFactory(point, paperPoint);
 

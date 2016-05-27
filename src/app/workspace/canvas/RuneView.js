@@ -3,21 +3,20 @@
 let RunePathView = require('./RunePathView');
 
 class RuneView {
-    constructor (runeModel, grid, interactiveLayer, renderLayer) {
+    constructor (runeModel, grid, layers) {
 
         this.data = runeModel;
         this.grid = grid;
-        this.iLayer = interactiveLayer;
-        this.rLayer = renderLayer;
+        this.layers = layers;
     }
-
     draw () {
 
-        this.iLayer.removeChildren();
-        this.rLayer.removeChildren();
+        this.layers.interactive.removeChildren();
+        this.layers.render.removeChildren();
+        this.layers.overlay.removeChildren();
 
         this.data.paths.forEach((path) => {
-            new RunePathView(path, this.grid, this.iLayer, this.rLayer);
+            new RunePathView(path, this.grid, this.layers);
         });
     }
 

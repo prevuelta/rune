@@ -8,6 +8,7 @@ let Sheet = require('../../components/Sheet.jsx');
 let Switch = require('../../components/Switch.jsx');
 let Button = require('../../components/Button.jsx');
 let ButtonGroup = require('../../components/ButtonGroup.jsx');
+let XYInput = require('../../components/XYInput.jsx');
 
 let Handle = React.createClass({
     getInitialState: function () {
@@ -58,6 +59,12 @@ let Arc = React.createClass({
         this.setState({arc: arc});
         Events.redrawCanvas.dispatch();
     },
+    updateCenter: function (val) {
+        console.log("Arc center", val);
+        this.state.arc.center = val;
+        this.setState({arc: this.state.arc});
+        Events.redrawCanvas.dispatch();
+    },
     render: function () {
         let arc = this.state.arc;
         let directionSymbol = this.state.arc.direction ? "⤿" : "⤾";
@@ -70,6 +77,10 @@ let Arc = React.createClass({
                         onChange={this.updateArc.bind(this, 'size', arc)}
                         />
                     Center
+                    <XYInput
+                        change={this.updateCenter}
+                        value={this.state.arc.center}
+                        label="Center" />
                     <input
                         type="text"
                         defaultValue={arc.center.x + ',' + arc.center.y}

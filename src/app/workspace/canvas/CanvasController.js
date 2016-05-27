@@ -22,15 +22,14 @@ class CanvasController {
         this.layers = {
             grid: new paper.Layer(),
             render: new paper.Layer(),
-            interactive: new paper.Layer(),
-            overlay: new paper.Layer()
+            overlay: new paper.Layer(),
+            interactive: new paper.Layer()
         };
 
         this.runeView = new RuneView(
             this.data.activeRune,
             this.data.tablet.gridOptions,
-            this.layers.interactive,
-            this.layers.render
+            this.layers
         );
 
         this.setupGridView();

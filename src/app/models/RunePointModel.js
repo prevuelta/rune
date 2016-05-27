@@ -10,17 +10,17 @@ class BasePoint {
 class RuneArc {
     constructor (obj) {
 
-        if (typeof obj === 'object') {
-            this.size = obj.size || 2;
-            this.center = new RunePoint(null, obj.center) || new RunePoint(null, 0,0);
-            this.endPoint = new RunePoint(null, obj.endPoint) || new RunePoint(null, 0, 0);
-            this.direction = obj.direction || false;
-        } else {
-            this.size = 2;
-            this.center = new RunePoint(null, 0,0);
-            this.endPoint = new RunePoint(null, 0,0);
-            this.direction = false;
-        }
+        // if (typeof obj === 'object') {
+            this.size = obj && obj.size || 2;
+            this.center = obj && new RunePoint(null, obj.center) || new RunePoint(null, 1,1);
+            this.endPoint = obj && new RunePoint(null, obj.endPoint) || new RunePoint(null, 0, 0);
+            this.direction = obj && obj.direction || false;
+        // } else {
+        //     this.size = 2;
+        //     this.center = new RunePoint(null, 1,1);
+        //     this.endPoint = new RunePoint(null, 0,0);
+        //     this.direction = false;
+        // }
     }
 }
 
@@ -38,26 +38,29 @@ class RunePoint extends BasePoint {
         }
 
         if (typeof x === 'object') {
-            super(x.x, x.y);;
-            this.transforms = x.transforms || [];
-            this.transform = x.transform || [0,0];
-            this.handleIn = x.handleIn || null;
-            this.handleOut = x.handleOut || null;
-            this.isCurve = x.isCurve || false;
-            this.isSelected = x.isSelected || false;
-            this.arcIn = x.arcIn && new RuneArc(x.arcIn) || null;
-            this.arcOut = x.arcOut && new RuneArc(x.arcOut) || null;
+            super(x.x, x.y);
         } else {
-            super(x, y);
-            this.transforms = [];
-            this.transform = [0,0];
-            this.handleIn = null;
-            this.handleOut = null;
-            this.isCurve = false;
-            this.isSelected = false
-            this.arcIn = null;
-            this.arcOut = null;
+             super(x, y);
         }
+
+        this.transforms = x.transforms || [];
+        this.transform = x.transform || [0,0];
+        this.handleIn = x.handleIn || null;
+        this.handleOut = x.handleOut || null;
+        this.isCurve = x.isCurve || false;
+        this.isSelected = x.isSelected || false;
+        this.arcIn = x.arcIn && new RuneArc(x.arcIn) || null;
+        this.arcOut = x.arcOut && new RuneArc(x.arcOut) || null;
+        // } else {
+        //     this.transforms = [];
+        //     this.transform = [0,0];
+        //     this.handleIn = null;
+        //     this.handleOut = null;
+        //     this.isCurve = false;
+        //     this.isSelected = false
+        //     this.arcIn = null;
+        //     this.arcOut = null;
+        // }
     }
 
     toggleCurve (isCurve) {
@@ -106,8 +109,8 @@ class RunePoint extends BasePoint {
 
     render (res) {
         return [
-            this.x * res.x,
-            this.y * res.y
+            (this.x * res.x) + (this.transform[0] * res.x),
+            (this.y * res.y) + (this.transform[1] * res.y)
         ];
     }
 

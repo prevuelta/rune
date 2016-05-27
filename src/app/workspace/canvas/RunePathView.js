@@ -11,11 +11,10 @@ let RuneNodeFactory = require('./RuneNodeFactory');
 
 class RunePathView {
 
-    constructor (path, grid, iLayer, rLayer) {
+    constructor (path, grid, layers) {
 
         this.grid = grid;
-        this.iLayer = iLayer;
-        this.rLayer = rLayer;
+        this.layers = layers;
 
         let style = path.isClosed ? styles.path.filled : path.isActive ? styles.path.active : styles.path.outline;
         let paperPath;
@@ -47,7 +46,7 @@ class RunePathView {
 
         path.points.forEach(p => {
             if (p.hasArc) {
-                 this.rLayer.activate();
+                 this.layers.render.activate();
                 if (segments.length > 0) {
                     paths.push(new paper.Path(segments));
                     segments = [];
@@ -55,20 +54,20 @@ class RunePathView {
                 let renderedPoint = new paper.Point(
                     p.render(_this.grid.res)
                 );
-                paths = paths.concat(new RuneArcView(p, renderedPoint, _this.grid.res, this.iLayer, this.rLayer).paths);
+                paths = paths.concat(new RuneArcView(p, renderedPoint, _this.grid.res, this.layers).paths);
             } else {
-                segments.push(RunePointViewFactory(p, this.grid.res, this.rLayer, this.iLayer));
+                segments.push(RunePointViewFactory(p, this.grid.res, this.layers));
             }
         });
 
 
         if (segments.length > 0) {
-          this.rLayer.activate();
+           this.layers.render.activate();
            paths.push(new paper.Path(segments));
         }
 
         if (paths.length > 1) {
-            this.rLayer.activate();
+            this.layers.render.activate();
             let newPath = new paper.Path();
             paths.forEach(p => newPath.join(p));
             return newPath;
@@ -82,7 +81,7 @@ class RunePathView {
     getPathSegment (path) {
         let _this = this;
         return path.points.map(function(point) {
-            return RunePointViewFactory(point, this.grid.res, this.rLayer, this.iLayer);
+            return RunePointViewFactory(point, this.grid.res, this.layers);
         })
     }
 }
