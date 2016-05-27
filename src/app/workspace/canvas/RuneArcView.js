@@ -60,9 +60,10 @@ class RuneArcView {
         this.layers.interactive.activate();
 
         RuneNodeFactory(this.point, this.renderedPoint);
-        RuneNodeFactory(arc.center, center);
 
         if (this.point.isSelected || arc.center.isSelected) {
+
+            RuneNodeFactory(arc.center, center);
 
             RuneNodeFactory(null, center.add(rotation));
 

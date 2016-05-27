@@ -20,7 +20,10 @@ class ModelController {
         Events.deletePoint.add(this.deletePoint.bind(this));
         Events.addSubPath.add(this.addSubPath.bind(this));
         Events.deselectAll.add(this.deselectAll.bind(this));
+        
         Events.addTablet.add(this.newTablet.bind(this));
+        Events.loadTablet.add(this.loadTablet.bind(this));
+
         Events.deletePath.add(this.deletePath.bind(this));
 
         Events.gridUpdate.add(this.updateGrid.bind(this));
@@ -36,6 +39,15 @@ class ModelController {
     newTablet () {
         this.save();
         this.tablet = new TabletModel();
+        Events.resetData.dispatch(this.tablet);
+        Events.redrawCanvas.dispatch();
+        Events.refreshPanels.dispatch();
+    }
+
+    loadTablet (tablet) {
+        this.save();
+        this.tablet = new TabletModel(tablet);
+        Events.resetData.dispatch(this.tablet);
         Events.redrawCanvas.dispatch();
         Events.refreshPanels.dispatch();
     }

@@ -10,7 +10,7 @@ class TabletModel {
         this.id = data && data.id || this.guid();
         this.gridOptions = new GridModel(data && data.gridOptions);
         this.renderedSVG = data && data.renderedSVG || '';
-        this.activePathIndex = data && data.activePathIndex || 0;
+        // this.activePathIndex = data && data.activePathIndex || 0;
         this.runes = data && data.runes.map(rune => new RuneModel(rune)) || [new RuneModel()];
     }
 

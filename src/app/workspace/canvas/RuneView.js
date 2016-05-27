@@ -9,6 +9,7 @@ class RuneView {
         this.grid = grid;
         this.layers = layers;
     }
+
     draw () {
 
         this.layers.interactive.removeChildren();

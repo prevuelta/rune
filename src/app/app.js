@@ -24,16 +24,10 @@ class App {
             return Util.getLocalData(ref);
         });
 
-        this.loadTablet(this.savedTablets[0]);
-
-        Events.loadTablet.add(this.loadTablet.bind(this));
-
-    }
-
-    loadTablet (data) {
-
+        let data = this.savedTablets[0]
+        ;
         this.data = new DataController(data);
-        this.canvas = new CanvasController(this.data);
+        this.canvas = new CanvasController(this.data.tablet);
 
         this.plugins = require('./plugins');
 
@@ -42,6 +36,7 @@ class App {
         let app = this;
 
         setInterval(this.save.bind(this), 20000);
+
     }
 
     save () {

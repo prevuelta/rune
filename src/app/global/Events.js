@@ -19,6 +19,7 @@ let events = [
     'redrawCanvas',
     'refreshPanels',
     'reloadPanels',
+    'resetData',
     'selectPath',
     'selectPoint',
     'superNudge',

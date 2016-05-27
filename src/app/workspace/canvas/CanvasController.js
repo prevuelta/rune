@@ -11,7 +11,7 @@ class CanvasController {
     constructor (tabletModel) {
 
     	// Canvas
-        this.data = tabletModel;
+        this.tablet = tabletModel;
         this.isPreview = false;
 
         // Setup paper
@@ -26,11 +26,7 @@ class CanvasController {
             interactive: new paper.Layer()
         };
 
-        this.runeView = new RuneView(
-            this.data.activeRune,
-            this.data.tablet.gridOptions,
-            this.layers
-        );
+        this.createRuneView();
 
         this.setupGridView();
 
@@ -46,9 +42,24 @@ class CanvasController {
         Events.redrawCanvas.add(this.redrawCanvas.bind(this));
         Events.updateGridView.add(this.setupGridView.bind(this));
         Events.display.add(this.displayMode.bind(this));
+        Events.resetData.add(this.resetData.bind(this));
 
         Events.redrawCanvas.dispatch();
 
+    }
+
+    resetData (newTablet) {
+        this.tablet = newTablet;
+        this.createRuneView();
+        this.redrawCanvas();
+    }
+
+    createRuneView () {
+        this.runeView = new RuneView(
+            this.tablet.activeRune,
+            this.tablet.gridOptions,
+            this.layers
+        );
     }
 
     displayMode() {
@@ -67,7 +78,7 @@ class CanvasController {
     }
 
 	setupGridView () {
-		this.gridView = new GridView(this.data.tablet.gridOptions, this.layers.grid);
+		this.gridView = new GridView(this.tablet.gridOptions, this.layers.grid);
         this.redrawCanvas();
 	}
 
