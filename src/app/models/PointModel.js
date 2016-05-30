@@ -1,11 +1,10 @@
 'use strict';
 
-let Arc = require('./ArcModel');
+let ArcModel = require('./ArcModel');
 
+class PointModel {
 
-class Point {
-
-    constructor(path, x, y) {
+    constructor (path, x, y) {
 
         if (path) {
             Object.defineProperty(this, 'path', {
@@ -105,4 +104,4 @@ class Point {
     }
 }
 
-module.exports = Point;
+module.exports = PointModel;

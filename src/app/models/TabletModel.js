@@ -1,3 +1,5 @@
+'use static';
+
 let RuneModel = require('./RuneModel');
 let GridModel = require('./GridModel');
 

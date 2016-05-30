@@ -92,7 +92,7 @@ class ModelController {
     }
 
     clearRune() {
-        this.activeRune.clearPaths().currentPointIndex = 0;
+        this.activeRune.clearPaths();
         Events.reloadPanels.dispatch();
         Events.redrawCanvas.dispatch();
     }
