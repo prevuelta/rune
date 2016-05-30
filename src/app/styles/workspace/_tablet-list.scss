@@ -1,0 +1,22 @@
+.tablet-previews {
+    display: flex;
+    .tablet-preview {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: $sky;
+        padding: $qu;
+        cursor: pointer;
+        margin: 0 $qu $qu 0;
+        width: $u3;
+        height: $u3;
+        .button {
+            margin: 0;
+        }
+        svg {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+        }
+    }
+}

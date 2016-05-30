@@ -16,9 +16,11 @@ class RuneView {
         this.layers.render.removeChildren();
         this.layers.overlay.removeChildren();
 
-        this.data.paths.forEach((path) => {
-            new RunePathView(path, this.grid, this.layers);
-        });
+        if (this.data.paths) {
+            this.data.paths.forEach((path) => {
+                new RunePathView(path, this.grid, this.layers);
+            });
+        }
     }
 
 }

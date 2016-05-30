@@ -59,17 +59,27 @@ class PanelController {
             document.getElementById('rune-panels')
         );
 
-        let TabletListPanel = TabletList.panel;
+        let TabletListPanel = React.createClass({
+            render: function () {
+                let Component = TabletList.panel;
+                return (<PanelWrapper options={{title : this.props.title, collapsed: this.props.collapsed }} >
+                     <Component
+                        tablets={this.props.tablets}
+                        activeTablet={this.props.tablet} />
+                </PanelWrapper>);
+            }
+        });
 
         let tabletPanel = React.render(
-            <PanelWrapper options={{title : TabletList.title, collapsed: TabletList.collapsed }} >
-                 <TabletListPanel tablets={_this.tablets} />
-             </PanelWrapper>,
+            <TabletListPanel
+                title={TabletList.title}
+                collapsed={TabletList.collapsed}
+                tablets={_this.tablets}
+                tablet={this.app.data.tablet}/>,
              document.getElementById('rune-tabs')
         );
 
         function reloadHandler () {
-            console.log("Reloading panels...");
             panels.replaceState({'data' : _this.app.data, 'panels' : allPanels, canvas: _this.app.canvas });
         };
 
@@ -77,6 +87,7 @@ class PanelController {
 
         Events.refreshPanels.add(() => {
             panels.setState({'data' : _this.app.data});
+            tabletPanel.setState({tablet: _this.app.data.tablet});
         });
 
     }

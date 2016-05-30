@@ -12,6 +12,7 @@ class TabletModel {
         this.renderedSVG = data && data.renderedSVG || '';
         // this.activePathIndex = data && data.activePathIndex || 0;
         this.runes = data && data.runes.map(rune => new RuneModel(rune)) || [new RuneModel()];
+        this.activeRune = this.runes[0];
     }
 
      guid () {

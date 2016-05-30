@@ -11,7 +11,7 @@ let Button = require('../../components/Button.jsx');
 let Cross = require('../../icons/Cross.jsx');
 
 module.exports = {
-    title: 'Tablets',
+    title: 'Saved Tablets',
     collapsed: false,
     panel: React.createClass({
         getInitialState : function() {
@@ -26,12 +26,12 @@ module.exports = {
         render: function() {
             return (
                 <div>
-                    <div>
+                    <div className="tablet-previews">
                         {
                             this.state.tablets.map((tablet) => {
                                 return (
                                 <div
-                                    className="svg-preview"
+                                    className="tablet-preview"
                                     onClick={this.loadTablet.bind(this, tablet)}>
                                     <div
                                         dangerouslySetInnerHTML={{__html: tablet.renderedSVG}}
@@ -40,10 +40,19 @@ module.exports = {
                                 </div>)
                             })
                         }
-                        <Button
-                            handler={this.newTablet.bind(this)}>
-                            <Cross />
-                        </Button>
+                        <div
+                            className="tablet-preview">
+                            <div
+                                dangerouslySetInnerHTML={{__html: this.props.activeTablet.renderedSVG}}
+                                >
+                            </div>
+                        </div>
+                        <div className="tablet-preview">
+                            <Button
+                                handler={this.newTablet.bind(this)}>
+                                <Cross />
+                            </Button>
+                        </div>
                     </div>
                 </div>
             );

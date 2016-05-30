@@ -24,14 +24,13 @@ class App {
             return Util.getLocalData(ref);
         });
 
-        let data = this.savedTablets[0]
-        ;
+        let data = this.savedTablets[0];
+
         this.data = new DataController(data);
+
         this.canvas = new CanvasController(this.data.tablet);
 
-        this.plugins = require('./plugins');
-
-        this.workspace = new WorkSpaceController(this, this.savedTablets);
+        this.workspace = new WorkSpaceController(this);
 
         let app = this;
 
@@ -40,6 +39,7 @@ class App {
     }
 
     save () {
+        Events.renderSVG.dispatch();
         this.data.save();
     }
 }

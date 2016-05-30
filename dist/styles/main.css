@@ -28,6 +28,25 @@ ul, li {
   margin: 0;
   padding: 0; }
 
+.tablet-previews {
+  display: flex; }
+  .tablet-previews .tablet-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #27dded;
+    padding: 3px;
+    cursor: pointer;
+    margin: 0 3px 3px 0;
+    width: 36px;
+    height: 36px; }
+    .tablet-previews .tablet-preview .button {
+      margin: 0; }
+    .tablet-previews .tablet-preview svg {
+      width: auto;
+      height: auto;
+      max-width: 100%; }
+
 header {
   position: fixed;
   left: 0;
@@ -219,16 +238,6 @@ input {
   box-sizing: border-box; }
   .sheet.active {
     background: #27dded; }
-
-.svg-preview {
-  background: #27dded;
-  padding: 3px;
-  display: inline-block;
-  cursor: pointer;
-  margin: 0 3px 3px 0; }
-  .svg-preview svg {
-    width: 36px;
-    height: auto; }
 
 .overlay {
   position: fixed;

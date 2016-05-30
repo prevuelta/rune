@@ -27,7 +27,6 @@ class CanvasController {
         };
 
         this.createRuneView();
-
         this.setupGridView();
 
     	this.showGrid = true;
@@ -43,6 +42,7 @@ class CanvasController {
         Events.updateGridView.add(this.setupGridView.bind(this));
         Events.display.add(this.displayMode.bind(this));
         Events.resetData.add(this.resetData.bind(this));
+        Events.renderSVG.add(this.renderSVG.bind(this));
 
         Events.redrawCanvas.dispatch();
 
@@ -110,6 +110,25 @@ class CanvasController {
         console.log("Redrawing...");
 		paper.view.draw();
 	}
+
+    renderSVG () {
+
+        let renderCanvas = new paper.Project(document.getElementById('rune-render'));
+
+        renderCanvas.addChild(this.layers.render);
+
+        let bounds = renderCanvas.layers[0].bounds;
+        renderCanvas.layers[0].translate(-bounds.x, -bounds.y);
+        renderCanvas.view.viewSize = new paper.Size(bounds.width, bounds.height);
+
+        let svgString = renderCanvas.exportSVG({asString: true, layerIndex: 0});
+
+        svgString.replace(/fill-opacity=".+?"/g, '');
+
+        svgString = svgString.replace(/\<svg/, `<svg viewBox="0,0,${bounds.width},${bounds.height}" `);
+
+        this.tablet.renderedSVG = svgString;
+    }
 }
 
 module.exports = CanvasController;

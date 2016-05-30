@@ -12,6 +12,7 @@ let events = [
     'deselectAll',
     'display',
     'draw',
+    'renderSVG',
     'gridUpdate',
     'updateGridView',
     'loadTablet',

@@ -9,7 +9,6 @@ class ModelController {
     constructor (tabletModel) {
 
         this.tablet = new TabletModel(tabletModel);
-        this.currentRune = 0;
 
         Events.addPoint.add(this.addPoint.bind(this));
 
@@ -20,7 +19,7 @@ class ModelController {
         Events.deletePoint.add(this.deletePoint.bind(this));
         Events.addSubPath.add(this.addSubPath.bind(this));
         Events.deselectAll.add(this.deselectAll.bind(this));
-        
+
         Events.addTablet.add(this.newTablet.bind(this));
         Events.loadTablet.add(this.loadTablet.bind(this));
 
@@ -33,7 +32,8 @@ class ModelController {
     }
 
     get activeRune () {
-        return this.tablet.runes[this.currentRune];
+        // TODO: Remove & refactor
+        return this.tablet.activeRune;
     }
 
     newTablet () {

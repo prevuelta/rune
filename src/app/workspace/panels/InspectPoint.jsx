@@ -10,6 +10,10 @@ let Button = require('../../components/Button.jsx');
 let ButtonGroup = require('../../components/ButtonGroup.jsx');
 let XYInput = require('../../components/XYInput.jsx');
 
+// Icons:
+let ArcInIcon = require('../../icons/ArcIn.jsx');
+let ArcOutIcon = require('../../icons/ArcOut.jsx');
+
 let Handle = React.createClass({
     getInitialState: function () {
         return {handle: this.props.handle};
@@ -94,52 +98,6 @@ let Arc = React.createClass({
     }
 });
 
-// let PointData = React.createClass({
-//     getInitialState: function () {
-//         return {point: this.props.point, show: false};
-//     },
-//     setIsCurve: function (point) {
-//         point.isCurve = !point.isCurve;
-//         this.setState({point: point});
-//         Events.redrawCanvas.dispatch();
-//     },
-//     toggle: function () {
-//         this.state.show = !this.state.show;
-//         // this.setState();
-//     },
-//     componentWillReceiveProps : function (nextProps) {
-//       this.setState({point: nextProps.point});
-//       return nextProps;
-//     },
-
-//     deletePoint: (point) => {
-//         Events.deletePoint.dispatch(point);
-//     },
-//     toggleArcIn: function () {
-//         this.state.point.setArcIn();
-//         Events.redrawCanvas.dispatch();
-//     },
-//     toggleArcOut: function () {
-//         this.state.point.setArcOut();
-//         Events.redrawCanvas.dispatch();
-//     },
-//     selectPoint: (point) => {
-//         Events.selectPoint.dispatch(point);
-//     },
-//     render: function() {
-//         let x = this.props.point.x;
-//         let y = this.props.point.y;
-//         // debugger;
-//         let classNames = this.state.point.isSelected ? 'sheet active' : 'sheet';
-//         let showHide = this.state.show ? '-' : '+';
-//         return (
-//             <Sheet
-//                 active={this.state.point.isSelected}
-//                 name={}>
-//             </Sheet>
-//     }
-// });
-
 module.exports = {
     title: 'Inspect point',
     collapsed: false,
@@ -197,12 +155,13 @@ module.exports = {
                                 <Switch
                                     onToggle={this.toggleArcIn}
                                     toggle={this.state.point.hasArcIn}
-                                    symbol="╭">
+                                    >
+                                    <ArcInIcon />
                                 </Switch>
                                 <Switch
                                     onToggle={this.toggleArcOut}
-                                    toggle={this.state.point.hasArcOut}
-                                    symbol="╮">
+                                    toggle={this.state.point.hasArcOut}>
+                                    <ArcOutIcon />
                                 </Switch>
                             </ButtonGroup>
                         </div>
