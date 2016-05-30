@@ -2,6 +2,12 @@
 
 let React = require('react');
 
+// Components
+let Switch = require('../../components/Switch.jsx');
+
+// Icons:
+let Stack = require('../../icons/Stack.jsx');
+
 module.exports = React.createClass({
     handleStart: function () {
 
@@ -20,7 +26,11 @@ module.exports = React.createClass({
             <div className="panel">
                 <div className="handle" onClick={this.toggleShow}>
                     { this.props.options.title }
-                    <span className="toggle">{this.state.collapsed ? '-' : '+'}</span>
+                    <Switch
+                        onToggle={this.toggleShow}
+                        toggle={this.props.collapsed}>
+                        <Stack />
+                    </Switch>
                 </div>
                 { !this.state.collapsed ?
                 <div className="panel-content">

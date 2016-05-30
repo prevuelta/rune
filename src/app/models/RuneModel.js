@@ -1,35 +1,14 @@
-let RunePoint = require('./RunePointModel');
+'use strict';
+
+let PathModel = require('./PathModel');
+let PointModel = require('./PointModel');
 let Events = require('../global/Events');
 
-/* ========== Rune Model ========== */
-
-class RunePathModel {
-    constructor (data) {
-        let _this = this;
-        this.points = data && data.points.map(p => new RunePoint(this, p)) || [];
-        this.isClosed = data && data.isClosed || false;
-        this.isActive = data && data.isActive || false;
-        this.children = data && data.children.map(c => new RunePathModel(c)) || [];
-    }
-
-    addChild (path) {
-        this.children.push(path);
-    }
-
-    get hasChildren () {
-        return !!this.children.length;
-    }
-
-    get hasPoints () {
-        return !!this.points.length;
-    }
-
-}
 
 class RuneModel {
     constructor (data) {
 
-        this.paths = data && data.paths.map(p => new RunePathModel(p)) || [new RunePathModel()];
+        this.paths = data && data.paths.map(p => new PathModel(p)) || [new PathModel()];
         this.activePath = this.paths.find(p => p.isActive) || this.paths[0];
         this.selectedPoints = data && data.selectedPoints || [];
         this.currentPointIndex = data && data.currentPointIndex || 0;
@@ -49,7 +28,7 @@ class RuneModel {
     }
 
     clearPaths ()  {
-        this.paths = [new RunePathModel()];
+        this.paths = [new PathModel()];
         this.activePath = this.paths[0];
         return this;
     }
@@ -134,7 +113,7 @@ class RuneModel {
     }
 
     addPath () {
-        let path = new RunePathModel();
+        let path = new PathModel();
         this.activePath.isActive = false;
         path.isActive = true;
         this.paths.push(path);
@@ -143,14 +122,14 @@ class RuneModel {
     }
 
     addSubPath (path) {
-        let subPath = new RunePathModel();
+        let subPath = new PathModel();
         path.addChild(subPath);
         this.selectPath(subPath);
     }
 
     addPoint (gridPoint) {
 
-        let point = new RunePoint(this.activePath, gridPoint.x, gridPoint.y);
+        let point = new PointModel(this.activePath, gridPoint.x, gridPoint.y);
         // point.gridPoint = gridPoint;
         let selectedIndex = this.activePath.points.indexOf(this.selectedPoint);
 

@@ -123,7 +123,7 @@ class CanvasController {
 
         let svgString = renderCanvas.exportSVG({asString: true, layerIndex: 0});
 
-        svgString.replace(/fill-opacity=".+?"/g, '');
+        svgString = svgString.replace(/fill-opacity=".+?"/g, '');
 
         svgString = svgString.replace(/\<svg/, `<svg viewBox="0,0,${bounds.width},${bounds.height}" `);
 

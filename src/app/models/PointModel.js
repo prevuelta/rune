@@ -1,30 +1,9 @@
-/* ========== Point Model ========== */
+'use strict';
 
-class BasePoint {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-}
+let Arc = require('./ArcModel');
 
-class RuneArc {
-    constructor (obj) {
 
-        // if (typeof obj === 'object') {
-            this.size = obj && obj.size || 2;
-            this.center = obj && new RunePoint(null, obj.center) || new RunePoint(null, 1,1);
-            this.endPoint = obj && new RunePoint(null, obj.endPoint) || new RunePoint(null, 0, 0);
-            this.direction = obj && obj.direction || false;
-        // } else {
-        //     this.size = 2;
-        //     this.center = new RunePoint(null, 1,1);
-        //     this.endPoint = new RunePoint(null, 0,0);
-        //     this.direction = false;
-        // }
-    }
-}
-
-class RunePoint extends BasePoint {
+class Point {
 
     constructor(path, x, y) {
 
@@ -38,9 +17,11 @@ class RunePoint extends BasePoint {
         }
 
         if (typeof x === 'object') {
-            super(x.x, x.y);
+            this.x = x.x;
+            this.y = x.y;
         } else {
-             super(x, y);
+             this.x = x;
+             this.y = y;
         }
 
         this.transforms = x.transforms || [];
@@ -49,18 +30,8 @@ class RunePoint extends BasePoint {
         this.handleOut = x.handleOut || null;
         this.isCurve = x.isCurve || false;
         this.isSelected = x.isSelected || false;
-        this.arcIn = x.arcIn && new RuneArc(x.arcIn) || null;
-        this.arcOut = x.arcOut && new RuneArc(x.arcOut) || null;
-        // } else {
-        //     this.transforms = [];
-        //     this.transform = [0,0];
-        //     this.handleIn = null;
-        //     this.handleOut = null;
-        //     this.isCurve = false;
-        //     this.isSelected = false
-        //     this.arcIn = null;
-        //     this.arcOut = null;
-        // }
+        this.arcIn = x.arcIn && new ArcModel(x.arcIn) || null;
+        this.arcOut = x.arcOut && new ArcModel(x.arcOut) || null;
     }
 
     toggleCurve (isCurve) {
@@ -80,11 +51,11 @@ class RunePoint extends BasePoint {
     }
 
     setArcIn () {
-        this.arcIn = this.hasArcIn ? null : new RuneArc();
+        this.arcIn = this.hasArcIn ? null : new ArcModel();
     }
 
     setArcOut () {
-        this.arcOut = this.hasArcOut ? null : new RuneArc();
+        this.arcOut = this.hasArcOut ? null : new ArcModel();
     }
 
     // set handleIn (coords) {
@@ -134,4 +105,4 @@ class RunePoint extends BasePoint {
     }
 }
 
-module.exports = RunePoint;
+module.exports = Point;

@@ -2,7 +2,7 @@ var Util = require('../../global/util');
 var constants = require('../../global/Const');
 var Events = require('../../global/Events');
 var styles = require('../../global/styles');
-var RunePoint = require('../../models/RunePointModel');
+var PointModel = require('../../models/PointModel');
 
 var paper = require('paper');
 
@@ -51,7 +51,7 @@ class GridView {
         col = row = -(this.options.units/2) + 0.5;
 
         for (let i = 1; i <= this.options.units * this.options.units; i++) {
-            this.points.push(new RunePoint(null, row, col));
+            this.points.push(new PointModel(null, row, col));
             if (i && i % this.options.units == 0) {
                 row++;
                 col = -(this.options.units/2) + 0.5;

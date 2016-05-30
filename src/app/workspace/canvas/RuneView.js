@@ -1,6 +1,6 @@
 'use strict';
 
-let RunePathView = require('./RunePathView');
+let PathView = require('./PathView');
 
 class RuneView {
     constructor (runeModel, grid, layers) {
@@ -18,7 +18,7 @@ class RuneView {
 
         if (this.data.paths) {
             this.data.paths.forEach((path) => {
-                new RunePathView(path, this.grid, this.layers);
+                new PathView(path, this.grid, this.layers);
             });
         }
     }
