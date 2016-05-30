@@ -1,7 +1,5 @@
 'use strict';
 
-let PointModel = require('./PointModel');
-
 class ArcModel {
     constructor (obj) {
 
@@ -20,3 +18,5 @@ class ArcModel {
 }
 
 module.exports = ArcModel;
+
+var PointModel = require('./PointModel');
