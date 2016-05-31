@@ -41,6 +41,7 @@ class RuneArcView {
         midRotation.angle += angle / 2;
 
         this.layers.render.activate();
+
         if (isIn) {
             this.paths.push(new paper.Path.Arc({
                 from: center.add(rotation),

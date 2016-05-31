@@ -19,8 +19,11 @@ class RunePathView {
         let style = path.isClosed ? styles.path.filled : path.isActive ? styles.path.active : styles.path.outline;
         let paperPath;
 
+        this.layers.render.activate();
+
         if (path.hasChildren) {
             let paths = [path].concat(path.children);
+
             paperPath = new paper.CompoundPath({
                 children: paths.map((p) => {
                     return this.generatePath(p, style);
@@ -46,7 +49,6 @@ class RunePathView {
 
         path.points.forEach(p => {
             if (p.hasArc) {
-                 this.layers.render.activate();
                 if (segments.length > 0) {
                     paths.push(new paper.Path(segments));
                     segments = [];
@@ -62,12 +64,10 @@ class RunePathView {
 
 
         if (segments.length > 0) {
-           this.layers.render.activate();
            paths.push(new paper.Path(segments));
         }
 
         if (paths.length > 1) {
-            this.layers.render.activate();
             let newPath = new paper.Path();
             paths.forEach(p => newPath.join(p));
             return newPath;

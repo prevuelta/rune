@@ -64,7 +64,6 @@ class GridView {
 
 	draw () {
 
-        this.layer.removeChildren();
         this.layer.activate();
 
 		let _this = this;

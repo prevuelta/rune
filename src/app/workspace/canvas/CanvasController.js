@@ -65,16 +65,7 @@ class CanvasController {
     displayMode() {
 
         this.isPreview = !this.isPreview;
-
         this.redrawCanvas();
-
-        if (this.isPreview) {
-            this.layers.interactive.removeChildren();
-            this.layers.grid.removeChildren();
-            this.layers.overlay.removeChildren();
-        }
-
-        Events.draw.dispatch();
     }
 
 	setupGridView () {
@@ -87,7 +78,9 @@ class CanvasController {
     }
 
 	redrawGridLayer () {
-		this.gridView.draw();
+		this.layers.grid.removeChildren();
+        this.gridView.draw();
+
 	}
 
     refreshGrid () {
@@ -96,14 +89,26 @@ class CanvasController {
     }
 
     redrawCanvas () {
+
+        this.layers.grid.removeChildren();
+        this.layers.interactive.removeChildren();
+        this.layers.render.removeChildren();
+        this.layers.overlay.removeChildren();
+
         this.gridView.draw();
         this.runeView.draw();
 
-        debugger;
+        // this.layers.interactive.translate(paper.view.center);
+        // this.layers.render.translate(paper.view.center);
+        // this.layers.overlay.translate(paper.view.center);
 
-        this.layers.interactive.translate(paper.view.center);
-        this.layers.render.translate(paper.view.center);
-        this.layers.overlay.translate(paper.view.center);
+        if (this.isPreview) {
+            this.layers.interactive.removeChildren();
+            this.layers.grid.removeChildren();
+            // this.layers.overlay.removeChildren();
+        }
+
+        console.log("Debugg");
 
         this.drawCanvas();
     }
