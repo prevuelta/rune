@@ -33,7 +33,6 @@ class App {
         this.workspace = new WorkSpaceController(this);
 
         let app = this;
-
         //setInterval(this.save.bind(this), 20000);
 
     }

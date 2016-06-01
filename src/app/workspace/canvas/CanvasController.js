@@ -99,7 +99,7 @@ class CanvasController {
         this.gridView.draw();
         this.runeView.draw();
 
-        debugger;
+        //debugger;
 
         this.layers.interactive.translate(paper.view.center);
         this.layers.render.translate(paper.view.center);

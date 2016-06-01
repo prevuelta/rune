@@ -105,19 +105,18 @@ class RuneModel {
             }
             this.activePath = path;
             if (path.hasPoints && !dontSelectPoint) {
-                this.selectHandler(path.points[0], true);
+              //  this.selectHandler(path.points[0], true);
             } else if (!path.hasPoints) {
-                this.selectedPoint = null;
+              //  this.selectedPoint = null;
             }
         }
     }
 
     addPath () {
+	console.log("Creating path");
         let path = new PathModel();
-        this.activePath.isActive = false;
-        path.isActive = true;
         this.paths.push(path);
-        this.activePath = path;
+        this.selectPath(path);
         this.selectedPoint = null;
     }
 
