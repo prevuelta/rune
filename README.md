@@ -1,31 +1,27 @@
 # Rüne
 ## WORK IN PROGRESS
 
-Web based drawing tool for people who like to think inside the box.
-
-_Using:_
-React
-PaperJS
-Browserify
-
+Online SVG based icon and type creator for people who like to think inside the box.
 
 ## To run:
 
-Uses npm as a taskrunner
+```
+npm start
+```
 
-Basic task to build / watch:
+## For development:
+
+Please run
+```
+npm run lib
+```
+to compile libraries
+
+
+Dev process to build && watch:
 
 ```
 npm run build:watch
 ```
 
 Enjoy :)
-
-
- ####Plugin ideas:
-
- * Randomise points
- * Shapes (center at selected point);
- * Grid plugins and multiple grids eg. Diagonal, square, ellipse
- * Proper preview mode
- * Symbol library
