@@ -1,5 +1,6 @@
 node_modules/
 .sass-cache
 .sass-cache/*
-build
-build/*
+/dist
+/dist/*
+npm-debug.log
