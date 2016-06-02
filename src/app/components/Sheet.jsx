@@ -1,6 +1,7 @@
 'use strict';
 
 let React = require('react');
+let Button = require('./Button.jsx');
 
 module.exports = React.createClass({
     getInitialState: function () {
@@ -11,16 +12,18 @@ module.exports = React.createClass({
     },
     render: function () {
         let classNames = this.state.active ? 'sheet active' : 'sheet';
+        let Icon;
         if (this.props.icon) {
-            let Icon = this.props.icon;
-            debugger;
+            Icon = this.props.icon;
         }
         return (
             <div
                 className={classNames}
                 onClick={this.props.onClick}>
                 { this.props.icon ?
-                    <Icon />
+                    <Button>
+                        <Icon />
+                    </Button>
                     : this.props.name
                 }
                 <div className="actions">

@@ -5,7 +5,7 @@ let constants = require('../../global/const');
 let styles = require('../../global/styles');
 let paper = require('paper');
 let Trig = require('../../global/Trig');
-let RuneArcView = require('./RuneArcView');
+let ArcView = require('./ArcView');
 let RunePointViewFactory = require('./RunePointViewFactory');
 let RuneNodeFactory = require('./RuneNodeFactory');
 
@@ -44,6 +44,7 @@ class RunePathView {
     }
 
     generatePath (path, style) {
+
         let _this = this;
         let paths = [];
         let segments = [];
@@ -57,7 +58,7 @@ class RunePathView {
                 let renderedPoint = new paper.Point(
                     p.render(_this.grid.res)
                 );
-                paths = paths.concat(new RuneArcView(p, renderedPoint, _this.grid.res).paths);
+                paths = paths.concat(new ArcView(p, renderedPoint, _this.grid.res).paths);
             } else {
                 segments.push(RunePointViewFactory(p, this.grid.res));
             }
@@ -72,8 +73,8 @@ class RunePathView {
             let newPath;
             Canvas.drawToLayer('render', () => {
                 newPath = new paper.Path();
+                paths.forEach(p => newPath.join(p));
             });
-            paths.forEach(p => newPath.join(p));
             return newPath;
         } else if (paths[0]) {
             return paths[0];

@@ -5,7 +5,7 @@ let Trig = require('../../global/Trig');
 let styles = require('../../global/styles');
 let RuneNodeFactory = require('./RuneNodeFactory');
 
-class RuneArcView {
+class ArcView {
     constructor (point, renderedPoint, res) {
 
         this.point = point;
@@ -71,4 +71,4 @@ class RuneArcView {
     }
 }
 
-module.exports = RuneArcView;
+module.exports = ArcView;
