@@ -66,7 +66,9 @@ class RunePathView {
 
 
         if (segments.length > 0) {
-           paths.push(new paper.Path(segments));
+            Canvas.drawToLayer('render', () => {
+                paths.push(new paper.Path(segments));
+            });
         }
 
         if (paths.length > 1) {

@@ -11,6 +11,7 @@ let ButtonGroup = require('../../components/ButtonGroup.jsx');
 let Cross = require('../../icons/Cross.jsx');
 let X = require('../../icons/X.jsx');
 let PointIcon = require('../../icons/Point.jsx');
+let PathIcon = require('../../icons/Path.jsx');
 
 
 let Point = React.createClass({
@@ -68,7 +69,7 @@ let Path = React.createClass({
         return (
             <div className="path">
                 <Sheet
-                    name="––––"
+                    icon={PathIcon}
                     active={this.state.path.isActive}
                     onClick={this.selectPath.bind(this, this.state.path)}>
                     <ButtonGroup>
