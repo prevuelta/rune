@@ -6,9 +6,7 @@ var _ = require('lodash');
 /* ========== Data ========== */
 
 class ModelController {
-    constructor (tabletModel) {
-
-        this.tablet = new TabletModel(tabletModel);
+    constructor () {
 
         Events.addPoint.add(this.addPoint.bind(this));
 
@@ -40,15 +38,21 @@ class ModelController {
         this.save();
         this.tablet = new TabletModel();
         Events.resetData.dispatch(this.tablet);
-        Events.redrawCanvas.dispatch();
+        Events.redrawView.dispatch();
         Events.refreshPanels.dispatch();
     }
 
-    loadTablet (tablet) {
-        this.save();
+    setTablet (tablet) {
+        if (this.tablet) {
+            this.save();
+        }
         this.tablet = new TabletModel(tablet);
+    }
+
+    loadTablet (tablet) {
+        this.setTablet(tablet);
         Events.resetData.dispatch(this.tablet);
-        Events.redrawCanvas.dispatch();
+        Events.redrawView.dispatch();
         Events.refreshPanels.dispatch();
     }
 
@@ -62,39 +66,39 @@ class ModelController {
 
     addPoint (gridRef) {
         this.activeRune.addPoint(gridRef);
-        Events.redrawCanvas.dispatch();
+        Events.redrawView.dispatch();
         Events.refreshPanels.dispatch();
         // Events.reloadPanels.dispatch();
     }
 
     deletePoint (p) {
         this.activeRune.deletePoint(p);
-        Events.redrawCanvas.dispatch();
+        Events.redrawView.dispatch();
         Events.refreshPanels.dispatch();
     }
 
     deletePath (p) {
         this.activeRune.deletePath(p);
-        Events.redrawCanvas.dispatch();
+        Events.redrawView.dispatch();
         Events.refreshPanels.dispatch();
     }
 
     addPath () {
         this.activeRune.addPath();
         Events.reloadPanels.dispatch();
-        Events.redrawCanvas.dispatch();
+        Events.redrawView.dispatch();
     }
 
     addSubPath (path) {
         this.activeRune.addSubPath(path);
         Events.reloadPanels.dispatch();
-        Events.redrawCanvas.dispatch();
+        Events.redrawView.dispatch();
     }
 
     clearRune() {
         this.activeRune.clearPaths();
         Events.reloadPanels.dispatch();
-        Events.redrawCanvas.dispatch();
+        Events.redrawView.dispatch();
     }
 
     updateGrid (grid) {
@@ -107,13 +111,13 @@ class ModelController {
         this.activeRune.selectedPoint.x += transform[0];
         this.activeRune.selectedPoint.y += transform[1];
 
-        Events.redrawCanvas.dispatch();
+        Events.redrawView.dispatch();
     }
 
     selectPoint(point) {
         this.activeRune.selectHandler(point);
         Events.refreshPanels.dispatch();
-        Events.redrawCanvas.dispatch();
+        Events.redrawView.dispatch();
     }
 
     deselectAll () {
@@ -127,4 +131,4 @@ class ModelController {
     }
 }
 
-module.exports = ModelController;
+module.exports = new ModelController();

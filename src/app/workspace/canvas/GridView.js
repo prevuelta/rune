@@ -5,7 +5,7 @@ var styles = require('../../global/styles');
 var PointModel = require('../../models/PointModel');
 
 var paper = require('paper');
-
+var Canvas = require('./CanvasService');
 
 /* ========== Grid view ========== */
 
@@ -14,7 +14,11 @@ var gridPointFactory = (point, res) => {
     let p = point.render(res);
     let paperPoint = new paper.Point( p[0] - (res.x/2), p[1] - (res.y/2) );
     // let path = new paper.Path.Ellipse({point: paperPoint, size: [res.x, res.y]});
-    let path = new paper.Path.Rectangle(paperPoint, res.x-2, res.y-2);
+    let path;
+
+    Canvas.drawToLayer('grid', () => {
+        path = new paper.Path.Rectangle(paperPoint, res.x-2, res.y-2);
+    });
 
     path.value = point;
     path.active = false;
@@ -40,9 +44,7 @@ var gridPointFactory = (point, res) => {
 }
 
 class GridView {
-	constructor (options, layer) {
-
-        this.layer = layer;
+	constructor (options) {
 
     	this.options = options;
     	this.points = [];
@@ -64,31 +66,33 @@ class GridView {
 
 	draw () {
 
-        this.layer.activate();
+        Canvas.drawToLayer('grid', this.drawToGrid.bind(this));
+        this.createGridPoints();
 
-		let _this = this;
+	}
 
-        let gridColor = new paper.Color(_this.gridColor, 100);
+    drawToGrid () {
+
+        let gridColor = new paper.Color(this.gridColor, 100);
 
         let {x,y} = this.options.res;
 
-        let rowLines = new paper.Group();
-        let colLines = new paper.Group();
+        let rowLines, colLines;
+
+        rowLines = new paper.Group();
+        colLines = new paper.Group();
 
         for (let i = -this.options.units/2; i < this.options.units/2; i++) {
             rowLines.addChild(this.xLine(i * y));
             colLines.addChild(this.yLine(i * x));
         }
-
         colLines.translate([paper.view.center.x + (x/2), 0]);
         rowLines.translate([0, paper.view.center.y + (y/2)]);
 
         this.xLine(paper.view.center.y, constants.RED);
         this.yLine(paper.view.center.x, constants.RED);
 
-        this.createGridPoints();
-
-	}
+    }
 
     createGridPoints () {
 
@@ -104,14 +108,16 @@ class GridView {
     }
 
 	yLine (xLoc, color) {
-		let line = new paper.Path.Rectangle([xLoc, 0], 1, 2000);
-		line.fillColor = color ? color : constants.BLUE;
+        let line = new paper.Path.Rectangle([xLoc, 0], 1, 2000);
+        line.fillColor = color ? color : constants.BLUE;
+
         return line;
 	}
 
 	xLine (yLoc, color) {
 		let line = new paper.Path.Rectangle([0, yLoc], 2000, 1);
-		line.fillColor = color ? color : constants.BLUE;
+        line.fillColor = color ? color : constants.BLUE;
+
         return line;
 	}
 }

@@ -29,7 +29,7 @@ let Handle = React.createClass({
             this.props.onUpdate(coords.map(c => +c));
         }
         // this.setState({handle: this.state.handle});
-        // Events.redrawCanvas.dispatch();
+        // Events.redrawView.dispatch();
     },
     render: function () {
         return (
@@ -61,13 +61,13 @@ let Arc = React.createClass({
             arc.size = value;
         }
         this.setState({arc: arc});
-        Events.redrawCanvas.dispatch();
+        Events.redrawView.dispatch();
     },
     updateCenter: function (val) {
         console.log("Arc center", val);
         this.state.arc.center = val;
         this.setState({arc: this.state.arc});
-        Events.redrawCanvas.dispatch();
+        Events.redrawView.dispatch();
     },
     render: function () {
         let arc = this.state.arc;
@@ -108,7 +108,7 @@ module.exports = {
         setIsCurve: function (point) {
             point.toggleCurve();
             this.setState({point: point});
-            Events.redrawCanvas.dispatch();
+            Events.redrawView.dispatch();
         },
         componentWillReceiveProps: function(nextProps) {
             this.setState({
@@ -118,22 +118,22 @@ module.exports = {
         toggleArcIn: function () {
             this.state.point.setArcIn();
             this.setState({point: this.state.point});
-            Events.redrawCanvas.dispatch();
+            Events.redrawView.dispatch();
         },
         toggleArcOut: function () {
             this.state.point.setArcOut();
             this.setState({point: this.state.point});
-            Events.redrawCanvas.dispatch();
+            Events.redrawView.dispatch();
         },
         updateHandleIn: function (val) {
             this.state.point.handleIn = val;
             this.setState({point: this.state.point});
-            Events.redrawCanvas.dispatch();
+            Events.redrawView.dispatch();
         },
         updateHandleOut: function (val) {
             this.state.point.handleOut = val;
             this.setState({point: this.state.point});
-            Events.redrawCanvas.dispatch();
+            Events.redrawView.dispatch();
         },
         render: function() {
             if (this.state.point) {

@@ -4,7 +4,7 @@
   "description": "SVG glyph creator using paper.js. Grid based design system to produce letter forms, icons etc then export as SVG from browser.",
   "main": "index.js",
   "scripts": {
-    "start" : "npm run build && npm run serve",
+    "start" : "npm run lib && npm run build && npm run serve",
     "build:watch": "parallelshell 'npm run copy-statics' 'npm run watch:js -s' 'npm run watch:css -s' 'npm run build:html -s' 'npm run serve -s'",
     "serve" : "http-server ./dist -p 8000 -d false",
     "watch:js": "watch 'npm run build:js' ./src/app/",

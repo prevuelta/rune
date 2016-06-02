@@ -17,7 +17,7 @@ let events = [
     'updateGridView',
     'loadTablet',
     'nudge',
-    'redrawCanvas',
+    'redrawView',
     'refreshPanels',
     'reloadPanels',
     'resetData',

@@ -11,11 +11,18 @@ module.exports = React.createClass({
     },
     render: function () {
         let classNames = this.state.active ? 'sheet active' : 'sheet';
+        if (this.props.icon) {
+            let Icon = this.props.icon;
+            debugger;
+        }
         return (
             <div
                 className={classNames}
                 onClick={this.props.onClick}>
-                {this.props.name}
+                { this.props.icon ?
+                    <Icon />
+                    : this.props.name
+                }
                 <div className="actions">
                     {this.props.children}
                 </div>

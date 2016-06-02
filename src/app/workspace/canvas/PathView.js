@@ -9,27 +9,28 @@ let RuneArcView = require('./RuneArcView');
 let RunePointViewFactory = require('./RunePointViewFactory');
 let RuneNodeFactory = require('./RuneNodeFactory');
 
+let Canvas = require('./CanvasService');
+
 class RunePathView {
 
-    constructor (path, grid, layers) {
+    constructor (path, grid) {
 
         this.grid = grid;
-        this.layers = layers;
 
         let style = path.isClosed ? styles.path.filled : path.isActive ? styles.path.active : styles.path.outline;
         let paperPath;
 
-        this.layers.render.activate();
-
         if (path.hasChildren) {
             let paths = [path].concat(path.children);
+            Canvas.drawToLayer('render', () => {
+                paperPath = new paper.CompoundPath({
+                    children: paths.map((p) => {
+                        return this.generatePath(p, style);
+                    }),
+                    style: style
+                });
+            });
 
-            paperPath = new paper.CompoundPath({
-                children: paths.map((p) => {
-                    return this.generatePath(p, style);
-                }),
-                style: style
-            })
         } else {
             paperPath = this.generatePath(path, style);
             if (paperPath) {
@@ -56,9 +57,9 @@ class RunePathView {
                 let renderedPoint = new paper.Point(
                     p.render(_this.grid.res)
                 );
-                paths = paths.concat(new RuneArcView(p, renderedPoint, _this.grid.res, this.layers).paths);
+                paths = paths.concat(new RuneArcView(p, renderedPoint, _this.grid.res).paths);
             } else {
-                segments.push(RunePointViewFactory(p, this.grid.res, this.layers));
+                segments.push(RunePointViewFactory(p, this.grid.res));
             }
         });
 
@@ -68,7 +69,10 @@ class RunePathView {
         }
 
         if (paths.length > 1) {
-            let newPath = new paper.Path();
+            let newPath;
+            Canvas.drawToLayer('render', () => {
+                newPath = new paper.Path();
+            });
             paths.forEach(p => newPath.join(p));
             return newPath;
         } else if (paths[0]) {
@@ -81,7 +85,7 @@ class RunePathView {
     getPathSegment (path) {
         let _this = this;
         return path.points.map(function(point) {
-            return RunePointViewFactory(point, this.grid.res, this.layers);
+            return RunePointViewFactory(point, this.grid.res);
         })
     }
 }

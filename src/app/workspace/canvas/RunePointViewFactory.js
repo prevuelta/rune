@@ -4,7 +4,7 @@ let paper = require('paper');
 let RuneNodeFactory = require('./RuneNodeFactory');
 let styles = require('../../global/styles');
 
-function RunePointViewFactory (point, res, layers) {
+function RunePointViewFactory (point, res) {
 
     let paperPoint = new paper.Point(
         point.render(res)
@@ -19,8 +19,6 @@ function RunePointViewFactory (point, res, layers) {
 
     let handleIn = point.handleIn ? new paper.Point(point.handleIn[0], point.handleIn[1]) : null;
     let handleOut = point.handleOut ? new paper.Point(point.handleOut[0], point.handleOut[1]) : null;
-
-    layers.interactive.activate();
 
     point.node = RuneNodeFactory(point, paperPoint);
 

@@ -10,6 +10,7 @@ let Button = require('../../components/Button.jsx');
 let ButtonGroup = require('../../components/ButtonGroup.jsx');
 let Cross = require('../../icons/Cross.jsx');
 let X = require('../../icons/X.jsx');
+let PointIcon = require('../../icons/Point.jsx');
 
 
 let Point = React.createClass({
@@ -25,7 +26,7 @@ let Point = React.createClass({
     render: function () {
         return (
             <Sheet
-                name="•"
+                icon={PointIcon}
                 active={this.props.point.isSelected}
                 onClick={this.selectPoint.bind(this, this.props.point)}>
                 <ButtonGroup>
@@ -46,7 +47,7 @@ let Path = React.createClass({
     changeHandler: function () {
         this.state.path.isClosed = !this.state.path.isClosed;
         this.setState({path: this.state.path});
-        Events.redrawCanvas.dispatch();
+        Events.redrawView.dispatch();
     },
     componentWillReceiveProps : function (nextProps) {
         this.setState({path :nextProps.path });

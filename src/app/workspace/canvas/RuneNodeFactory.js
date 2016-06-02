@@ -4,9 +4,15 @@ let paper = require('paper');
 let styles = require('../../global/styles');
 let Events = require('../../global/Events');
 
+let Canvas = require('./CanvasService');
+
 module.exports = function (point, renderedPoint) {
 
-	let node =  new paper.Path.Circle(renderedPoint, 8);
+	let node;
+    Canvas.drawToLayer('interactive', () => {
+        node =  new paper.Path.Circle(renderedPoint, 8);
+    });
+
     let _node = node;
 
     node.isHandle = true;

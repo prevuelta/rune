@@ -24,7 +24,7 @@ module.exports = {
             this.state.data.units = +units;
             grid.new = new GridModel(this.state.data);
             Events.gridUpdate.dispatch(grid);
-            Events.redrawCanvas.dispatch();
+            Events.redrawView.dispatch();
         },
         render: function() {
             return (

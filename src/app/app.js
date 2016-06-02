@@ -1,12 +1,13 @@
 'use strict';
 
 // Rune
-var Events = require('./global/Events');
-var keys = require('./global/keys');
-var Util = require('./global/Util');
-var WorkSpaceController = require('./workspace/WorkspaceController');
-var CanvasController = require('./workspace/canvas/CanvasController');
-var DataController = require('./models/ModelController');
+let Events = require('./global/Events');
+let keys = require('./global/keys');
+let Util = require('./global/Util');
+
+let WorkSpaceController = require('./workspace/WorkspaceController');
+let ViewController = require('./workspace/canvas/ViewController');
+let DataController = require('./models/ModelController');
 
 class App {
 
@@ -25,15 +26,15 @@ class App {
         });
 
         let data = this.savedTablets[0];
+        this.data = DataController;
+        this.data.setTablet(data);
 
-        this.data = new DataController(data);
-
-        this.canvas = new CanvasController(this.data.tablet);
+        this.view = ViewController;
+        this.view.loadTablet(this.data.tablet)
 
         this.workspace = new WorkSpaceController(this);
 
         let app = this;
-
         //setInterval(this.save.bind(this), 20000);
 
     }
@@ -44,4 +45,4 @@ class App {
     }
 }
 
-var app = new App();
+let app = new App();

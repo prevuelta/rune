@@ -6,13 +6,12 @@ let styles = require('../../global/styles');
 let RuneNodeFactory = require('./RuneNodeFactory');
 
 class RuneArcView {
-    constructor (point, renderedPoint, res, layers) {
+    constructor (point, renderedPoint, res) {
 
         this.point = point;
         this.renderedPoint = renderedPoint;
         this.res = res;
         this.paths = [];
-        this.layers = layers;
 
         if (point.hasArcIn) {
             this.createArc(point.arcIn, true);
@@ -40,8 +39,6 @@ class RuneArcView {
         rotation.angle += angle;
         midRotation.angle += angle / 2;
 
-        this.layers.render.activate();
-
         if (isIn) {
             this.paths.push(new paper.Path.Arc({
                 from: center.add(rotation),
@@ -58,8 +55,6 @@ class RuneArcView {
             }));
         }
 
-        this.layers.interactive.activate();
-
         RuneNodeFactory(this.point, this.renderedPoint);
 
         if (this.point.isSelected || arc.center.isSelected) {
@@ -68,7 +63,6 @@ class RuneArcView {
 
             RuneNodeFactory(null, center.add(rotation));
 
-            this.layers.overlay.activate();
             let circle = new paper.Path.Circle(center, radius);
             circle.style = styles.overlay;
         }
