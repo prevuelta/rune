@@ -131,8 +131,7 @@ class RuneModel {
     addPoint (gridPoint) {
 
         let point = new PointModel(this.activePath, gridPoint.x, gridPoint.y);
-        // point.gridPoint = gridPoint;
-        debugger;
+
         let selectedIndex = this.activePath.points.indexOf(this.selectedPoint);
 
         if (selectedIndex > -1) {
