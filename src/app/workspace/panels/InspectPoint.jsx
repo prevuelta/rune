@@ -13,6 +13,7 @@ let XYInput = require('../../components/XYInput.jsx');
 // Icons:
 let ArcInIcon = require('../../icons/ArcIn.jsx');
 let ArcOutIcon = require('../../icons/ArcOut.jsx');
+let CurveIcon = require('../../icons/Curve.jsx');
 
 let Handle = React.createClass({
     getInitialState: function () {
@@ -149,8 +150,8 @@ module.exports = {
                             <ButtonGroup>
                                 <Switch
                                     onToggle={this.setIsCurve.bind(this, this.state.point)}
-                                    toggle={this.state.point.isCurve}
-                                    symbol="∩">
+                                    toggle={this.state.point.isCurve}>
+                                    <CurveIcon />
                                 </Switch>
                                 <Switch
                                     onToggle={this.toggleArcIn}

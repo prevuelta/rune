@@ -1,0 +1,14 @@
+.dialogue {
+    min-width: 30%;
+    min-height: 30%;
+    border: 1px solid $sky;
+    padding: $u;
+    background: #fff;
+    background: $sky-dark;
+    border-radius: $hu;
+    border-bottom: 1px solid black;
+    textarea {
+        width: 100%;
+        min-height: $u6;
+    }
+}

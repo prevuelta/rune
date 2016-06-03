@@ -20,15 +20,7 @@ module.exports = React.createClass({
             <div
                 className={classNames}
                 onClick={this.props.onClick}>
-                { this.props.icon ?
-                    <Button>
-                        <Icon />
-                    </Button>
-                    : this.props.name
-                }
-                <div className="actions">
-                    {this.props.children}
-                </div>
+                {this.props.children}
             </div>
         );
     }

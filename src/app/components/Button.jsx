@@ -11,7 +11,9 @@ module.exports = React.createClass({
     //     this.props.handler();
     // },
     click: function (event) {
-        this.props.handler(event);
+        if (this.props.handler) {
+            this.props.handler(event);
+        }
     },
     render: function() {
         return (

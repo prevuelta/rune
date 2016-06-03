@@ -2,7 +2,7 @@
 .button {
 	width: $uh;
 	height: $uh;
-    margin-top: $hu;
+    margin-top: $qu;
 	cursor: pointer;
 	border-radius: 2px;
 	text-align: center;
@@ -11,6 +11,9 @@
 	line-height: $uh;
 	box-sizing: border-box;
 	font-family: 'Courier New';
+    display: flex;
+    align-items: center;
+    justify-content: center;
     svg {
         width: $u;
         height: $u;
@@ -31,7 +34,7 @@
 .button-group {
     display: flex;
     // border: 1px solid red;
-    margin-top: $hu;
+    margin-top: $qu;
     .button,
     .switch {
         margin: 0;
@@ -39,5 +42,20 @@
 }
 
 .path .path {
-    border-left: 3px solid $field;
+    margin-left: $qu;
+    .sheet{
+        border-left: $qu solid $field;
+    }
+}
+
+.header {
+    border-bottom: 1px solid white;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: $hu;
+    margin-bottom: $u;
+    * {
+        margin: 0;
+    }
 }

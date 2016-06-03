@@ -60,7 +60,6 @@ class ArcView {
         if (this.point.isSelected || arc.center.isSelected) {
 
             RuneNodeFactory(arc.center, center);
-
             RuneNodeFactory(null, center.add(rotation));
 
             let circle = new paper.Path.Circle(center, radius);

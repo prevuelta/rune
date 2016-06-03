@@ -41,15 +41,9 @@ module.exports = {
                             })
                         }
                         <div
+                            onClick={this.newTablet}
                             className="tablet-preview">
-                            <div
-                                dangerouslySetInnerHTML={{__html: this.props.activeTablet.renderedSVG}}
-                                >
-                            </div>
-                        </div>
-                        <div className="tablet-preview">
-                            <Button
-                                handler={this.newTablet.bind(this)}>
+                            <Button>
                                 <Cross />
                             </Button>
                         </div>

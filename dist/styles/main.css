@@ -12,6 +12,9 @@
 .shadow {
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); }
 
+.float-right {
+  float: right; }
+
 body {
   font-family: "Inconsolata", sans-serif;
   font-weight: 400; }
@@ -143,6 +146,19 @@ body {
     background: #3b3935;
     color: white; }
 
+.dialogue {
+  min-width: 30%;
+  min-height: 30%;
+  border: 1px solid #27dded;
+  padding: 12px;
+  background: #fff;
+  background: #42494a;
+  border-radius: 6px;
+  border-bottom: 1px solid black; }
+  .dialogue textarea {
+    width: 100%;
+    min-height: 72px; }
+
 button {
   padding: 6px 12px;
   border: none;
@@ -155,14 +171,19 @@ button {
 label {
   display: block; }
 
-input {
+input,
+textarea {
+  box-sizing: border-box;
   padding: 6px;
   margin: 6px 0;
-  border: 1px solid black;
+  border: 1px solid #27dded;
   font-family: "Inconsolata", sans-serif;
   color: white;
   display: inline-block;
   background: #42494a; }
+
+input {
+  border-radius: 2px; }
 
 #rune-canvas {
   height: 100%;
@@ -197,7 +218,7 @@ input {
 .button {
   width: 18px;
   height: 18px;
-  margin-top: 6px;
+  margin-top: 3px;
   cursor: pointer;
   border-radius: 2px;
   text-align: center;
@@ -205,7 +226,10 @@ input {
   font-size: 12px;
   line-height: 18px;
   box-sizing: border-box;
-  font-family: 'Courier New'; }
+  font-family: 'Courier New';
+  display: flex;
+  align-items: center;
+  justify-content: center; }
   .switch svg,
   .button svg {
     width: 12px;
@@ -220,13 +244,25 @@ input {
 
 .button-group {
   display: flex;
-  margin-top: 6px; }
+  margin-top: 3px; }
   .button-group .button,
   .button-group .switch {
     margin: 0; }
 
 .path .path {
-  border-left: 3px solid #14bb5b; }
+  margin-left: 3px; }
+  .path .path .sheet {
+    border-left: 3px solid #14bb5b; }
+
+.header {
+  border-bottom: 1px solid white;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 6px;
+  margin-bottom: 12px; }
+  .header * {
+    margin: 0; }
 
 .sheet {
   display: flex;
@@ -255,14 +291,5 @@ input {
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.2); }
-  .overlay .dialogue {
-    min-width: 30%;
-    min-height: 30%;
-    border: 1px solid #27dded;
-    padding: 12px;
-    background: #fff; }
-    .overlay .dialogue textarea {
-      width: 100%;
-      min-height: 72px; }
 
 /*# sourceMappingURL=main.css.map */

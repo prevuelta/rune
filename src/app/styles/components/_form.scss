@@ -13,12 +13,18 @@ label {
 	display: block;
 }
 
-input {
+input,
+textarea {
+    box-sizing: border-box;
 	padding: $hu;
 	margin: $hu 0;
-	border: 1px solid black;
+	border: 1px solid $sky;
     font-family: $primary-font;
     color: white;
     display: inline-block;
     background: $sky-dark;
+}
+
+input {
+    border-radius: 2px;
 }

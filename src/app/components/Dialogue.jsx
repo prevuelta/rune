@@ -2,6 +2,8 @@
 
 let React = require('react');
 let Button = require('./Button.jsx');
+let X = require('../icons/X.jsx');
+let Header = require('./Header.jsx');
 
 module.exports = React.createClass({
     // getInitialState: function () {
@@ -19,7 +21,13 @@ module.exports = React.createClass({
             <div
                 className="overlay">
                 <div className="dialogue">
-                    <Button handler={this.hide.bind(this)} symbol="X"></Button>
+                    <Header>
+                        {this.props.title}
+                        <Button
+                            handler={this.hide.bind(this)}>
+                            <X/>
+                        </Button>
+                    </Header>
                     { this.props.children }
                 </div>
             </div>

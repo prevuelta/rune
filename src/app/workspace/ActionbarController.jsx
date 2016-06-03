@@ -29,7 +29,8 @@ class ActionBar {
     			action : function(e) {
     				e.preventDefault();
     				// debugger;
-    				actionBar.app.data.save();
+                    Events.renderSVG.dispatch();
+                    Events.saveTablet.dispatch();
 
     			}
     		},
@@ -70,8 +71,8 @@ class ActionBar {
 
                     let dialogue = React.render(
                         <Dialogue
-                            element={element}>
-                            <h2>SVG code:</h2>
+                            element={element}
+                            title="Copy SVG code">
                             <textarea>{ actionBar.app.data.tablet.renderedSVG }</textarea>
                         </Dialogue>,
                         element

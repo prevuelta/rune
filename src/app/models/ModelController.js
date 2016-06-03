@@ -8,24 +8,20 @@ var _ = require('lodash');
 class ModelController {
     constructor () {
 
-        Events.addPoint.add(this.addPoint.bind(this));
-
-        Events.selectPoint.add(this.selectPoint.bind(this));
-        Events.selectPath.add(this.selectPath.bind(this));
-        Events.clearPoints.add(this.clearRune.bind(this));
         Events.addPath.add(this.addPath.bind(this));
-        Events.deletePoint.add(this.deletePoint.bind(this));
+        Events.addPoint.add(this.addPoint.bind(this));
         Events.addSubPath.add(this.addSubPath.bind(this));
-        Events.deselectAll.add(this.deselectAll.bind(this));
-
         Events.addTablet.add(this.newTablet.bind(this));
-        Events.loadTablet.add(this.loadTablet.bind(this));
-
+        Events.clearPoints.add(this.clearRune.bind(this));
         Events.deletePath.add(this.deletePath.bind(this));
-
+        Events.deletePoint.add(this.deletePoint.bind(this));
+        Events.deselectAll.add(this.deselectAll.bind(this));
         Events.gridUpdate.add(this.updateGrid.bind(this));
-
+        Events.loadTablet.add(this.loadTablet.bind(this));
         Events.nudge.add(this.addTransformToSelected.bind(this));
+        Events.saveTablet.add(this.saveTablet.bind(this));
+        Events.selectPath.add(this.selectPath.bind(this));
+        Events.selectPoint.add(this.selectPoint.bind(this));
 
     }
 
@@ -35,7 +31,7 @@ class ModelController {
     }
 
     newTablet () {
-        this.save();
+        this.saveTablet();
         this.tablet = new TabletModel();
         Events.resetData.dispatch(this.tablet);
         Events.redrawView.dispatch();
@@ -44,7 +40,7 @@ class ModelController {
 
     setTablet (tablet) {
         if (this.tablet) {
-            this.save();
+            this.saveTablet();
         }
         this.tablet = new TabletModel(tablet);
     }
@@ -56,7 +52,7 @@ class ModelController {
         Events.refreshPanels.dispatch();
     }
 
-    save () {
+    saveTablet () {
         localStorage[this.tablet.id] = JSON.stringify(this.tablet);
     }
 
