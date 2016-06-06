@@ -48,20 +48,34 @@ ul, li {
     .tablet-previews .tablet-preview svg {
       width: auto;
       height: auto;
-      max-width: 100%; }
+      max-width: 100%;
+      max-height: 100%; }
 
 header {
   position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  padding: 12px;
-  background: #f4f4f4; }
+  left: 6px;
+  top: 6px;
+  width: auto;
+  padding: 6px;
+  background: #42494a;
+  border-radius: 3px;
+  z-index: 9999;
+  display: flex; }
   header strong {
     display: inline-block;
     line-height: 1.8em;
     margin-right: 12px;
     font-size: 2rem; }
+  header .logo {
+    z-index: 9999;
+    height: auto;
+    padding: 0 6px 0 0; }
+    header .logo img {
+      height: 18px;
+      margin: 0;
+      padding: 3px;
+      background: black;
+      display: block; }
 
 html, body {
   height: 100%;
@@ -70,19 +84,6 @@ html, body {
 body {
   padding: 0;
   margin: 0; }
-
-.logo {
-  position: fixed;
-  z-index: 9999;
-  height: auto;
-  text-direction: ttb;
-  padding: 6px; }
-  .logo img {
-    width: 18px;
-    margin: 0;
-    padding: 3px;
-    background: black;
-    display: block; }
 
 #rune-panels {
   position: fixed;
@@ -108,10 +109,15 @@ body {
   left: 0;
   right: 20%;
   height: 120px; }
+  #rune-tabs > div {
+    height: 100%;
+    display: flex;
+    align-items: stretch; }
   #rune-tabs .panel {
     width: 40%;
     height: 100%;
-    overflow-y: scroll; }
+    overflow-y: scroll;
+    margin-right: 6px; }
 
 .panel {
   height: auto;
@@ -144,7 +150,18 @@ body {
   .panel .pane {
     padding: 12px;
     background: #3b3935;
-    color: white; }
+    color: white;
+    box-sizing: border-box; }
+  .panel .pane-half {
+    width: 50%;
+    float: left; }
+  .panel .pane .pane.pane-half {
+    padding: 0;
+    padding-left: 0 3px;
+    background: none; }
+    .panel .pane .pane.pane-half:first-child {
+      padding-left: 0;
+      padding-right: 3px; }
 
 .dialogue {
   min-width: 30%;
@@ -169,7 +186,8 @@ button {
     color: black; }
 
 label {
-  display: block; }
+  display: block;
+  color: white; }
 
 input,
 textarea {
@@ -180,7 +198,8 @@ textarea {
   font-family: "Inconsolata", sans-serif;
   color: white;
   display: inline-block;
-  background: #42494a; }
+  background: #42494a;
+  width: 100%; }
 
 input {
   border-radius: 2px; }
@@ -191,28 +210,33 @@ input {
   background: #e4e4e4; }
 
 #rune-actionbar {
-  display: inline-block;
-  position: fixed;
-  top: 0;
-  left: 48px;
-  z-index: 999; }
+  display: inline-block; }
   #rune-actionbar ul {
-    padding: 0 0 0 0;
-    margin: 0; }
+    padding: 0;
+    margin: 0;
+    display: flex; }
     #rune-actionbar ul li {
-      display: inline-block;
       margin-right: 6px; }
+      #rune-actionbar ul li:last-child {
+        margin: 0; }
       #rune-actionbar ul li a {
+        cursor: pointer; }
+      #rune-actionbar ul li a,
+      #rune-actionbar ul li span {
+        display: block;
         font-size: 13px;
-        cursor: pointer;
         padding: 6px 12px;
         background: black;
-        color: #ece5d4;
-        border-radius: 0 0 3px 3px;
+        color: white;
         text-decoration: none;
+        background: #42494a;
         font-weight: bold; }
-        #rune-actionbar ul li a:hover {
-          text-decoration: underline; }
+      #rune-actionbar ul li a:hover {
+        background: #27dded;
+        color: black; }
+      #rune-actionbar ul li span {
+        background: #ece5d4;
+        color: #3b3935; }
 
 .switch,
 .button {

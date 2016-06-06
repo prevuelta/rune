@@ -74,23 +74,16 @@ let Arc = React.createClass({
         let arc = this.state.arc;
         let directionSymbol = this.state.arc.direction ? "⤿" : "⤾";
         return  <div>
-                    Arc<br/>
                     Size: <strong>π/</strong>
                     <input
                         type="text"
                         defaultValue={arc.size}
                         onChange={this.updateArc.bind(this, 'size', arc)}
                         />
-                    Center
                     <XYInput
                         change={this.updateCenter}
                         value={this.state.arc.center}
                         label="Center" />
-                    <input
-                        type="text"
-                        defaultValue={arc.center.x + ',' + arc.center.y}
-                        onChange={this.updateArc.bind(this, 'center', arc)}
-                       />
                     <Button
                         handler={this.updateArc.bind(this, 'direction', arc)}
                         symbol={directionSymbol}>

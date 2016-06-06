@@ -63,7 +63,14 @@ class RuneModel {
         }
         point.setSelected(true);
         this.selectedPoint = point;
+    }
 
+    nextPoint () {
+        
+    }
+
+    prevPoint () {
+        
     }
 
     updateGrid (grid) {

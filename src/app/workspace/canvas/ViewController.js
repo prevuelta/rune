@@ -1,3 +1,5 @@
+'use strict';
+
 let GridView = require('./GridView.js');
 let RuneView = require('./RuneView.js');
 let Util = require('../../global/Util');
@@ -5,6 +7,8 @@ let Events = require('../../global/Events');
 let paper = require('paper');
 
 let Canvas = require('./CanvasService');
+
+let SVG = require('../../global/SVGService');
 
 /* ========== Render Tablet ========== */
 
@@ -102,7 +106,9 @@ class ViewController {
 
         svgString = svgString.replace(/\<svg/, `<svg viewBox="0,0,${bounds.width},${bounds.height}" `);
 
-        this.tablet.renderedSVG = svgString;
+        let optimisedString = SVG.optimise(svgString);
+
+        this.tablet.renderedSVG = optimisedString;
     }
 }
 

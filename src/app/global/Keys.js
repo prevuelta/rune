@@ -17,7 +17,9 @@ const keyMap = {
     up: 38,
     right: 39,
     down: 40,
-    p: 80
+    p: 80,
+    k: 75,
+    l: 76
 };
 
 var superNudgeVectors = {
@@ -49,9 +51,9 @@ let Keys = {
         document.addEventListener('keydown', function(e) {
             let hasModifier = MODIFIERS.find(mod => e[mod]);
 
-            let ref = `${hasModifier && hasModifier + '+' || ''}${e.keyCode}`;
+            console.log("Keycode", e.keyCode);
 
-            console.log(ref);
+            let ref = `${hasModifier && hasModifier + '+' || ''}${e.keyCode}`;
 
             if (_this.maps[ref] && e.target.tagName !== 'INPUT') {
                 e.preventDefault();
@@ -67,6 +69,15 @@ let Keys = {
             Events.display.dispatch();
         });
 
+        this.mapKey(this.key.l, () => {
+            Events.nextPoint.dispatch();
+        });
+
+
+        this.mapKey(this.key.k, () => {
+            Events.prevPoint.dispatch();
+        });
+
         Object.keys({
             'up' : this.key.up,
             'down' : this.key.down,
@@ -75,9 +86,11 @@ let Keys = {
         }).forEach(key => {
             Keys.mapKey(`shiftKey+${Keys.key[key]}`, () => {
                 Events.nudge.dispatch(superNudgeVectors[key]);
+                Events.redrawPanels.dispatch();
             });
             Keys.mapKey(`${Keys.key[key]}`, () => {
                 Events.nudge.dispatch(nudgeVectors[key]);
+                Events.redrawPanels.dispatch();
             });
         });
 

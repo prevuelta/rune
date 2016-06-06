@@ -73,12 +73,6 @@ class ModelController {
         Events.refreshPanels.dispatch();
     }
 
-    deletePath (p) {
-        this.activeRune.deletePath(p);
-        Events.redrawView.dispatch();
-        Events.refreshPanels.dispatch();
-    }
-
     addPath () {
         this.activeRune.addPath();
         Events.reloadPanels.dispatch();
@@ -89,6 +83,12 @@ class ModelController {
         this.activeRune.addSubPath(path);
         Events.reloadPanels.dispatch();
         Events.redrawView.dispatch();
+    }
+
+    deletePath (p) {
+        this.activeRune.deletePath(p);
+        Events.redrawView.dispatch();
+        Events.refreshPanels.dispatch();
     }
 
     clearRune() {

@@ -1,4 +1,5 @@
 let paper = require('paper');
+let Events = require('../../global/events');
 
 class CanvasService {
     constructor () {
@@ -8,12 +9,26 @@ class CanvasService {
         paper.setup(this.canvas).install(window);
         paper.settings.handleSize = 8;
 
+        this.resetCanvasPosition();
+
         this.layers = {
+        	board: new paper.Layer(),
             grid: new paper.Layer(),
             render: new paper.Layer(),
             overlay: new paper.Layer(),
             interactive: new paper.Layer()
         };
+
+        Events.canvasMove.add(this.setCanvasPosition.bind(this));
+        Events.canvasCenter.add(this.resetCanvasPosition.bind(this));
+    }
+
+    setCanvasPosition (point) {
+    	this.canvasPosition = point;
+    }
+
+    resetCanvasPosition () {
+    	this.canvasPosition = new paper.Point(0, 0);
     }
 
     clearAllLayers () {
@@ -38,9 +53,11 @@ class CanvasService {
     }
 
     centerLayers () {
-        this.layers.interactive.translate(paper.view.center);
-        this.layers.render.translate(paper.view.center);
-        this.layers.overlay.translate(paper.view.center);
+    	let canvasPosition = paper.view.center.add(this.canvasPosition);
+        this.layers.board.translate(canvasPosition);
+        this.layers.interactive.translate(canvasPosition);
+        this.layers.render.translate(canvasPosition);
+        this.layers.overlay.translate(canvasPosition);
     }
 }
 

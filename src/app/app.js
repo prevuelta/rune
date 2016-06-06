@@ -25,6 +25,8 @@ class App {
             return Util.getLocalData(ref);
         });
 
+        console.log("Saved tablets", this.savedTablets);
+
         let data = this.savedTablets[0];
         this.data = DataController;
         this.data.setTablet(data);

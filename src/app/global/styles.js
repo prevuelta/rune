@@ -4,6 +4,9 @@ let constants = require('./const');
 let paper = require('paper');
 
 module.exports = {
+    board: {
+        fillColor: '#ffffff'
+    },
     node : {
         normal: {
             strokeWidth: 2,

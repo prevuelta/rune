@@ -39,5 +39,19 @@
         padding: $u;
         background: $cream-dark;
         color: white;
+        box-sizing: border-box;
+    }
+    .pane-half {
+    	width: 50%;
+    	float: left;
+    }
+    .pane .pane.pane-half {
+    	padding: 0;
+    	padding-left: 0 $qu;
+    	background: none;
+    	&:first-child {
+    		padding-left: 0;
+    		padding-right: $qu;
+    	}
     }
 }

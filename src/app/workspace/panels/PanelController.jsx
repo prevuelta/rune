@@ -7,6 +7,7 @@ let React = require('react');
 let Events = require('../../global/Events');
 let PanelWrapper = require('./PanelWrapper.jsx');
 let TabletList = require('./TabletList.jsx');
+let Canvas = require('./Canvas.jsx');
 
 let allPanels = [
     require('./InspectPath.jsx'),
@@ -70,14 +71,35 @@ class PanelController {
             }
         });
 
+        let CanvasPanel = React.createClass({
+            render: function () {
+                let Component = Canvas.panel;
+                return (<PanelWrapper options={{title : this.props.title, collapsed: this.props.collapsed }} >
+                     <Component />
+                </PanelWrapper>);
+            }
+        });
+
         let tabletPanel = React.render(
-            <TabletListPanel
+            <div>
+                <TabletListPanel
                 title={TabletList.title}
                 collapsed={TabletList.collapsed}
                 tablets={_this.tablets}
-                tablet={this.app.data.tablet}/>,
+                tablet={this.app.data.tablet}/>
+                <CanvasPanel
+                title={Canvas.title}
+                collapsed={Canvas.collapsed}/>
+            </div>,
              document.getElementById('rune-tabs')
         );
+
+        // let canvasPanel = React.render(
+        //     <CanvasPanel
+        //         title={Canvas.title}
+        //         collapsed={Canvas.collapsed}/>,
+        //      document.getElementById('rune-tabs')
+        // );
 
         function reloadHandler () {
             panels.replaceState({'data' : _this.app.data, 'panels' : allPanels, canvas: _this.app.canvas });

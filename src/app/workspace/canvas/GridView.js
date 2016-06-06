@@ -49,25 +49,34 @@ class GridView {
     	this.options = options;
     	this.points = [];
 
-        let col, row;
-        col = row = -(this.options.units/2) + 0.5;
+        this.gridUnits = 20;
 
-        for (let i = 1; i <= this.options.units * this.options.units; i++) {
+        let col, row;
+        col = row = -(this.gridUnits/2) + 0.5;
+
+        for (let i = 1; i <= this.gridUnits * this.gridUnits; i++) {
             this.points.push(new PointModel(null, row, col));
-            if (i && i % this.options.units == 0) {
+            if (i && i % this.gridUnits == 0) {
                 row++;
-                col = -(this.options.units/2) + 0.5;
+                col = -(this.gridUnits/2) + 0.5;
             } else {
                 col++;
             }
         }
+    }
 
+    drawToBoard () {
+        let boardX = this.options.board.x * this.options.res.x;
+        let boardY = this.options.board.y * this.options.res.y;
+        console.log("Artboard:", boardX, boardY);
+        let artBoard = new paper.Path.Rectangle(-boardX/2,-boardY/2, boardX, boardY);
+        artBoard.style = styles.board;
     }
 
 	draw () {
-
+        Canvas.drawToLayer('board', this.drawToBoard.bind(this));
         Canvas.drawToLayer('grid', this.drawToGrid.bind(this));
-        this.createGridPoints();
+        Canvas.drawToLayer('grid', this.createGridPoints.bind(this));
 
 	}
 
@@ -82,7 +91,7 @@ class GridView {
         rowLines = new paper.Group();
         colLines = new paper.Group();
 
-        for (let i = -this.options.units/2; i < this.options.units/2; i++) {
+        for (let i = -this.gridUnits/2; i < this.gridUnits/2; i++) {
             rowLines.addChild(this.xLine(i * y));
             colLines.addChild(this.yLine(i * x));
         }

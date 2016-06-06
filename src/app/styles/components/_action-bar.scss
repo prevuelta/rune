@@ -1,28 +1,40 @@
 #rune-actionbar {
 	display: inline-block;
-    position: fixed;
-    top: 0;
-    left: $u4;
-    z-index: 999;
+    // position: fixed;
+    // top: $u;
+    // left: $u4;
+    // z-index: 999;
 	ul {
-		padding: 0 0 0 0;
+		padding: 0;
 		margin: 0;
+		display: flex;
 		li {
-			display: inline-block;
 			// padding-right: $u;
 			margin-right: $hu;
+			&:last-child {
+				margin: 0;
+			}
 			a {
-				font-size: 13px;
 				cursor: pointer;
+			}
+			a,
+			span {
+				display: block;
+				font-size: 13px;
 				padding: $hu $u;
 				background: black;
-				color: $cream;
-				border-radius: 0 0 $qu $qu;
+				color: white;
 				text-decoration: none;
-				&:hover {
-					text-decoration: underline;
-				}
+				background: $sky-dark;
 				font-weight: bold;
+			}
+			a:hover {
+				background: $sky;
+				color: black;
+			}
+			span {
+				background: $cream;
+				color: $cream-dark;
 			}
 		}
 	}

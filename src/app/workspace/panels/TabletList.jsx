@@ -32,11 +32,8 @@ module.exports = {
                                 return (
                                 <div
                                     className="tablet-preview"
+                                    dangerouslySetInnerHTML={{__html: tablet.renderedSVG}}
                                     onClick={this.loadTablet.bind(this, tablet)}>
-                                    <div
-                                        dangerouslySetInnerHTML={{__html: tablet.renderedSVG}}
-                                        >
-                                    </div>
                                 </div>)
                             })
                         }

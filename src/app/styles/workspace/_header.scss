@@ -1,14 +1,36 @@
 header {
 	position: fixed;
-	left: 0;
-	top: 0;
-    right: 0;
-    padding: $u;
-    background: #f4f4f4;
+	left: $hu;
+	top: $hu;
+	width: auto;
+    padding: $hu;
+    background: $sky-dark;
+    border-radius: $qu;
+    z-index: 9999;
+    display: flex;
 	strong{
 		display: inline-block;
 		line-height: 1.8em;
 		margin-right: $u;
 		font-size: 2rem;
+	}
+	.logo {
+		// border-radius: $qu;
+	    // position: fixed;
+	    z-index: 9999;
+	    // display: flex;
+	    // height: $u3;
+	    height: auto;
+	    // text-direction: ttb;
+	    // font-size: 13px;
+	    padding: 0 $hu 0 0;
+	    img {
+	       // width: $uh;
+	       height: $uh;
+		   margin: 0;
+		   padding: $qu;
+		   background: black;
+	       display: block;
+		}
 	}
 }

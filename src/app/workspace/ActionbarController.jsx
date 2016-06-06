@@ -5,13 +5,6 @@ let Events = require('../global/Events');
 let React = require('react');
 let paper = require('paper');
 
-// var SVGO = require('svgo'),
-//     svgo = new SVGO({
-//          plugins: [
-//          ],
-//          multipass: true
-//     });
-
 // React components:
 let Dialogue = require('../components/Dialogue.jsx');
 let Button = require('../components/Button.jsx');
@@ -49,14 +42,6 @@ class ActionBar {
     			action: function(e) {
     				e.preventDefault();
                     Events.display.dispatch();
-    			}
-    		},
-    		{
-    			id: "rune",
-    			title: "Add rune",
-    			action: function(e) {
-    				e.preventDefault();
-    				app.tablet.addRune();
     			}
     		},
     		{
@@ -114,9 +99,16 @@ class ActionBar {
     	    render: function() {
     	        return (
     				<ul>
+                        <li><span>Rüne</span></li>
     					{
     						this.props.actions.map(function(action, i) {
-    							return <li key={action.id}><a className="action" data-action={ action.id }>{ action.title }</a></li>;
+    							return <li key={action.id}>
+                                    <a
+                                        className="action"
+                                        data-action={ action.id }>
+                                        { action.title }
+                                    </a>
+                                </li>;
     						})
     					}
     				</ul>

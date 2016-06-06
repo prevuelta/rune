@@ -17,19 +17,23 @@ module.exports = React.createClass({
     render: function() {
         return (
             <div>
-                {this.props.label}
-                <input
-                    className="input-x"
-                    defaultValue={this.state.coords.x}
-                    onChange={this.updateX}
-                    type="number"
-                    step="1" />
-                <input
-                    className="input-y"
-                    defaultValue={this.state.coords.y}
-                    onChange={this.updateY}
-                    type="number"
-                    step="1" />
+                <label>{this.props.label}</label>
+                <div className="pane pane-half">
+                    <input
+                        className="input-x"
+                        defaultValue={this.state.coords.x}
+                        onChange={this.updateX}
+                        type="number"
+                        step="1" />
+                </div>
+                <div className="pane pane-half">
+                    <input
+                        className="input-y"
+                        defaultValue={this.state.coords.y}
+                        onChange={this.updateY}
+                        type="number"
+                        step="1" />
+                </div>
             </div>
         );
     }
