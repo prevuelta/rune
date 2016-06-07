@@ -49,7 +49,7 @@ class GridView {
     	this.options = options;
     	this.points = [];
 
-        this.gridUnits = 20;
+        this.gridUnits = options.grid.size;
 
         let col, row;
         col = row = -(this.gridUnits/2) + 0.5;
@@ -66,8 +66,8 @@ class GridView {
     }
 
     drawToBoard () {
-        let boardX = this.options.board.x * this.options.res.x;
-        let boardY = this.options.board.y * this.options.res.y;
+        let boardX = this.options.board.x * this.options.grid.res.x;
+        let boardY = this.options.board.y * this.options.grid.res.y;
         console.log("Artboard:", boardX, boardY);
         let artBoard = new paper.Path.Rectangle(-boardX/2,-boardY/2, boardX, boardY);
         artBoard.style = styles.board;
@@ -84,7 +84,7 @@ class GridView {
 
         let gridColor = new paper.Color(this.gridColor, 100);
 
-        let {x,y} = this.options.res;
+        let {x,y} = this.options.grid.res;
 
         let rowLines, colLines;
 
@@ -110,7 +110,7 @@ class GridView {
         let _this = this;
 
         this.points.forEach((point) => {
-            _this.gridPoints.addChild(gridPointFactory(point, this.options.res));
+            _this.gridPoints.addChild(gridPointFactory(point, this.options.grid.res));
         });
 
         this.gridPoints.translate(paper.view.center);

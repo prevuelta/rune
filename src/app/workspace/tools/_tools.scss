@@ -1,0 +1,12 @@
+#rune-tools {
+    background: $sky-dark;
+    border-radius: $qu;
+    .tool {
+        padding: $hu;
+        display: flex;
+        .button {
+            margin: 0;
+        }
+        width: auto;
+    }
+}

@@ -102,6 +102,12 @@ body {
   left: 0;
   top: 0; }
 
+#rune-tools {
+  position: fixed;
+  top: 48px;
+  left: 6px;
+  height: auto; }
+
 #rune-tabs {
   position: fixed;
   background: #f4f4f4;
@@ -315,5 +321,15 @@ input {
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.2); }
+
+#rune-tools {
+  background: #42494a;
+  border-radius: 3px; }
+  #rune-tools .tool {
+    padding: 6px;
+    display: flex;
+    width: auto; }
+    #rune-tools .tool .button {
+      margin: 0; }
 
 /*# sourceMappingURL=main.css.map */

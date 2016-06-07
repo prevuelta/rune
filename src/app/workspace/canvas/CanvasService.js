@@ -9,6 +9,10 @@ class CanvasService {
         paper.setup(this.canvas).install(window);
         paper.settings.handleSize = 8;
 
+        this.canvas.addEventListener('click', () => {
+            console.log("yupe");
+        });
+
         this.resetCanvasPosition();
 
         this.layers = {
@@ -16,7 +20,9 @@ class CanvasService {
             grid: new paper.Layer(),
             render: new paper.Layer(),
             overlay: new paper.Layer(),
-            interactive: new paper.Layer()
+            interactive: new paper.Layer(),
+            tools: new paper.Layer()
+
         };
 
         Events.canvasMove.add(this.setCanvasPosition.bind(this));

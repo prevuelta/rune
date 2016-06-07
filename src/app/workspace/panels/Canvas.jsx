@@ -7,19 +7,19 @@ let Events = require('../../global/Events');
 // Components:
 let Button = require('../../components/Button.jsx');
 let Cross = require('../../icons/Cross.jsx');
+let XYInput = require('../../components/XYInput.jsx');
 
 module.exports = {
     title: 'Canvas',
     collapsed: false,
     panel: React.createClass({
         getInitialState : function() {
-            return {tablets: this.props.tablets };
+            return {optiosn: this.props.options };
         },
-        loadTablet: function (tabletId) {
-            Events.loadTablet.dispatch(tabletId);
-        },
-        newTablet: function () {
-            Events.addTablet.dispatch();
+         updateBoard (board) {
+            this.state.options.board = board;
+            this.setState({options: this.state.options});
+            Events.redrawView.dispatch();
         },
         render: function() {
             return (
@@ -28,6 +28,10 @@ module.exports = {
                         <span>Mode</span>
                     </div>
                     <div className="pane pane-half">
+                         <label>Board</label>
+                        <XYInput value={this.state.options.board} change={this.updateBoard}/>
+                        <label>Zoom level</label>
+                        <input type="text" ref="baseUnit" defaultValue={ this.state.options.zoomLevel} />
                         <span>Zoom</span>
                         <Button>
                             <Cross />

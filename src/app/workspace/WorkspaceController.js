@@ -1,14 +1,19 @@
-var ActionBar = require('./ActionBarController.jsx');
-var PanelController = require('./panels/PanelController.jsx');
+'use strict';
 
-function WorkSpaceController(app) {
+let ActionBar = require('./ActionBarController.jsx');
+let PanelController = require('./panels/PanelController.jsx');
+let ToolsController = require('./tools/ToolsController.jsx');
 
-	this.actionBar = new ActionBar(app);
-	this.panels = new PanelController(app, app.savedTablets);
-}
+class WorkSpaceController {
 
-WorkSpaceController.prototype = {
-	constructor: WorkSpaceController,
+    constructor (app) {
+
+        // TODO: refactor with service pattern
+        this.actionBar = new ActionBar(app);
+        // TODO: refactor with service pattern
+        this.panels = new PanelController(app, app.savedTablets);
+        this.tools = ToolsController;
+    }
 }
 
 module.exports = WorkSpaceController;

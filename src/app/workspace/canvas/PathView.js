@@ -13,9 +13,9 @@ let Canvas = require('./CanvasService');
 
 class RunePathView {
 
-    constructor (path, grid) {
+    constructor (path, gridOptions) {
 
-        this.grid = grid;
+        this.grid = gridOptions;
 
         let style = path.isClosed ? styles.path.filled : path.isActive ? styles.path.active : styles.path.outline;
         let paperPath;

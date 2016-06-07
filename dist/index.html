@@ -1,50 +1,40 @@
 <!DOCTYPE html>
 <html>
-	<head>
+    <head>
 
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<title>Rüne | Awesome sauce</title>
-		<meta name="description" content="">
+        <title>Rüne | Awesome sauce</title>
+        <meta name="description" content="">
 
-		<link href="styles/main.css" rel='stylesheet' type="text/css">
+        <link href="styles/main.css" rel='stylesheet' type="text/css">
 
-		<!-- Font -->
+        <!-- Font -->
 
         <link href='https://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
+    </head>
 
-	</head>
+    <body>
+        <header>
+            <nav id="rune-actionbar">
+            </nav>
+        </header>
 
-	<body>
-		<header>
-			<nav id="rune-actionbar">
-				
-			</nav>
-		</header>
-		<div id="rune-canvas-panel">
-			<canvas id="rune-canvas" resize>
-			</canvas>
-		</div>
-
-		<div id="rune-panels">
-
-		</div>
-
-        <div id="rune-tabs">
-
+        <div id="rune-canvas-panel">
+            <canvas id="rune-canvas" resize></canvas>
         </div>
 
-		<div id="rune-overlay">
-		</div>
-
+        <div id="rune-tools"></div>
+        <div id="rune-panels"></div>
+        <div id="rune-tabs"></div>
+        <div id="rune-overlay"></div>
         <canvas id="rune-render"></canvas>
 
-		<script src="lib.min.js" sync></script>
-		<script src="app.min.js" sync></script>
+        <script src="lib.min.js" sync></script>
+        <script src="app.min.js" sync></script>
 
-	</body>
-
+    </body>
 </html>

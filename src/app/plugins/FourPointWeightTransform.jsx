@@ -97,7 +97,7 @@ module.exports = function() {
         collapsed: true,
         panel: React.createClass({
             getInitialState : function() {
-                return {data: data.gridOptions };
+                return {data: data.options.grid };
             },
             triggerTransform: function() {
                 console.log("Doing the 4pt");

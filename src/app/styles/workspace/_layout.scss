@@ -30,6 +30,13 @@ body {
 	// margin-top:
 }
 
+#rune-tools {
+    position: fixed;
+    top: $u4;
+    left: $hu;
+    height: auto;
+}
+
 #rune-tabs {
     position: fixed;
     background: #f4f4f4;

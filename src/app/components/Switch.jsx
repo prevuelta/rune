@@ -7,7 +7,9 @@ module.exports = React.createClass({
         return {toggle: this.props.toggle};
     },
     toggle: function () {
-        this.props.onToggle();
+        if (this.props.onToggle) {
+            this.props.onToggle();
+        }
         this.setState({toggle: !this.state.toggle});
     },
     render: function() {

@@ -75,7 +75,7 @@ class PanelController {
             render: function () {
                 let Component = Canvas.panel;
                 return (<PanelWrapper options={{title : this.props.title, collapsed: this.props.collapsed }} >
-                     <Component />
+                     <Component options={_this.app.data.tablet.options} />
                 </PanelWrapper>);
             }
         });

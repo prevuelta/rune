@@ -22,6 +22,7 @@ class ModelController {
         Events.saveTablet.add(this.saveTablet.bind(this));
         Events.selectPath.add(this.selectPath.bind(this));
         Events.selectPoint.add(this.selectPoint.bind(this));
+        Events.zoomIn.add(this.zoomIn.bind(this));
 
     }
 
@@ -124,6 +125,11 @@ class ModelController {
         this.activeRune.selectPath(path);
         Events.refreshPanels.dispatch();
         Events.draw.dispatch();
+    }
+
+    zoomIn () {
+        this.tablet.increaseZoom();
+        Events.gridUpdate.dispatch();
     }
 }
 

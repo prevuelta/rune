@@ -41,7 +41,7 @@ class ViewController {
     createRuneView () {
         this.runeView = new RuneView(
             this.tablet.activeRune,
-            this.tablet.gridOptions
+            this.tablet.options.grid
         );
     }
 
@@ -51,7 +51,7 @@ class ViewController {
     }
 
 	setupGridView () {
-		this.gridView = new GridView(this.tablet.gridOptions);
+		this.gridView = new GridView(this.tablet.options);
 	}
 
     resizeHandler () {
