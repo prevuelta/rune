@@ -10,7 +10,10 @@ let Dialogue = require('../components/Dialogue.jsx');
 let Button = require('../components/Button.jsx');
 
 class ActionBar {
-    constructor (app) {
+    constructor () {
+    }
+
+    loadApp (app) {
 
     	var actionBar = this;
     	actionBar.app = app;
@@ -123,4 +126,4 @@ class ActionBar {
     }
 }
 
-module.exports = ActionBar;
+module.exports = new ActionBar();

@@ -6,44 +6,54 @@ let Draggable = require('react-draggable');
 let React = require('react');
 let Events = require('../../global/Events');
 let PanelWrapper = require('./PanelWrapper.jsx');
-let TabletList = require('./TabletList.jsx');
-let Canvas = require('./Canvas.jsx');
 
 let allPanels = [
-    require('./InspectPath.jsx'),
+    require('./TabletList.jsx'),
     require('./InspectPoint.jsx'),
-    require('./GridManager.jsx')
+    require('./InspectPath.jsx'),
+    require('./GridManager.jsx'),
+    require('./Canvas.jsx')
 ];
 
 class PanelController {
 
-    constructor (app, tablets) {
+    loadApp (app) {
         this.app = app;
-        this.tablets = tablets;
         this.init();
     }
 
     init () {
 
-        let _this = this;
+        let app = this.app;
 
         let Panels = React.createClass({
             getInitialState: function () {
-                return { panels : this.props.panels, data : this.props.data, canvas: this.props.canvas };
+                return { 
+                    panels : this.props.panels,
+                    data : this.props.data,
+                    canvas: this.props.canvas,
+                    tablets: this.props.tablets
+                };
             },
             componentWillReceiveProps: function (nextProps) {
                 return nextProps;
             },
             render: function() {
-                let _this = this;
                 return (
                     <div>
                         {
                             this.state.panels.map((panel) => {
                                 let Component = panel.panel;
-                                return <PanelWrapper key={panel.title} options={{title : panel.title, collapsed: panel.collapsed }} >
-                                     <Component data={_this.state.data} canvas={_this.state.canvas} />
-                                 </PanelWrapper>;
+                                return (
+                                    <PanelWrapper
+                                        key={panel.title}
+                                        options={{title : panel.title, collapsed: panel.collapsed }} >
+                                         <Component
+                                            data={this.state.data}
+                                            canvas={this.state.canvas}
+                                            tablets={this.state.tablets} />
+                                     </PanelWrapper>
+                                );
                             })
                         }
                     </div>
@@ -54,79 +64,25 @@ class PanelController {
         // Plugin panels
         let panels = React.render(
             <Panels
-                panels={ allPanels}
-                data={_this.app.data}
-                canvas={_this.app.canvas} />,
+                panels={allPanels}
+                data={app.data}
+                canvas={app.canvas}
+                tablets={app.savedTablets} />,
             document.getElementById('rune-panels')
         );
 
-        let TabletListPanel = React.createClass({
-            render: function () {
-                let Component = TabletList.panel;
-                return (<PanelWrapper options={{title : this.props.title, collapsed: this.props.collapsed }} >
-                     <Component
-                        tablets={this.props.tablets}
-                        activeTablet={this.props.tablet} />
-                </PanelWrapper>);
-            }
-        });
-
-        let CanvasPanel = React.createClass({
-            render: function () {
-                let Component = Canvas.panel;
-                return (<PanelWrapper options={{title : this.props.title, collapsed: this.props.collapsed }} >
-                     <Component options={_this.app.data.tablet.options} />
-                </PanelWrapper>);
-            }
-        });
-
-        let tabletPanel = React.render(
-            <div>
-                <TabletListPanel
-                title={TabletList.title}
-                collapsed={TabletList.collapsed}
-                tablets={_this.tablets}
-                tablet={this.app.data.tablet}/>
-                <CanvasPanel
-                title={Canvas.title}
-                collapsed={Canvas.collapsed}/>
-            </div>,
-             document.getElementById('rune-tabs')
-        );
-
-        // let canvasPanel = React.render(
-        //     <CanvasPanel
-        //         title={Canvas.title}
-        //         collapsed={Canvas.collapsed}/>,
-        //      document.getElementById('rune-tabs')
-        // );
 
         function reloadHandler () {
-            panels.replaceState({'data' : _this.app.data, 'panels' : allPanels, canvas: _this.app.canvas });
+            panels.replaceState({'data' : app.data, 'panels' : allPanels, canvas: app.canvas, tablets: app.savedTablets });
         };
 
-        Events.reloadPanels.add(reloadHandler.bind(_this));
+        Events.reloadPanels.add(reloadHandler.bind(app));
 
         Events.refreshPanels.add(() => {
-            panels.setState({'data' : _this.app.data});
-            tabletPanel.setState({tablet: _this.app.data.tablet});
+            panels.setState({'data' : app.data});
         });
 
     }
 }
 
-// <Draggable
-//     start={{x: offsetX + 800, y: offsetY }}
-//     onStart={this.handleStart}
-//     handle=".handle"
-//     >
-//     <div className="panel">
-//         <div className="handle">{ this.props.options.title }<span className="toggle">-</span></div>
-//         <div className="panel-content">
-//             { this.props.children }
-//         </div>
-//     </div>
-// </Draggable>
-
-
-module.exports = PanelController;
+module.exports = new PanelController();

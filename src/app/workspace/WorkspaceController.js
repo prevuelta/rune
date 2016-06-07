@@ -6,14 +6,13 @@ let ToolsController = require('./tools/ToolsController.jsx');
 
 class WorkSpaceController {
 
-    constructor (app) {
+    loadApp (app) {
 
         // TODO: refactor with service pattern
-        this.actionBar = new ActionBar(app);
+        ActionBar.loadApp(app);
         // TODO: refactor with service pattern
-        this.panels = new PanelController(app, app.savedTablets);
-        this.tools = ToolsController;
+        PanelController.loadApp(app);
     }
 }
 
-module.exports = WorkSpaceController;
+module.exports = new WorkSpaceController();

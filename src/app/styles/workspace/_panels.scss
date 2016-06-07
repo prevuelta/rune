@@ -35,6 +35,9 @@
 	.toggle {
 		float: right;
 	}
+	.pane-group {
+		display: flex;
+	}
     .pane {
         padding: $u;
         background: $cream-dark;
@@ -43,7 +46,6 @@
     }
     .pane-half {
     	width: 50%;
-    	float: left;
     }
     .pane .pane.pane-half {
     	padding: 0;

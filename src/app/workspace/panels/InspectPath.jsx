@@ -10,6 +10,7 @@ let Button = require('../../components/Button.jsx');
 let ButtonGroup = require('../../components/ButtonGroup.jsx');
 let Cross = require('../../icons/Cross.jsx');
 let X = require('../../icons/X.jsx');
+let Stack = require('../../icons/Stack.jsx');
 let PointIcon = require('../../icons/Point.jsx');
 let PathIcon = require('../../icons/Path.jsx');
 
@@ -49,7 +50,7 @@ let Path = React.createClass({
     },
     changeHandler: function () {
         this.state.path.isClosed = !this.state.path.isClosed;
-        this.setState({path: this.state.path});
+        this.setState({path: this.state.path, collapsed: false});
         Events.redrawView.dispatch();
     },
     componentWillReceiveProps : function (nextProps) {
@@ -68,6 +69,9 @@ let Path = React.createClass({
     addSubPath: (path) => {
         console.log("should be");
         Events.addSubPath.dispatch(path);
+    },
+    toggleCollapsed: function () {
+        this.setState({collapsed: !this.state.collapsed});
     },
     render: function () {
         return (
@@ -90,9 +94,16 @@ let Path = React.createClass({
                             handler={this.removePath.bind(this, this.state.path)}>
                             <X/>
                         </Button>
+                        <Button
+                            handler={this.toggleCollapsed}>
+                            <Stack/>
+                        </Button>
                     </ButtonGroup>
                 </Sheet>
-                { this.state.path.points.map((p) => <Point point={p}></Point> ) }
+                { !this.state.collapsed ?
+                    this.state.path.points.map((p) => <Point point={p}></Point> )
+                    : null
+                }
                 {
                     this.state.path.hasChildren ?
                         this.state.path.children.map((p) => {

@@ -153,14 +153,15 @@ body {
       background: red; }
   .panel .toggle {
     float: right; }
+  .panel .pane-group {
+    display: flex; }
   .panel .pane {
     padding: 12px;
     background: #3b3935;
     color: white;
     box-sizing: border-box; }
   .panel .pane-half {
-    width: 50%;
-    float: left; }
+    width: 50%; }
   .panel .pane .pane.pane-half {
     padding: 0;
     padding-left: 0 3px;

@@ -14,7 +14,7 @@ module.exports = {
     collapsed: false,
     panel: React.createClass({
         getInitialState : function() {
-            return {optiosn: this.props.options };
+            return {options: this.props.data.tablet.options };
         },
          updateBoard (board) {
             this.state.options.board = board;
@@ -24,12 +24,12 @@ module.exports = {
         render: function() {
             return (
                 <div>
-                    <div className="pane pane-half">
+                    <div className="pane">
                         <span>Mode</span>
                     </div>
-                    <div className="pane pane-half">
+                    <div className="pane">
                          <label>Board</label>
-                        <XYInput value={this.state.options.board} change={this.updateBoard}/>
+                        <XYInput value={this.state.options.board} change={this.updateBoard} />
                         <label>Zoom level</label>
                         <input type="text" ref="baseUnit" defaultValue={ this.state.options.zoomLevel} />
                         <span>Zoom</span>

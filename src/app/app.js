@@ -28,13 +28,14 @@ class App {
         console.log("Saved tablets", this.savedTablets);
 
         let data = this.savedTablets[0];
+        
         this.data = DataController;
         this.data.setTablet(data);
 
         this.view = ViewController;
         this.view.loadTablet(this.data.tablet)
 
-        this.workspace = new WorkSpaceController(this);
+        WorkSpaceController.loadApp(this);
 
         let app = this;
         //setInterval(this.save.bind(this), 20000);
