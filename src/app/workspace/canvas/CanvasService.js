@@ -7,6 +7,7 @@ class CanvasService {
         // Setup paper
         this.canvas = document.getElementById('rune-canvas');
         paper.setup(this.canvas).install(window);
+        this.view = paper.View['_viewsById']['rune-canvas'];
         paper.settings.handleSize = 8;
 
         this.canvas.addEventListener('click', () => {

@@ -94,7 +94,7 @@ class ViewController {
 
         let renderCanvas = new paper.Project(document.getElementById('rune-render'));
 
-        renderCanvas.addChild(Canvas.layers.render);
+        renderCanvas.addChild(Canvas.layers.render.clone());
 
         let bounds = renderCanvas.layers[0].bounds;
         renderCanvas.layers[0].translate(-bounds.x, -bounds.y);
@@ -109,6 +109,9 @@ class ViewController {
         let optimisedString = SVG.optimise(svgString);
 
         this.tablet.renderedSVG = optimisedString;
+
+        // TODO: Sort this out, gross way of getting to original projec
+        Canvas.view['_project'].activate();
     }
 }
 
