@@ -7,6 +7,12 @@ let React = require('react');
 let Events = require('../../global/Events');
 let PanelWrapper = require('./PanelWrapper.jsx');
 
+// Componente
+let Button = require('../../components/Button.jsx');
+
+// Icons
+let StackIcon = require('../../icons/Stack.jsx');
+
 let allPanels = [
     require('./TabletList.jsx'),
     require('./InspectPoint.jsx'),
@@ -28,19 +34,31 @@ class PanelController {
 
         let Panels = React.createClass({
             getInitialState: function () {
-                return { 
+                return {
                     panels : this.props.panels,
                     data : this.props.data,
                     canvas: this.props.canvas,
-                    tablets: this.props.tablets
+                    tablets: this.props.tablets,
+                    collapsed: false
                 };
             },
             componentWillReceiveProps: function (nextProps) {
                 return nextProps;
             },
+            toggleCollapsed () {
+                this.setState({collapsed: !this.state.collapsed});
+            },
             render: function() {
+                let className = this.state.collapsed ? 'collapsed' : '';
                 return (
-                    <div>
+                    <div
+                        className={className}>
+                        <div className="collapse-tab"
+                             onClick={this.toggleCollapsed}>
+                            <Button>
+                                <StackIcon />
+                            </Button>
+                        </div>
                         {
                             this.state.panels.map((panel) => {
                                 let Component = panel.panel;

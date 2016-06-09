@@ -10,7 +10,6 @@
 "workspace/tablet-list",
 "workspace/header",
 "workspace/layout",
-"workspace/panels",
 "workspace/dialogue",
 "components/form",
 "components/canvas",
@@ -20,5 +19,7 @@
 "components/overlay";
 
 // TODO: move component styles into app
+// Workspace
 @import
-"../workspace/tools/tools";
+"../workspace/tools/tools",
+"../workspace/panels/panels";

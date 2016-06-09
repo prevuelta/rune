@@ -1,0 +1,105 @@
+#rune-panels {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    box-sizing: border-box;
+    width: auto;
+    & > div {
+        width: auto;
+        height: 100%;
+        box-sizing: border-box;
+        padding: $qu;
+        overflow-y: auto;
+        overflow-x: visible;
+        background: $neutral-grey-dark;
+        border-left: $hu solid $cream-dark;
+        &:hover {
+            // border-color: $sky;
+        }
+        &.collapsed {
+            width: 0;
+            .panel { display: none;}
+        }
+        .collapse-tab {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            height: $u4;
+            width: $uh;
+            position: absolute;
+            top: 50%;
+            margin-top: -$u2;
+            left: -$uh;
+            border-radius: $hu 0 0 $hu;
+            z-index: 9999;
+            background: $cream-dark;
+            svg {
+                width: $ttu;
+                height: $ttu;
+                transform: rotate(90deg);
+            }
+            &:hover {
+                background: $sky;
+            }
+        }
+    }
+}
+
+.panel {
+    height: auto;//$u * 16;
+    width: 100%;
+    margin-bottom: $hu;
+    background: $sky-dark;
+    border-radius: $hu;
+    border-bottom: 1px solid black;
+    &.ui-draggable-dragging {
+        z-index: 9999;
+    }
+    .panel-content {
+        font-size: 14px;
+        padding: $qu;
+    }
+    .handle {
+        cursor: pointer;
+        color: white;
+        // background: #d4d4d4;
+        width: 100%;
+        height: $u2;
+        font-weight: bold;
+        font-size: 12px;
+        padding: 0 $hu;
+        line-height: $u2;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+        &:active {
+            background: red;
+        }
+    }
+    .toggle {
+        float: right;
+    }
+    .pane-group {
+        display: flex;
+    }
+    .pane {
+        padding: $u;
+        background: $cream-dark;
+        color: white;
+        box-sizing: border-box;
+    }
+    .pane-half {
+        width: 50%;
+    }
+    .pane .pane.pane-half {
+        padding: 0;
+        padding-left: 0 $qu;
+        background: none;
+        &:first-child {
+            padding-left: 0;
+            padding-right: $qu;
+        }
+    }
+}

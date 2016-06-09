@@ -10,16 +10,6 @@ body {
 	margin: 0;
 }
 
-#rune-panels {
-    position: fixed;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    padding: $hu;
-    box-sizing: border-box;
-    width: $panel-width;
-    overflow-y: scroll;
-}
 
 #rune-canvas-panel {
 	width: 100%;
@@ -27,7 +17,6 @@ body {
 	position: fixed;
 	left: 0;
 	top: 0;
-	// margin-top:
 }
 
 #rune-tools {
