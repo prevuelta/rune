@@ -181,8 +181,7 @@ input {
         background: black;
         color: white;
         text-decoration: none;
-        background: #42494a;
-        font-weight: bold; }
+        background: #42494a; }
       #rune-actionbar ul li a:hover {
         background: #27dded;
         color: black; }
@@ -249,13 +248,14 @@ input {
   color: white;
   width: 100%;
   height: 24px;
-  font-weight: bold;
-  font-size: 12px;
+  font-size: 13px;
   padding: 0 3px 0 6px;
   line-height: 24px;
   box-sizing: border-box; }
   .sheet.active {
     background: #27dded; }
+  .sheet:hover {
+    background: #56534d; }
 
 .overlay {
   position: fixed;
@@ -322,22 +322,20 @@ input {
 .panel {
   height: auto;
   width: 100%;
-  margin-bottom: 6px;
+  font-size: 13px;
+  margin-bottom: 3px;
   background: #42494a;
   border-radius: 6px;
   border-bottom: 1px solid black; }
   .panel.ui-draggable-dragging {
     z-index: 9999; }
   .panel .panel-content {
-    font-size: 14px;
     padding: 3px; }
   .panel .handle {
     cursor: pointer;
     color: white;
     width: 100%;
     height: 24px;
-    font-weight: bold;
-    font-size: 12px;
     padding: 0 6px;
     line-height: 24px;
     box-sizing: border-box;

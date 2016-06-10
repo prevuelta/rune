@@ -50,7 +50,8 @@
 .panel {
     height: auto;//$u * 16;
     width: 100%;
-    margin-bottom: $hu;
+    font-size: 13px;
+    margin-bottom: $qu;
     background: $sky-dark;
     border-radius: $hu;
     border-bottom: 1px solid black;
@@ -58,7 +59,6 @@
         z-index: 9999;
     }
     .panel-content {
-        font-size: 14px;
         padding: $qu;
     }
     .handle {
@@ -67,8 +67,6 @@
         // background: #d4d4d4;
         width: 100%;
         height: $u2;
-        font-weight: bold;
-        font-size: 12px;
         padding: 0 $hu;
         line-height: $u2;
         box-sizing: border-box;
