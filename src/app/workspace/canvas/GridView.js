@@ -1,47 +1,14 @@
-var Util = require('../../global/util');
-var constants = require('../../global/Const');
-var Events = require('../../global/Events');
-var styles = require('../../global/styles');
-var PointModel = require('../../models/PointModel');
+'use strict';
 
-var paper = require('paper');
-var Canvas = require('./CanvasService');
+let Util = require('../../global/util');
+let constants = require('../../global/Const');
+let Events = require('../../global/Events');
+let styles = require('../../global/styles');
+let PointModel = require('../../models/PointModel');
+let GridNodeFactory = require('./GridNodeFactory');
 
-/* ========== Grid view ========== */
-
-var gridPointFactory = (point, res) => {
-
-    let p = point.render(res);
-    let paperPoint = new paper.Point( p[0] - (res.x/2), p[1] - (res.y/2) );
-    // let path = new paper.Path.Ellipse({point: paperPoint, size: [res.x, res.y]});
-    let path;
-
-    Canvas.drawToLayer('grid', () => {
-        path = new paper.Path.Rectangle(paperPoint, res.x-2, res.y-2);
-    });
-
-    path.value = point;
-    path.active = false;
-
-    path.style = styles.grid.fill;
-    path.opacity = 0.2;
-
-    path.onMouseEnter = function (e) {
-        this.opacity = 0.4;
-    };
-
-    path.onMouseLeave = function (e) {
-        this.opacity = 0.2;
-    };
-
-    path.onMouseDown = function (e) {
-        this.opacity = 0.6;
-        Events.addPoint.dispatch(e.target.value);
-        Events.draw.dispatch();
-    };
-
-    return path;
-}
+let paper = require('paper');
+let Canvas = require('./CanvasService');
 
 class GridView {
 	constructor (options) {
@@ -69,16 +36,27 @@ class GridView {
         let boardX = this.options.board.x * this.options.grid.res.x;
         let boardY = this.options.board.y * this.options.grid.res.y;
         console.log("Artboard:", boardX, boardY);
-        let artBoard = new paper.Path.Rectangle(-boardX/2,-boardY/2, boardX, boardY);
+        let artBoard = new paper.Path.Rectangle(paper.view.center.x-boardX/2,paper.view.center.y-boardY/2, boardX, boardY);
         artBoard.style = styles.board;
     }
 
 	draw () {
         Canvas.drawToLayer('board', this.drawToBoard.bind(this));
+        Canvas.drawToLayer('overlay', this.drawToOverlay.bind(this));
         Canvas.drawToLayer('grid', this.drawToGrid.bind(this));
         Canvas.drawToLayer('grid', this.createGridPoints.bind(this));
 
 	}
+
+    drawToOverlay () {
+        this.xLine(paper.view.center.y, styles.guides.accent);
+        this.yLine(paper.view.center.x, styles.guides.accent);
+        this.xLine(paper.view.center.y - this.options.board.y * this.options.grid.res.y / 2, styles.guides.accent);
+        this.xLine(paper.view.center.y + this.options.board.y * this.options.grid.res.y / 2, styles.guides.accent);
+        this.yLine(paper.view.center.x - this.options.board.x * this.options.grid.res.x / 2, styles.guides.accent);
+        this.yLine(paper.view.center.x + this.options.board.x * this.options.grid.res.x / 2, styles.guides.accent);
+
+    }
 
     drawToGrid () {
 
@@ -91,15 +69,21 @@ class GridView {
         rowLines = new paper.Group();
         colLines = new paper.Group();
 
+        let thing = styles.guides.primary;
+
         for (let i = -this.gridUnits/2; i < this.gridUnits/2; i++) {
-            rowLines.addChild(this.xLine(i * y));
-            colLines.addChild(this.yLine(i * x));
+            rowLines.addChild(this.xLine(i * y, styles.guides.primary));
+            colLines.addChild(this.yLine(i * x, styles.guides.primary));
+            for (let j = -4; j <= 4; j+=2) {
+                if (j) {
+                    rowLines.addChild(this.xLine(i * y + (j * (y/10)), styles.guides.secondary));
+                    colLines.addChild(this.yLine(i * x + (j * (x/10)), styles.guides.secondary));
+                }
+            }
         }
+
         colLines.translate([paper.view.center.x + (x/2), 0]);
         rowLines.translate([0, paper.view.center.y + (y/2)]);
-
-        this.xLine(paper.view.center.y, constants.RED);
-        this.yLine(paper.view.center.x, constants.RED);
 
     }
 
@@ -110,22 +94,22 @@ class GridView {
         let _this = this;
 
         this.points.forEach((point) => {
-            _this.gridPoints.addChild(gridPointFactory(point, this.options.grid.res));
+            _this.gridPoints.addChild(GridNodeFactory(point, this.options.grid.res));
         });
 
         this.gridPoints.translate(paper.view.center);
     }
 
-	yLine (xLoc, color) {
+	yLine (xLoc, style) {
         let line = new paper.Path.Rectangle([xLoc, 0], 1, 2000);
-        line.fillColor = color ? color : constants.BLUE;
+        line.style = style;
 
         return line;
 	}
 
-	xLine (yLoc, color) {
+	xLine (yLoc, style) {
 		let line = new paper.Path.Rectangle([0, yLoc], 2000, 1);
-        line.fillColor = color ? color : constants.BLUE;
+        line.style = style;
 
         return line;
 	}

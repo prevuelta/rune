@@ -29,6 +29,7 @@ let events = [
     'selectPath',
     'selectPoint',
     'superNudge',
+    'toolSelected',
     'zoomIn',
     'zoomOut'
 ];

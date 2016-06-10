@@ -29,7 +29,18 @@ module.exports = {
     },
     grid: {
         fill: {
-            fillColor: new paper.Color(constants.BLUE, 0.2)
+            fillColor: new paper.Color(constants.BLUE)
+        }
+    },
+    guides: {
+        primary : {
+            fillColor: new paper.Color(constants.BLUE)
+        },
+        secondary: {
+            fillColor:  colorWithAlpha(constants.BLUE, 0.2)
+        },
+        accent: {
+           fillColor: new paper.Color(constants.RED)
         }
     },
     overlay: {
@@ -46,4 +57,10 @@ module.exports = {
             strokeColor: constants.RED
         }
     }
+};
+
+function colorWithAlpha(hex, alpha) {
+    let color = new paper.Color(hex);
+    color.alpha = alpha;
+    return color;
 }

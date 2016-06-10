@@ -26,8 +26,14 @@ class CanvasService {
 
         };
 
+        this.layers.tools.on('mousedown', function () {
+            console.log("Tool layer clicked");
+        });
+
         Events.canvasMove.add(this.setCanvasPosition.bind(this));
         Events.canvasCenter.add(this.resetCanvasPosition.bind(this));
+
+        Events.toolSelected.add(this.enableToolLayer.bind(this));
     }
 
     setCanvasPosition (point) {
@@ -59,12 +65,16 @@ class CanvasService {
         cb();
     }
 
+    enableToolLayer () {
+        console.log("tool layer shown");
+        this.layers.tools.visible = true;
+    }
+
     centerLayers () {
     	let canvasPosition = paper.view.center.add(this.canvasPosition);
-        this.layers.board.translate(canvasPosition);
         this.layers.interactive.translate(canvasPosition);
         this.layers.render.translate(canvasPosition);
-        this.layers.overlay.translate(canvasPosition);
+        // this.layers.overlay.translate(canvasPosition);
     }
 }
 

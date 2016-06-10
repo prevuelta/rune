@@ -12,9 +12,15 @@ class ToolsController {
     constructor () {
 
         let Tool = React.createClass({
+            setActive: function () {
+                Events.toolSelected.dispatch();
+            },
             render: function () {
                 return (
-                    <div className="tool">
+                    <div
+                        className="tool"
+                        onClick={this.setActive}
+                        >
                         {this.props.children}
                     </div>
                 );
