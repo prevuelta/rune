@@ -71,6 +71,8 @@ class ViewController {
 
     redrawView () {
 
+        console.log("Redrawing...");
+
         Canvas.clearAllLayers();
 
         this.gridView.draw();
@@ -86,7 +88,7 @@ class ViewController {
     }
 
 	drawView () {
-        console.log("Redrawing...");
+        console.log("Drawing...");
 		paper.view.draw();
 	}
 

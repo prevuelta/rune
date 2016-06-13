@@ -268,14 +268,19 @@ input {
   justify-content: center;
   background: rgba(0, 0, 0, 0.2); }
 
-#rune-tools {
+#rune-tools > div {
+  display: flex;
+  align-items: flex-start; }
+#rune-tools .tool-bar {
   background: #42494a;
-  border-radius: 3px; }
-  #rune-tools .tool {
-    padding: 6px;
+  border-radius: 3px;
+  margin-right: 6px;
+  padding-bottom: 6px; }
+  #rune-tools .tool-bar .tool {
+    padding: 6px 6px 0 6px;
     display: flex;
     width: auto; }
-    #rune-tools .tool .button {
+    #rune-tools .tool-bar .tool .button {
       margin: 0; }
 
 #rune-panels {
@@ -352,6 +357,8 @@ input {
     background: #3b3935;
     color: white;
     box-sizing: border-box; }
+  .panel > .pane {
+    display: flex; }
   .panel .pane-half {
     width: 50%; }
   .panel .pane .pane.pane-half {

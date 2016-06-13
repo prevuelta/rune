@@ -20,17 +20,6 @@ class ActionBar {
 
     	this.actions = [
     		{
-    			id : "save",
-    			title : "Save",
-    			action : function(e) {
-    				e.preventDefault();
-    				// debugger;
-                    Events.renderSVG.dispatch();
-                    Events.saveTablet.dispatch();
-
-    			}
-    		},
-    		{
     			id : "clear",
     			title : "Clear",
     			action: function(e) {

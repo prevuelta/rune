@@ -1,5 +1,9 @@
+'use strict';
+
 let paper = require('paper');
 let Events = require('../../global/events');
+
+const DRAG_LIMIT = 30;
 
 class CanvasService {
     constructor () {
@@ -8,13 +12,10 @@ class CanvasService {
         this.canvas = document.getElementById('rune-canvas');
         paper.setup(this.canvas).install(window);
         this.view = paper.View['_viewsById']['rune-canvas'];
+        this.view.zoom = 1;
         paper.settings.handleSize = 8;
 
-        this.canvas.addEventListener('click', () => {
-            console.log("yupe");
-        });
-
-        this.resetCanvasPosition();
+        this.resetCanvasOffset();
 
         this.layers = {
         	board: new paper.Layer(),
@@ -22,26 +23,56 @@ class CanvasService {
             render: new paper.Layer(),
             overlay: new paper.Layer(),
             interactive: new paper.Layer(),
-            tools: new paper.Layer()
-
+            // tools: new paper.Layer()
         };
 
-        this.layers.tools.on('mousedown', function () {
-            console.log("Tool layer clicked");
+        this.protectedLayers = {
+            tools: new paper.Layer()
+        };
+
+        this.setupToolsLayer();
+
+    }
+
+    setupToolsLayer () {
+        // this.protectedLayers.tools.on('mousedown', function () {
+        //     console.log("Tool layer clicked");
+        // });
+
+        this.drawToProtectedLayer('tools', () => {
+            let test = paper.Path.Rectangle(new paper.Point(0, 0), this.view.size);
+            test.fillColor = 'red';
+            // test.visible = false;
         });
 
-        Events.canvasMove.add(this.setCanvasPosition.bind(this));
-        Events.canvasCenter.add(this.resetCanvasPosition.bind(this));
-
-        Events.toolSelected.add(this.enableToolLayer.bind(this));
+        this.deactivateToolLayer();
     }
 
-    setCanvasPosition (point) {
-    	this.canvasPosition = point;
+    activateToolLayer (cb) {
+        let toolsLayer = this.protectedLayers.tools;
+        paper.project.addChild(toolsLayer);
+        // Events.draw.dispatch();
+
+        toolsLayer.on('mousedown', cbHandler.bind(this));
+
+        function cbHandler (e) {
+            cb(e);
+            toolsLayer.off('mousedown', cbHandler);
+            this.deactivateToolLayer();
+        }
     }
 
-    resetCanvasPosition () {
-    	this.canvasPosition = new paper.Point(0, 0);
+    deactivateToolLayer () {
+        this.protectedLayers.tools.remove();
+        // Events.draw.dispatch();
+    }
+
+    setCanvasOffset (point) {
+        this.canvasOffset = new paper.Point(point);
+    }
+
+    resetCanvasOffset () {
+    	this.canvasOffset = new paper.Point(0, 0);
     }
 
     clearAllLayers () {
@@ -65,16 +96,23 @@ class CanvasService {
         cb();
     }
 
+    drawToProtectedLayer(layer, cb) {
+        this.protectedLayers[layer].activate();
+        cb();
+    }
+
     enableToolLayer () {
         console.log("tool layer shown");
         this.layers.tools.visible = true;
     }
 
     centerLayers () {
-    	let canvasPosition = paper.view.center.add(this.canvasPosition);
-        this.layers.interactive.translate(canvasPosition);
-        this.layers.render.translate(canvasPosition);
-        // this.layers.overlay.translate(canvasPosition);
+        console.log("Offset", this.canvasOffset);
+        this.layers.grid.translate(this.canvasOffset);
+    	let canvasOffset = paper.view.center.add(this.canvasOffset);
+        this.layers.interactive.translate(canvasOffset);
+        this.layers.render.translate(canvasOffset);
+        // this.layers.overlay.translate(canvasOffset);
     }
 }
 

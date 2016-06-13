@@ -1,15 +1,15 @@
 'use strict';
 
 let React = require('react');
-let Events = require('../../global/Events');
+let Events = require('../../../global/Events');
 
 // Components
-let Button = require('../../components/Button.jsx');
-let Switch = require('../../components/Switch.jsx');
+let Button = require('../../../components/Button.jsx');
+let Switch = require('../../../components/Switch.jsx');
 
 
 // Icon
-let ZoomIcon = require('../../icons/Zoom.jsx');
+let ZoomIcon = require('../../../icons/Zoom.jsx');
 
 module.exports = React.createClass({
     getInitialState: function () {

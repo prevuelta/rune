@@ -1,12 +1,20 @@
 #rune-tools {
-    background: $sky-dark;
-    border-radius: $qu;
-    .tool {
-        padding: $hu;
+    & > div {
         display: flex;
-        .button {
-            margin: 0;
+        align-items: flex-start;
+    }
+    .tool-bar {
+        background: $sky-dark;
+        border-radius: $qu;
+        margin-right: $hu;
+        padding-bottom: $hu;
+        .tool {
+            padding: $hu $hu 0 $hu;
+            display: flex;
+            .button {
+                margin: 0;
+            }
+            width: auto;
         }
-        width: auto;
     }
 }

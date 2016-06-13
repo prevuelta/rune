@@ -6,6 +6,7 @@ let events = [
     'addTablet',
     'addSubPath',
     'canvasMove',
+    'canvasCenterPre',
     'canvasCenter',
     'clearPoints',
     'deletePoint',

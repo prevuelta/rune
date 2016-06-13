@@ -88,6 +88,7 @@
         color: white;
         box-sizing: border-box;
     }
+    & > .pane { display: flex; }
     .pane-half {
         width: 50%;
     }

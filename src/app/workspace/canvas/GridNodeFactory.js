@@ -3,7 +3,8 @@
 let paper = require('paper')
 
 let styles = require('../../global/styles');
-let Canvas = require('./CanvasService');;
+let Canvas = require('./CanvasService');
+let Events = require('../../global/Events');
 
 /* ========== Grid view ========== */
 
@@ -33,7 +34,7 @@ var GridNodeFactory = (point, res) => {
     };
 
     path.onMouseDown = function (e) {
-        this.opacity = 0.6;
+        e.stopPropagation();
         Events.addPoint.dispatch(e.target.value);
         Events.draw.dispatch();
     };

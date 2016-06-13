@@ -31,7 +31,7 @@ module.exports = {
                          <label>Board</label>
                         <XYInput value={this.state.options.board} change={this.updateBoard} />
                         <label>Zoom level</label>
-                        <input type="text" ref="baseUnit" defaultValue={ this.state.options.zoomLevel} />
+                        <input type="number" ref="baseUnit" defaultValue={ this.state.options.zoomLevel} />
                         <span>Zoom</span>
                         <Button>
                             <Cross />

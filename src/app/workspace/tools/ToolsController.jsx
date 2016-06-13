@@ -4,8 +4,8 @@ let React = require('react');
 
 // Tools
 let tools = [
-    require('./Zoom.jsx'),
-    require('./Pan.jsx'),
+    require('./canvas/CanvasTools'),
+    require('./data/DataTools'),
 ];
 
 class ToolsController {
@@ -27,15 +27,32 @@ class ToolsController {
             }
         })
 
+        let Bar = React.createClass({
+            render: function () {
+                return (
+                    <div className="tool-bar">
+                        {
+                            this.props.bar.map(t => {
+                                let Component = t;
+                                return (
+                                    <Tool>
+                                        <Component />
+                                    </Tool>
+                                );
+                            })
+                        }
+                    </div>
+                );
+            }
+        }); 
+
         React.render(
             <div>
             {
-                tools.map(t => {
-                    let Component = t;
+                tools.map(b => {
                     return (
-                        <Tool>
-                            <Component />
-                        </Tool>
+                        <Bar bar={b}>
+                        </Bar>
                     );
                 })
             }

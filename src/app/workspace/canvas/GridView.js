@@ -35,7 +35,6 @@ class GridView {
     drawToBoard () {
         let boardX = this.options.board.x * this.options.grid.res.x;
         let boardY = this.options.board.y * this.options.grid.res.y;
-        console.log("Artboard:", boardX, boardY);
         let artBoard = new paper.Path.Rectangle(paper.view.center.x-boardX/2,paper.view.center.y-boardY/2, boardX, boardY);
         artBoard.style = styles.board;
     }
