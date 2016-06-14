@@ -2,11 +2,11 @@
   "name": "Rune",
   "version": "1.0.0",
   "description": "SVG glyph creator using paper.js. Grid based design system to produce letter forms, icons etc then export as SVG from browser.",
-  "main": "index.js",
+  "main": "app.min.js",
   "scripts": {
-    "start" : "npm run lib && npm run build && npm run serve",
+    "start": "npm run lib && npm run build && npm run serve",
     "build:watch": "parallelshell 'npm run copy-statics' 'npm run watch:js -s' 'npm run watch:css -s' 'npm run build:html -s' 'npm run serve -s'",
-    "serve" : "http-server ./dist -p 8000 -d false",
+    "serve": "http-server ./dist -p 8000 -d false",
     "watch:js": "watch 'npm run build:js' ./src/app/",
     "watch:css": "sass --watch ./src/app/styles/main.scss:./dist/styles/main.css",
     "watch:html": "watch 'npm run build:html'",
@@ -47,10 +47,10 @@
     "react": "^0.13.3",
     "react-draggable": "^0.8.1",
     "reactify": "^1.1.1",
+    "reload": "^0.7.0",
     "signals": "^1.0.0",
     "svgo": "^0.6.6",
     "uglifyjs": "^2.4.10",
-    "watch": "latest",
-    "reload": "^0.7.0"
+    "watch": "latest"
   }
 }
