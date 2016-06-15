@@ -13,9 +13,9 @@ let Canvas = require('./CanvasService');
 
 class RunePathView {
 
-    constructor (path, gridOptions) {
+    constructor (path, options) {
 
-        this.grid = gridOptions;
+        this.options = options;
 
         let style = path.isClosed ? styles.path.filled : path.isActive ? styles.path.active : styles.path.outline;
         let paperPath;
@@ -56,11 +56,11 @@ class RunePathView {
                     segments = [];
                 }
                 let renderedPoint = new paper.Point(
-                    p.render(_this.grid.res)
+                    p.render(_this.options)
                 );
-                paths = paths.concat(new ArcView(p, renderedPoint, _this.grid.res).paths);
+                paths = paths.concat(new ArcView(p, renderedPoint, _this.options).paths);
             } else {
-                segments.push(RunePointViewFactory(p, this.grid.res));
+                segments.push(RunePointViewFactory(p, this.options));
             }
         });
 
@@ -88,7 +88,7 @@ class RunePathView {
     getPathSegment (path) {
         let _this = this;
         return path.points.map(function(point) {
-            return RunePointViewFactory(point, this.grid.res);
+            return RunePointViewFactory(point, this.options);
         })
     }
 }

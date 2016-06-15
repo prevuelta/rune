@@ -16,7 +16,7 @@ class TabletModel {
         let zoomLevel = data && data.zoomLevel || DEFAULT_ZOOM_LEVEL;
 
         this.options = {
-            grid: new GridModel(data && data.options.grid, zoomLevel),
+            grid: new GridModel(data && data.options.grid),
             zoomLevel: zoomLevel,
             board: this.board = data && data.board || {x : 9, y : 15},
             viewMode: ViewModeEnum.normal
@@ -40,7 +40,6 @@ class TabletModel {
 
     increaseZoom () {
         this.options.zoomLevel++;
-        this.options.grid.setBaseUnit(this.options.zoomLevel);
     }
 
     decreaseZoom () {

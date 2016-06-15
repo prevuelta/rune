@@ -4,7 +4,9 @@ let paper = require('paper');
 let RuneNodeFactory = require('./RuneNodeFactory');
 let styles = require('../../global/styles');
 
-function RunePointViewFactory (point, res) {
+function RunePointViewFactory (point, options) {
+
+    let res = options.grid.getRes(options.zoomLevel);
 
     let paperPoint = new paper.Point(
         point.render(res)

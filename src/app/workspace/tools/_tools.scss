@@ -11,7 +11,8 @@
         .tool {
             padding: $hu $hu 0 $hu;
             display: flex;
-            .button {
+            .button,
+            .switch {
                 margin: 0;
             }
             width: auto;

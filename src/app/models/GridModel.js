@@ -2,22 +2,18 @@ let constants = require('../global/const');
 
 class GridModel {
 
-    constructor (gridOptions, zoomLevel) {
-        this.ratio = gridOptions && gridOptions.ratio || 1;
-        this.baseUnit = zoomLevel;
-        this.size = gridOptions && gridOptions.size || 20;
+    constructor (options) {
+        this.ratio = options.grid && options.grid.ratio || 1;
+        this.size = options.grid && options.grid.size || 20;
     }
 
-    get res () {
+    getRes (zoomLevel) {
         return {
-            x: this.baseUnit,
-            y: this.baseUnit * this.ratio
-        };
+            x: zoomLevel * 1,
+            y: zoomLevel * this.ratio
+        }
     }
 
-    setBaseUnit (newBaseUnit) {
-        this.baseUnit = newBaseUnit;
-    }
 }
 
 module.exports = GridModel;

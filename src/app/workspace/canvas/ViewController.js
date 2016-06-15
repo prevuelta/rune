@@ -15,7 +15,7 @@ let SVG = require('../../global/SVGService');
 class ViewController {
     constructor () {
 
-    	// Canvas
+        // Canvas
         this.isPreview = false;
         this.showGrid = true;
 
@@ -23,7 +23,7 @@ class ViewController {
 
         Events.draw.add(this.drawView.bind(this));
         Events.redrawView.add(this.redrawView.bind(this));
-        Events.updateGridView.add(this.setupGridView.bind(this));
+        Events.updateGridView.add(this.refreshGrid.bind(this));
         Events.display.add(this.displayMode.bind(this));
         Events.resetData.add(this.loadTablet.bind(this));
         Events.renderSVG.add(this.renderSVG.bind(this));
@@ -41,7 +41,7 @@ class ViewController {
     createRuneView () {
         this.runeView = new RuneView(
             this.tablet.activeRune,
-            this.tablet.options.grid
+            this.tablet.options
         );
     }
 
@@ -50,22 +50,22 @@ class ViewController {
         this.redrawView();
     }
 
-	setupGridView () {
-		this.gridView = new GridView(this.tablet.options);
-	}
+    setupGridView () {
+        this.gridView = new GridView(this.tablet.options);
+    }
 
     resizeHandler () {
         this.redrawView();
     }
 
-	redrawGridLayer () {
-		Canvas.clearLayer('grid');
+    redrawGridLayer () {
+        Canvas.clearLayer('grid');
         this.gridView.draw();
 
-	}
+    }
 
     refreshGrid () {
-        this.setupGrid();
+        this.gridView.updateOptions(this.tablet.options);
         this.redrawView();
     }
 
@@ -87,10 +87,10 @@ class ViewController {
         this.drawView();
     }
 
-	drawView () {
+    drawView () {
         console.log("Drawing...");
-		paper.view.draw();
-	}
+        paper.view.draw();
+    }
 
     renderSVG () {
 

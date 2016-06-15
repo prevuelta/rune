@@ -280,7 +280,8 @@ input {
     padding: 6px 6px 0 6px;
     display: flex;
     width: auto; }
-    #rune-tools .tool-bar .tool .button {
+    #rune-tools .tool-bar .tool .button,
+    #rune-tools .tool-bar .tool .switch {
       margin: 0; }
 
 #rune-panels {

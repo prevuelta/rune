@@ -3,17 +3,17 @@
 let PathView = require('./PathView');
 
 class RuneView {
-    constructor (runeModel, gridOptions) {
+    constructor (runeModel, options) {
 
         this.data = runeModel;
-        this.gridOptions = gridOptions;
+        this.options = options;
     }
 
     draw () {
 
         if (this.data.paths) {
             this.data.paths.forEach((path) => {
-                new PathView(path, this.gridOptions);
+                new PathView(path, this.options);
             });
         }
     }

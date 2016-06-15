@@ -16,10 +16,14 @@ module.exports = {
         getInitialState : function() {
             return {options: this.props.data.tablet.options };
         },
-         updateBoard (board) {
+        updateBoard (board) {
             this.state.options.board = board;
             this.setState({options: this.state.options});
             Events.redrawView.dispatch();
+        },
+        updateZoom (e) {
+            this.state.options.zoomLevel = +e.target.value;
+            Events.updateGridView.dispatch();
         },
         render: function() {
             return (
@@ -31,7 +35,10 @@ module.exports = {
                          <label>Board</label>
                         <XYInput value={this.state.options.board} change={this.updateBoard} />
                         <label>Zoom level</label>
-                        <input type="number" ref="baseUnit" defaultValue={ this.state.options.zoomLevel} />
+                        <input
+                            onChange={this.updateZoom}
+                            type="number"
+                            defaultValue={ this.state.options.zoomLevel} />
                         <span>Zoom</span>
                         <Button>
                             <Cross />

@@ -129,7 +129,7 @@ class ModelController {
 
     zoomIn () {
         this.tablet.increaseZoom();
-        Events.gridUpdate.dispatch();
+        Events.updateGridView.dispatch();
     }
 }
 

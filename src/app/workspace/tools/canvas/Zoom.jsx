@@ -5,8 +5,6 @@ let Events = require('../../../global/Events');
 
 // Components
 let Button = require('../../../components/Button.jsx');
-let Switch = require('../../../components/Switch.jsx');
-
 
 // Icon
 let ZoomIcon = require('../../../icons/Zoom.jsx');
@@ -16,14 +14,14 @@ module.exports = React.createClass({
         return {isActive: false};
     },
     dispatch: function () {
-        Events.zoom.dispatch();
+        Events.zoomIn.dispatch();
     },
     render: function () {
         return (
-            <Switch
-                toggle={this.state.isActive}>
+            <Button
+                handler={this.dispatch}>
                 <ZoomIcon />
-            </Switch>
+            </Button>
         );
     }
 });
