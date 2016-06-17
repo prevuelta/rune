@@ -27,6 +27,7 @@ let events = [
     'reloadPanels',
     'resetData',
     'saveTablet',
+    'showSvg',
     'selectPath',
     'selectPoint',
     'superNudge',

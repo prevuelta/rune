@@ -16,6 +16,11 @@ module.exports = {
         getInitialState : function() {
             return {options: this.props.data.tablet.options };
         },
+        componentWillReceiveProps: function(nextProps) {
+            this.setState({
+                options: nextProps.data.tablet.options
+            });
+        },
         updateBoard (board) {
             this.state.options.board = board;
             this.setState({options: this.state.options});
@@ -23,6 +28,8 @@ module.exports = {
         },
         updateZoom (e) {
             this.state.options.zoomLevel = +e.target.value;
+            this.setState({options: this.state.options});
+
             Events.updateGridView.dispatch();
         },
         render: function() {

@@ -16,7 +16,7 @@ class TabletModel {
         let zoomLevel = data && data.zoomLevel || DEFAULT_ZOOM_LEVEL;
 
         this.options = {
-            grid: new GridModel(data && data.options.grid),
+            grid: new GridModel(data && data.options),
             zoomLevel: zoomLevel,
             board: this.board = data && data.board || {x : 9, y : 15},
             viewMode: ViewModeEnum.normal

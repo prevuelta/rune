@@ -10,7 +10,6 @@ body {
 	margin: 0;
 }
 
-
 #rune-canvas-panel {
 	width: 100%;
 	height: 100%;
@@ -21,7 +20,7 @@ body {
 
 #rune-tools {
     position: fixed;
-    top: $u4;
+    top: $hu;
     left: $hu;
     height: auto;
 }

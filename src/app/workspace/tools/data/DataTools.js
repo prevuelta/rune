@@ -1,3 +1,4 @@
 module.exports = [
-	require('./Save.jsx')
+    require('./Save.jsx'),
+	require('./Svg.jsx'),
 ];
