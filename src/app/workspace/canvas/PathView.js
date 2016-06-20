@@ -55,10 +55,13 @@ class RunePathView {
                     paths.push(new paper.Path(segments));
                     segments = [];
                 }
+                let res = this.options.grid.getRes(this.options.zoomLevel);
+
                 let renderedPoint = new paper.Point(
-                    p.render(_this.options)
+                    p.render(res)
                 );
-                paths = paths.concat(new ArcView(p, renderedPoint, _this.options).paths);
+
+                paths = paths.concat(new ArcView(p, renderedPoint, res).paths);
             } else {
                 segments.push(RunePointViewFactory(p, this.options));
             }

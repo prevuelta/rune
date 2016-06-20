@@ -5,6 +5,8 @@ let Trig = require('../../global/Trig');
 let styles = require('../../global/styles');
 let RuneNodeFactory = require('./RuneNodeFactory');
 
+let Canvas = require('./CanvasService');
+
 class ArcView {
     constructor (point, renderedPoint, res) {
 
@@ -23,6 +25,13 @@ class ArcView {
     }
 
     createArc (arc, isIn) {
+
+        Canvas.drawToLayer('render', this.drawToRender.bind(this, arc, isIn));
+        RuneNodeFactory(this.point, this.renderedPoint);
+
+    }
+
+    drawToRender (arc, isIn) {
 
         let center = this.renderedPoint.add(new paper.Point(arc.center.render(this.res)));
         let radius = this.renderedPoint.getDistance(center);
@@ -55,18 +64,18 @@ class ArcView {
             }));
         }
 
-        RuneNodeFactory(this.point, this.renderedPoint);
-
         if (this.point.isSelected || arc.center.isSelected) {
 
             RuneNodeFactory(arc.center, center);
             RuneNodeFactory(null, center.add(rotation));
 
-            let circle = new paper.Path.Circle(center, radius);
-            circle.style = styles.overlay;
+            Canvas.drawToLayer('interactive', this.drawToInteractive.bind(this, center, radius));
         }
-        // let c3 = new paper.Path.Circle(center.add(midRotation), 10);
-        // c3.strokeColor = 'blue';
+    }
+
+    drawToInteractive (center, radius) {
+        let circle = new paper.Path.Circle(center, radius);
+        circle.style = styles.overlay;
     }
 }
 
