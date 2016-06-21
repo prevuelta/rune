@@ -19,6 +19,7 @@ module.exports = React.createClass({
     //     });
     // },
     dispatch: function () {
+        Events.renderSVG.dispatch();
         Events.showSvg.dispatch();
     },
     render: function () {

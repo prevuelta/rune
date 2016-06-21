@@ -22,6 +22,7 @@ module.exports = {
         },
         newTablet: function () {
             Events.addTablet.dispatch();
+            Events.refreshPanels.dispatch();
         },
         render: function() {
             return (

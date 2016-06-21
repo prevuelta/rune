@@ -41,10 +41,14 @@
     }
 }
 
-.path .path {
-    margin-left: $qu;
-    .sheet{
-        border-left: $qu solid $field;
+.path {
+    .sheet {
+        border-left: $u solid $field;
+    }
+    .path {
+        .sheet{
+            border-left: $u solid $rust;
+        }
     }
 }
 

@@ -23,7 +23,7 @@ textarea {
     font-family: $primary-font;
     color: white;
     display: inline-block;
-    background: $sky-dark;
+    background: lighten($sky-dark, 5);
     width: 100%;
 }
 

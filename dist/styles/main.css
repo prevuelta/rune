@@ -117,13 +117,10 @@ body {
 
 .dialogue {
   min-width: 30%;
-  min-height: 30%;
-  border: 1px solid #27dded;
   padding: 12px;
   background: #fff;
   background: #42494a;
-  border-radius: 6px;
-  border-bottom: 1px solid black; }
+  border-radius: 6px; }
   .dialogue textarea {
     width: 100%;
     min-height: 72px; }
@@ -150,7 +147,7 @@ textarea {
   font-family: "Inconsolata", sans-serif;
   color: white;
   display: inline-block;
-  background: #42494a;
+  background: #4e5657;
   width: 100%; }
 
 input {
@@ -224,10 +221,10 @@ input {
   .button-group .switch {
     margin: 0; }
 
-.path .path {
-  margin-left: 3px; }
-  .path .path .sheet {
-    border-left: 3px solid #14bb5b; }
+.path .sheet {
+  border-left: 12px solid #14bb5b; }
+.path .path .sheet {
+  border-left: 12px solid #e13d1c; }
 
 .header {
   border-bottom: 1px solid white;
