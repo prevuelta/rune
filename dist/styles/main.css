@@ -31,26 +31,6 @@ ul, li {
   margin: 0;
   padding: 0; }
 
-.tablet-previews {
-  display: flex; }
-  .tablet-previews .tablet-preview {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #27dded;
-    padding: 3px;
-    cursor: pointer;
-    margin: 0 3px 3px 0;
-    width: 36px;
-    height: 36px; }
-    .tablet-previews .tablet-preview .button {
-      margin: 0; }
-    .tablet-previews .tablet-preview svg {
-      width: auto;
-      height: auto;
-      max-width: 100%;
-      max-height: 100%; }
-
 header {
   position: fixed;
   left: 6px;
@@ -287,7 +267,8 @@ input {
   top: 0;
   bottom: 0;
   box-sizing: border-box;
-  width: auto; }
+  width: auto;
+  max-width: 25%; }
   #rune-panels > div {
     width: auto;
     height: 100%;
@@ -366,5 +347,26 @@ input {
     .panel .pane .pane.pane-half:first-child {
       padding-left: 0;
       padding-right: 3px; }
+
+.tablet-previews {
+  display: flex;
+  flex-wrap: wrap; }
+  .tablet-previews .tablet-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #27dded;
+    padding: 3px;
+    cursor: pointer;
+    margin: 0 3px 3px 0;
+    width: 36px;
+    height: 36px; }
+    .tablet-previews .tablet-preview .button {
+      margin: 0; }
+    .tablet-previews .tablet-preview svg {
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%; }
 
 /*# sourceMappingURL=main.css.map */

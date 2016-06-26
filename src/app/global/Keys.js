@@ -86,11 +86,9 @@ let Keys = {
         }).forEach(key => {
             Keys.mapKey(`shiftKey+${Keys.key[key]}`, () => {
                 Events.nudge.dispatch(superNudgeVectors[key]);
-                Events.redrawPanels.dispatch();
             });
             Keys.mapKey(`${Keys.key[key]}`, () => {
                 Events.nudge.dispatch(nudgeVectors[key]);
-                Events.redrawPanels.dispatch();
             });
         });
 

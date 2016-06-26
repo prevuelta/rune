@@ -91,7 +91,7 @@ class PanelController {
 
 
         function reloadHandler () {
-            panels.replaceState({'data' : app.data, 'panels' : allPanels, canvas: app.canvas, tablets: app.savedTablets });
+            panels.replaceState({data : app.data, panels : allPanels, canvas: app.canvas, tablets: app.savedTablets });
         };
 
         Events.reloadPanels.add(reloadHandler.bind(app));

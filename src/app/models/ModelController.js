@@ -107,7 +107,7 @@ class ModelController {
 
         this.activeRune.selectedPoint.x += transform[0];
         this.activeRune.selectedPoint.y += transform[1];
-
+        Events.refreshPanels.dispatch();
         Events.redrawView.dispatch();
     }
 
