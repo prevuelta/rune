@@ -1,4 +1,18 @@
-/* ------ Base Units ------ */
+/*
+*   STRUCTURE VARIABLES
+*   Generated Wed Apr 20 2016 12:32:37 GMT+1200 (NZST)
+*/
+/*
+*   Units
+*/
+/* Unit divisions */
+/* Unit multiplications */
+/*
+*   Proportional units
+*/
+/* Proportional unit divisions */
+/* Proportional unit multiplications */
+/* Misc measurements */
 .cf:before,
 .cf:after {
   content: " ";
@@ -368,5 +382,19 @@ input {
       height: auto;
       max-width: 100%;
       max-height: 100%; }
+
+.coord {
+  margin-bottom: 6px;
+  font-size: 0.75rem; }
+  .coord > span {
+    margin-bottom: 2px;
+    display: inline-block;
+    padding: 3px 6px;
+    background: #42494a;
+    border-radius: 2px; }
+  .coord em {
+    color: #14bb5b;
+    font-size: 1rem;
+    font-style: normal; }
 
 /*# sourceMappingURL=main.css.map */

@@ -19,20 +19,26 @@ module.exports = React.createClass({
             <div>
                 <label>{this.props.label}</label>
                 <div className="pane pane-half">
-                    <input
-                        className="input-x"
-                        defaultValue={this.state.coords.x}
-                        onChange={this.updateX}
-                        type="number"
-                        step="1" />
+                    <label>
+                        <span>X:</span>
+                        <input
+                            className="input-x"
+                            defaultValue={this.state.coords.x}
+                            onChange={this.updateX}
+                            type="number"
+                            step="1" />
+                    </label>
                 </div>
                 <div className="pane pane-half">
-                    <input
-                        className="input-y"
-                        defaultValue={this.state.coords.y}
-                        onChange={this.updateY}
-                        type="number"
-                        step="1" />
+                    <label>
+                        <span>Y:</span>
+                        <input
+                            className="input-y"
+                            defaultValue={this.state.coords.y}
+                            onChange={this.updateY}
+                            type="number"
+                            step="1" />
+                    </label>
                 </div>
             </div>
         );

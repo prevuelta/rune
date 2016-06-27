@@ -128,3 +128,20 @@
         }
     }
 }
+
+.coord {
+    margin-bottom: $hu;
+    font-size: $qqqpu;
+    & > span {
+       margin-bottom: 2px;
+       display: inline-block;
+       padding: $qu $hu;
+       background: $sky-dark;
+       border-radius: 2px;
+    }
+    em {
+        color: $field;
+        font-size: $pu;
+        font-style: normal;
+    }
+}

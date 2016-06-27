@@ -91,12 +91,12 @@ let Path = React.createClass({
                            <svg viewBox="0 0 200 200" width="200" height="200" xmlns="http://www.w3.org/2000/svg"><path d="M120 0h80v200H0V0h80v40H40v120h120V40h-40" fill-opacity=".6" stroke-miterlimit="10" font-family="sans-serif" font-size="12"/></svg>
                         </Switch>
                         <Button
-                            handler={this.removePath.bind(this, this.state.path)}>
-                            <X/>
-                        </Button>
-                        <Button
                             handler={this.toggleCollapsed}>
                             <Stack/>
+                        </Button>
+                        <Button
+                            handler={this.removePath.bind(this, this.state.path)}>
+                            <X/>
                         </Button>
                     </ButtonGroup>
                 </Sheet>

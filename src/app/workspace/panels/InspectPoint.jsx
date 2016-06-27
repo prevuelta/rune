@@ -137,9 +137,10 @@ module.exports = {
                 return (
                     <div>
                         <div className="pane">
-                            <small>
-                                <span>x: {x.toFixed(2)}, y:{y.toFixed(2)}</span>
-                            </small>
+                            <div className="coord">
+                                <span>X: <em>{x.toFixed(2)}</em></span>
+                                <span>Y: <em>{y.toFixed(2)}</em></span>
+                            </div>
                             <ButtonGroup>
                                 <Switch
                                     onToggle={this.setIsCurve.bind(this, this.state.point)}
