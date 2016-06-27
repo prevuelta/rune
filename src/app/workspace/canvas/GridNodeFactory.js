@@ -10,8 +10,7 @@ var GridNodeFactory = (point, options) => {
 
     let res = options.grid.getRes(options.zoomLevel);
     let p = point.render(res);
-    let paperPoint = new paper.Point( p[0] - (res.x/2), p[1] - (res.y/2) );
-    // let path = new paper.Path.Ellipse({point: paperPoint, size: [res.x, res.y]});
+    let paperPoint = new paper.Point(p[0]-res.x/2, p[1]-res.y/2);
     let path;
 
     Canvas.drawToLayer('grid', () => {

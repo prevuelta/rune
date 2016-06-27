@@ -17,16 +17,19 @@ class GridView {
 
         this.points = [];
 
-        let col, row;
-        col = row = -(this.options.grid.size/2) + 0.5;
+        let gridX = options.board.x + 1;
+        let gridY = options.board.y + 1;
 
-        for (let i = 1; i <= this.options.grid.size * this.options.grid.size; i++) {
-            this.points.push(new PointModel(null, row, col));
-            if (i && i % this.options.grid.size == 0) {
-                row++;
-                col = -(this.options.grid.size/2) + 0.5;
+        let x = -gridX/2;
+        let y = -gridY/2;
+
+        for (let i = 1; i <= gridX * gridY; i++) {
+            this.points.push(new PointModel(null, x+0.5, y+0.5));
+            if (i && i % gridX == 0) {
+                y++;
+                x = -gridX/2;
             } else {
-                col++;
+                x++;
             }
         }
     }
@@ -76,19 +79,23 @@ class GridView {
 
         let thing = styles.guides.primary;
 
-        for (let i = -this.options.grid.size/2; i < this.options.grid.size/2; i++) {
+        for (let i = -this.options.board.x/2; i < this.options.board.x/2; i++) {
+            console.log(i);
             colLines.addChild(this.yLine(i * this.resX, styles.guides.primary));
-            rowLines.addChild(this.xLine(i * this.resY, styles.guides.primary));
             for (let j = -4; j <= 4; j+=2) {
                 if (j) {
                     colLines.addChild(this.yLine(i * this.resX + (j * (this.resX/10)), styles.guides.secondary));
-                    rowLines.addChild(this.xLine(i * this.resY + (j * (this.resY/10)), styles.guides.secondary));
+                    // rowLines.addChild(this.xLine(i * this.resY + (j * (this.resY/10)), styles.guides.secondary));
                 }
             }
         }
 
-        colLines.translate([paper.view.center.x + (this.resX/2), 0]);
-        rowLines.translate([0, paper.view.center.y + (this.resY/2)]);
+        for (let i = -this.options.board.y/2; i < this.options.board.y/2; i++) {
+            rowLines.addChild(this.xLine(i * this.resY, styles.guides.primary));
+        }
+
+        colLines.translate([paper.view.center.x, 0]);
+        rowLines.translate([0, paper.view.center.y]);
 
     }
 
@@ -99,6 +106,7 @@ class GridView {
         let _this = this;
 
         this.points.forEach((point) => {
+            console.log(point);
             _this.gridPoints.addChild(GridNodeFactory(point, this.options));
         });
 
