@@ -19,6 +19,14 @@ class ArcModel {
     }
 }
 
+class TangentModel {
+    constructor () {
+        this.radius = 40;
+        this.center = new PointModel(null, 1, 1);
+        this.direction = false;
+    }
+}
+
 
 class PointModel {
 
@@ -47,12 +55,21 @@ class PointModel {
         this.handleOut = x.handleOut || null;
         this.isCurve = x.isCurve || false;
         this.isSelected = x.isSelected || false;
+        this.tangent = x.tangent && new TangentModel(x.tangent) || null;
         this.arcIn = x.arcIn && new ArcModel(x.arcIn) || null;
         this.arcOut = x.arcOut && new ArcModel(x.arcOut) || null;
     }
 
     toggleCurve (isCurve) {
         this.isCurve = !this.isCurve;
+    }
+
+    get hasTangent () {
+        return !!this.tangent;
+    }
+
+    setTangent () {
+        this.tangent = new TangentModel();
     }
 
     get hasArcIn () {

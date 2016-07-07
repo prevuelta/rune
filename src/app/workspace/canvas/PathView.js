@@ -6,6 +6,7 @@ let styles = require('../../global/styles');
 let paper = require('paper');
 let Trig = require('../../global/Trig');
 let ArcView = require('./ArcView');
+let TangentView = require('./TangentView');
 let RunePointViewFactory = require('./RunePointViewFactory');
 let RuneNodeFactory = require('./RuneNodeFactory');
 
@@ -50,7 +51,7 @@ class RunePathView {
         let segments = [];
 
         path.points.forEach(p => {
-            if (p.hasArc) {
+            if (p.hasArc || p.hasTangent) {
                 if (segments.length > 0) {
                     paths.push(new paper.Path(segments));
                     segments = [];
@@ -60,8 +61,11 @@ class RunePathView {
                 let renderedPoint = new paper.Point(
                     p.render(res)
                 );
-
-                paths = paths.concat(new ArcView(p, renderedPoint, res).paths);
+                if (p.hasTangent) {
+                    paths = paths.concat(new TangentView(p, renderedPoint, res).paths);
+                } else {
+                    paths = paths.concat(new ArcView(p, renderedPoint, res).paths);
+                }
             } else {
                 segments.push(RunePointViewFactory(p, this.options));
             }

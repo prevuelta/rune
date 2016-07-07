@@ -80,7 +80,6 @@ class GridView {
         let thing = styles.guides.primary;
 
         for (let i = -this.options.board.x/2; i < this.options.board.x/2; i++) {
-            console.log(i);
             colLines.addChild(this.yLine(i * this.resX, styles.guides.primary));
             for (let j = -4; j <= 4; j+=2) {
                 if (j) {
@@ -106,7 +105,6 @@ class GridView {
         let _this = this;
 
         this.points.forEach((point) => {
-            console.log(point);
             _this.gridPoints.addChild(GridNodeFactory(point, this.options));
         });
 

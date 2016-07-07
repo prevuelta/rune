@@ -119,6 +119,11 @@ module.exports = {
             this.setState({point: this.state.point});
             Events.redrawView.dispatch();
         },
+        toggleTangent: function () {
+            this.state.point.setTangent();
+            this.setState({point: this.state.point});
+            Events.redrawView.dispatch();
+        },
         updateHandleIn: function (val) {
             this.state.point.handleIn = val;
             this.setState({point: this.state.point});
@@ -157,6 +162,11 @@ module.exports = {
                                     onToggle={this.toggleArcOut}
                                     toggle={this.state.point.hasArcOut}>
                                     <ArcOutIcon />
+                                </Switch>
+                                <Switch
+                                    onToggle={this.toggleTangent}
+                                    toggle={this.state.point.hasTangent}>
+                                    <CurveIcon />
                                 </Switch>
                             </ButtonGroup>
                         </div>
