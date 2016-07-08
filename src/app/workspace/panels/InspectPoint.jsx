@@ -126,7 +126,7 @@ let Tangent = React.createClass({
                         value={this.state.tangent.center}
                         label="Center" />
                     <Button
-                        handler={this.updateArc}
+                        handler={this.updateDirection}
                         symbol={directionSymbol}>
                     </Button>
                 </div>

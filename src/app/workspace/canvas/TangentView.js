@@ -21,6 +21,7 @@ class TangentView {
         this.endPoint = new paper.Point(point.tangent.endPoint.render(res));
         this.center = renderedPoint.add(new paper.Point(point.tangent.center.render(res)));
         this.exitPoint = new paper.Point(40, 40);
+        this.direction = point.tangent.direction ? 1 : -1;
 
         this.createTangent();
 
@@ -50,8 +51,8 @@ class TangentView {
 
     drawToRender () {
 
-        let tangent1Vec = this.getTangentVec(this.radius, this.renderedPoint, this.center, -1);
-        let tangent2Vec = this.getTangentVec(this.radius, this.endPoint, this.center, 1);
+        let tangent1Vec = this.getTangentVec(this.radius, this.renderedPoint, this.center, -this.direction);
+        let tangent2Vec = this.getTangentVec(this.radius, this.endPoint, this.center, this.direction);
 
         // let throughVec = 
 
