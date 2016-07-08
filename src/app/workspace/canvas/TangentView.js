@@ -18,7 +18,8 @@ class TangentView {
         // these paths need to have: orignpoint, tangent point, | arc | second tangrent point, exit point
         this.paths = [];
         this.radius = point.tangent.radius;
-        this.center = new paper.Point(0, 0);
+        this.endPoint = new paper.Point(point.tangent.endPoint.render(res));
+        this.center = renderedPoint.add(new paper.Point(point.tangent.center.render(res)));
         this.exitPoint = new paper.Point(40, 40);
 
         this.createTangent();
@@ -32,53 +33,84 @@ class TangentView {
 
     }
 
-    drawToRender () {
+    getTangentVec (radius, point, center, direction) {
+        let hyp = center.getDistance(point);
+        let adj = Math.sqrt(hyp * hyp - radius * radius);
 
-        let hyp = this.center.getDistance(this.renderedPoint);
-        let adj = Math.sqrt(hyp * hyp - this.radius * this.radius);
-
-        console.log("h", hyp, "a", adj, "o", this.radius);
-
-        let angle = this.renderedPoint.getAngle(this.center);
-
+        let angle = point.getAngle(center);
         let newAngle = Trig.radToDeg(Math.acos(adj / hyp));
 
-        let tangentVec = this.renderedPoint.add(this.center);
-        tangentVec.normalize();
-        tangentVec.length = hyp;//adj;
-        tangentVec.angle += 180 + newAngle;
+        let vec = point.subtract(this.center)
+        vec.normalize();
+        vec.length = hyp;
+        vec.angle += 180 + newAngle * direction;
 
-        console.log("New angle", newAngle);
+        return vec;
+    }
 
-        let tangent1 = this.renderedPoint.add(tangentVec);
+    drawToRender () {
 
-        // let tangentVec2 = new paper.Point(0, 0);
-        // tangentVec2.length = adj;
-        // tangentVec2.angle = angle - newAngle;
+        let tangent1Vec = this.getTangentVec(this.radius, this.renderedPoint, this.center, -1);
+        let tangent2Vec = this.getTangentVec(this.radius, this.endPoint, this.center, 1);
 
-        let tangent2 = this.renderedPoint.add(tangentVec2);
+        // let throughVec = 
+
+        // let throughVec = tangentVec.clone();
+        // throughVec.length = -this.radius;
+
+        // tangentVec.normalize();
+        // tangentVec.length = hyp;//adj;
+
+        // let through = this.center.add(throughVec);
+
+        // tangentVec.angle
+
+        let tangent1 = this.renderedPoint.add(tangent1Vec);
+        let tangent2 = this.endPoint.add(tangent2Vec);
+
+        // tangentVec.angle -= newAngle * 2;
+
+        // let tangent2 = this.renderedPoint.add(tangentVec);
+
+        this.paths.push(new paper.Path([this.endPoint, tangent2, tangent1, this.renderedPoint]));
+        // this.paths.push(new paper.Path([this.renderedPoint]));
+
+        // this.paths.push(new paper.Path.Arc({
+        //     from: tangent2,
+        //     through: through,
+        //     to: tangent1,
+        //     strokeColor: 'black'
+        // }));
+
+
 
         // console.log("Tan one", tangent2);
         // debugger;
 
         // this.paths.push(new paper.Path([this.renderedPoint, tangent1]));
 
-        RuneNodeFactory(this.point, this.renderedPoint);
-        RuneNodeFactory(null, this.center);
-        RuneNodeFactory(null, tangent1);
-        RuneNodeFactory(null, tangent2);
+        // RuneNodeFactory(this.point, this.renderedPoint);
+        RuneNodeFactory(this.point.tangent.center, this.center);
+        RuneNodeFactory(this.point.tangent.endPoint, this.endPoint);
+        // RuneNodeFactory(null, tangent2);
 
-      Canvas.drawToLayer('interactive', () => {
-            let line = new paper.Path.Line(this.renderedPoint, this.center);
-            line.style = styles.overlay;
-            let line2 = new paper.Path.Line(this.center, tangent1);
-            line2.style = styles.overlay;
-            let line3 = new paper.Path.Line(tangent1, this.renderedPoint);
-            line3.strokeColor = 'red';
-            let circle = new paper.Path.Circle(this.center, this.radius);
-            circle.style = styles.overlay;
-      });
 
+        if (this.point.isSelected || this.point.tangent.center.isSelected || this.point.tangent.endPoint.isSelected) {
+
+              Canvas.drawToLayer('interactive', () => {
+                    let line = new paper.Path.Line(this.renderedPoint, this.center);
+                    line.style = styles.overlay;
+                    let line2 = new paper.Path.Line(this.center, tangent1);
+                    line2.style = styles.overlay;
+                    let line3 = new paper.Path.Line(tangent1, this.renderedPoint);
+                    line3.strokeColor = 'red';
+                    let line4 = new paper.Path.Line(tangent2, this.endPoint);
+                    line4.strokeColor = 'green';
+                    let circle = new paper.Path.Circle(this.center, this.radius);
+                    circle.style = styles.overlay;
+              });
+
+        }
         // this.paths.push(new paper.Path.Arc({
         //     from: center.add(rotation),
         //     through: center.add(midRotation),

@@ -7,6 +7,7 @@ let Events = require('../../global/Events');
 let Sheet = require('../../components/Sheet.jsx');
 let Switch = require('../../components/Switch.jsx');
 let Button = require('../../components/Button.jsx');
+let NumberInput = require('../../components/NumberInput.jsx');
 let ButtonGroup = require('../../components/ButtonGroup.jsx');
 let XYInput = require('../../components/XYInput.jsx');
 
@@ -91,6 +92,47 @@ let Arc = React.createClass({
                 </div>
     }
 });
+
+let Tangent = React.createClass({
+    getInitialState: function () {
+        return {tangent: this.props.tangent};
+    },
+    updateCenter: function (val) {
+        this.state.tangent.center = val;
+        this.setState({tangent: this.state.tangent});
+        Events.redrawView.dispatch();
+    },
+    updateRadius: function (newRadius) {
+        this.state.tangent.radius = newRadius;
+        this.setState({tangent: this.state.tangent});
+        Events.redrawView.dispatch();
+    },
+    updateDirection: function () {
+        this.state.tangent.direction = !this.state.tangent.direction;
+        this.setState({tangent: this.state.tangent});
+        Events.redrawView.dispatch();
+    },
+    render: function () {
+        let directionSymbol = this.state.tangent.direction ? "⤿" : "⤾";
+        return  <div>
+                    Size: <strong>π/</strong>
+                    <NumberInput
+                        label="Radius"
+                        value={this.state.tangent.radius}
+                        change={this.updateRadius}>
+                    </NumberInput>
+                    <XYInput
+                        change={this.updateCenter}
+                        value={this.state.tangent.center}
+                        label="Center" />
+                    <Button
+                        handler={this.updateArc}
+                        symbol={directionSymbol}>
+                    </Button>
+                </div>
+    }
+});
+
 
 module.exports = {
     title: 'Inspect point',
@@ -188,6 +230,11 @@ module.exports = {
                                 {
                                     this.state.point.hasArcOut ?
                                         <Arc arc={this.state.point.arcOut}></Arc>
+                                    : null
+                                }
+                                {
+                                    this.state.point.hasTangent ?
+                                        <Tangent tangent={this.state.point.tangent}></Tangent>
                                     : null
                                 }
                             </div>
