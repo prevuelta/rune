@@ -1,5 +1,8 @@
 'use strict';
 
+
+require('../extendLibs');
+
 // Rune
 let Events = require('./global/Events');
 let keys = require('./global/keys');

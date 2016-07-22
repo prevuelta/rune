@@ -22,3 +22,13 @@
 @import
 "../workspace/tools/tools",
 "../workspace/panels/panels";
+
+.notes {
+    z-index: 9999;
+    font-size: 18px;
+    top: 300px;
+    position: absolute;
+    left: 0;
+    padding-left: $u;
+    width: 25%;
+}

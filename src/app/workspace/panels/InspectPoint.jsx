@@ -103,7 +103,7 @@ let Tangent = React.createClass({
         Events.redrawView.dispatch();
     },
     updateRadius: function (newRadius) {
-        this.state.tangent.radius = newRadius;
+        this.state.tangent.size = newRadius;
         this.setState({tangent: this.state.tangent});
         Events.redrawView.dispatch();
     },
@@ -118,7 +118,7 @@ let Tangent = React.createClass({
                     Size: <strong>π/</strong>
                     <NumberInput
                         label="Radius"
-                        value={this.state.tangent.radius}
+                        value={this.state.tangent.size}
                         change={this.updateRadius}>
                     </NumberInput>
                     <XYInput

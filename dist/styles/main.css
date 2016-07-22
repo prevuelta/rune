@@ -397,4 +397,13 @@ input {
     font-size: 1rem;
     font-style: normal; }
 
+.notes {
+  z-index: 9999;
+  font-size: 18px;
+  top: 300px;
+  position: absolute;
+  left: 0;
+  padding-left: 12px;
+  width: 25%; }
+
 /*# sourceMappingURL=main.css.map */

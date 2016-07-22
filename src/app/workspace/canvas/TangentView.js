@@ -17,7 +17,7 @@ class TangentView {
         this.res = res;
         // these paths need to have: orignpoint, tangent point, | arc | second tangrent point, exit point
         this.paths = [];
-        this.radius = point.tangent.radius;
+        this.radius = res.x * point.tangent.size;
         this.endPoint = new paper.Point(point.tangent.endPoint.render(res));
         this.center = renderedPoint.add(new paper.Point(point.tangent.center.render(res)));
         this.exitPoint = new paper.Point(40, 40);
@@ -54,7 +54,7 @@ class TangentView {
         let tangent1Vec = this.getTangentVec(this.radius, this.renderedPoint, this.center, -this.direction);
         let tangent2Vec = this.getTangentVec(this.radius, this.endPoint, this.center, this.direction);
 
-        // let throughVec = 
+        // let throughVec =
 
         // let throughVec = tangentVec.clone();
         // throughVec.length = -this.radius;
@@ -69,19 +69,33 @@ class TangentView {
         let tangent1 = this.renderedPoint.add(tangent1Vec);
         let tangent2 = this.endPoint.add(tangent2Vec);
 
+        let midPoint = tangent1.getMid(tangent2);
+
+        let angle = midPoint.getAngle(this.center);
+
+        let throughVec = new paper.Point(0, 0);
+
+        throughVec.angle = angle;
+        throughVec.length = this.radius;
+
+
         // tangentVec.angle -= newAngle * 2;
 
         // let tangent2 = this.renderedPoint.add(tangentVec);
 
-        this.paths.push(new paper.Path([this.endPoint, tangent2, tangent1, this.renderedPoint]));
-        // this.paths.push(new paper.Path([this.renderedPoint]));
+        this.paths.push(new paper.Path([this.endPoint]));
 
-        // this.paths.push(new paper.Path.Arc({
-        //     from: tangent2,
-        //     through: through,
-        //     to: tangent1,
-        //     strokeColor: 'black'
-        // }));
+        this.paths.push(new paper.Path.Arc({
+            from: tangent2,
+            through: this.center.subtract(throughVec),
+            to: tangent1,
+            strokeColor: 'black'
+        }));
+
+        this.paths.push(new paper.Path([this.renderedPoint]));
+
+            // , tangent2, tangent1, this.renderedPoint]));
+        // this.paths.push(new paper.Path([this.renderedPoint]));
 
 
 

@@ -11,14 +11,14 @@ class ArcModel {
     }
 }
 
-class TangentModel {
-    constructor (obj) {
-        this.radius = obj && obj.radius || 40;
-        this.center = obj && new PointModel(null, obj.center) || new PointModel(null, 1, 1);
-        this.endPoint = obj && new PointModel(null, obj.endPoint) || new PointModel(null, 0, 0);
-        this.direction = obj && obj.direction || false;
-    }
-}
+// class TangentModel {
+//     constructor (obj) {
+//         this.radius = obj && obj.radius || 2;
+//         this.center = obj && new PointModel(null, obj.center) || new PointModel(null, 1, 1);
+//         this.endPoint = obj && new PointModel(null, obj.endPoint) || new PointModel(null, 0, 0);
+//         this.direction = obj && obj.direction || false;
+//     }
+// }
 
 
 class PointModel {
@@ -48,7 +48,7 @@ class PointModel {
         this.handleOut = x.handleOut || null;
         this.isCurve = x.isCurve || false;
         this.isSelected = x.isSelected || false;
-        this.tangent = x.tangent && new TangentModel(x.tangent) || null;
+        this.tangent = x.tangent && new ArcModel(x.tangent) || null;
         this.arcIn = x.arcIn && new ArcModel(x.arcIn) || null;
         this.arcOut = x.arcOut && new ArcModel(x.arcOut) || null;
     }
@@ -62,7 +62,7 @@ class PointModel {
     }
 
     setTangent () {
-        this.tangent = this.hasTangent ? null : new TangentModel();
+        this.tangent = this.hasTangent ? null : new ArcModel();
     }
 
     get hasArcIn () {
