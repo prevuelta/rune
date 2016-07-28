@@ -32,7 +32,7 @@ class WorkSpaceController {
             <Dialogue
                 element={element}
                 title="Copy SVG code">
-                <textarea>{ this.app.data.tablet.renderedSVG }</textarea>
+                <textarea>{ this.app.data.tablet.activeRune.renderedSVG }</textarea>
             </Dialogue>,
             element
         );

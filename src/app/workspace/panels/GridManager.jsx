@@ -3,7 +3,7 @@
 let React = require('react');
 let Events = require('../../global/Events');
 let Button = require('../../components/Button.jsx');
-let GridModel = require('../../models/GridModel');
+let GridModel = require('../../data/GridModel');
 
 
 module.exports = {

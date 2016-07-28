@@ -15,6 +15,8 @@ class RuneModel {
         this.reverseAdd = false;
         this.selectedPoint = null;
 
+        this.renderedSVG = data && data.renderedSVG || '';
+
         let _this = this;
 
         // Get selected point

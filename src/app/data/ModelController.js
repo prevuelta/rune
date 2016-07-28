@@ -1,7 +1,7 @@
-var TabletModel = require('./TabletModel');
-var RuneModel = require('./RuneModel');
-var Events = require('../global/Events');
-var _ = require('lodash');
+let TabletModel = require('./TabletModel');
+let RuneModel = require('./RuneModel');
+let Events = require('../global/Events');
+let _ = require('lodash');
 
 /* ========== Data ========== */
 
@@ -42,8 +42,10 @@ class ModelController {
     setTablet (tablet) {
         if (this.tablet) {
             this.saveTablet();
+            this.tablet.active = false;
         }
         this.tablet = new TabletModel(tablet);
+        this.tablet.active = true;
     }
 
     loadTablet (tablet) {

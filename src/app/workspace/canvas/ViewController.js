@@ -110,9 +110,9 @@ class ViewController {
 
         let optimisedString = SVG.optimise(svgString);
 
-        this.tablet.renderedSVG = optimisedString;
+        this.tablet.activeRune.renderedSVG = optimisedString;
 
-        // TODO: Sort this out, gross way of getting to original projec
+        // TODO: Sort this out, gross way of getting to original project
         Canvas.view['_project'].activate();
     }
 }

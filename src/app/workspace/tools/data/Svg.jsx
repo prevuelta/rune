@@ -20,7 +20,7 @@ module.exports = React.createClass({
     // },
     dispatch: function () {
         Events.renderSVG.dispatch();
-        Events.showSvg.dispatch();
+        Events.showSvg.dispatch(); // Workspace Controller
     },
     render: function () {
         return (

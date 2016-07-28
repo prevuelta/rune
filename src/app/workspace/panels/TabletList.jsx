@@ -6,16 +6,18 @@ let Events = require('../../global/Events');
 
 // Components:
 let Button = require('../../components/Button.jsx');
+let ButtonGroup = require('../../components/ButtonGroup.jsx');
+let Sheet = require('../../components/Sheet.jsx');
 
 // Icons
 let Cross = require('../../icons/Cross.jsx');
 
 module.exports = {
-    title: 'Saved Tablets',
+    title: 'Tablets',
     collapsed: false,
     panel: React.createClass({
         getInitialState : function() {
-            return {tablets: this.props.tablets };
+            return {tablets: this.props.tablets, activeTable: this.props.activeTablet };
         },
         loadTablet: function (tabletId) {
             Events.loadTablet.dispatch(tabletId);
@@ -27,25 +29,23 @@ module.exports = {
         render: function() {
             return (
                 <div>
-                    <div className="tablet-previews">
                         {
                             this.state.tablets.map((tablet) => {
                                 return (
-                                <div
-                                    className="tablet-preview"
-                                    dangerouslySetInnerHTML={{__html: tablet.renderedSVG}}
+                                <Sheet
+                                    active={tablet.active}
                                     onClick={this.loadTablet.bind(this, tablet)}>
-                                </div>)
+                                    <span>{ tablet.name }</span>
+                                </Sheet>)
                             })
                         }
-                        <div
-                            onClick={this.newTablet}
-                            className="tablet-preview">
-                            <Button>
+                        <ButtonGroup>
+                            <Button
+                                handler={this.newTablet}>
                                 <Cross />
                             </Button>
-                        </div>
-                    </div>
+                        </ButtonGroup>
+
                 </div>
             );
         }

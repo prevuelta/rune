@@ -10,7 +10,7 @@ let Util = require('./global/Util');
 
 let WorkSpaceController = require('./workspace/WorkspaceController');
 let ViewController = require('./workspace/canvas/ViewController');
-let DataController = require('./models/ModelController');
+let DataController = require('./data/ModelController');
 
 class App {
 

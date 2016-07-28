@@ -362,10 +362,10 @@ input {
       padding-left: 0;
       padding-right: 3px; }
 
-.tablet-previews {
+.rune-previews {
   display: flex;
   flex-wrap: wrap; }
-  .tablet-previews .tablet-preview {
+  .rune-previews .rune-preview {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -375,9 +375,9 @@ input {
     margin: 0 3px 3px 0;
     width: 36px;
     height: 36px; }
-    .tablet-previews .tablet-preview .button {
+    .rune-previews .rune-preview .button {
       margin: 0; }
-    .tablet-previews .tablet-preview svg {
+    .rune-previews .rune-preview svg {
       width: auto;
       height: auto;
       max-width: 100%;

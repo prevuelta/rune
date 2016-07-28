@@ -4,7 +4,7 @@ let Util = require('../../global/util');
 let constants = require('../../global/Const');
 let Events = require('../../global/Events');
 let styles = require('../../global/styles');
-let PointModel = require('../../models/PointModel');
+let PointModel = require('../../data/PointModel');
 let GridNodeFactory = require('./GridNodeFactory');
 
 let paper = require('paper');

@@ -15,6 +15,7 @@ let StackIcon = require('../../icons/Stack.jsx');
 
 let allPanels = [
     require('./TabletList.jsx'),
+    require('./RuneList.jsx'),
     require('./InspectPoint.jsx'),
     require('./InspectPath.jsx'),
     require('./GridManager.jsx'),
