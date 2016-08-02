@@ -112,8 +112,14 @@ let Tangent = React.createClass({
         this.setState({tangent: this.state.tangent});
         Events.redrawView.dispatch();
     },
+    updateOrientation: function () {
+        this.state.tangent.orientation = !this.state.tangent.orientation;
+        this.setState({tangent: this.state.tangent});
+        Events.redrawView.dispatch();
+    },
     render: function () {
         let directionSymbol = this.state.tangent.direction ? "⤿" : "⤾";
+        let orientationSymbol = this.state.tangent.orientation ? "⤿" : "⤾";
         return  <div>
                     Size: <strong>π/</strong>
                     <NumberInput
@@ -128,6 +134,10 @@ let Tangent = React.createClass({
                     <Button
                         handler={this.updateDirection}
                         symbol={directionSymbol}>
+                    </Button>
+                    <Button
+                        handler={this.updateOrientation}
+                        symbol={orientationSymbol}>
                     </Button>
                 </div>
     }

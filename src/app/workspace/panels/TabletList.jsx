@@ -11,16 +11,25 @@ let Sheet = require('../../components/Sheet.jsx');
 
 // Icons
 let Cross = require('../../icons/Cross.jsx');
+let X = require('../../icons/X.jsx');
 
 module.exports = {
     title: 'Tablets',
     collapsed: false,
     panel: React.createClass({
         getInitialState : function() {
-            return {tablets: this.props.tablets, activeTable: this.props.activeTablet };
+            return {tablets: this.props.data.tablets };
+        },
+        componentWillReceiveProps: function(nextProps) {
+            this.setState({
+                tablets: nextProps.data.tablets
+            });
         },
         loadTablet: function (tabletId) {
             Events.loadTablet.dispatch(tabletId);
+        },
+        deleteTablet: function (tablet) {
+            Events.deleteTablet.dispatch(tablet);
         },
         newTablet: function () {
             Events.addTablet.dispatch();
@@ -36,6 +45,12 @@ module.exports = {
                                     active={tablet.active}
                                     onClick={this.loadTablet.bind(this, tablet)}>
                                     <span>{ tablet.name }</span>
+                                     <ButtonGroup>
+                                        <Button
+                                            handler={this.deleteTablet.bind(this, tablet)}>
+                                            <X />
+                                        </Button>
+                                    </ButtonGroup>
                                 </Sheet>)
                             })
                         }

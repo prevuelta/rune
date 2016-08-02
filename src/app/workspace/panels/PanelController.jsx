@@ -69,8 +69,7 @@ class PanelController {
                                         options={{title : panel.title, collapsed: panel.collapsed }} >
                                          <Component
                                             data={this.state.data}
-                                            canvas={this.state.canvas}
-                                            tablets={this.state.tablets} />
+                                            canvas={this.state.canvas} />
                                      </PanelWrapper>
                                 );
                             })
@@ -85,14 +84,17 @@ class PanelController {
             <Panels
                 panels={allPanels}
                 data={app.data}
-                canvas={app.canvas}
-                tablets={app.savedTablets} />,
+                canvas={app.canvas} />,
             document.getElementById('rune-panels')
         );
 
 
         function reloadHandler () {
-            panels.replaceState({data : app.data, panels : allPanels, canvas: app.canvas, tablets: app.savedTablets });
+            panels.replaceState({
+                data : app.data,
+                panels : allPanels,
+                canvas: app.canvas
+            });
         };
 
         Events.reloadPanels.add(reloadHandler.bind(app));

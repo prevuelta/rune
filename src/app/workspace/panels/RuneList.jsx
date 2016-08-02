@@ -18,12 +18,16 @@ module.exports = {
         getInitialState : function() {
             return {runes: this.props.data.tablet.runes };
         },
-        loadrune: function (runeId) {
-            Events.loadrune.dispatch(runeId);
+        componentWillReceiveProps: function(nextProps) {
+            this.setState({
+                runes: nextProps.data.tablet.runes
+            });
         },
-        newrune: function () {
-            Events.addrune.dispatch();
-            Events.refreshPanels.dispatch();
+        loadRune: function (runeId) {
+            Events.loadRune.dispatch(runeId);
+        },
+        newRune: function () {
+            Events.addRune.dispatch();
         },
         render: function() {
             return (
@@ -35,7 +39,7 @@ module.exports = {
                                 <div
                                     className="rune-preview"
                                     dangerouslySetInnerHTML={{__html: rune.renderedSVG}}
-                                    onClick={this.loadrune.bind(this, rune)}>
+                                    onClick={this.loadRune.bind(this, rune)}>
                                 </div>)
                             })
                         }

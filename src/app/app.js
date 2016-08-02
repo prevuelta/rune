@@ -30,10 +30,10 @@ class App {
 
         console.log("Saved tablets", this.savedTablets);
 
-        let data = this.savedTablets[0];
-        
+        let data = this.savedTablets;
+
         this.data = DataController;
-        this.data.setTablet(data);
+        this.data.setTablets(data);
 
         this.view = ViewController;
         this.view.loadTablet(this.data.tablet)

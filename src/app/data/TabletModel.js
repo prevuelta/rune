@@ -40,6 +40,10 @@ class TabletModel {
         s4() + '-' + s4() + s4() + s4();
     }
 
+    setActiveRune (rune) {
+        this.activeRune = rune;
+    }
+
     increaseZoom () {
         this.options.zoomLevel++;
     }

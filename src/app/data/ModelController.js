@@ -12,17 +12,21 @@ class ModelController {
         Events.addPoint.add(this.addPoint.bind(this));
         Events.addSubPath.add(this.addSubPath.bind(this));
         Events.addTablet.add(this.newTablet.bind(this));
+        Events.addRune.add(this.addRune.bind(this));
         Events.clearPoints.add(this.clearRune.bind(this));
         Events.deletePath.add(this.deletePath.bind(this));
         Events.deletePoint.add(this.deletePoint.bind(this));
         Events.deselectAll.add(this.deselectAll.bind(this));
         Events.gridUpdate.add(this.updateGrid.bind(this));
         Events.loadTablet.add(this.loadTablet.bind(this));
+        Events.loadRune.add(this.loadRune.bind(this));
         Events.nudge.add(this.addTransformToSelected.bind(this));
         Events.saveTablet.add(this.saveTablet.bind(this));
         Events.selectPath.add(this.selectPath.bind(this));
         Events.selectPoint.add(this.selectPoint.bind(this));
         Events.zoomIn.add(this.zoomIn.bind(this));
+
+        this.tablets = [];
 
     }
 
@@ -32,11 +36,23 @@ class ModelController {
     }
 
     newTablet () {
-        this.saveTablet();
-        this.tablet = new TabletModel();
-        Events.resetData.dispatch(this.tablet);
-        Events.redrawView.dispatch();
+        console.log("Adding tablet");
+        // if (this.tablet) {
+            // this.saveTablet();
+            // this.tablet.active = false;
+        // }
+        this.tablets.push(new TabletModel());
+        // Events.resetData.dispatch(this.tablet);
+        // Events.redrawView.dispatch();
         Events.refreshPanels.dispatch();
+    }
+
+    setTablets (tablets) {
+        this.tablets = tablets.map(t => new TabletModel(t));
+        if (!this.tablets.length) {
+           this.newTablet();
+        }
+        this.setTablet(this.tablets[0]);
     }
 
     setTablet (tablet) {
@@ -44,7 +60,7 @@ class ModelController {
             this.saveTablet();
             this.tablet.active = false;
         }
-        this.tablet = new TabletModel(tablet);
+        this.tablet = tablet;//new TabletModel(tablet);
         this.tablet.active = true;
     }
 
@@ -60,7 +76,17 @@ class ModelController {
     }
 
     addRune () {
+        console.log("adding rune");
         this.tablet.runes.push(new RuneModel());
+        Events.redrawView.dispatch();
+        Events.refreshPanels.dispatch();
+    }
+
+    loadRune (rune) {
+        this.tablet.setActiveRune(rune);
+        Events.resetData.dispatch(this.tablet);
+        Events.redrawView.dispatch();
+        Events.refreshPanels.dispatch();
     }
 
     addPoint (gridRef) {

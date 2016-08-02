@@ -22,6 +22,7 @@ class TangentView {
         this.center = renderedPoint.add(new paper.Point(point.tangent.center.render(res)));
         this.exitPoint = new paper.Point(40, 40);
         this.direction = point.tangent.direction ? 1 : -1;
+        this.orientation = point.tangent.orientation ? 1 : -1;
 
         this.createTangent();
 
@@ -76,7 +77,7 @@ class TangentView {
         let throughVec = new paper.Point(0, 0);
 
         throughVec.angle = angle;
-        throughVec.length = this.radius;
+        throughVec.length = this.radius * this.orientation;
 
 
         // tangentVec.angle -= newAngle * 2;

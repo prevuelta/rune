@@ -8,6 +8,7 @@ class ArcModel {
         this.center = obj && new PointModel(null, obj.center) || new PointModel(null, 1,1);
         this.endPoint = obj && new PointModel(null, obj.endPoint) || new PointModel(null, 0, 0);
         this.direction = obj && obj.direction || false;
+        this.orientation = obj && obj.orientation || false;
     }
 }
 
