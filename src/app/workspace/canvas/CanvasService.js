@@ -1,7 +1,8 @@
 'use strict';
 
 let paper = require('paper');
-let Events = require('../../global/events');
+let Events = require('../../global/Events');
+let Util = require('../../global/Util');
 
 const DRAG_LIMIT = 30;
 
@@ -34,6 +35,8 @@ class CanvasService {
 
     }
 
+    // Setup a draw cycle with renderQueue
+
     setupToolsLayer () {
         // this.protectedLayers.tools.on('mousedown', function () {
         //     console.log("Tool layer clicked");
@@ -42,33 +45,91 @@ class CanvasService {
         this.drawToProtectedLayer('tools', () => {
             let test = paper.Path.Rectangle(new paper.Point(0, 0), this.view.size);
             test.fillColor = 'red';
-            // test.visible = false;
+            test.visible = false;
         });
 
         this.deactivateToolLayer();
     }
 
-    activateToolLayer (cb) {
+    activateToolLayer (
+        clickCallback,
+        mousemoveCallback
+    ) {
         let toolsLayer = this.protectedLayers.tools;
         paper.project.addChild(toolsLayer);
-        // Events.draw.dispatch();
 
-        toolsLayer.on('mousedown', cbHandler.bind(this));
+        if (clickCallback) {
 
-        function cbHandler (e) {
-            cb(e);
-            toolsLayer.off('mousedown', cbHandler);
-            this.deactivateToolLayer();
+            toolsLayer.on('click', clickHandler.bind(this));
+
+            function clickHandler (e) {
+                clickCallback(e);
+                toolsLayer.off('click', clickHandler);
+                this.deactivateToolLayer();
+            }
+        }
+
+        if (mousemoveCallback) {
+
+            let isMoving = false;
+            let origin = null;
+
+            let debouncedMoveHandler = Util.debounce(mousemoveHandler, 10);
+            toolsLayer.on('mousedown', mousedownHandler);
+            toolsLayer.on('mousemove', debouncedMoveHandler);
+            toolsLayer.on('mouseup', mouseupHandler);
+            toolsLayer.on('mouseleave', mouseupHandler);
+
+            function mousemoveHandler (e) {
+                e.preventDefault();
+                if (isMoving) {
+                    mousemoveCallback(e.point, origin);
+                    origin = e.point;
+                }
+            }
+
+            function mouseupHandler () {
+                isMoving = false;
+            }
+
+            function mousedownHandler (e) {
+                e.preventDefault();
+                origin = e.point;
+                isMoving = true;
+            }
+
+            return (function () {
+                console.log("removing the things");
+                toolsLayer.off('mousedown', mousedownHandler);
+                toolsLayer.off('mousemove', mousemoveHandler);
+                toolsLayer.off('mouseup', mouseupHandler);
+                toolsLayer.off('mouseleave', mouseupHandler);
+                this.deactivateToolLayer();
+            }).bind(this);
         }
     }
 
+
     deactivateToolLayer () {
+        console.log("Removing tools layer");
         this.protectedLayers.tools.remove();
         // Events.draw.dispatch();
     }
 
     setCanvasOffset (point) {
         this.canvasOffset = new paper.Point(point);
+
+        console.log("Offset", this.canvasOffset);
+
+        // let canvasOffset = paper.view.center.add(this.canvasOffset);
+        this.layers.board.translate(this.canvasOffset);
+        this.layers.grid.translate(this.canvasOffset);
+        this.layers.interactive.translate(this.canvasOffset);
+        this.layers.render.translate(this.canvasOffset);
+        this.layers.overlay.translate(this.canvasOffset);
+
+        Events.draw.dispatch();
+
     }
 
     resetCanvasOffset () {

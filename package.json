@@ -5,8 +5,8 @@
   "main": "app.min.js",
   "scripts": {
     "start": "npm run lib && npm run build && npm run serve",
-    "build:watch": "parallelshell 'npm run copy-statics' 'npm run watch:js -s' 'npm run watch:css -s' 'npm run build:html -s' 'npm run serve -s'",
-    "serve": "http-server ./dist -p 8000 -d false",
+    "watch": "parallelshell 'npm run copy-statics' 'npm run watch:js -s' 'npm run watch:css -s' 'npm run build:html -s' 'npm run serve -s'",
+    "serve": "browser-sync start --port 8000 --serveStatic './dist' --files './dist/*'",
     "watch:js": "watch 'npm run build:js' ./src/app/",
     "watch:css": "sass --watch ./src/app/styles/main.scss:./dist/styles/main.css",
     "watch:html": "watch 'npm run build:html'",
@@ -41,6 +41,7 @@
   },
   "homepage": "https://github.com/prevuelta/rune",
   "devDependencies": {
+    "browser-sync": "^2.14.0",
     "browserify": "latest",
     "paper": "~0.9.25",
     "parallelshell": "^2.0.0",
