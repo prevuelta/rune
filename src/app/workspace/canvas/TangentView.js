@@ -22,7 +22,7 @@ class TangentView {
         this.center = renderedPoint.add(new paper.Point(point.tangent.center.render(res)));
         this.exitPoint = new paper.Point(40, 40);
         this.direction = point.tangent.direction ? 1 : -1;
-        this.orientation = point.tangent.orientation ? 1 : -1;
+        this.orientation = point.tangent.orientation ? 1: -1;
 
         this.createTangent();
 
@@ -40,11 +40,11 @@ class TangentView {
         let adj = Math.sqrt(hyp * hyp - radius * radius);
 
         let angle = point.getAngle(center);
-        let newAngle = Trig.radToDeg(Math.acos(adj / hyp));
+        let newAngle = Trig.radToDeg(Math.asin(radius / hyp));
 
         let vec = point.subtract(this.center)
         vec.normalize();
-        vec.length = hyp;
+        vec.length = adj;
         vec.angle += 180 + newAngle * direction;
 
         return vec;
@@ -55,55 +55,27 @@ class TangentView {
         let tangent1Vec = this.getTangentVec(this.radius, this.renderedPoint, this.center, -this.direction);
         let tangent2Vec = this.getTangentVec(this.radius, this.endPoint, this.center, this.direction);
 
-        // let throughVec =
-
-        // let throughVec = tangentVec.clone();
-        // throughVec.length = -this.radius;
-
-        // tangentVec.normalize();
-        // tangentVec.length = hyp;//adj;
-
-        // let through = this.center.add(throughVec);
-
-        // tangentVec.angle
-
         let tangent1 = this.renderedPoint.add(tangent1Vec);
         let tangent2 = this.endPoint.add(tangent2Vec);
 
         let midPoint = tangent1.getMid(tangent2);
 
-        let angle = midPoint.getAngle(this.center);
-
-        let throughVec = new paper.Point(0, 0);
-
-        throughVec.angle = angle;
+        let throughVec = midPoint.subtract(this.center);
+        throughVec.normalize();
         throughVec.length = this.radius * this.orientation;
 
-
-        // tangentVec.angle -= newAngle * 2;
-
-        // let tangent2 = this.renderedPoint.add(tangentVec);
+        let arcMidPoint = this.center.add(throughVec);
 
         this.paths.push(new paper.Path([this.endPoint]));
 
         this.paths.push(new paper.Path.Arc({
             from: tangent2,
-            through: this.center.subtract(throughVec),
+            through: arcMidPoint,
             to: tangent1,
             strokeColor: 'black'
         }));
 
         this.paths.push(new paper.Path([this.renderedPoint]));
-
-            // , tangent2, tangent1, this.renderedPoint]));
-        // this.paths.push(new paper.Path([this.renderedPoint]));
-
-
-
-        // console.log("Tan one", tangent2);
-        // debugger;
-
-        // this.paths.push(new paper.Path([this.renderedPoint, tangent1]));
 
         // RuneNodeFactory(this.point, this.renderedPoint);
         RuneNodeFactory(this.point.tangent.center, this.center);
@@ -118,10 +90,12 @@ class TangentView {
                     line.style = styles.overlay;
                     let line2 = new paper.Path.Line(this.center, tangent1);
                     line2.style = styles.overlay;
-                    let line3 = new paper.Path.Line(tangent1, this.renderedPoint);
+                    let line3 = new paper.Path.Line(this.center, midPoint);
                     line3.strokeColor = 'red';
-                    let line4 = new paper.Path.Line(tangent2, this.endPoint);
+                    let line4 = new paper.Path.Line(tangent1, tangent2);
                     line4.strokeColor = 'green';
+                    let line5 = new paper.Path.Line(this.center, arcMidPoint);
+                    line5.strokeColor = 'black';
                     let circle = new paper.Path.Circle(this.center, this.radius);
                     circle.style = styles.overlay;
               });

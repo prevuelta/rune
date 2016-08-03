@@ -121,16 +121,15 @@ let Tangent = React.createClass({
         let directionSymbol = this.state.tangent.direction ? "⤿" : "⤾";
         let orientationSymbol = this.state.tangent.orientation ? "⤿" : "⤾";
         return  <div>
-                    Size: <strong>π/</strong>
                     <NumberInput
-                        label="Radius"
+                        label="Radius (π/x)"
                         value={this.state.tangent.size}
                         change={this.updateRadius}>
                     </NumberInput>
                     <XYInput
+                        label="Center"
                         change={this.updateCenter}
-                        value={this.state.tangent.center}
-                        label="Center" />
+                        value={this.state.tangent.center} />
                     <Button
                         handler={this.updateDirection}
                         symbol={directionSymbol}>

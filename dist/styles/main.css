@@ -130,7 +130,9 @@ button {
 
 label {
   display: block;
-  color: white; }
+  color: black;
+  padding: 0 6px;
+  background: #27dded; }
 
 input,
 textarea {
@@ -142,7 +144,11 @@ textarea {
   color: white;
   display: inline-block;
   background: #4e5657;
-  width: 100%; }
+  width: 100%;
+  font-size: 0.75rem; }
+
+input[type="number"] {
+  max-width: 72px; }
 
 input {
   border-radius: 2px; }
@@ -350,17 +356,9 @@ input {
     background: #3b3935;
     color: white;
     box-sizing: border-box; }
-  .panel > .pane {
-    display: flex; }
-  .panel .pane-half {
-    width: 50%; }
-  .panel .pane .pane.pane-half {
-    padding: 0;
-    padding-left: 0 3px;
-    background: none; }
-    .panel .pane .pane.pane-half:first-child {
-      padding-left: 0;
-      padding-right: 3px; }
+  .panel .flex-group {
+    display: flex;
+    align-items: center; }
 
 .rune-previews {
   display: flex;
@@ -374,9 +372,12 @@ input {
     cursor: pointer;
     margin: 0 3px 3px 0;
     width: 36px;
-    height: 36px; }
+    height: 36px;
+    border: 2px solid #27dded; }
     .rune-previews .rune-preview .button {
       margin: 0; }
+    .rune-previews .rune-preview.active {
+      border-color: #85ecf5; }
     .rune-previews .rune-preview svg {
       width: auto;
       height: auto;

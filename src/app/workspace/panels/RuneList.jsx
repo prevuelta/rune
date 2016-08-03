@@ -16,11 +16,15 @@ module.exports = {
     collapsed: false,
     panel: React.createClass({
         getInitialState : function() {
-            return {runes: this.props.data.tablet.runes };
+            return {
+                runes: this.props.data.tablet.runes,
+                activeRune: this.props.data.tablet.activeRune
+            };
         },
         componentWillReceiveProps: function(nextProps) {
             this.setState({
-                runes: nextProps.data.tablet.runes
+                runes: nextProps.data.tablet.runes,
+                activeRune: this.props.data.tablet.activeRune
             });
         },
         loadRune: function (runeId) {
@@ -35,9 +39,10 @@ module.exports = {
                     <div className="rune-previews">
                         {
                             this.state.runes.map((rune) => {
+                                let classNames = rune === this.state.activeRune ? 'rune-preview active' : 'rune-preview';
                                 return (
                                 <div
-                                    className="rune-preview"
+                                    className={classNames}
                                     dangerouslySetInnerHTML={{__html: rune.renderedSVG}}
                                     onClick={this.loadRune.bind(this, rune)}>
                                 </div>)

@@ -8,6 +8,7 @@ let Events = require('../../global/Events');
 let Button = require('../../components/Button.jsx');
 let Cross = require('../../icons/Cross.jsx');
 let XYInput = require('../../components/XYInput.jsx');
+let NumberInput = require('../../components/NumberInput.jsx');
 
 module.exports = {
     title: 'Canvas',
@@ -26,8 +27,8 @@ module.exports = {
             this.setState({options: this.state.options});
             Events.redrawView.dispatch();
         },
-        updateZoom (e) {
-            this.state.options.zoomLevel = +e.target.value;
+        updateZoom (value) {
+            this.state.options.zoomLevel = value;
             this.setState({options: this.state.options});
 
             Events.updateGridView.dispatch();
@@ -40,13 +41,16 @@ module.exports = {
                     </div>
                     <div className="pane">
                          <label>Board</label>
-                        <XYInput value={this.state.options.board} change={this.updateBoard} />
-                        <label>Zoom level</label>
-                        <input
-                            onChange={this.updateZoom}
-                            type="number"
-                            defaultValue={ this.state.options.zoomLevel} />
-                        <span>Zoom</span>
+                        <XYInput
+                            value={this.state.options.board}
+                            change={this.updateBoard} />
+
+                        <NumberInput
+                            label="Zoom level"
+                            value={this.state.options.zoomLevel}
+                            change={this.updateZoom}>
+                        </NumberInput>
+
                         <Button>
                             <Cross />
                         </Button>

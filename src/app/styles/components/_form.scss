@@ -11,7 +11,9 @@ button {
 
 label {
 	display: block;
-    color: white;
+    color: black;
+    padding: 0 $hu;
+    background: $sky;
 }
 
 input,
@@ -25,6 +27,11 @@ textarea {
     display: inline-block;
     background: lighten($sky-dark, 5);
     width: 100%;
+    font-size: $qqqpu;
+}
+
+input[type="number"] {
+    max-width: $u6;
 }
 
 input {

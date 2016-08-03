@@ -12,14 +12,14 @@ module.exports = React.createClass({
     },
     render: function() {
         return (
-            <label>
-                {this.props.label}
+            <div className="flex-group">
+                <label>{this.props.label}</label>
                 <input
                     type="number"
                     defaultValue={this.state.value}
                     onChange={this.updateValue}
                     />
-            </label>
+            </div>
         );
     }
 });

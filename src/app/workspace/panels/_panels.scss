@@ -89,18 +89,10 @@
         color: white;
         box-sizing: border-box;
     }
-    & > .pane { display: flex; }
-    .pane-half {
-        width: 50%;
-    }
-    .pane .pane.pane-half {
-        padding: 0;
-        padding-left: 0 $qu;
-        background: none;
-        &:first-child {
-            padding-left: 0;
-            padding-right: $qu;
-        }
+    .flex-group {
+        display: flex;
+        align-items: center;
+        // flex-align: row no-wrap;
     }
 }
 
@@ -117,8 +109,12 @@
         margin: 0 $qu $qu 0;
         width: $u3;
         height: $u3;
+        border: 2px solid $sky;
         .button {
             margin: 0;
+        }
+        &.active {
+            border-color: lighten($sky, 20);
         }
         svg {
             width: auto;
