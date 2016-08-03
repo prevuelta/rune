@@ -19,14 +19,11 @@ module.exports = React.createClass({
         let tool = this;
         this.active = !this.active;
         if (this.active) {
-            console.log("activating");
             this.deactivateToolLayer = Canvas.activateToolLayer(null, function (loc, origin) {
-                console.log("Moving", loc, origin);
                 let translate = {x: loc.x - origin.x, y: loc.y - origin.y};
-                Canvas.setCanvasOffset(translate);
+                Canvas.setCanvasTranslate(translate);
             });
         } else if (!this.active && this.deactivateToolLayer) {
-            console.log("deactivating");
             this.deactivateToolLayer();
         }
     },

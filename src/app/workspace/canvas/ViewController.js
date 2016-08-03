@@ -63,7 +63,6 @@ class ViewController {
         this.gridView.draw();
 
     }
-
     refreshGrid () {
         this.gridView.updateOptions(this.tablet.options);
         this.redrawView();
@@ -89,6 +88,7 @@ class ViewController {
 
     drawView () {
         console.log("Drawing...");
+        Canvas.translate();
         paper.view.draw();
     }
 

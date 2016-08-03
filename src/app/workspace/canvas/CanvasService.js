@@ -17,6 +17,7 @@ class CanvasService {
         paper.settings.handleSize = 8;
 
         this.resetCanvasOffset();
+        this.resetCanvasTranslate();
 
         this.layers = {
         	board: new paper.Layer(),
@@ -99,7 +100,6 @@ class CanvasService {
             }
 
             return (function () {
-                console.log("removing the things");
                 toolsLayer.off('mousedown', mousedownHandler);
                 toolsLayer.off('mousemove', mousemoveHandler);
                 toolsLayer.off('mouseup', mouseupHandler);
@@ -118,23 +118,33 @@ class CanvasService {
 
     setCanvasOffset (point) {
         this.canvasOffset = new paper.Point(point);
-
-        console.log("Offset", this.canvasOffset);
-
-        // let canvasOffset = paper.view.center.add(this.canvasOffset);
-        this.layers.board.translate(this.canvasOffset);
-        this.layers.grid.translate(this.canvasOffset);
-        this.layers.interactive.translate(this.canvasOffset);
-        this.layers.render.translate(this.canvasOffset);
-        this.layers.overlay.translate(this.canvasOffset);
-
+        // this.translate();
         Events.draw.dispatch();
-
     }
 
     resetCanvasOffset () {
-    	this.canvasOffset = new paper.Point(0, 0);
+        this.canvasOffset = new paper.Point(0, 0);
     }
+
+    resetCanvasTranslate () {
+        this.canvasTranslate = new paper.Point(0, 0);
+    }
+
+    setCanvasTranslate (point) {
+        this.canvasTranslate = new paper.Point(point);
+        this.translate();
+        Events.draw.dispatch();
+    }
+
+    translate () {
+        console.log("Translating", this.canvasTranslate);
+        this.layers.board.translate(this.canvasTranslate);
+        this.layers.grid.translate(this.canvasTranslate);
+        this.layers.interactive.translate(this.canvasTranslate);
+        this.layers.render.translate(this.canvasTranslate);
+        this.layers.overlay.translate(this.canvasTranslate);
+    }
+
 
     clearAllLayers () {
         Object.keys(this.layers).forEach(k => this.layers[k].removeChildren());
@@ -168,7 +178,7 @@ class CanvasService {
     }
 
     centerLayers () {
-        console.log("Offset", this.canvasOffset);
+     //    console.log("Offset", this.canvasOffset);
         this.layers.grid.translate(this.canvasOffset);
     	let canvasOffset = paper.view.center.add(this.canvasOffset);
         this.layers.interactive.translate(canvasOffset);

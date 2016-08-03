@@ -19,6 +19,7 @@ let allPanels = [
     require('./InspectPoint.jsx'),
     require('./InspectPath.jsx'),
     require('./GridManager.jsx'),
+    require('./Guides.jsx'),
     require('./Canvas.jsx')
 ];
 
