@@ -114,7 +114,7 @@
             margin: 0;
         }
         &.active {
-            border-color: lighten($sky, 20);
+            border-color: $glow;//lighten($sky, 20);
         }
         svg {
             width: auto;

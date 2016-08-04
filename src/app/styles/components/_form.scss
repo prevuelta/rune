@@ -19,9 +19,10 @@ label {
 input,
 textarea {
     box-sizing: border-box;
+    box-shadow: inset 1px 1px 1px 0px rgba(0,0,0,0.2);
 	padding: $hu;
 	margin: $hu 0;
-	border: 1px solid $sky;
+	border: 2px solid $sky;
     font-family: $primary-font;
     color: white;
     display: inline-block;

@@ -92,6 +92,17 @@ let Keys = {
             });
         });
 
+        document.addEventListener('mousewheel', mouseScroll);
+
+        function mouseScroll (e) {
+            let delta = e.wheelDelta;
+            console.log("delta", delta);
+            if (delta < 0) {
+                Events.zoomIn.dispatch();
+            } else {
+                Events.zoomOut.dispatch();
+            }
+        }
         return this;
     }
 };

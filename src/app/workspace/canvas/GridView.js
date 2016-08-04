@@ -16,6 +16,7 @@ class GridView {
         this.updateOptions(options);
 
         this.points = [];
+        this.boardBound = 2000;
 
         let gridX = options.board.x + 1;
         let gridY = options.board.y + 1;
@@ -44,9 +45,23 @@ class GridView {
     }
 
     drawToBoard () {
+
+        let boundsRect = new paper.Path.Rectangle(
+            paper.view.center.x-this.boardBound/2,
+            paper.view.center.y-this.boardBound/2,
+            this.boardBound,
+            this.boardBound
+        );
+
+        boundsRect.strokeColor = 'black';
+
         let boardX = (this.options.board.x) * this.resX;
         let boardY = (this.options.board.y) * this.resY;
-        let artBoard = new paper.Path.Rectangle(paper.view.center.x-boardX/2,paper.view.center.y-boardY/2, boardX, boardY);
+        let artBoard = new paper.Path.Rectangle(
+            paper.view.center.x-boardX/2,
+            paper.view.center.y-boardY/2,
+            boardX,
+            boardY);
         artBoard.style = styles.board;
     }
 
@@ -59,12 +74,7 @@ class GridView {
     }
 
     drawToOverlay () {
-        this.xLine(paper.view.center.y, styles.guides.accent);
-        this.yLine(paper.view.center.x, styles.guides.accent);
-        this.xLine(paper.view.center.y - this.options.board.y * this.resY / 2, styles.guides.accent);
-        this.xLine(paper.view.center.y + this.options.board.y * this.resY / 2, styles.guides.accent);
-        this.yLine(paper.view.center.x - this.options.board.x * this.resX / 2, styles.guides.accent);
-        this.yLine(paper.view.center.x + this.options.board.x * this.resX / 2, styles.guides.accent);
+
 
     }
 
@@ -96,6 +106,13 @@ class GridView {
         colLines.translate([paper.view.center.x, 0]);
         rowLines.translate([0, paper.view.center.y]);
 
+        this.xLine(paper.view.center.y, styles.guides.accent);
+        this.yLine(paper.view.center.x, styles.guides.accent);
+        this.xLine(paper.view.center.y - this.options.board.y * this.resY / 2, styles.guides.accent);
+        this.xLine(paper.view.center.y + this.options.board.y * this.resY / 2, styles.guides.accent);
+        this.yLine(paper.view.center.x - this.options.board.x * this.resX / 2, styles.guides.accent);
+        this.yLine(paper.view.center.x + this.options.board.x * this.resX / 2, styles.guides.accent);
+
     }
 
     createGridPoints () {
@@ -112,14 +129,14 @@ class GridView {
     }
 
     yLine (xLoc, style) {
-        let line = new paper.Path.Rectangle([xLoc, 0], 1, 2000);
+        let line = new paper.Path.Rectangle([xLoc, paper.view.center.y - 1000], 1, 2000);
         line.style = style;
 
         return line;
     }
 
     xLine (yLoc, style) {
-        let line = new paper.Path.Rectangle([0, yLoc], 2000, 1);
+        let line = new paper.Path.Rectangle([paper.view.center.x - 1000, yLoc], 2000, 1);
         line.style = style;
 
         return line;

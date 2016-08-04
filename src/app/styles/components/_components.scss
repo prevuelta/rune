@@ -20,13 +20,15 @@
         fill: white;
     }
     &:hover {
+        background: $rust;
         svg {
-            fill: $rust;
+            fill: $cream;
         }
     }
     &.on {
+        background: $sky;
         svg {
-            fill: $field;
+            fill: $glow;
         }
     }
 }

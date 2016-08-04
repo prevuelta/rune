@@ -15,7 +15,7 @@ module.exports = React.createClass({
    	centerCanvas: function () {
         let tool = this;
 		Canvas.activateToolLayer(function (e) {
-            Canvas.setCanvasOffset(e.point);
+            // Canvas.setCanvasOffset(e.point);
         });
 	},
     render: function () {

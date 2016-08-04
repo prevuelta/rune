@@ -25,6 +25,7 @@ class ModelController {
         Events.selectPath.add(this.selectPath.bind(this));
         Events.selectPoint.add(this.selectPoint.bind(this));
         Events.zoomIn.add(this.zoomIn.bind(this));
+        Events.zoomOut.add(this.zoomOut.bind(this));
 
         this.tablets = [];
 
@@ -158,6 +159,13 @@ class ModelController {
     zoomIn () {
         this.tablet.increaseZoom();
         Events.updateGridView.dispatch();
+        Events.refreshPanels.dispatch('canvas');
+    }
+
+    zoomOut () {
+        this.tablet.decreaseZoom();
+        Events.updateGridView.dispatch();
+        Events.refreshPanels.dispatch('canvas');
     }
 }
 

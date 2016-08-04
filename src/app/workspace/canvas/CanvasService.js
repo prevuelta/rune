@@ -17,7 +17,6 @@ class CanvasService {
         paper.settings.handleSize = 8;
 
         this.resetCanvasOffset();
-        this.resetCanvasTranslate();
 
         this.layers = {
         	board: new paper.Layer(),
@@ -25,7 +24,6 @@ class CanvasService {
             render: new paper.Layer(),
             overlay: new paper.Layer(),
             interactive: new paper.Layer(),
-            // tools: new paper.Layer()
         };
 
         this.protectedLayers = {
@@ -34,17 +32,16 @@ class CanvasService {
 
         this.setupToolsLayer();
 
+        this.initialCenter = paper.view.center;
+
     }
 
     // Setup a draw cycle with renderQueue
 
     setupToolsLayer () {
-        // this.protectedLayers.tools.on('mousedown', function () {
-        //     console.log("Tool layer clicked");
-        // });
 
         this.drawToProtectedLayer('tools', () => {
-            let test = paper.Path.Rectangle(new paper.Point(0, 0), this.view.size);
+            let test = new paper.Path.Rectangle(paper.view.center.x - 1000, paper.view.center.y - 1000,2000, 2000);
             test.fillColor = 'red';
             test.visible = false;
         });
@@ -85,7 +82,7 @@ class CanvasService {
                 e.preventDefault();
                 if (isMoving) {
                     mousemoveCallback(e.point, origin);
-                    origin = e.point;
+                    // origin = e.point;
                 }
             }
 
@@ -116,33 +113,38 @@ class CanvasService {
         // Events.draw.dispatch();
     }
 
-    setCanvasOffset (point) {
-        this.canvasOffset = new paper.Point(point);
-        // this.translate();
-        Events.draw.dispatch();
-    }
-
     resetCanvasOffset () {
         this.canvasOffset = new paper.Point(0, 0);
     }
 
-    resetCanvasTranslate () {
-        this.canvasTranslate = new paper.Point(0, 0);
-    }
-
-    setCanvasTranslate (point) {
-        this.canvasTranslate = new paper.Point(point);
-        this.translate();
+    setCanvasOffset (delta) {
+        console.log("Offset delta", delta);
+        this.canvasOffset = this.canvasOffset.subtract(delta);
+        this.translateCanvas();
         Events.draw.dispatch();
     }
 
-    translate () {
-        console.log("Translating", this.canvasTranslate);
-        this.layers.board.translate(this.canvasTranslate);
-        this.layers.grid.translate(this.canvasTranslate);
-        this.layers.interactive.translate(this.canvasTranslate);
-        this.layers.render.translate(this.canvasTranslate);
-        this.layers.overlay.translate(this.canvasTranslate);
+
+    // resetCanvasTranslate () {
+    //     this.canvasTranslate = new paper.Point(0, 0);
+    // }
+
+    // setCanvasTranslate (point) {
+    //     this.canvasTranslate = new paper.Point(point);
+    //     this.translate();
+    //     Events.draw.dispatch();
+    // }
+
+    translateCanvas () {
+        // debugger;
+          paper.view.center = this.initialCenter.add(this.canvasOffset);
+    //     // paper.view.center.add(this.canvasOffset);
+    //     // console.log("Translating", this.canvasTranslate);
+    //     // this.layers.board.translate(this.canvasTranslate);
+    //     // this.layers.grid.translate(this.canvasTranslate);
+    //     // this.layers.interactive.translate(this.canvasTranslate);
+    //     // this.layers.render.translate(this.canvasTranslate);
+    //     // this.layers.overlay.translate(this.canvasTranslate);
     }
 
 
@@ -178,12 +180,16 @@ class CanvasService {
     }
 
     centerLayers () {
-     //    console.log("Offset", this.canvasOffset);
-        this.layers.grid.translate(this.canvasOffset);
-    	let canvasOffset = paper.view.center.add(this.canvasOffset);
-        this.layers.interactive.translate(canvasOffset);
-        this.layers.render.translate(canvasOffset);
-        // this.layers.overlay.translate(canvasOffset);
+        console.log("datal", this.canvasOffset);
+        let newCenter = paper.view.center.add(this.canvasOffset);
+        paper.view.center = newCenter;
+        // console.log("Offset", this.canvasOffset);
+        // this.layers.board.translate(newCenter);
+        // this.layers.grid.translate(newCenter);
+        this.layers.interactive.translate(newCenter);
+        this.layers.render.translate(newCenter);
+        this.layers.overlay.translate(newCenter);
+
     }
 }
 

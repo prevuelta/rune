@@ -100,7 +100,7 @@ class PanelController {
 
         Events.reloadPanels.add(reloadHandler.bind(app));
 
-        Events.refreshPanels.add(() => {
+        Events.refreshPanels.add((panel) => {
             panels.setState({'data' : app.data});
         });
 

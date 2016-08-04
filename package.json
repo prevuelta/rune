@@ -12,7 +12,7 @@
     "watch:html": "watch 'npm run build:html'",
     "build:html": "cp ./src/app/index.html ./dist/index.html",
     "build": "echo 'building app...' && npm run lib && npm run build:js && npm run build:css && npm run copy-statics",
-    "build:js": "echo 'compiling javascript...' && browserify --fase -x react -x paper -x lodash ./src/app/app.js > ./dist/app.min.js && echo 'Finished compiling.'",
+    "build:js": "echo 'compiling javascript...' && browserify --fast -x react -x paper -x lodash ./src/app/app.js > ./dist/app.min.js && echo 'Finished compiling.'",
     "lib": "echo 'compiling libraries...' && browserify -r react -r react-draggable -r paper -r lodash -r signals -r ./src/extendLibs.js -o ./dist/lib.min.js && echo 'Finished lib compile'",
     "build:css": "echo 'compiling stylesheets...' && sass ./src/app/styles/main.scss:./dist/styles/main.css",
     "copy-statics": "echo 'Copying statics...' && cp -R ./src/app/assets/ ./dist/assets/"

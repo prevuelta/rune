@@ -21,7 +21,8 @@ module.exports = React.createClass({
         if (this.active) {
             this.deactivateToolLayer = Canvas.activateToolLayer(null, function (loc, origin) {
                 let translate = {x: loc.x - origin.x, y: loc.y - origin.y};
-                Canvas.setCanvasTranslate(translate);
+                console.log(translate);
+                Canvas.setCanvasOffset(translate);
             });
         } else if (!this.active && this.deactivateToolLayer) {
             this.deactivateToolLayer();

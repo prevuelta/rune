@@ -88,7 +88,7 @@ class ViewController {
 
     drawView () {
         console.log("Drawing...");
-        Canvas.translate();
+        Canvas.translateCanvas();
         paper.view.draw();
     }
 

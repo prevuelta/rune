@@ -137,9 +137,10 @@ label {
 input,
 textarea {
   box-sizing: border-box;
+  box-shadow: inset 1px 1px 1px 0px rgba(0, 0, 0, 0.2);
   padding: 6px;
   margin: 6px 0;
-  border: 1px solid #27dded;
+  border: 2px solid #27dded;
   font-family: "Inconsolata", sans-serif;
   color: white;
   display: inline-block;
@@ -207,12 +208,18 @@ input {
     width: 12px;
     height: 12px;
     fill: white; }
-  .switch:hover svg,
-  .button:hover svg {
-    fill: #e13d1c; }
-  .switch.on svg,
-  .button.on svg {
-    fill: #14bb5b; }
+  .switch:hover,
+  .button:hover {
+    background: #e13d1c; }
+    .switch:hover svg,
+    .button:hover svg {
+      fill: #ece5d4; }
+  .switch.on,
+  .button.on {
+    background: #27dded; }
+    .switch.on svg,
+    .button.on svg {
+      fill: #f1f417; }
 
 .button-group {
   display: flex;
@@ -377,7 +384,7 @@ input {
     .rune-previews .rune-preview .button {
       margin: 0; }
     .rune-previews .rune-preview.active {
-      border-color: #85ecf5; }
+      border-color: #f1f417; }
     .rune-previews .rune-preview svg {
       width: auto;
       height: auto;
