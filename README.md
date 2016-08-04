@@ -21,7 +21,7 @@ to compile libraries
 Dev process to build && watch:
 
 ```
-npm run build:watch
+npm run watch
 ```
 
 Enjoy :)
