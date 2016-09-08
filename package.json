@@ -53,5 +53,8 @@
     "svgo": "^0.6.6",
     "uglifyjs": "^2.4.10",
     "watch": "latest"
+  },
+  "dependencies": {
+    "lodash": "^4.15.0"
   }
 }
