@@ -1,6 +1,6 @@
 {
   "name": "Rune",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "SVG glyph creator using paper.js. Grid based design system to produce letter forms, icons etc then export as SVG from browser.",
   "main": "app.min.js",
   "scripts": {
