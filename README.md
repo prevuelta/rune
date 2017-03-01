@@ -3,7 +3,7 @@
 
 Online SVG based icon and type creator for people who like to think inside the box.
 
-## Demo: `http://.a4m.nz`
+Demo: `http://rune.a4m.nz`
 
 ## To run:
 
