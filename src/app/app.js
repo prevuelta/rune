@@ -1,54 +1,69 @@
 'use strict';
 
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { createStore } from 'redux';
+import App from './components/app.jsx';
 
-require('../extendLibs');
+const store = createStore((state = 0, action) => {return 1});
 
-// Rune
-let Events = require('./global/Events');
-let keys = require('./global/keys');
-let Util = require('./global/Util');
+const render = () => ReactDOM.render(
+    <App />,
+    document.getElementById('app')
+);
 
-let WorkSpaceController = require('./workspace/WorkspaceController');
-let ViewController = require('./workspace/canvas/ViewController');
-let DataController = require('./data/ModelController');
+render();
 
-class App {
+store.subscribe(render);
 
-    constructor () {
 
-        this.config = {
-            nudge: {
-                normal: 1,
-                super : 10,
-            }
-        }
+// require('../extendLibs');
 
-        // Setup workspace
-        this.savedTablets = Object.keys(localStorage).map(ref => {
-            return Util.getLocalData(ref);
-        });
+// let Events = require('./global/Events');
+// let keys = require('./global/keys');
+// let Util = require('./global/Util');
 
-        console.log("Saved tablets", this.savedTablets);
+// let WorkSpaceController = require('./workspace/WorkspaceController');
+// let ViewController = require('./workspace/canvas/ViewController');
+// let DataController = require('./data/ModelController');
 
-        let data = this.savedTablets;
+// class App {
 
-        this.data = DataController;
-        this.data.setTablets(data);
+//     constructor () {
 
-        this.view = ViewController;
-        this.view.loadTablet(this.data.tablet)
+//         this.config = {
+//             nudge: {
+//                 normal: 1,
+//                 super : 10,
+//             }
+//         }
 
-        WorkSpaceController.loadApp(this);
+//         // Setup workspace
+//         this.savedTablets = Object.keys(localStorage).map(ref => {
+//             return Util.getLocalData(ref);
+//         });
 
-        let app = this;
-        //setInterval(this.save.bind(this), 20000);
+//         console.log("Saved tablets", this.savedTablets);
 
-    }
+//         let data = this.savedTablets;
 
-    save () {
-        Events.renderSVG.dispatch();
-        this.data.save();
-    }
-}
+//         this.data = DataController;
+//         this.data.setTablets(data);
 
-let app = new App();
+//         this.view = ViewController;
+//         this.view.loadTablet(this.data.tablet)
+
+//         WorkSpaceController.loadApp(this);
+
+//         let app = this;
+//         //setInterval(this.save.bind(this), 20000);
+
+//     }
+
+//     save () {
+//         Events.renderSVG.dispatch();
+//         this.data.save();
+//     }
+// }
+
+// let app = new App();
