@@ -1,11 +1,12 @@
 'use static';
 
-let RuneModel = require('./RuneModel');
-let GridModel = require('./GridModel');
+const RuneModel = require('./RuneModel');
+const GridModel = require('./GridModel');
 
-let ViewModeEnum = require('../enums/ViewModeEnum');
-let nameGen = require('../global/NameGenerator');
+const ViewModeEnum = require('../enums/ViewModeEnum');
+const nameGen = require('../global/NameGenerator');
 
+const Util = require('../global/Util');
 const DEFAULT_ZOOM_LEVEL = 24;
 
 class TabletModel {
@@ -14,7 +15,7 @@ class TabletModel {
         this.name = data && data.name || nameGen(3);
 
         this.active = data && data.active || false;
-        this.id = data && data.id || this.guid();
+        this.id = data && data.id || Util.guid();
 
         let zoomLevel = data && data.zoomLevel || DEFAULT_ZOOM_LEVEL;
 
@@ -30,15 +31,6 @@ class TabletModel {
         this.activeRune = this.runes[0];
     }
 
-     guid () {
-      function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000)
-          .toString(16)
-          .substring(1);
-      }
-      return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-        s4() + '-' + s4() + s4() + s4();
-    }
 
     setActiveRune (rune) {
         this.activeRune = rune;

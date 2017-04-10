@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run lib && npm run build && npm run serve",
     "watch": "parallelshell 'npm run copy-statics' 'npm run watch:js -s' 'npm run watch:css -s' 'npm run build:html -s' 'npm run serve -s'",
-    "serve": "browser-sync start --port 8000 --serveStatic './dist' --files './dist/*'",
+    "serve": "echo 'Serving on 8000' && browser-sync start --port 8000 --serveStatic './dist' --files './dist/*'",
     "watch:js": "watch 'npm run build:js' ./src/app/",
     "watch:css": "sass --watch ./src/styles/main.scss:./dist/styles/main.css",
     "watch:html": "watch 'npm run build:html'",

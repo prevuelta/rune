@@ -3,12 +3,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
+import { providor } from 'react-redux';
 import App from './components/app.jsx';
 
 const store = createStore((state = 0, action) => {return 1});
 
+// Populate store
+
 const render = () => ReactDOM.render(
-    <App />,
+    <Provider store={store}>
+        <App />
+    </Provider>,
     document.getElementById('app')
 );
 
@@ -56,7 +61,6 @@ store.subscribe(render);
 //         WorkSpaceController.loadApp(this);
 
 //         let app = this;
-//         //setInterval(this.save.bind(this), 20000);
 
 //     }
 

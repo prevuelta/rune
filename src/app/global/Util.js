@@ -1,20 +1,27 @@
-/* ========== Utilities ========== */
-
 module.exports = {
-    getIndices: (points, gridPoints) => {
-    	return points.map(function(point) {
-    		return gridPoints.indexOf(point);
-    	});
+    getIndices (points, gridPoints) {
+        return points.map(function(point) {
+            return gridPoints.indexOf(point);
+        });
     },
-    object: (o) => {
+    object (o) {
         function F() {}
         F.prototype = o;
         return new F();
     },
-    getLocalData: (ref) => {
-    	return (localStorage[ref] && typeof localStorage[ref] === 'string') ? JSON.parse(localStorage[ref]) : null;
+    getLocalData (ref) {
+        return (localStorage[ref] && typeof localStorage[ref] === 'string') ? JSON.parse(localStorage[ref]) : null;
     },
-    debounce: (func, wait, immediate) => {
+    guid () {
+      function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1);
+      }
+      return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4();
+    },
+    debounce (func, wait, immediate) {
         let timeout;
         return function () {
             let context = this;
