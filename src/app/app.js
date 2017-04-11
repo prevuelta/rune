@@ -3,16 +3,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
-import { providor } from 'react-redux';
-import App from './components/app.jsx';
+import { Provider } from 'react-redux';
+import reducer from './reducers/reducer';
+import Workspace from './workspace/workspace';
 
-const store = createStore((state = 0, action) => {return 1});
+const store = createStore(reducer, {todos: [{text: "thing"}]});
 
 // Populate store
 
 const render = () => ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <Workspace />
     </Provider>,
     document.getElementById('app')
 );
