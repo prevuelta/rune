@@ -3,7 +3,6 @@
 import React from 'react';
 
 import {connect} from 'react-redux';
-import action from '../actions/action';
 
 let Workspace = props => {
     console.log(props)
@@ -22,9 +21,8 @@ let Workspace = props => {
 }
 
 function mapStateToProps (state, ownProps = {}) {
-  console.log(state); // state
   return { todos: state.todos };
 }
 
-export default connect(mapStateToProps, action)(Workspace);
+export default connect(mapStateToProps, (text) => {type: 'ADD_TODO', text})(Workspace);
 
