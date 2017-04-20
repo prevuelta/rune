@@ -2,12 +2,10 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import reducer from './reducers/reducer';
 import Workspace from './workspace/workspace';
+import { Provider } from 'react-redux';
 
-const store = createStore(reducer, {todos: [{text: "thing"}]});
+import store from './data/store';
 
 // Populate store
 

@@ -24,5 +24,11 @@ function mapStateToProps (state, ownProps = {}) {
   return { todos: state.todos };
 }
 
-export default connect(mapStateToProps, (text) => {type: 'ADD_TODO', text})(Workspace);
+function mapDispatchToProps (dispatch) {
+    return ({
+        dispatch
+    });
+}
+
+export default connect(mapStateToProps, dispatch => ({dispatch}))(Workspace);
 

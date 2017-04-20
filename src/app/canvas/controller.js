@@ -1,16 +1,36 @@
 'use strict';
 
-let GridView = require('./GridView.js');
-let RuneView = require('./RuneView.js');
-let Util = require('../../global/Util');
-let Events = require('../../global/Events');
-let paper = require('paper');
+// let GridView = require('./GridView.js');
+// let RuneView = require('./RuneView.js');
+// let Util = require('../../global/Util');
+// let Events = require('../../global/Events');
+// let paper = require('paper');
 
-let Canvas = require('./CanvasService');
+// let Canvas = require('./CanvasService');
 
-let SVG = require('../../global/SVGService');
+// let SVG = require('../../global/SVGService');
 
-/* ========== Render Tablet ========== */
+
+// get data 
+
+// render model
+{
+    type: 'handle',
+    args: {}
+}
+
+{
+    type: 'rectangle',
+}
+
+{
+    type: 'path',
+    points: [],
+    paths: [{
+        type: 'path',
+        points:''
+    }]
+}
 
 class ViewController {
     constructor () {

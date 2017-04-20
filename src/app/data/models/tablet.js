@@ -1,37 +1,13 @@
 'use static';
 
-const RuneModel = require('./RuneModel');
-const GridModel = require('./GridModel');
+import Rune from './rune';
+import Grid from './grid';
 
-const ViewModeEnum = require('../enums/ViewModeEnum');
-const nameGen = require('../global/NameGenerator');
+import nameGen from '../../util/nameGenerator';
+import Util from '../../util/util';
+import Constants from '../../util/constants';
 
-const Util = require('../global/Util');
-const DEFAULT_ZOOM_LEVEL = 24;
-
-class TabletModel {
-    constructor (data) {
-
-        this.name = data && data.name || nameGen(3);
-
-        this.active = data && data.active || false;
-        this.id = data && data.id || Util.guid();
-
-        let zoomLevel = data && data.zoomLevel || DEFAULT_ZOOM_LEVEL;
-
-        this.options = {
-            grid: new GridModel(data && data.options),
-            zoomLevel: zoomLevel,
-            board: this.board = data && data.board || {x : 9, y : 15},
-            viewMode: ViewModeEnum.normal
-        };
-
-        // this.activePathIndex = data && data.activePathIndex || 0;
-        this.runes = data && data.runes.map(rune => new RuneModel(rune)) || [new RuneModel()];
-        this.activeRune = this.runes[0];
-    }
-
-
+const tablet =  {
     setActiveRune (rune) {
         this.activeRune = rune;
     }
@@ -45,4 +21,28 @@ class TabletModel {
     }
 }
 
-module.exports = TabletModel;
+const ViewModeEnum = {
+    normal: 0,
+    preview: 1
+};
+
+function TabletFactory (data) {
+
+    let tabletData = {
+        name: data && data.name || nameGen(3),
+        active: data && data.active || false,
+        id: data && data.id || Util.guid(),
+        options: {
+            grid: Grid(data && data.options),
+            zoomLevel: zoomLevel = data && data.zoomLevel || Constants.DEFAULT_ZOOM_LEVEL,
+            size: data && data.size || {x : 9, y : 15},
+            viewMode: ViewModeEnum.normal
+        },
+        runes: data && data.runes.map(rune => Rune(rune)) || [Rune()],
+        activeRune: this.runes[0]
+    };
+
+    return Object.assign(Object.create(tablet), tabletData);
+}
+
+export default TabletFactory;
