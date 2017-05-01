@@ -5,16 +5,16 @@ import Grid from './grid';
 
 import nameGen from '../../util/nameGenerator';
 import Util from '../../util/util';
-import Constants from '../../util/constants';
+import Constants from '../../util/const';
 
 const tablet =  {
     setActiveRune (rune) {
         this.activeRune = rune;
-    }
+    },
 
     increaseZoom () {
         this.options.zoomLevel++;
-    }
+    },
 
     decreaseZoom () {
         this.options.zoomLevel--;
@@ -34,13 +34,14 @@ function TabletFactory (data) {
         id: data && data.id || Util.guid(),
         options: {
             grid: Grid(data && data.options),
-            zoomLevel: zoomLevel = data && data.zoomLevel || Constants.DEFAULT_ZOOM_LEVEL,
+            zoomLevel: data && data.zoomLevel || Constants.DEFAULT_ZOOM_LEVEL,
             size: data && data.size || {x : 9, y : 15},
             viewMode: ViewModeEnum.normal
         },
         runes: data && data.runes.map(rune => Rune(rune)) || [Rune()],
-        activeRune: this.runes[0]
     };
+
+    tabletData.activeRune = tabletData.runes[0];
 
     return Object.assign(Object.create(tablet), tabletData);
 }

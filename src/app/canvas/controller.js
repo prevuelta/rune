@@ -11,27 +11,6 @@
 // let SVG = require('../../global/SVGService');
 
 
-// get data 
-
-// render model
-{
-    type: 'handle',
-    args: {}
-}
-
-{
-    type: 'rectangle',
-}
-
-{
-    type: 'path',
-    points: [],
-    paths: [{
-        type: 'path',
-        points:''
-    }]
-}
-
 class ViewController {
     constructor () {
 

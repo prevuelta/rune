@@ -4,24 +4,24 @@ import React from 'react';
 
 import {connect} from 'react-redux';
 
+import Tablet from './components/tablet';
+
 let Workspace = props => {
-    console.log(props)
+    console.log(props);
     return (
         <div>
-            <h1>Hello world</h1>
             <div id="rune-tools"></div>
             <div id="rune-panels"></div>
             <div id="rune-overlay"></div>
             {
-                props.todos.map(t => <p>{t.text}</p>)
+                props.tablets.map(t => <Tablet data={t} /> )
             }
-            <button onClick={() => props.dispatch({ type: 'ADD_TODO', text: 'wat'})}>Add</button>
         </div>
     );
 }
 
 function mapStateToProps (state, ownProps = {}) {
-  return { todos: state.todos };
+  return { tablets: state.tablets };
 }
 
 function mapDispatchToProps (dispatch) {
