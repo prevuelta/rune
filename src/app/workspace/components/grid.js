@@ -1,7 +1,6 @@
 'use strict';
 
 import React from 'react';
-import Paper from '../../canvas/paper';
 import Line from './line';
 import Group from './group';
 
@@ -18,7 +17,14 @@ class Grid extends React.Component {
         return (
             <Group>
                 {
-                    sizeArr.map((s, i) => <Line x={i*10} y={0} color="red" length={2000} />)
+                    sizeArr.map((s, i) => {
+                        return (
+                            <Group>
+                                <Line x={i*10} y={0} color="red" length={2000} />
+                                <Line y={i*10} x={0} color="red" length={2000} />
+                            </Group>
+                        );
+                    })
                 }
             </Group>
         );

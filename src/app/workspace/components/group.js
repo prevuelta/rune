@@ -9,8 +9,7 @@ class Group extends React.Component {
     }
 
     render () {
-        console.log("CGHILDREN", this.props.children)
-        return this.props.children;
+        return <g>{this.props.children}</g>
     }
 }
 
