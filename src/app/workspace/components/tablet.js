@@ -12,12 +12,12 @@ class Tablet extends React.Component {
     render () {
         console.log("Tablet data", this.props.data);
         let { data } = this.props;
-        let height = data.options.grid.size * data.options.size.y;
-        let width = data.options.grid.size * data.options.size.x;
+        let height = data.options.layout.y * data.options.layout.gridUnit;
+        let width = data.options.layout.x * data.options.layout.gridUnit
         return (
             <div className="tablet">
-                <svg height={width} width={height}>
-                    <Grid data={data.options.grid} />
+                <svg height={height} width={width}>
+                    <Grid data={data.options.layout} />
                 </svg>
             </div>
         );

@@ -3,29 +3,27 @@
 import React from 'react';
 import Line from './line';
 import Group from './group';
+//import Styles = from '../../util/styles';
+import { COLORS } from '../../util/constants';
 
 class Grid extends React.Component {
 
     constructor (props) {
         super(props);
-        console.log("Grid data", props.data);
     }
 
     render () {
-        let {size} = this.props.data;
-        let sizeArr = new Array(size).fill(size);
+        let { data } = this.props;
+        let lines = [];
+        for (let i = 0; i < Math.max(data.x, data.y); i++) {
+            if (i < data.y)
+                lines.push(<Line y={i*data.gridUnit} color={COLORS.BLUE} length={2000} />);
+            if (i < data.x)
+                lines.push(<Line x={i*data.gridUnit} color={COLORS.BLUE} length={2000} />);
+        };
         return (
             <Group>
-                {
-                    sizeArr.map((s, i) => {
-                        return (
-                            <Group>
-                                <Line x={i*10} y={0} color="red" length={2000} />
-                                <Line y={i*10} x={0} color="red" length={2000} />
-                            </Group>
-                        );
-                    })
-                }
+                { lines }
             </Group>
         );
     }

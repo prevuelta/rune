@@ -5,7 +5,7 @@ import Grid from './grid';
 
 import nameGen from '../../util/nameGenerator';
 import Util from '../../util/util';
-import Constants from '../../util/const';
+import Constants from '../../util/constants';
 
 const tablet =  {
     setActiveRune (rune) {
@@ -33,9 +33,13 @@ function TabletFactory (data) {
         active: data && data.active || false,
         id: data && data.id || Util.guid(),
         options: {
-            grid: Grid(data && data.options),
             zoomLevel: data && data.zoomLevel || Constants.DEFAULT_ZOOM_LEVEL,
-            size: data && data.size || {x : 9, y : 15},
+            layout: {
+                gridUnit: 20,
+                gridRatio: 1,
+                x: 9,
+                y: 15
+            },
             viewMode: ViewModeEnum.normal
         },
         runes: data && data.runes.map(rune => Rune(rune)) || [Rune()],
