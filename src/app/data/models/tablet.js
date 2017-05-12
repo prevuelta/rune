@@ -35,10 +35,10 @@ function TabletFactory (data) {
         options: {
             zoomLevel: data && data.zoomLevel || Constants.DEFAULT_ZOOM_LEVEL,
             layout: {
-                gridUnit: 20,
+                gridUnit: 40,
                 gridRatio: 1,
-                x: 9,
-                y: 15
+                x: 7,
+                y: 10
             },
             viewMode: ViewModeEnum.normal
         },

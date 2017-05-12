@@ -4,6 +4,7 @@
   "description": "SVG glyph creator using paper.js. Grid based design system to produce letter forms, icons etc then export as SVG from browser.",
   "main": "app.min.js",
   "scripts": {
+    "flow": "flow",
     "start": "npm run lib && npm run build && npm run serve",
     "watch": "parallelshell 'npm run copy-statics' 'npm run watch:js -s' 'npm run watch:css -s' 'npm run build:html -s' 'npm run serve -s'",
     "serve": "echo 'Serving on 8000' && browser-sync start --port 8000 --serveStatic './dist' --files './dist/*'",
@@ -12,8 +13,8 @@
     "watch:html": "watch 'npm run build:html'",
     "build:html": "cp ./src/index.html ./dist/index.html",
     "build": "echo 'building app...' && npm run lib && npm run build:js && npm run build:css && npm run copy-statics",
-    "build:js": "echo 'compiling javascript...' && browserify --fast -x react -x paper -x react-dom -x redux ./src/app/app.js > ./dist/app.min.js && echo 'Finished compiling.'",
-    "lib": "echo 'compiling libraries...' && browserify -r react -r react-draggable -r paper -r signals -r react-dom -r redux -o ./dist/lib.min.js && echo 'Finished lib compile'",
+    "build:js": "echo 'compiling javascript...' && browserify -t unflowify --fast -x react -x react-draggable -x react-dom -x redux ./src/app/app.js > ./dist/app.min.js && echo 'Finished compiling.'",
+    "lib": "echo 'compiling libraries...' && browserify -r react -r react-draggable -r react-dom -r redux -o ./dist/lib.min.js && echo 'Finished lib compile'",
     "build:css": "echo 'compiling stylesheets...' && sass ./src/app/styles/main.scss:./dist/styles/main.css",
     "copy-statics": "echo 'Copying statics...' && cp -R ./src/assets/ ./dist/assets/"
   },
@@ -44,26 +45,25 @@
   },
   "homepage": "https://github.com/prevuelta/rune",
   "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-react": "^6.23.0",
     "babelify": "^7.3.0",
     "browser-sync": "^2.14.0",
     "browserify": "latest",
     "eslint": "^3.19.0",
+    "flow-bin": "^0.46.0",
     "parallelshell": "^2.0.0",
     "reload": "^1.1.1",
-    "uglifyjs": "^2.4.10",
+    "unflowify": "^1.0.1",
     "watch": "latest"
   },
   "dependencies": {
-    "babel-preset-es2015": "^6.24.0",
-    "babel-preset-react": "^6.23.0",
-    "lodash": "^4.15.0",
-    "paper": "~0.10.3",
     "react": "^15.5.4",
     "react-dom": "^15.4.2",
     "react-draggable": "^2.2.3",
     "react-redux": "^5.0.3",
     "redux": "^3.6.0",
-    "signals": "^1.0.0",
     "svgo": "^0.7.2"
   }
 }
