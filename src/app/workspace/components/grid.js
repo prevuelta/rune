@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import Line from './line';
+import {Line, Vline, Hline} from './line';
 import Group from './group';
 import GridNode from './gridNode';
 //import Styles = from '../../util/styles';
@@ -28,13 +28,13 @@ class Grid extends React.Component {
                     //lines.push(<Line y={i *data.gridUnit+(j*data.gridUnit/5)} opacity={0.2} color={COLORS.BLUE} length={2000} />);
             };
             if (i <= data.y)
-                lines.push(<Line y={i*data.gridUnit} color={COLORS.BLUE} length={2000} />);
+                lines.push(<Hline y={i*data.gridUnit} color={COLORS.BLUE} length={2000} />);
             if (i <= data.x)
-                lines.push(<Line x={i*data.gridUnit} color={COLORS.BLUE} length={2000} />);
+                lines.push(<Vline x={i*data.gridUnit} color={COLORS.BLUE} length={2000} />);
         };
         lines.push(
-            <Line x={width/2} color={COLORS.RED} length={2000} />,
-            <Line y={height/2} color={COLORS.RED} length={2000} />,
+            //<Line x={width/2} color={COLORS.RED} length={2000} />,
+            //<Line y={height/2} color={COLORS.RED} length={2000} />,
         );
         return (
             <Group>

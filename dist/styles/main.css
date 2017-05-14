@@ -194,6 +194,11 @@ svg {
   position: absolute;
   left: 50px;
   top: 50px; }
+  .tablet svg {
+    position: absolute;
+    top: 10;
+    left: 10;
+    background: none; }
 
 .switch,
 .button {
