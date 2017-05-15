@@ -6,22 +6,9 @@ import Group from './group';
 //import Styles = from '../../util/styles';
 import { COLORS } from '../../util/constants';
 
-class GridNode extends React.Component {
-
-    constructor (props) {
-        super(props);
-    }
-
-    _handleClick (e) {
-        console.log(e)
-    }
-
-    render () {
-        let { data } = this.props;
-        return (
-            <circle cx={0} cy={0} r={10} fill={"red"} onClick={this._handleClick} />
-        );
-    }
+export default function GridNode (props) {
+    let {location, clickHandler} = props;
+    return (
+        <circle cx={location[0]} cy={location[1]} r={10} fill={"red"} onClick={clickHandler} />
+    );
 }
-
-export default GridNode;
