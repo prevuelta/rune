@@ -2,6 +2,7 @@
 
 import React from 'react';
 import {GridLines, GridNodes} from './grid';
+import {connect} from 'react-redux';
 
 const SLUG = 20;
 
@@ -48,4 +49,8 @@ class Tablet extends React.Component {
     }
 }
 
-export default Tablet;
+function mapStateToProps (...args) {
+    console.log(args);
+}
+
+export default connect(mapStateToProps, () => dispatch())(Tablet);
