@@ -4,24 +4,23 @@ import React from 'react';
 
 import {connect} from 'react-redux';
 
-import Tablet from './components/tablet';
+import Rune from './components/rune';
 
 let Workspace = props => {
-    console.log(props);
     return (
         <div>
             <div id="rune-tools"></div>
             <div id="rune-panels"></div>
             <div id="rune-overlay"></div>
             {
-                props.tablets.map(t => <Tablet data={t} /> )
+                props.tablet.runes.map((r, i) => <Rune tablet={props.tablet} key={i} data={r} /> )
             }
         </div>
     );
 }
 
 function mapStateToProps (state, ownProps = {}) {
-  return { tablets: state.tablets };
+  return { tablet: state.tablets[state.currentTabletIndex] };
 }
 
 function mapDispatchToProps (dispatch) {

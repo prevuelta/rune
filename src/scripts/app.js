@@ -9,12 +9,15 @@ import store from './data/store';
 
 // Populate store
 
-const render = () => ReactDOM.render(
-    <Provider store={store}>
-        <Workspace />
-    </Provider>,
-    document.getElementById('app')
-);
+const render = () => {
+    console.log("Rendering");
+    ReactDOM.render(
+        <Provider store={store}>
+            <Workspace />
+        </Provider>,
+        document.getElementById('app')
+    );
+}
 
 render();
 

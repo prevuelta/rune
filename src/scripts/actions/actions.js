@@ -2,7 +2,7 @@
 
 export function addPoint (point) {
     return {
-        type: 'ADD_POINT'
+        type: 'ADD_POINT',
         point
     };
 };

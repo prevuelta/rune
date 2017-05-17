@@ -3,9 +3,15 @@
 import React from 'react';
 import {Line, Vline, Hline} from './line';
 import Group from './group';
-import GridNode from './gridNode';
 //import Styles = from '../../util/styles';
 import { COLORS } from '../../util/constants';
+
+export default function GridNode (props) {
+    let {location, clickHandler, radius} = props;
+    return (
+        <circle cx={location[0]} cy={location[1]} r={radius} fill={"red"} onClick={clickHandler} fillOpacity={0.4} />
+    );
+}
 
 export function GridLines (props) {
     let { data } = props;
@@ -40,10 +46,15 @@ export function GridLines (props) {
 
 export function GridNodes (props) {
     let {clickHandler, data} = props;
-    console.log(props);
+    let nodes = [];
+    for (let x = 0; x <= data.x; x++) for (let y = 0; y <= data.y;y++) {
+        let point = {x:x*data.gridUnit, y:y*data.gridUnit};
+        let k = x*(data.y+1)+y;
+        nodes.push(<GridNode grid={[x,y]} key={k} clickHandler={clickHandler.bind(null, point)} location={[data.gridUnit * x, data.gridUnit * y]}  radius={data.gridUnit/2} />);
+    };
     return (
         <Group>
-            <GridNode grid={[1,3]} clickHandler={clickHandler} location={[data.gridUnit * 1, data.gridUnit * 3]} />
+            { nodes }
         </Group>
     );
 }

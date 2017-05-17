@@ -7,9 +7,7 @@ import reducer from './reducers/reducer';
 
 import Tablet from '../data/models/tablet';
 
-let initialState = {tablets: [ Tablet() ]};
-
 /* Remember: store is pure data */
-const store = createStore(reducer, initialState);
+const store = createStore(reducer);
 
 export default store;
