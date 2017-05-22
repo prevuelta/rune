@@ -195,6 +195,7 @@ svg {
   left: 50px;
   top: 50px; }
   .rune svg {
+    overflow: visible;
     position: absolute;
     background: none; }
   .rune .rune-label {
