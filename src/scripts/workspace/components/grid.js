@@ -7,9 +7,9 @@ import Group from './group';
 import { COLORS } from '../../util/constants';
 
 export default function GridNode (props) {
-    let {location, clickHandler, radius} = props;
+    let {location, clickHandler, size} = props;
     return (
-        <circle cx={location[0]} cy={location[1]} r={radius} fill={"red"} onClick={clickHandler} fillOpacity={0.4} />
+        <rect x={location[0]} y={location[1]} width={size} height={size} fill={"red"} onClick={clickHandler} fillOpacity={0.4} />
     );
 }
 
@@ -50,7 +50,7 @@ export function GridNodes (props) {
     for (let x = 0; x <= data.x; x++) for (let y = 0; y <= data.y;y++) {
         let point = {x:x*data.gridUnit, y:y*data.gridUnit};
         let k = x*(data.y+1)+y;
-        nodes.push(<GridNode grid={[x,y]} key={k} clickHandler={clickHandler.bind(null, point)} location={[data.gridUnit * x, data.gridUnit * y]}  radius={data.gridUnit/2} />);
+        nodes.push(<GridNode grid={[x,y]} key={k} clickHandler={clickHandler.bind(null, point)} location={[data.gridUnit * x, data.gridUnit * y]}  size={data.gridUnit/2} />);
     };
     return (
         <Group>
