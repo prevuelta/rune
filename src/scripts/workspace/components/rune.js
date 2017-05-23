@@ -4,6 +4,7 @@ import React from 'react';
 import { GridLines, GridNodes } from './grid';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/actions';
+import Point from './point';
 
 const SLUG = 20;
 
@@ -16,11 +17,12 @@ function BGLayer (props) {
     );
 }
 
-function Overlay (props) {
-    let {height, width} = props;
+function UI (props) {
+    let {height, width, points} = props;
     return (
         <svg id="overlay" height={height} width={width}>
             <GridNodes {...props} />
+            { points.map((p, i) => <Point key={i} x={p.x} y={p.y} />) }
         </svg>
     );
 }
@@ -40,7 +42,8 @@ class Rune extends React.Component {
             height, 
             width,
             size: { width, height},
-            layout
+            layout,
+            points: this.props.points
         };
     }
 
@@ -54,19 +57,23 @@ class Rune extends React.Component {
     }
 
     render () {
-        let { layout, width, height, size } = this.state;
+        let { layout, width, height, size, points } = this.state;
         return (
             <div className="rune" style={{width: width, height: height, padding: SLUG}}>
                 <BGLayer {...size} data={layout} />
-                <Overlay {...size} data={layout} clickHandler={this.props.addPoint} />
+                <UI {...size} points={points} data={layout} clickHandler={this.props.addPoint} />
             </div>
         );
     }
 }
 
 function mapStateToProps (state, ownProps) {
-    console.log("Updating")
-    return ownProps;
+    let points = state.points.filter(p => p.rune === ownProps.index);
+    console.log("Rune points", points);    
+    return {
+        ...ownProps,
+        points
+    };
 }
 
 export default connect(mapStateToProps, actionCreators)(Rune);

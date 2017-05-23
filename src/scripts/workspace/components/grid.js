@@ -9,7 +9,7 @@ import { COLORS } from '../../util/constants';
 export default function GridNode (props) {
     let {location, clickHandler, radius} = props;
     return (
-        <circle cx={location[0]} cy={location[1]} r={radius} fill={"red"} onClick={clickHandler} fillOpacity={0.4} />
+        <circle className="grid-node" cx={location[0]} cy={location[1]} r={radius} fill={"red"} onClick={clickHandler} fillOpacity={0.4} />
     );
 }
 

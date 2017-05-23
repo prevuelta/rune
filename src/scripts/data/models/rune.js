@@ -1,5 +1,11 @@
 'use strict';
 
+export default function (tablet) {
+    return {
+        tablet,
+        points: [0]
+    };
+};
 // let PathModel = require('./PathModel');
 // let PointModel = require('./PointModel');
 // let Events = require('../global/Events');
@@ -181,9 +187,3 @@
 //     }
 // }
 
-// module.exports = RuneModel;
-
-function Rune (data) {
-    return {};
-}
-export default Rune
