@@ -62,6 +62,6 @@ export function GridNodes (props) {
 function GridNode (props) {
     let {location, clickHandler, size} = props;
     return (
-        <rect className="grid-node" x={location[0]} y={location[1]} width={size} height={size} fill={"red"} onClick={clickHandler} fillOpacity={0.4} />
+        <rect className="grid-node" x={location[0]} y={location[1]} width={size} height={size} fill={COLORS.BLUE} onClick={clickHandler} fillOpacity={0.2} />
     );
 }
