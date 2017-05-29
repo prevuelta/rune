@@ -6,16 +6,6 @@ import Group from './group';
 //import Styles = from '../../util/styles';
 import { COLORS } from '../../util/constants';
 
-<<<<<<< HEAD
-export default function GridNode (props) {
-    let {location, clickHandler, radius} = props;
-    return (
-        <circle className="grid-node" cx={location[0]} cy={location[1]} r={radius} fill={"red"} onClick={clickHandler} fillOpacity={0.4} />
-    );
-}
-=======
->>>>>>> eb8c3e9cd69b3f1e6ae890cb0dd60981f9ecf715
-
 export function GridLines (props) {
     let { data } = props;
     console.log(props)
