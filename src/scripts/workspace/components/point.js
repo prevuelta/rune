@@ -1,18 +1,24 @@
 'use strict';
 
 import React from 'react';
+import * as actionCreators from '../../actions/actions';
+import { connect } from 'react-redux';
+import { COLORS } from '../../util/constants';
 
-class Point extends React.Component {
-    
-    constructor (props) {
-        super(props);
-    }
-    
-    render () {
-        return (
-            <circle cx={this.props.x} cy={this.props.y} r={10} fillColor={'red'} />
-        );
-    }
+function Point (props) {
+    return <circle
+                onClick={() => props.selectPoint(props.index)}
+                cx={props.x}
+                cy={props.y}
+                r={8}
+                fill={'white'}
+                stroke={props.selected ? COLORS.RED : COLORS.BLUE}
+                strokeWidth={2}
+            />
 }
 
-export default Point;
+function mapStateToProps (state, ownProps) {
+    return ownProps;
+}
+
+export default connect(mapStateToProps, actionCreators)(Point);

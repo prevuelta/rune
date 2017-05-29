@@ -13,16 +13,26 @@ let Workspace = props => {
             <div id="rune-panels"></div>
             <div id="rune-overlay"></div>
             {
-                props.runes.map((r, i) => <Rune index={i} tablet={props.tablet} key={i} data={r} /> )
+                props.runes.map((r, i) => {
+                    return <Rune
+                                tablet={props.tablet}
+                                key={i}
+                                id={r.id}
+                                />
+                })
             }
         </div>
     );
 }
 
-function mapStateToProps (state, ownProps = {}) {
-    //Get runes via tablet id 
+function mapStateToProps (state) {
     let tablet = state.tablets[state.currentTabletIndex];
-    return { tablet, runes: state.runes.filter(r => r.tablet === state.currentTabletIndex ) };
+    let runes = state.runes.filter(r => r.tablet === tablet.id)
+    console.log(runes, tablet, state.runes);
+    return {
+        tablet,
+        runes
+    };
 }
 
 function mapDispatchToProps (dispatch) {

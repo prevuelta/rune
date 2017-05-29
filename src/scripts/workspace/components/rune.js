@@ -4,7 +4,9 @@ import React from 'react';
 import { GridLines, GridNodes } from './grid';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/actions';
+import Group from './group';
 import Point from './point';
+import { COLORS } from '../../util/constants';
 
 const SLUG = 20;
 
@@ -12,67 +14,81 @@ function BGLayer (props) {
     let {height, width} = props;
     return (
         <svg id="background" height={height} width={width} >
-            <GridLines data={props.data} />
+            <GridLines {...props} />
         </svg>
     );
 }
 
-function UI (props) {
-    let {height, width, points} = props;
+function Overlay (props) {
+    let {height, width, points, selectedPointIndex} = props;
     return (
         <svg id="overlay" height={height} width={width}>
             <GridNodes {...props} />
-            { points.map((p, i) => <Point key={i} x={p.x} y={p.y} />) }
+            <Group>
+                {
+                    points.map((p, i) => <Point index={i} selected={i === selectedPointIndex} key={i} {...p} />)
+                }
+            </Group>
         </svg>
     );
 }
 
-class Rune extends React.Component {
+function RenderLayer (props) {
+    let {height, width, paths} = props;
+    return (
+        <svg id="render" height={height} width={width}>
+            {
+                paths.map((path, i) => {
+                    console.log("PATH", path);
+                    let str = path.map((p, i) => `${i?'L':'M'} ${p.x} ${p.y} `); 
+                    return <path key={i} d={str} stroke={'red'} strokeWidth={1} fill={'none'} />;
+                })
+            }
+        </svg>
+    );
+}
 
-    constructor (props) {
-        super(props);
-        console.log("Rune props", props)
-        console.log("Rune data", this.props.data);
-        let { data } = this.props;
-        let { options: { layout } } = this.props.tablet;
-        let height = layout.y * layout.gridUnit;
-        let width = layout.x * layout.gridUnit
-        this.state = {
-            data,
-            height, 
-            width,
-            size: { width, height},
-            layout,
-            points: this.props.points
-        };
-    }
+function Rune (props) {
+    let { points, tablet, paths, selectedPointIndex } = props;
+    let { options: { layout } } = tablet;
+    let height = layout.y * layout.gridUnit;
+    let width = layout.x * layout.gridUnit;
+    let size = {width, height};
+    return (
+        <div className="rune" style={{width, height, padding: SLUG}}>
+            <BGLayer {...size} layout={layout} />
+            <RenderLayer {...size} paths={paths} />
+            <Overlay
+                {...size}
+                layout={layout}
+                points={points}
+                selectedPointIndex={selectedPointIndex}
+                rune={props.id}
+                handlers={{addPoint: props.addPoint}}
+            />
+        </div>
+    );
+}
 
-    clickHandler (e) {
-        console.log(e)
-    }
 
-    componentWillReceiveProps (newProps) {
-        console.log(newProps)
-        
-    }
-
-    render () {
-        let { layout, width, height, size, points } = this.state;
-        return (
-            <div className="rune" style={{width: width, height: height, padding: SLUG}}>
-                <BGLayer {...size} data={layout} />
-                <UI {...size} points={points} data={layout} clickHandler={this.props.addPoint} />
-            </div>
-        );
-    }
+function mapDispatchToProps (dispatch) {
+    return ({
+        dispatch
+    });
 }
 
 function mapStateToProps (state, ownProps) {
-    let points = state.points.filter(p => p.rune === ownProps.index);
-    console.log("Rune points", points);    
+    let points = state.points.filter(p => p.rune === ownProps.id);
+    // let paths = state.paths.filter(p => p.rune = ownProps.id);
+    let hist = {};
+    points.forEach(p => { p.path in hist ? hist[p.path].push(p) : hist[p.path] = [p]; } );
+    let paths = [];
+    for (let path in hist) paths.push(hist[path]);
     return {
         ...ownProps,
-        points
+        paths,
+        points,
+        selectedPointIndex: state.selectedPointIndex
     };
 }
 
