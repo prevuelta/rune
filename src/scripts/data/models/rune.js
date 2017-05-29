@@ -184,6 +184,6 @@
 // module.exports = RuneModel;
 
 function Rune (data) {
-    return {};
+    return {...data};
 }
 export default Rune

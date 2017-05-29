@@ -27,11 +27,17 @@ const ViewModeEnum = {
 };
 
 function TabletFactory (data) {
+    let id;
+    if (data && !Number.isNaN(data.id)) {
+        id = data.id;
+    } else {
+        id = Util.guid();
+    }
 
     let tabletData = {
         name: data && data.name || nameGen(3),
         active: data && data.active || false,
-        id: data && data.id || Util.guid(),
+        id,
         options: {
             zoomLevel: data && data.zoomLevel || Constants.DEFAULT_ZOOM_LEVEL,
             layout: {
@@ -41,11 +47,12 @@ function TabletFactory (data) {
                 y: 10
             },
             viewMode: ViewModeEnum.normal
-        },
-        runes: data && data.runes.map(rune => Rune(rune)) || [Rune()],
+        }
     };
 
-    tabletData.activeRune = tabletData.runes[0];
+    console.log(tabletData);
+
+    // tabletData.activeRune = tabletData.runes[0];
 
     return Object.assign(Object.create(tablet), tabletData);
 }

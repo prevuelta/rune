@@ -4,6 +4,9 @@ import React from 'react';
 import { GridLines, GridNodes } from './grid';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/actions';
+import Group from './group';
+import Point from './point';
+import { COLORS } from '../../util/constants';
 
 const SLUG = 20;
 
@@ -11,62 +14,59 @@ function BGLayer (props) {
     let {height, width} = props;
     return (
         <svg id="background" height={height} width={width} >
-            <GridLines data={props.data} />
+            <GridLines {...props} />
         </svg>
     );
 }
 
+
 function Overlay (props) {
-    let {height, width} = props;
+    let {height, width, points} = props;
     return (
         <svg id="overlay" height={height} width={width}>
             <GridNodes {...props} />
+            <Group>
+                {
+                    points.map(p => <Point {...p} />)
+                }
+            </Group>
         </svg>
     );
 }
 
-class Rune extends React.Component {
-
-    constructor (props) {
-        super(props);
-        console.log("Rune props", props)
-        console.log("Rune data", this.props.data);
-        let { data } = this.props;
-        let { options: { layout } } = this.props.tablet;
-        let height = layout.y * layout.gridUnit;
-        let width = layout.x * layout.gridUnit
-        this.state = {
-            data,
-            height, 
-            width,
-            size: { width, height},
-            layout
-        };
-    }
-
-    clickHandler (e) {
-        console.log(e)
-    }
-
-    componentWillReceiveProps (newProps) {
-        console.log(newProps)
-        
-    }
-
-    render () {
-        let { layout, width, height, size } = this.state;
-        return (
-            <div className="rune" style={{width: width, height: height, padding: SLUG}}>
-                <BGLayer {...size} data={layout} />
-                <Overlay {...size} data={layout} clickHandler={this.props.addPoint} />
-            </div>
-        );
-    }
+function Rune (props) {
+    let { points, tablet } = props;
+    let { options: { layout } } = tablet;
+    let height = layout.y * layout.gridUnit;
+    let width = layout.x * layout.gridUnit;
+    let size = {width, height};
+    return (
+        <div className="rune" style={{width, height, padding: SLUG}}>
+            <BGLayer {...size} layout={layout} />
+            <Overlay
+                {...size}
+                layout={layout}
+                points={points}
+                rune={props.id}
+                handlers={{addPoint: props.addPoint}}
+            />
+        </div>
+    );
 }
 
+
+function mapDispatchToProps (dispatch) {
+    return ({
+        dispatch
+    });
+}
 function mapStateToProps (state, ownProps) {
-    console.log("Updating")
-    return ownProps;
+    let points = state.points.filter(p => p.rune === ownProps.id)
+    console.log(points, state.points);
+    return {
+        ...ownProps,
+        points
+    };
 }
 
 export default connect(mapStateToProps, actionCreators)(Rune);

@@ -1,13 +1,14 @@
 'use strict';
 
 import Tablet from '../models/tablet';
+import Rune from '../models/rune';
 
 const initialState = {
-    tablets: [ Tablet() ],
+    tablets: [ Tablet({id: 0}) ],
     currentTabletIndex: 0,
     currentRuneIndex: 0,
     currentPathIndex: 0,
-    runes: [],
+    runes: [Rune({tablet: 0, id:0})],
     paths: [],
     points: []
 };
