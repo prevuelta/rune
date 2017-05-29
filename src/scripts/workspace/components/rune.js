@@ -21,21 +21,37 @@ function BGLayer (props) {
 
 
 function Overlay (props) {
-    let {height, width, points} = props;
+    let {height, width, points, selectedPointIndex} = props;
+    console.log("INDEX", selectedPointIndex);
     return (
         <svg id="overlay" height={height} width={width}>
             <GridNodes {...props} />
             <Group>
                 {
-                    points.map(p => <Point {...p} />)
+                    points.map((p, i) => <Point index={i} selected={i === selectedPointIndex} key={i} {...p} />)
                 }
             </Group>
         </svg>
     );
 }
 
+function RenderLayer (props) {
+    let {height, width, paths} = props;
+    return (
+        <svg id="render" height={height} width={width}>
+            {
+                paths.map((path, i) => {
+                    console.log("PATH", path);
+                    let str = path.map((p, i) => `${i?'L':'M'} ${p.x} ${p.y} `); 
+                    return <path key={i} d={str} stroke={'red'} strokeWidth={1} fill={'none'} />;
+                })
+            }
+        </svg>
+    );
+}
+
 function Rune (props) {
-    let { points, tablet } = props;
+    let { points, tablet, paths, selectedPointIndex } = props;
     let { options: { layout } } = tablet;
     let height = layout.y * layout.gridUnit;
     let width = layout.x * layout.gridUnit;
@@ -43,10 +59,12 @@ function Rune (props) {
     return (
         <div className="rune" style={{width, height, padding: SLUG}}>
             <BGLayer {...size} layout={layout} />
+            <RenderLayer {...size} paths={paths} />
             <Overlay
                 {...size}
                 layout={layout}
                 points={points}
+                selectedPointIndex={selectedPointIndex}
                 rune={props.id}
                 handlers={{addPoint: props.addPoint}}
             />
@@ -61,11 +79,17 @@ function mapDispatchToProps (dispatch) {
     });
 }
 function mapStateToProps (state, ownProps) {
-    let points = state.points.filter(p => p.rune === ownProps.id)
-    console.log(points, state.points);
+    let points = state.points.filter(p => p.rune === ownProps.id);
+    // let paths = state.paths.filter(p => p.rune = ownProps.id);
+    let hist = {};
+    points.forEach(p => { p.path in hist ? hist[p.path].push(p) : hist[p.path] = [p]; } );
+    let paths = [];
+    for (let path in hist) paths.push(hist[path]);
     return {
         ...ownProps,
-        points
+        paths,
+        points,
+        selectedPointIndex: state.selectedPointIndex
     };
 }
 

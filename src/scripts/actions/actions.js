@@ -6,3 +6,10 @@ export function addPoint (point) {
         point
     };
 };
+
+export function selectPoint (index) {
+    return {
+        type: 'SELECT_POINT',
+        index
+    };
+};
