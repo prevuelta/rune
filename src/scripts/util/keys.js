@@ -51,7 +51,9 @@ document.addEventListener('keydown', function(e) {
     console.log('Key pressed: ', ref);
     if (keyActions[ref] && e.target.tagName !== 'INPUT') {
         e.preventDefault();
-        Store.dispatch(keyActions[ref]);
+        let action = keyActions[ref];
+        console.log("Key action: ", action);
+        Store.dispatch(action);
     }
 });
 

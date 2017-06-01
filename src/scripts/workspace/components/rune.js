@@ -56,9 +56,9 @@ function Rune (props) {
     let size = {width, height};
     return (
         <div className="rune" style={{width, height, padding: SLUG}}>
-            { proofView && <BGLayer {...size} layout={layout} /> }
+            { !proofView && <BGLayer {...size} layout={layout} /> }
             <RenderLayer {...size} paths={paths} />
-            { proofView && <Overlay
+            { !proofView && <Overlay
                 {...size}
                 layout={layout}
                 points={points}

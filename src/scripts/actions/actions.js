@@ -14,13 +14,18 @@ export function selectPoint (index) {
     };
 }
 
-/* POINT ACTIONS */
+/* POINT */
 
-export function deleteSelectedPoints (indices) {
+export const deleteSelectedPoints = { type: 'DELETE_SELECTED_POINTS' };
+
+export function nudge (vector, isSuper) {
     return {
-        type: 'DELETE_SELECTED_POINTS',
-        indices
+        type: 'NUDGE',
+        vector,
+        isSuper
     };
-}
+};
+
+/* WORKSPACE */
 
 export const toggleProofView = { type: 'TOGGLE_PROOF_VIEW' };

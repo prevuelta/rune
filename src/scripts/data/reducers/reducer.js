@@ -27,9 +27,16 @@ export default (state = initialState, action) => {
                 points: state.points.concat(action.point)
             };
         case 'SELECT_POINT':
+            let index = state.selectedPoints.indexOf(action.index);
+            let points = state.selectedPoints;
+            if (index > -1) {
+                points.splice(index, 1);
+            } else {
+                points.push(action.index);
+            }
             return {
                 ...state,
-                selectedPoints: [...state.selectedPoints, action.index]
+                selectedPoints: points 
             };
         break;
         case 'DELETE_SELECTED_POINTS':
