@@ -46,7 +46,7 @@ ul, li {
   padding: 0; }
 
 .grid-node:hover {
-  fill: green; }
+  fillOpacity: 1; }
 
 header {
   position: fixed;

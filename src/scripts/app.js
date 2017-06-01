@@ -7,6 +7,8 @@ import { Provider } from 'react-redux';
 
 import store from './data/store';
 
+import './util/keys';
+
 // Populate store
 
 const render = () => {

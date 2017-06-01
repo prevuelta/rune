@@ -20,13 +20,13 @@ function BGLayer (props) {
 }
 
 function Overlay (props) {
-    let {height, width, points, selectedPointIndex} = props;
+    let {height, width, points, selectedPoints} = props;
     return (
         <svg id="overlay" height={height} width={width}>
             <GridNodes {...props} />
             <Group>
                 {
-                    points.map((p, i) => <Point index={i} selected={i === selectedPointIndex} key={i} {...p} />)
+                    points.map((p, i) => <Point index={i} selected={selectedPoints.indexOf(i) > -1} key={i} {...p} />)
                 }
             </Group>
         </svg>
@@ -49,23 +49,23 @@ function RenderLayer (props) {
 }
 
 function Rune (props) {
-    let { points, tablet, paths, selectedPointIndex } = props;
+    let { points, tablet, paths, selectedPoints, proofView } = props;
     let { options: { layout } } = tablet;
     let height = layout.y * layout.gridUnit;
     let width = layout.x * layout.gridUnit;
     let size = {width, height};
     return (
         <div className="rune" style={{width, height, padding: SLUG}}>
-            <BGLayer {...size} layout={layout} />
+            { proofView && <BGLayer {...size} layout={layout} /> }
             <RenderLayer {...size} paths={paths} />
-            <Overlay
+            { proofView && <Overlay
                 {...size}
                 layout={layout}
                 points={points}
-                selectedPointIndex={selectedPointIndex}
+                selectedPoints={selectedPoints}
                 rune={props.id}
-                handlers={{addPoint: props.addPoint}}
-            />
+                handlers={{addPoint: props.addPoint}} />
+            }
         </div>
     );
 }
@@ -88,7 +88,8 @@ function mapStateToProps (state, ownProps) {
         ...ownProps,
         paths,
         points,
-        selectedPointIndex: state.selectedPointIndex
+        selectedPoints: state.selectedPoints,
+        proofView: state.proofView
     };
 }
 
