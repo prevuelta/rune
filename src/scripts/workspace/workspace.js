@@ -1,14 +1,12 @@
 'use strict';
 
 import React from 'react';
-
 import {connect} from 'react-redux';
-
 import Rune from './components/rune';
 
 let Workspace = props => {
     return (
-        <div>
+        <div onClick={props.onWorkspaceClick}>
             <div id="rune-tools"></div>
             <div id="rune-panels"></div>
             <div id="rune-overlay"></div>

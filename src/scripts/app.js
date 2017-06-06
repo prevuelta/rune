@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import Workspace from './workspace/workspace';
 import { Provider } from 'react-redux';
 
-import store from './data/store';
+import Store from './data/store';
 
 import './util/keys';
 
@@ -14,8 +14,8 @@ import './util/keys';
 const render = () => {
     console.log("Rendering");
     ReactDOM.render(
-        <Provider store={store}>
-            <Workspace />
+        <Provider store={Store}>
+            <Workspace onWorkspaceClick={() => Store.dispatch({type: 'DESELECT_ALL'})}/>
         </Provider>,
         document.getElementById('app')
     );
@@ -23,7 +23,7 @@ const render = () => {
 
 render();
 
-store.subscribe(render);
+Store.subscribe(render);
 
 
 // require('../extendLibs');

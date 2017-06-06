@@ -7,7 +7,7 @@ import { COLORS } from '../../util/constants';
 
 function Point (props) {
     return <circle
-                onClick={() => props.selectPoint(props.index)}
+                onClick={e => props.selectPoint(e, props.index)}
                 cx={props.x}
                 cy={props.y}
                 r={8}

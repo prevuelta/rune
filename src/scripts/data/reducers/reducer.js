@@ -1,7 +1,12 @@
 'use strict';
 
+import { combineReducers } from 'redux';
+
 import Tablet from '../models/tablet';
 import Rune from '../models/rune';
+
+import point from './point';
+import view from './view';
 
 const initialState = {
     tablets: [ Tablet({id: 0}) ],
@@ -17,6 +22,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
     console.log(action)
+    let { points, selectedPoints } = state;
     switch (action.type) {
         case 'ADD_POINT':
             console.log("Adding point", action.point)
@@ -24,19 +30,25 @@ export default (state = initialState, action) => {
             point.path = state.currentPathId;
             return { 
                 ...state,
-                points: state.points.concat(action.point)
+                points: points.concat(action.point)
             };
         case 'SELECT_POINT':
-            let index = state.selectedPoints.indexOf(action.index);
-            let points = state.selectedPoints;
+            let index = selectedPoints.indexOf(action.index);
+            
             if (index > -1) {
-                points.splice(index, 1);
+                selectedPoints.splice(index, 1);
             } else {
-                points.push(action.index);
+                selectedPoints.push(action.index);
             }
             return {
                 ...state,
-                selectedPoints: points 
+                selectedPoints
+            };
+        break;
+        case 'DESELECT_ALL':
+            return {
+                ...state,
+                selectedPoints: []
             };
         break;
         case 'DELETE_SELECTED_POINTS':
@@ -52,7 +64,24 @@ export default (state = initialState, action) => {
                 proofView: !state.proofView
             };
         break;
+        case 'NUDGE_POINTS':
+            console.log(points);
+            selectedPoints.forEach(p => {
+                let point = points[p];
+                point.x += action.vector[0] * state.tablets[state.currentTabletIndex].options.layout.gridUnit;
+                point.y += action.vector[1] * state.tablets[state.currentTabletIndex].options.layout.gridUnit;
+            });
+            return {
+                ...state,
+                points
+            }
+        break;
         default:
             return state
     }
 }
+
+// export default combineReducers({
+//     point,
+//     view
+// });

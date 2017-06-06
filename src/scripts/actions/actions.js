@@ -1,13 +1,15 @@
 'use strict';
 
-export function addPoint (point) {
+export function addPoint (e, point) {
+    e.stopPropagation();
     return {
         type: 'ADD_POINT',
         point
     };
 }
 
-export function selectPoint (index) {
+export function selectPoint (e, index) {
+    e.stopPropagation();
     return {
         type: 'SELECT_POINT',
         index
@@ -22,7 +24,6 @@ export function nudge (vector, isSuper) {
     return {
         type: 'NUDGE',
         vector,
-        isSuper
     };
 };
 

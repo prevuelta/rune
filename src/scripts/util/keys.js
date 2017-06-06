@@ -17,32 +17,36 @@ const keyMap = {
     enter: 13,
     esc: 27,
     space: 32,
-    left: 37,
-    up: 38,
-    right: 39,
-    down: 40,
+    37: 'left',
+    38: 'up',
+    39: 'right',
+    40: 'down',
     80: 'p', 
     k: 75,
     l: 76
-};
-
-var superNudgeVectors = {
-    'up' : [0,-1],
-    'down': [0,1],
-    'left' : [-1,0],
-    'right' : [1,0]
 };
 
 var nudgeVectors = {
     'up' : [0,-0.1],
     'down': [0,0.1],
     'left' : [-0.1,0],
-    'right' : [0.1,0]
+    'right' : [0.1,0],
+    'shiftKey+up' : [0,-1],
+    'shiftKey+down': [0,1],
+    'shiftKey+left' : [-1,0],
+    'shiftKey+right' : [1,0]
 };
+
+let keys = {};
+
+Object.keys(nudgeVectors).forEach(k => {
+    keys[k] = {type: 'NUDGE_POINTS', vector: nudgeVectors[k]};
+});
 
 let keyActions = {
     delete: deleteSelectedPoints,
     p : toggleProofView,
+    ...keys
 };
 
 document.addEventListener('keydown', function(e) {

@@ -45,7 +45,7 @@ export function GridNodes (props) {
         nodes.push(<GridNode
             grid={[x,y]}
             key={k}
-            addPoint={handlers.addPoint.bind(null, point)}
+            addPoint={e => handlers.addPoint(e, point)}
             location={[(layout.gridUnit * x)+2-layout.gridUnit/2, (layout.gridUnit * y)+2-layout.gridUnit/2]}
             size={layout.gridUnit-4} />
         );
