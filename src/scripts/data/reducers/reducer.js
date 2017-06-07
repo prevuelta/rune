@@ -15,9 +15,10 @@ const initialState = {
     currentPathIndex: 0,
     runes: [{tablet: 0, id:0}],
     selectedPoints: [],
+    lastSelected: null,
     paths: [{id: 0, rune: 0}],
     points: [],
-    proofView: false
+    proofView: false,
 };
 
 export default (state = initialState, action) => {
@@ -25,30 +26,53 @@ export default (state = initialState, action) => {
     let { points, selectedPoints } = state;
     switch (action.type) {
         case 'ADD_POINT':
-            console.log("Adding point", action.point)
             let point = action.point;
             point.path = state.currentPathId;
+
+            if (state.lastSelected != null) {
+                console.log(state.lastSelected)
+                points.splice(state.lastSelected, 0, action.point);
+            } else {
+                points = points.concat(action.point);
+            }
             return { 
                 ...state,
-                points: points.concat(action.point)
+                points,
+                selectedPoints: []
             };
-        case 'SELECT_POINT':
+        case 'UNDO':
+        break;
+        case 'SELECT_POINT': {
             let index = selectedPoints.indexOf(action.index);
-            
+            return {
+                lastSelected: action.index,
+                ...state,
+                selectedPoints: index > -1 && selectedPoints.length === 1 ? [] : [action.index],
+                lastSelected: index === -1 ? action.index : null
+            };
+        }
+        break;
+        case 'ADD_SELECT_POINT' : {
+            let index = selectedPoints.indexOf(action.index);
+            let lastSelected = state.lastSelected;
             if (index > -1) {
                 selectedPoints.splice(index, 1);
             } else {
                 selectedPoints.push(action.index);
+                lastSelected = action.index;
             }
             return {
                 ...state,
-                selectedPoints
-            };
+                selectedPoints,
+                lastSelected
+            }
+        }
         break;
         case 'DESELECT_ALL':
             return {
                 ...state,
-                selectedPoints: []
+                selectedPoints: [],
+                lastSelected: null
             };
         break;
         case 'DELETE_SELECTED_POINTS':

@@ -11,7 +11,7 @@ export function addPoint (e, point) {
 export function selectPoint (e, index) {
     e.stopPropagation();
     return {
-        type: 'SELECT_POINT',
+        type: e.shiftKey ? 'ADD_SELECT_POINT' : 'SELECT_POINT',
         index
     };
 }

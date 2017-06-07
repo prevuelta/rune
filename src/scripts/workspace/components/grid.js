@@ -10,7 +10,6 @@ export function GridLines (props) {
     let { layout } = props;
     let width = layout.gridUnit * layout.x;
     let height= layout.gridUnit * layout.y;
-    console.log("Width", width, "Height", height)
     let lines = [
     ];
     for (let i = 0; i <= Math.max(layout.x, layout.y); i++) {

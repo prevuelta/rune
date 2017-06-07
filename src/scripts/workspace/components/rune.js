@@ -39,7 +39,6 @@ function RenderLayer (props) {
         <svg id="render" height={height} width={width}>
             {
                 paths.map((path, i) => {
-                    console.log("PATH", path);
                     let str = path.map((p, i) => `${i?'L':'M'} ${p.x} ${p.y} `); 
                     return <path key={i} d={str} stroke={'red'} strokeWidth={1} fill={'none'} />;
                 })
