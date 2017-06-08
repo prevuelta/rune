@@ -83,12 +83,13 @@ body {
   margin: 0;
   background: #e0e0e0; }
 
-#rune-canvas-panel {
+#app {
   width: 100%;
-  height: 100%;
-  position: fixed;
-  left: 0;
-  top: 0; }
+  height: 100%; }
+
+#rune-workspace {
+  width: 100%;
+  height: 100%; }
 
 #rune-tools {
   position: fixed;
@@ -189,11 +190,9 @@ input {
         background: #ece5d4;
         color: #3b3935; }
 
-svg {
-  background: white; }
-
 .rune {
   padding: 6px;
+  border-radius: 6px;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
   background: white;
   border: 1px solid red;
@@ -321,16 +320,16 @@ svg {
   bottom: 0;
   box-sizing: border-box;
   width: auto;
-  max-width: 25%; }
+  max-width: 25%;
+  min-width: 240px; }
   #rune-panels > div {
     width: auto;
     height: 100%;
     box-sizing: border-box;
-    padding: 3px;
+    padding: 6px;
     overflow-y: auto;
     overflow-x: visible;
-    background: #222;
-    border-left: 6px solid #3b3935; }
+    background: #222; }
     #rune-panels > div.collapsed {
       width: 0; }
       #rune-panels > div.collapsed .panel {

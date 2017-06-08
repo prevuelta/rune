@@ -69,13 +69,6 @@ function Rune (props) {
     );
 }
 
-
-function mapDispatchToProps (dispatch) {
-    return ({
-        dispatch
-    });
-}
-
 function mapStateToProps (state, ownProps) {
     let points = state.points.filter(p => p.rune === ownProps.id);
     // let paths = state.paths.filter(p => p.rune = ownProps.id);

@@ -68,7 +68,7 @@ export default (state = initialState, action) => {
             }
         }
         break;
-        case 'DESELECT_ALL':
+        case 'DESELECT_ALL_POINTS':
             return {
                 ...state,
                 selectedPoints: [],

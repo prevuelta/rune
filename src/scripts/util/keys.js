@@ -57,7 +57,7 @@ document.addEventListener('keydown', function(e) {
         e.preventDefault();
         let action = keyActions[ref];
         console.log("Key action: ", action);
-        Store.dispatch(action);
+        Store.dispatch(action());
     }
 });
 

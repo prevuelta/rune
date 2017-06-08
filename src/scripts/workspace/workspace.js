@@ -3,13 +3,28 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Rune from './components/rune';
+import * as actionCreators from '../actions/actions';
+
+// Panels
+import GridPanel from './panels/gridPanel';
+import PanelContainer from './panels/panelContainer';
+
+let panels = {
+    'Grid' : GridPanel
+};
 
 let Workspace = props => {
+    console.log("Workspace props", props)
     return (
-        <div onClick={props.onWorkspaceClick}>
+        <div id="rune-workspace" onClick={props.deselectAllPoints}>
             <div id="rune-tools"></div>
-            <div id="rune-panels"></div>
-            <div id="rune-overlay"></div>
+            <div id="rune-panels">
+                <div>
+                    {
+                        Object.keys(panels).map((k, i) => { let Panel = panels[k]; return (<PanelContainer title={k} key={i}><Panel /></PanelContainer>)})
+                    }
+                </div>
+            </div>
             {
                 props.runes.map((r, i) => {
                     return <Rune
@@ -32,11 +47,4 @@ function mapStateToProps (state) {
     };
 }
 
-function mapDispatchToProps (dispatch) {
-    return ({
-        dispatch
-    });
-}
-
-export default connect(mapStateToProps, dispatch => ({dispatch}))(Workspace);
-
+export default connect(mapStateToProps, actionCreators)(Workspace);

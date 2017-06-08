@@ -6,15 +6,16 @@
     box-sizing: border-box;
     width: auto;
     max-width: 25%;
+    min-width: $u*20;
     & > div {
         width: auto;
         height: 100%;
         box-sizing: border-box;
-        padding: $qu;
+        padding: $hu;
         overflow-y: auto;
         overflow-x: visible;
         background: $neutral-grey-dark;
-        border-left: $hu solid $cream-dark;
+        // border-left: $hu solid $cream-dark;
         &:hover {
             // border-color: $sky;
         }

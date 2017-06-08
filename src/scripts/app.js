@@ -15,7 +15,7 @@ const render = () => {
     console.log("Rendering");
     ReactDOM.render(
         <Provider store={Store}>
-            <Workspace onWorkspaceClick={() => Store.dispatch({type: 'DESELECT_ALL'})}/>
+            <Workspace />
         </Provider>,
         document.getElementById('app')
     );

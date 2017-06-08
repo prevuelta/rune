@@ -29,4 +29,5 @@ export function nudge (vector, isSuper) {
 
 /* WORKSPACE */
 
-export const toggleProofView = { type: 'TOGGLE_PROOF_VIEW' };
+export const toggleProofView = () => ({ type: 'TOGGLE_PROOF_VIEW' });
+export const deselectAllPoints = () => ({ type: 'DESELECT_ALL_POINTS' });
