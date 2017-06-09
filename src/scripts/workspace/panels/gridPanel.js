@@ -4,15 +4,35 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/actions';
 import React from 'react';
 
+// Components
+import XYInput from '../components/xyInput';
+
+
 class GridPanel extends React.Component {
     constructor (props) {
         super(props);
     }
 
+    _updateLayout (newProps) {
+        this.props.updateTabletSize(newProps);
+    }
+
     render () {
         return (
             <div>
-                    Grid panel
+                <div className="pane">
+                    <span>Mode</span>
+                </div>
+                <div className="pane">
+                    <label>Board</label>
+                    <XYInput
+                        x={this.state.options.layout.x}
+                        y={this.state.options.layout.y}
+                        onChange={this._updateLayout} />
+                    <Button>
+                        <Cross />
+                    </Button>
+                </div>
             </div>
         );
     }

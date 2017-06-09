@@ -1,19 +1,22 @@
 'use strict';
 
-let React = require('react');
+import React from 'react';
 
-module.exports = React.createClass({
-    getInitialState: function () {
-        return {coords: this.props.value};
-    },
-    updateX: function (event) {
-        this.state.coords.x = +event.target.value;
-        this.props.change(this.state.coords);
-    },
-    updateY: function (event) {
-        this.state.coords.y = +event.target.value;
-        this.props.change(this.state.coords);
-    },
+class XYInput extends React.Component {
+
+    constructor (props) {
+        super(props);
+        this.state = {
+            x: this.props.x,
+            y: this.props.y
+        };
+    }
+
+    updateX: function (event, axis) {
+        this.state[axis] = +event.target.value;
+        this.props.onChange({ x: this.state.x, y: this.state.y});
+    }
+
     render: function() {
         return (
             <div>
@@ -23,18 +26,20 @@ module.exports = React.createClass({
                     <input
                         className="input-x"
                         defaultValue={this.state.coords.x}
-                        onChange={this.updateX}
+                        onChange={e => this._onChange(e, 'x')}
                         type="number"
                         step="1" />
                     <label>Y:</label>
                     <input
                         className="input-y"
                         defaultValue={this.state.coords.y}
-                        onChange={this.updateY}
+                        onChange={e => this._onChange(e, 'y')}
                         type="number"
                         step="1" />
                 </div>
             </div>
         );
     }
-});
+}
+
+export default XYInput;
