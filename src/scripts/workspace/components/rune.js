@@ -50,8 +50,9 @@ function RenderLayer (props) {
 function Rune (props) {
     let { points, tablet, paths, selectedPoints, proofView } = props;
     let { options: { layout } } = tablet;
-    let height = layout.y * layout.gridUnit;
-    let width = layout.x * layout.gridUnit;
+    console.log(layout);
+    let height = layout.size.y * layout.gridUnit;
+    let width = layout.size.x * layout.gridUnit;
     let size = {width, height};
     return (
         <div className="rune" style={{width, height, padding: SLUG}}>

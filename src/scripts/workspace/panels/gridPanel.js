@@ -6,6 +6,8 @@ import React from 'react';
 
 // Components
 import XYInput from '../components/xyInput';
+import Button from '../components/button';
+import Cross from '../icons/cross';
 
 
 class GridPanel extends React.Component {
@@ -13,8 +15,14 @@ class GridPanel extends React.Component {
         super(props);
     }
 
-    _updateLayout (newProps) {
-        this.props.updateTabletSize(newProps);
+    _updateSize (value) {
+        this._updateLayout('size', value);
+    }
+
+    _updateLayout (prop, value) {
+        let layout = this.props.layout;
+        layout[prop] = value;
+        this.props.updateTabletLayout(layout);
     }
 
     render () {
@@ -26,9 +34,9 @@ class GridPanel extends React.Component {
                 <div className="pane">
                     <label>Board</label>
                     <XYInput
-                        x={this.state.options.layout.x}
-                        y={this.state.options.layout.y}
-                        onChange={this._updateLayout} />
+                        x={this.props.layout.size.x}
+                        y={this.props.layout.size.y}
+                        onChange={this._updateSize.bind(this)} />
                     <Button>
                         <Cross />
                     </Button>

@@ -43,8 +43,10 @@ function TabletFactory (data) {
             layout: {
                 gridUnit: 40,
                 gridRatio: 1,
-                x: 7,
-                y: 10
+                size: {
+                    x: 7,
+                    y: 10
+                } 
             },
             viewMode: ViewModeEnum.normal
         }

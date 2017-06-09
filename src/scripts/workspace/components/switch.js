@@ -2,24 +2,32 @@
 
 let React = require('react');
 
-module.exports = React.createClass({
-    getInitialState: function () {
-        return {toggle: this.props.toggle || false};
-    },
-    toggle: function () {
+class Switch extends React.Component {
+
+    constructor (props) {
+        super(props);
+        this.state = {
+            toggle: props.toggle || false
+        };
+    }
+
+    _toggle () {
         if (this.props.onToggle) {
             this.props.onToggle();
         }
         this.setState({toggle: !this.state.toggle});
-    },
-    render: function() {
+    }
+
+    render () {
         let classes = `switch ${this.state.toggle ? 'on' : 'off'}`;
         return (
             <div
                 className={classes}
-                onClick={this.toggle}>
+                onClick={this._toggle.bind(this)}>
                 { this.props.children || this.props.symbol }
             </div>
         );
     }
-});
+}
+
+export default Switch;

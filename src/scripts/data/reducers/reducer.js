@@ -25,6 +25,14 @@ export default (state = initialState, action) => {
     console.log(action)
     let { points, selectedPoints } = state;
     switch (action.type) {
+        case 'UPDATE_TABLET_LAYOUT': 
+            let tablets = state.tablets;
+            tablets[state.currentTabletIndex].options.layout = action.layout;
+            return {
+                ...state,
+                tablets
+            };
+        break;
         case 'ADD_POINT':
             let point = action.point;
             point.path = state.currentPathId;

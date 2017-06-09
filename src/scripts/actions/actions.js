@@ -31,3 +31,7 @@ export function nudge (vector, isSuper) {
 
 export const toggleProofView = () => ({ type: 'TOGGLE_PROOF_VIEW' });
 export const deselectAllPoints = () => ({ type: 'DESELECT_ALL_POINTS' });
+
+/* PANELS */
+
+export const updateTabletLayout = layout => ({ type: 'UPDATE_TABLET_LAYOUT', layout});

@@ -12,12 +12,13 @@ class XYInput extends React.Component {
         };
     }
 
-    updateX: function (event, axis) {
-        this.state[axis] = +event.target.value;
-        this.props.onChange({ x: this.state.x, y: this.state.y});
+    _onChange (event, axis) {
+        let response = { x: this.state.x, y: this.state.y };
+        response[axis] = +event.target.value;
+        this.props.onChange(response);
     }
 
-    render: function() {
+    render () {
         return (
             <div>
                 <label>{this.props.label}</label>
@@ -25,14 +26,14 @@ class XYInput extends React.Component {
                     <label>X:</label>
                     <input
                         className="input-x"
-                        defaultValue={this.state.coords.x}
+                        defaultValue={this.state.x}
                         onChange={e => this._onChange(e, 'x')}
                         type="number"
                         step="1" />
                     <label>Y:</label>
                     <input
                         className="input-y"
-                        defaultValue={this.state.coords.y}
+                        defaultValue={this.state.y}
                         onChange={e => this._onChange(e, 'y')}
                         type="number"
                         step="1" />

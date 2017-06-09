@@ -8,8 +8,8 @@ import { COLORS } from '../../util/constants';
 
 export function GridLines (props) {
     let { layout } = props;
-    let width = layout.gridUnit * layout.x;
-    let height= layout.gridUnit * layout.y;
+    let width = layout.gridUnit * layout.size.x;
+    let height= layout.gridUnit * layout.size.y;
     let lines = [
     ];
     for (let i = 0; i <= Math.max(layout.x, layout.y); i++) {
@@ -38,9 +38,9 @@ export function GridLines (props) {
 export function GridNodes (props) {
     let { handlers, layout} = props;
     let nodes = [];
-    for (let x = 0; x <= layout.x; x++) for (let y = 0; y <= layout.y;y++) {
+    for (let x = 0; x <= layout.size.x; x++) for (let y = 0; y <= layout.size.y;y++) {
         let point = {x:x*layout.gridUnit, y:y*layout.gridUnit, rune: props.rune};
-        let k = x*(layout.y+1)+y;
+        let k = x*(layout.size.y+1)+y;
         nodes.push(<GridNode
             grid={[x,y]}
             key={k}

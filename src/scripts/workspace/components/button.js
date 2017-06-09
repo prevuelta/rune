@@ -1,27 +1,13 @@
 'use strict';
 
-let React = require('react');
+import React from 'react';
 
-module.exports = React.createClass({
-    // getInitialState: function () {
-        // debugger;
-        // return null;   
-    // },
-    // clickHandler : function () {
-    //     this.props.handler();
-    // },
-    click: function (event) {
-        if (this.props.handler) {
-            this.props.handler(event);
-        }
-    },
-    render: function() {
-        return (
-            <div
-                className="button"
-                onClick={this.click}>
-                { this.props.children || this.props.symbol }
-            </div>
-        );
-    }
-});
+export default function (props) {
+    return (
+        <div
+            className="button"
+            onClick={props.onClick}>
+            { props.children || props.symbol }
+        </div>
+    );
+};
