@@ -138,9 +138,10 @@ button {
 
 label {
   display: block;
-  color: black;
-  padding: 0 6px;
-  background: #27dded; }
+  color: #27dded;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0 6px; }
 
 input,
 textarea {
@@ -315,16 +316,15 @@ input {
 
 #rune-panels {
   position: fixed;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  right: 6px;
+  top: 6px;
+  bottom: 6px;
   box-sizing: border-box;
   width: auto;
   max-width: 25%;
   min-width: 240px; }
   #rune-panels > div {
     width: auto;
-    height: 100%;
     box-sizing: border-box;
     padding: 6px;
     overflow-y: auto;
@@ -384,10 +384,12 @@ input {
   .panel .pane-group {
     display: flex; }
   .panel .pane {
-    padding: 12px;
+    padding: 6px;
     background: #3b3935;
     color: white;
     box-sizing: border-box; }
+    .panel .pane h3 {
+      margin: 0; }
   .panel .flex-group {
     display: flex;
     align-items: center; }

@@ -14,16 +14,6 @@ import Switch from '../components/switch';
 // Icons
 import StackIcon from '../icons/stack';
 
-// let allPanels = [
-//     require('./TabletList.jsx'),
-//     require('./RuneList.jsx'),
-//     require('./InspectPoint.jsx'),
-//     require('./InspectPath.jsx'),
-//     require('./GridManager.jsx'),
-//     require('./Guides.jsx'),
-//     require('./Canvas.jsx')
-// ];
-
 class PanelContainer extends React.Component {
 
     constructor (props) {
@@ -42,10 +32,10 @@ class PanelContainer extends React.Component {
         let className = this.state.collapsed ? 'collapsed' : '';
         return (
             <div className="panel">
-                <div className="handle" onClick={this._toggleCollapsed}>
+                <div className="handle" onClick={() => this._toggleCollapsed()}>
                     { title }
                     <Switch
-                        onToggle={this._toggleCollapsed}
+                        onToggle={() => this._toggleCollapsed()}
                         toggle={this.state.collapsed}>
                         <StackIcon />
                     </Switch>

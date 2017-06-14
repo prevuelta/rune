@@ -1,7 +1,7 @@
 button {
-	padding: $hu $u;
-	border: none;
-	border-radius: 2px;
+    padding: $hu $u;
+    border: none;
+    border-radius: 2px;
     cursor: pointer;
     &:hover {
         background: white;
@@ -10,19 +10,20 @@ button {
 }
 
 label {
-	display: block;
-    color: black;
+    display: block;
+    color: $sky;
+    font-size: $pu;
+    font-weight: bold;
     padding: 0 $hu;
-    background: $sky;
 }
 
 input,
 textarea {
     box-sizing: border-box;
     box-shadow: inset 1px 1px 1px 0px rgba(0,0,0,0.2);
-	padding: $hu;
-	margin: $hu 0;
-	border: 2px solid $sky;
+    padding: $hu;
+    margin: $hu 0;
+    border: 2px solid $sky;
     font-family: $primary-font;
     color: white;
     display: inline-block;

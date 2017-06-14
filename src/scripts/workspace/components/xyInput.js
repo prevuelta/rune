@@ -13,15 +13,17 @@ class XYInput extends React.Component {
     }
 
     _onChange (event, axis) {
+        let value = +event.target.value;
+        this.setState({ [axis] : value });
         let response = { x: this.state.x, y: this.state.y };
-        response[axis] = +event.target.value;
+        response[axis] = value;
         this.props.onChange(response);
     }
 
     render () {
         return (
             <div>
-                <label>{this.props.label}</label>
+                <h3>{this.props.label}</h3>
                 <div className="flex-group">
                     <label>X:</label>
                     <input

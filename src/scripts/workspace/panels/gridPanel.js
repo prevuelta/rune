@@ -29,17 +29,11 @@ class GridPanel extends React.Component {
         return (
             <div>
                 <div className="pane">
-                    <span>Mode</span>
-                </div>
-                <div className="pane">
-                    <label>Board</label>
                     <XYInput
+                        label="Size"
                         x={this.props.layout.size.x}
                         y={this.props.layout.size.y}
                         onChange={this._updateSize.bind(this)} />
-                    <Button>
-                        <Cross />
-                    </Button>
                 </div>
             </div>
         );
@@ -47,7 +41,7 @@ class GridPanel extends React.Component {
 }
 
 function mapStateToProps (state) {
-    let tablet = state.tablets[state.currentTabletIndex];
+    let tablet = state.tablets.all[state.tablets.current];
     let { layout } = tablet.options;
     return {
         layout

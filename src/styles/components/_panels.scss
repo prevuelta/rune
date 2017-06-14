@@ -1,15 +1,15 @@
 #rune-panels {
     position: fixed;
-    right: 0;
-    top: 0;
-    bottom: 0;
+    right: $hu;
+    top: $hu;
+    bottom: $hu;
     box-sizing: border-box;
     width: auto;
     max-width: 25%;
     min-width: $u*20;
     & > div {
         width: auto;
-        height: 100%;
+        // height: 100%;
         box-sizing: border-box;
         padding: $hu;
         overflow-y: auto;
@@ -85,7 +85,10 @@
         display: flex;
     }
     .pane {
-        padding: $u;
+        h3 {
+            margin: 0;
+        }
+        padding: $hu;
         background: $cream-dark;
         color: white;
         box-sizing: border-box;

@@ -6,11 +6,13 @@ import Rune from './components/rune';
 import * as actionCreators from '../actions/actions';
 
 // Panels
-import GridPanel from './panels/gridPanel';
 import PanelContainer from './panels/panelContainer';
+import GridPanel from './panels/gridPanel';
+import PathPath from './panels/pathPanel';
 
 let panels = {
-    'Grid' : GridPanel
+    'Grid' : GridPanel,
+    'Path' : PathPanel
 };
 
 let Workspace = props => {
@@ -39,8 +41,8 @@ let Workspace = props => {
 }
 
 function mapStateToProps (state) {
-    let tablet = state.tablets[state.currentTabletIndex];
-    let runes = state.runes.filter(r => r.tablet === tablet.id)
+    let tablet = state.tablets.all[state.tablets.current];
+    let runes = state.runes.all.filter(r => r.tablet === tablet.id)
     return {
         tablet,
         runes

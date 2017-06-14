@@ -8,20 +8,21 @@ import { COLORS } from '../../util/constants';
 
 export function GridLines (props) {
     let { layout } = props;
+    console.log(layout)
     let width = layout.gridUnit * layout.size.x;
     let height= layout.gridUnit * layout.size.y;
     let lines = [
     ];
-    for (let i = 0; i <= Math.max(layout.x, layout.y); i++) {
+    for (let i = 0; i <= Math.max(layout.size.x, layout.size.y); i++) {
         for (let j = 0; j < 5; j++){
-            if (i < layout.x)
+            if (i < layout.size.x)
                 lines.push(<Vline x={i *layout.gridUnit+(j*layout.gridUnit/5)} opacity={0.2} color={COLORS.BLUE} length={height} />);
-            if (i < layout.y)
+            if (i < layout.size.y)
                 lines.push(<Hline y={i *layout.gridUnit+(j*layout.gridUnit/5)} opacity={0.2} color={COLORS.BLUE} length={width} />);
         };
-        if (i <= layout.y)
+        if (i <= layout.size.y)
             lines.push(<Hline y={i*layout.gridUnit} color={COLORS.BLUE} length={width} />);
-        if (i <= layout.x)
+        if (i <= layout.size.x)
             lines.push(<Vline x={i*layout.gridUnit} color={COLORS.BLUE} length={height} />);
     };
     lines.push(
@@ -39,7 +40,7 @@ export function GridNodes (props) {
     let { handlers, layout} = props;
     let nodes = [];
     for (let x = 0; x <= layout.size.x; x++) for (let y = 0; y <= layout.size.y;y++) {
-        let point = {x:x*layout.gridUnit, y:y*layout.gridUnit, rune: props.rune};
+        let point = {x:x*layout.gridUnit, y:y*layout.gridUnit, path: props.currentPath, rune: props.rune};
         let k = x*(layout.size.y+1)+y;
         nodes.push(<GridNode
             grid={[x,y]}

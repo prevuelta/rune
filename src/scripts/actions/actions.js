@@ -18,7 +18,7 @@ export function selectPoint (e, index) {
 
 /* POINT */
 
-export const deleteSelectedPoints = { type: 'DELETE_SELECTED_POINTS' };
+export const deleteSelectedPoints = () => ({ type: 'DELETE_SELECTED_POINTS' });
 
 export function nudge (vector, isSuper) {
     return {

@@ -1,6 +1,7 @@
 'use strict';
 
 import Store from '../data/store';
+
 import {
     deleteSelectedPoints,
     toggleProofView,
@@ -40,7 +41,13 @@ var nudgeVectors = {
 let keys = {};
 
 Object.keys(nudgeVectors).forEach(k => {
-    keys[k] = {type: 'NUDGE_POINTS', vector: nudgeVectors[k]};
+    keys[k] = () => {
+        let state = Store.getState();
+        let tablet = state.tablets.all[state.tablets.current];
+        let { options: { layout: { gridUnit } } } = tablet;
+        let v = nudgeVectors[k];
+        return {type: 'NUDGE_POINTS', vector: [v[0]*gridUnit, v[1]*gridUnit] };
+    };
 });
 
 let keyActions = {

@@ -71,8 +71,7 @@ function Rune (props) {
 }
 
 function mapStateToProps (state, ownProps) {
-    let points = state.points.filter(p => p.rune === ownProps.id);
-    // let paths = state.paths.filter(p => p.rune = ownProps.id);
+    let points = state.points.all.filter(p => p.rune === ownProps.id);
     let hist = {};
     points.forEach(p => { p.path in hist ? hist[p.path].push(p) : hist[p.path] = [p]; } );
     let paths = [];
@@ -81,8 +80,9 @@ function mapStateToProps (state, ownProps) {
         ...ownProps,
         paths,
         points,
-        selectedPoints: state.selectedPoints,
-        proofView: state.proofView
+        currentPath: state.paths.current,
+        selectedPoints: state.points.selected,
+        proofView: state.view.proofView
     };
 }
 
