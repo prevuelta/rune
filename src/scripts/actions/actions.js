@@ -35,3 +35,5 @@ export const deselectAllPoints = () => ({ type: 'DESELECT_ALL_POINTS' });
 /* PANELS */
 
 export const updateTabletLayout = layout => ({ type: 'UPDATE_TABLET_LAYOUT', layout});
+
+export const addPath = () => ({ type: 'ADD_PATH' });

@@ -4,6 +4,7 @@ import { combineReducers } from 'redux';
 
 import Tablet from '../models/tablet';
 import Rune from '../models/rune';
+import Path from '../models/path';
 
 import points from './points';
 // import view from './view';
@@ -23,7 +24,7 @@ const initialRuneState = {
 };
 
 const initialPathState = {
-    all: [{id: 0, rune: 0}],
+    all: [ Path({id: 0})],
     current: 0
 };
 
@@ -37,7 +38,14 @@ function runes (state = initialRuneState, action) {
 
 function paths (state = initialPathState, action) {
 
+    console.log(action)
     switch (action.type) {
+        case 'ADD_PATH' :
+            return {
+                ...state,
+                all: [...state.all, Path()] 
+            };
+            break;
         default:
 
             return state;

@@ -1,25 +1,8 @@
 'use static';
 
-import Rune from './rune';
-import Grid from './grid';
-
 import nameGen from '../../util/nameGenerator';
 import Util from '../../util/util';
 import Constants from '../../util/constants';
-
-const tablet =  {
-    setActiveRune (rune) {
-        this.activeRune = rune;
-    },
-
-    increaseZoom () {
-        this.options.zoomLevel++;
-    },
-
-    decreaseZoom () {
-        this.options.zoomLevel--;
-    }
-}
 
 const ViewModeEnum = {
     normal: 0,
@@ -34,7 +17,7 @@ function TabletFactory (data) {
         id = Util.guid();
     }
 
-    let tabletData = {
+    return {
         name: data && data.name || nameGen(3),
         active: data && data.active || false,
         id,
@@ -51,12 +34,6 @@ function TabletFactory (data) {
             viewMode: ViewModeEnum.normal
         }
     };
-
-    console.log(tabletData);
-
-    // tabletData.activeRune = tabletData.runes[0];
-
-    return Object.assign(Object.create(tablet), tabletData);
 }
 
 export default TabletFactory;

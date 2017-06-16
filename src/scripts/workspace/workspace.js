@@ -8,7 +8,7 @@ import * as actionCreators from '../actions/actions';
 // Panels
 import PanelContainer from './panels/panelContainer';
 import GridPanel from './panels/gridPanel';
-import PathPath from './panels/pathPanel';
+import PathPanel from './panels/pathPanel';
 
 let panels = {
     'Grid' : GridPanel,

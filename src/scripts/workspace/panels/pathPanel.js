@@ -1,7 +1,8 @@
 'use strict';
 
 import * as actionCreators from '../../actions/actions';
-
+import React from 'react';
+import { connect } from 'react-redux';
 
 // Components:
 import Switch from '../components/switch';
@@ -27,13 +28,13 @@ class PathPanel extends React.Component {
                 <Sheet
                     name="Paths">
                     <Button
-                        handler={this.addPath.bind(this)}>
+                        onClick={() => this.props.addPath()}>
                         <Cross />
                     </Button>
                 </Sheet>
                 {
-                    this.state.paths.map((path) => {
-                        return <Path path={path}></Path>
+                    this.props.paths.map((path, i) => {
+                        return <Path path={path} key={i}></Path>
                     })
                 }
             </div>
@@ -43,25 +44,28 @@ class PathPanel extends React.Component {
 
 function Point (props) {
     return (
-        <Sheet
-            active={this.props.point.isSelected}
-            onClick={this.selectPoint.bind(this, this.props.point)}>
-            <Button>
-                <PointIcon />
-            </Button>
-            <ButtonGroup>
-                <Button
-                    handler={this.deletePoint.bind(this, this.props.point)}>
-                    <X/>
-                </Button>
-            </ButtonGroup>
-        </Sheet>
+        <p>Point</p>
     );
+//         <Sheet
+//             active={this.props.point.isSelected}
+//             onClick={this.selectPoint.bind(this, this.props.point)}>
+//             <Button>
+//                 <PointIcon />
+//             </Button>
+//             <ButtonGroup>
+//                 <Button
+//                     handler={this.deletePoint.bind(this, this.props.point)}>
+//                     <X/>
+//                 </Button>
+//             </ButtonGroup>
+//         </Sheet>
+
 }
 
 function Path (props) {
     return (
-        <div/>
+        <Sheet name="Path" >
+        </Sheet>
     );
 }
 
@@ -139,7 +143,7 @@ function Path (props) {
 
 function mapStateToProps (state) {
     return {
-        
+        paths: state.paths.all
     };
 }
 
