@@ -12,7 +12,6 @@ import './util/keys';
 // Populate store
 
 const render = () => {
-    console.log("Rendering");
     ReactDOM.render(
         <Provider store={Store}>
             <Workspace />

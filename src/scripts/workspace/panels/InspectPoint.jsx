@@ -1,6 +1,6 @@
 'use strict';
 
-let React = require('react');
+import React = require('react');
 let Events = require('../../global/Events');
 
 // Components

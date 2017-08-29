@@ -1,7 +1,7 @@
 'use strict';
 
 import * as actionCreators from '../../actions/actions';
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // Components:
@@ -19,10 +19,14 @@ class PathPanel extends React.Component {
 
     constructor (props) {
         super(props);
+    }
 
+    componentWillReceiveProps (newProps) {
+        console.log("rtoe");
     }
 
     render () {
+        console.log("Paths", this.props.paths)
         return (
             <div>
                 <Sheet
@@ -34,7 +38,7 @@ class PathPanel extends React.Component {
                 </Sheet>
                 {
                     this.props.paths.map((path, i) => {
-                        return <Path path={path} key={i}></Path>
+                        return <Path path={path} points={this.props.points} key={i}></Path>
                     })
                 }
             </div>
@@ -44,29 +48,95 @@ class PathPanel extends React.Component {
 
 function Point (props) {
     return (
-        <p>Point</p>
-    );
-//         <Sheet
-//             active={this.props.point.isSelected}
-//             onClick={this.selectPoint.bind(this, this.props.point)}>
-//             <Button>
-//                 <PointIcon />
-//             </Button>
-//             <ButtonGroup>
-//                 <Button
-//                     handler={this.deletePoint.bind(this, this.props.point)}>
-//                     <X/>
-//                 </Button>
-//             </ButtonGroup>
-//         </Sheet>
-
-}
-
-function Path (props) {
-    return (
-        <Sheet name="Path" >
+        <Sheet
+            active={props.isSelected}
+            onClick={() => props.selectPoint(props.point.id)}>
+            <Button>
+                <PointIcon />
+            </Button>
+            <ButtonGroup>
+                <Button
+                    onClick={() => props.deletePoint(props.point.id)}>
+                    <X/>
+                </Button>
+            </ButtonGroup>
         </Sheet>
     );
+}
+
+class Path extends Component {
+
+    constructor (props) {
+        super(props);
+        console.log("PATH PROPS:", props);
+        this.state = {
+            collapsed: false
+        };
+    }
+
+    _selectPath () {
+        // TODO: select path 
+    }
+
+    _addSubPath () {
+        // TODO: add child path
+    }
+
+    _deletePath () {
+        // TODO: delete path
+
+    }
+
+    _toggleCollapsed () {
+        this.setState({
+            collapsed: !this.state.collapsed
+        });
+        console.log("set collapsed", this.state.collapsed);
+    }
+
+    render () {
+        let { children, id, isActive } = this.props.path;
+        let { toggleClosedPath } = this.props;
+        let points = this.props.points.filter(p => p.path === id);
+        return (
+            <div className="path">
+                <Sheet
+                    active={this.props.path.isActive}>
+                    <Button
+                        onClick={this._selectPath.bind(this, id)}>
+                        <PathIcon/>
+                        <div>{" "+points.length}</div>
+                    </Button>
+                    <ButtonGroup>
+                        <Button
+                            onClick={this._addSubPath.bind(this, id)}>
+                            <Cross />
+                        </Button>
+                        <Switch onToggle={togglePathClosed}>
+                            <svg viewBox="0 0 200 200" width="200" height="200" xmlns="http://www.w3.org/2000/svg"><path d="M120 0h80v200H0V0h80v40H40v120h120V40h-40" fillOpacity=".6" strokeMiterlimit="10"/></svg>
+                        </Switch>
+                        <Button
+                            onClick={this._toggleCollapsed.bind(this)}>
+                            <Stack/>
+                        </Button>
+                        <Button
+                            onClick={this._deletePath.bind(this)}>
+                            <X/>
+                        </Button>
+                    </ButtonGroup>
+                </Sheet>
+                { !this.state.collapsed ?
+                        points.map((p, i) => <Point key={i} point={p}>{i}</Point> )
+                        : null
+                }
+                {
+                    children.map((p) => {
+                        return <Path path={p}></Path>;
+                    })
+                }
+            </div>
+        );
+    }
 }
 
 // let Path = React.createClass({
@@ -88,7 +158,7 @@ function Path (props) {
 //             Events.selectPath.dispatch(path);
 //         }
 //     },
-//     removePath: function (path) {
+//     deletePath: function (path) {
 //         Events.deletePath.dispatch(path);
 //     },
 //     addSubPath: (path) => {
@@ -101,49 +171,15 @@ function Path (props) {
 //     render: function () {
 //         return (
 //             <div className="path">
-//                 <Sheet
-//                     active={this.state.path.isActive}>
-//                     <Button
-//                         handler={this.selectPath.bind(this, this.state.path)}>
-//                         <PathIcon/>
-//                     </Button>
-//                     <ButtonGroup>
-//                         <Button
-//                             handler={this.addSubPath.bind(this, this.state.path)}>
-//                             <Cross />
-//                         </Button>
-//                         <Switch onToggle={this.changeHandler}>
-//                            <svg viewBox="0 0 200 200" width="200" height="200" xmlns="http://www.w3.org/2000/svg"><path d="M120 0h80v200H0V0h80v40H40v120h120V40h-40" fill-opacity=".6" stroke-miterlimit="10" font-family="sans-serif" font-size="12"/></svg>
-//                         </Switch>
-//                         <Button
-//                             handler={this.toggleCollapsed}>
-//                             <Stack/>
-//                         </Button>
-//                         <Button
-//                             handler={this.removePath.bind(this, this.state.path)}>
-//                             <X/>
-//                         </Button>
-//                     </ButtonGroup>
-//                 </Sheet>
-//                 { !this.state.collapsed ?
-//                     this.state.path.points.map((p) => <Point point={p}></Point> )
-//                     : null
-//                 }
-//                 {
-//                     this.state.path.hasChildren ?
-//                         this.state.path.children.map((p) => {
-//                             return <Path path={p}></Path>;
-//                         })
-//                     : null
-//                 }
-//             </div>
 //         );
 //     }
 // });
 
 function mapStateToProps (state) {
     return {
-        paths: state.paths.all
+        paths: state.paths.all,
+        points: state.points.all,
+        selectedPath: state.selectedPath
     };
 }
 

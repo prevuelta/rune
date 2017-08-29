@@ -48,12 +48,13 @@ function RenderLayer (props) {
 }
 
 function Rune (props) {
-    let { points, tablet, paths, selectedPoints, proofView } = props;
+    let { points, tablet, paths, selectedPoints, proofView, currentPath } = props;
     let { options: { layout } } = tablet;
-    console.log(layout);
+
     let height = layout.size.y * layout.gridUnit;
     let width = layout.size.x * layout.gridUnit;
     let size = {width, height};
+
     return (
         <div className="rune" style={{width, height, padding: SLUG}}>
             { !proofView && <BGLayer {...size} layout={layout} /> }
@@ -63,6 +64,7 @@ function Rune (props) {
                 layout={layout}
                 points={points}
                 selectedPoints={selectedPoints}
+                currentPath={currentPath}
                 rune={props.id}
                 handlers={{addPoint: props.addPoint}} />
             }

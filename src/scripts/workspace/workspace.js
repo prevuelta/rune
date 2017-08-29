@@ -41,8 +41,8 @@ let Workspace = props => {
 }
 
 function mapStateToProps (state) {
-    let tablet = state.tablets.all[state.tablets.current];
-    let runes = state.runes.all.filter(r => r.tablet === tablet.id)
+    let tablet = state.tablet.all[state.tablet.current];
+    let runes = state.rune.all.filter(r => r.tablet === tablet.id)
     return {
         tablet,
         runes

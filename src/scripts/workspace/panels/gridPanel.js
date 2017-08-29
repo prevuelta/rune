@@ -41,7 +41,7 @@ class GridPanel extends React.Component {
 }
 
 function mapStateToProps (state) {
-    let tablet = state.tablets.all[state.tablets.current];
+    let tablet = state.tablet.all[state.tablet.current];
     let { layout } = tablet.options;
     return {
         layout

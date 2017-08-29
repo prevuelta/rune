@@ -4,9 +4,9 @@ import { combineReducers } from 'redux';
 
 import Tablet from '../models/tablet';
 import Rune from '../models/rune';
-import Path from '../models/path';
 
-import points from './points';
+import point from './point';
+import path from './path';
 // import view from './view';
 
 const initialTabletState = {
@@ -23,38 +23,7 @@ const initialRuneState = {
     current: 0
 };
 
-const initialPathState = {
-    all: [ Path({id: 0})],
-    current: 0
-};
-
-function runes (state = initialRuneState, action) {
-    switch(action.type) {
-        default:
-            return state;
-            break;
-    };
-}
-
-function paths (state = initialPathState, action) {
-
-    console.log(action)
-    switch (action.type) {
-        case 'ADD_PATH' :
-            return {
-                ...state,
-                all: [...state.all, Path()] 
-            };
-            break;
-        default:
-
-            return state;
-
-            break;
-    };
-}
-
-function tablets (state = initialTabletState, action) {
+function tablet (state = initialTabletState, action) {
 
     switch (action.type) {
 
@@ -79,6 +48,14 @@ function tablets (state = initialTabletState, action) {
     }
 }
 
+function rune (state = initialRuneState, action) {
+    switch(action.type) {
+        default:
+            return state;
+            break;
+    };
+}
+
 function view (state = initialViewState, action) {
     switch(action.type) {
         case 'TOGGLE_PROOF_VIEW':
@@ -93,12 +70,10 @@ function view (state = initialViewState, action) {
     }
 }
 
-
-
 export default combineReducers({
     view,
-    runes,
-    tablets,
-    points,
-    paths
+    rune,
+    tablet,
+    point,
+    path
 });
