@@ -1,5 +1,7 @@
 'use strict';
 
+/* POINT */
+
 export function addPoint (e, point) {
     e.stopPropagation();
     return {
@@ -16,7 +18,6 @@ export function selectPoint (e, index) {
     };
 }
 
-/* POINT */
 
 export const deleteSelectedPoints = () => ({ type: 'DELETE_SELECTED_POINTS' });
 

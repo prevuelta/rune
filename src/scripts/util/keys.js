@@ -43,7 +43,7 @@ let keys = {};
 Object.keys(nudgeVectors).forEach(k => {
     keys[k] = () => {
         let state = Store.getState();
-        let tablet = state.tablets.all[state.tablets.current];
+        let tablet = state.tablet.all[state.tablet.current];
         let { options: { layout: { gridUnit } } } = tablet;
         let v = nudgeVectors[k];
         return {type: 'NUDGE_POINTS', vector: [v[0]*gridUnit, v[1]*gridUnit] };

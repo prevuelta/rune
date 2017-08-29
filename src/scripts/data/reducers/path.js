@@ -12,7 +12,7 @@ export default function (state = initialPathState, action) {
     switch (action.type) {
 
         case 'TOGGLE_PATH_CLOSED' : 
-            let path = stat.paths.find(p => p.id === action.id);
+            let path = state.path.find(p => p.id === action.id);
             path.isClosed = !path.isClosed;
             return {
                 ...state,

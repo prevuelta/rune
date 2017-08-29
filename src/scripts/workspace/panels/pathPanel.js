@@ -38,7 +38,7 @@ class PathPanel extends React.Component {
                 </Sheet>
                 {
                     this.props.paths.map((path, i) => {
-                        return <Path path={path} points={this.props.points} key={i}></Path>
+                        return <Path {...this.props} key={i}></Path>
                     })
                 }
             </div>
@@ -50,13 +50,13 @@ function Point (props) {
     return (
         <Sheet
             active={props.isSelected}
-            onClick={() => props.selectPoint(props.point.id)}>
+            onClick={e => props.selectPoint(e, props.point.id)}>
             <Button>
                 <PointIcon />
             </Button>
             <ButtonGroup>
                 <Button
-                    onClick={() => props.deletePoint(props.point.id)}>
+                    onClick={e => props.deletePoint(e, props.point.id)}>
                     <X/>
                 </Button>
             </ButtonGroup>
@@ -96,7 +96,7 @@ class Path extends Component {
 
     render () {
         let { children, id, isActive } = this.props.path;
-        let { toggleClosedPath } = this.props;
+        let { toggleClosedPath, selectPoint, deletePoint } = this.props;
         let points = this.props.points.filter(p => p.path === id);
         return (
             <div className="path">
@@ -112,7 +112,7 @@ class Path extends Component {
                             onClick={this._addSubPath.bind(this, id)}>
                             <Cross />
                         </Button>
-                        <Switch onToggle={togglePathClosed}>
+                        <Switch onToggle={toggleClosedPath}>
                             <svg viewBox="0 0 200 200" width="200" height="200" xmlns="http://www.w3.org/2000/svg"><path d="M120 0h80v200H0V0h80v40H40v120h120V40h-40" fillOpacity=".6" strokeMiterlimit="10"/></svg>
                         </Switch>
                         <Button
@@ -126,7 +126,7 @@ class Path extends Component {
                     </ButtonGroup>
                 </Sheet>
                 { !this.state.collapsed ?
-                        points.map((p, i) => <Point key={i} point={p}>{i}</Point> )
+                        points.map((p, i) => <Point selectPoint={selectPoint} deletePoint={deletePoint} key={i} point={p}>{i}</Point> )
                         : null
                 }
                 {
@@ -177,8 +177,8 @@ class Path extends Component {
 
 function mapStateToProps (state) {
     return {
-        paths: state.paths.all,
-        points: state.points.all,
+        paths: state.path.all,
+        points: state.point.all,
         selectedPath: state.selectedPath
     };
 }
