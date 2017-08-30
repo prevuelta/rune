@@ -21,18 +21,12 @@ function TabletFactory (data) {
         name: data && data.name || nameGen(3),
         active: data && data.active || false,
         id,
-        options: {
-            zoomLevel: data && data.zoomLevel || Constants.DEFAULT_ZOOM_LEVEL,
-            layout: {
-                gridUnit: 40,
-                gridRatio: 1,
-                size: {
-                    x: 7,
-                    y: 10
-                } 
-            },
-            viewMode: ViewModeEnum.normal
-        }
+        zoomLevel: data && data.zoomLevel || Constants.DEFAULT_ZOOM_LEVEL,
+        gridUnit: 40,
+        gridRatio: 1,
+        x: 7,
+        y: 10,
+        viewMode: ViewModeEnum.normal
     };
 }
 

@@ -6,33 +6,41 @@ import React from 'react';
 
 // Components
 import XYInput from '../components/xyInput';
+import NumberInput from '../components/numberInput';
 import Button from '../components/button';
 import Cross from '../icons/cross';
 
 
-class GridPanel extends React.Component {
+class TabletPanel extends React.Component {
     constructor (props) {
         super(props);
     }
 
     _updateSize (value) {
-        this._updateLayout('size', value);
+        console.log(value);
+        this._updateTablet('x', value.x);
+        this._updateTablet('y', value.y);
     }
 
-    _updateLayout (prop, value) {
-        let layout = this.props.layout;
-        layout[prop] = value;
-        this.props.updateTabletLayout(layout);
+    _updateTablet (prop, value) {
+        console.log(prop, value);
+        let { tablet } = this.props;
+        tablet[prop] = value;
+        this.props.updateTablet(tablet);
     }
 
     render () {
         return (
             <div>
                 <div className="pane">
+                    <NumberInput
+                        value={this.props.tablet.gridUnit}
+                        label="Grid Unit"
+                        onChange={this._updateTablet.bind(this, 'gridUnit')} />
                     <XYInput
                         label="Size"
-                        x={this.props.layout.size.x}
-                        y={this.props.layout.size.y}
+                        x={this.props.tablet.x}
+                        y={this.props.tablet.y}
                         onChange={this._updateSize.bind(this)} />
                 </div>
             </div>
@@ -42,13 +50,12 @@ class GridPanel extends React.Component {
 
 function mapStateToProps (state) {
     let tablet = state.tablet.all[state.tablet.current];
-    let { layout } = tablet.options;
     return {
-        layout
+        tablet
     };
 }
 
-export default connect(mapStateToProps, actionCreators)(GridPanel);
+export default connect(mapStateToProps, actionCreators)(TabletPanel);
 // let React = require('react');
 // let Events = require('../../global/Events');
 // let Button = require('../../components/Button.jsx');

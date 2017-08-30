@@ -11,18 +11,37 @@ export default function ( state = initialState, action) {
     let { all: points, selected, lastSelected } = state;
 
     switch(action.type) {
+        case 'RESIZE_POINTS' : {
+                return {
+                    ...state,
+                    all: points.map(p => ({ ...p, x: p.x *= action.xRatio, y: p.y *= action.yRatio }))
+                }
+            };
+            break;
+        case 'NEXT_POINT': 
+            return {
+                ...state,
+                selected: selected.length === 1 ? [ Math.min(state.all.length-1, selected[0]+1) ] : selected
+            }
+            break;
         case 'NUDGE_POINTS': {
 
-            selected.forEach(p => {
-                let point = points[p];
-                point.x += action.vector[0];// * state.tablets[state.currentTabletIndex].options.layout.gridUnit;
-                point.y += action.vector[1];// * state.tablets[state.currentTabletIndex].options.layout.gridUnit;
+            let newPoints = points.map((p, i) => {
+                if (selected.indexOf(i) > -1) {
+                    return {
+                        ...p,
+                        x: Math.min(1, Math.max(0, p.x + action.vector[0])),
+                        y: Math.min(1, Math.max(0, p.y + action.vector[1]))
+                    }
+                } else {
+                    return p;
+                }
             });
 
             return {
                 ...state,
-                selected
-            }
+                all: newPoints
+            };
 
         }
             break;
@@ -40,7 +59,7 @@ export default function ( state = initialState, action) {
         }
             break;
         case 'ADD_SELECT_POINT' : {
-
+            // TODO: This is manipulating state
             let index = selected.indexOf(action.index);
 
             if (index > -1) {
@@ -80,18 +99,16 @@ export default function ( state = initialState, action) {
 
         case 'ADD_POINT':
 
-            let point = action.point;
-
-            if (lastSelected != null) {
-                points.splice(lastSelected, 0, action.point);
-            } else {
-                points = points.concat(action.point);
-            }
+            let index = lastSelected || points.length;
 
             return { 
                 ...state,
-                all: points,
-                selected: []
+                all: [
+                    ...points.slice(0, index),
+                    action.point,
+                    ...points.slice(index)
+                ],
+                selected: [index]
             };
 
         break;

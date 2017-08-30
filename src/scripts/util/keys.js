@@ -2,29 +2,29 @@
 
 import Store from '../data/store';
 
-import {
-    deleteSelectedPoints,
-    toggleProofView,
-} from '../actions/actions';
+import * as actions from '../actions/actions';
 
 const MODIFIERS = [
     'shiftKey',
-    'ctrlKey'
+    'ctrlKey',
+    'metaKey'
 ];
 
-const keyMap = {
+const keyCodes = {
     8: 'delete',
-    tab: 9,
-    enter: 13,
-    esc: 27,
-    space: 32,
     37: 'left',
     38: 'up',
     39: 'right',
     40: 'down',
+    67: 'c',
+    75: 'k',
+    76: 'l',
+    78: 'n',
     80: 'p', 
-    k: 75,
-    l: 76
+    187: '+',
+    189: '-',
+    219: '[',
+    221: ']',
 };
 
 var nudgeVectors = {
@@ -44,26 +44,37 @@ Object.keys(nudgeVectors).forEach(k => {
     keys[k] = () => {
         let state = Store.getState();
         let tablet = state.tablet.all[state.tablet.current];
-        let { options: { layout: { gridUnit } } } = tablet;
+        let { x, y } = tablet;
         let v = nudgeVectors[k];
-        return {type: 'NUDGE_POINTS', vector: [v[0]*gridUnit, v[1]*gridUnit] };
+        return {type: 'NUDGE_POINTS', vector: [v[0]*(1/x), v[1]*(1/y)] };
     };
 });
 
 let keyActions = {
-    delete: deleteSelectedPoints,
-    p : toggleProofView,
+    'delete': actions.deleteSelectedPoints,
+    'p' : actions.toggleProofView,
+    'n' : actions.nextPoint,
+    'ctrlKey+]': actions.increaseX,
+    'ctrlKey+[': actions.decreaseX,
+    'shiftKey+ctrlKey+]': actions.increaseY,
+    'shiftKey+ctrlKey+[': actions.decreaseY,
+    'ctrlKey++': actions.increaseGridUnit,
+    'ctrlKey+-': actions.decreaseGridUnit,
+    'c' : actions.togglePathClosed,
     ...keys
 };
 
 document.addEventListener('keydown', function(e) {
-    let hasModifier = MODIFIERS.find(mod => e[mod]);
-    let ref = `${hasModifier && hasModifier + '+' || ''}${keyMap[e.keyCode] || e.keyCode}`;
+    if (!e.metaKey) {
+        // e.preventDefault();
+    }
+    let hasModifier = MODIFIERS.filter(m => e[m]).join('+');
+    let ref = `${hasModifier && hasModifier + '+'}${keyCodes[e.keyCode] || e.keyCode}`;
     console.log('Key pressed: ', ref);
     if (keyActions[ref] && e.target.tagName !== 'INPUT') {
         e.preventDefault();
         let action = keyActions[ref];
-        console.log("Key action: ", action);
+        console.log('Key action: ', action);
         Store.dispatch(action());
     }
 });
@@ -116,7 +127,7 @@ document.addEventListener('keydown', function(e) {
 
 //         function mouseScroll (e) {
 //             let delta = e.wheelDelta;
-//             console.log("delta", delta);
+//             console.log('delta', delta);
 //             if (delta < 0) {
 //                 Events.zoomIn.dispatch();
 //             } else {

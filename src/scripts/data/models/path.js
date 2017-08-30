@@ -16,6 +16,8 @@ function PathFactory (data) {
         id,
         isClosed: data && data.isClosed || false,
         isActive: data && data.isActive || false,
+        fill: 'none',
+        stroke: 'red',
         children: []
     };
 }

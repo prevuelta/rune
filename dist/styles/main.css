@@ -193,10 +193,8 @@ input {
 
 .rune {
   padding: 6px;
-  border-radius: 6px;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
   background: white;
-  border: 1px solid red;
   position: absolute;
   left: 50px;
   top: 50px; }

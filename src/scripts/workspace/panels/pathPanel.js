@@ -21,12 +21,8 @@ class PathPanel extends React.Component {
         super(props);
     }
 
-    componentWillReceiveProps (newProps) {
-        console.log("rtoe");
-    }
-
     render () {
-        console.log("Paths", this.props.paths)
+        let { togglePathClosed, addPoint, selectPoint, deletePoint } = this.props;
         return (
             <div>
                 <Sheet
@@ -38,7 +34,17 @@ class PathPanel extends React.Component {
                 </Sheet>
                 {
                     this.props.paths.map((path, i) => {
-                        return <Path {...this.props} key={i}></Path>
+                        let points = this.props.points.filter(p => path.id === p.path);
+                        return <Path
+                                    key={i}
+                                    path={path}
+                                    points={points}
+                                    togglePathClosed={togglePathClosed.bind(null, path.id)}
+                                    addPoint={addPoint}
+                                    deletePoint={deletePoint}
+                                    selectPoint={selectPoint}
+                                    >
+                                </Path>
                     })
                 }
             </div>
@@ -96,8 +102,7 @@ class Path extends Component {
 
     render () {
         let { children, id, isActive } = this.props.path;
-        let { toggleClosedPath, selectPoint, deletePoint } = this.props;
-        let points = this.props.points.filter(p => p.path === id);
+        let { points, togglePathClosed, selectPoint, deletePoint } = this.props;
         return (
             <div className="path">
                 <Sheet
@@ -112,7 +117,7 @@ class Path extends Component {
                             onClick={this._addSubPath.bind(this, id)}>
                             <Cross />
                         </Button>
-                        <Switch onToggle={toggleClosedPath}>
+                        <Switch onToggle={togglePathClosed}>
                             <svg viewBox="0 0 200 200" width="200" height="200" xmlns="http://www.w3.org/2000/svg"><path d="M120 0h80v200H0V0h80v40H40v120h120V40h-40" fillOpacity=".6" strokeMiterlimit="10"/></svg>
                         </Switch>
                         <Button

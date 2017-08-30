@@ -7,16 +7,15 @@ import * as actionCreators from '../actions/actions';
 
 // Panels
 import PanelContainer from './panels/panelContainer';
-import GridPanel from './panels/gridPanel';
+import TabletPanel from './panels/tabletPanel';
 import PathPanel from './panels/pathPanel';
 
 let panels = {
-    'Grid' : GridPanel,
+    'Tablet' : TabletPanel,
     'Path' : PathPanel
 };
 
 let Workspace = props => {
-    console.log("Workspace props", props)
     return (
         <div id="rune-workspace">
             <div id="rune-tools"></div>

@@ -20,6 +20,13 @@ class XYInput extends React.Component {
         this.props.onChange(response);
     }
 
+    componentWillReceiveProps (newProps) {
+        this.setState({
+            x: newProps.x,
+            y: newProps.y
+        });
+    }
+
     render () {
         return (
             <div>
@@ -28,14 +35,14 @@ class XYInput extends React.Component {
                     <label>X:</label>
                     <input
                         className="input-x"
-                        defaultValue={this.state.x}
+                        value={this.state.x}
                         onChange={e => this._onChange(e, 'x')}
                         type="number"
                         step="1" />
                     <label>Y:</label>
                     <input
                         className="input-y"
-                        defaultValue={this.state.y}
+                        value={this.state.y}
                         onChange={e => this._onChange(e, 'y')}
                         type="number"
                         step="1" />

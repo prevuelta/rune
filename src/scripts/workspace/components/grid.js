@@ -7,46 +7,46 @@ import Group from './group';
 import { COLORS } from '../../util/constants';
 
 export function GridLines (props) {
-    let { layout } = props;
-    let width = layout.gridUnit * layout.size.x;
-    let height= layout.gridUnit * layout.size.y;
-    let lines = [
-    ];
-    for (let i = 0; i <= Math.max(layout.size.x, layout.size.y); i++) {
+    let { tablet: { gridUnit, x: tX, y: tY}, height, width } = props;
+    let lines = []
+    for (let i = 0; i <= Math.max(tX, tY); i++) {
         for (let j = 0; j < 5; j++){
-            if (i < layout.size.x)
-                lines.push(<Vline x={i *layout.gridUnit+(j*layout.gridUnit/5)} opacity={0.2} color={COLORS.BLUE} length={height} />);
-            if (i < layout.size.y)
-                lines.push(<Hline y={i *layout.gridUnit+(j*layout.gridUnit/5)} opacity={0.2} color={COLORS.BLUE} length={width} />);
+            if (i < tX)
+                lines.push(<Vline key={lines.length} x={i *gridUnit+(j*gridUnit/5)} opacity={0.2} color={COLORS.BLUE} length={height} />);
+            if (i < tY)
+                lines.push(<Hline key={lines.length} y={i *gridUnit+(j*gridUnit/5)} opacity={0.2} color={COLORS.BLUE} length={width} />);
         };
-        if (i <= layout.size.y)
-            lines.push(<Hline y={i*layout.gridUnit} color={COLORS.BLUE} length={width} />);
-        if (i <= layout.size.x)
-            lines.push(<Vline x={i*layout.gridUnit} color={COLORS.BLUE} length={height} />);
+        if (i <= tY)
+            lines.push(<Hline key={lines.length} y={i*gridUnit} color={COLORS.BLUE} length={width} />);
+        if (i <= tX)
+            lines.push(<Vline key={lines.length} x={i*gridUnit} color={COLORS.BLUE} length={height} />);
     };
+
     lines.push(
-            <Hline y={height/2} color={COLORS.RED} length={width} />,
-            <Vline x={width/2} color={COLORS.RED} length={height} />,
-        );
+        <Hline key={lines.length} y={height/2} color={COLORS.RED} length={width} />,
+        <Vline key={lines.length+1} x={width/2} color={COLORS.RED} length={height} />,
+    );
+
     return (
         <Group>
-            {lines}
+            { lines }
         </Group>
     );
 }
 
 export function GridNodes (props) {
-    let { handlers, layout, currentPath} = props;
+    let { handlers, tablet, currentPath} = props;
+    let { x: tX, y: tY, gridUnit } = tablet;
     let nodes = [];
-    for (let x = 0; x <= layout.size.x; x++) for (let y = 0; y <= layout.size.y;y++) {
-        let point = {x:x*layout.gridUnit, y:y*layout.gridUnit, path: props.currentPath, rune: props.rune};
-        let k = x*(layout.size.y+1)+y;
+    for (let x = 0; x <= tX; x++) for (let y = 0; y <= tY; y++) {
+        let point = {x: x/tX, y: y/tY, path: props.currentPath, rune: props.rune};
+        let k = x * ( tY + 1 ) + y;
         nodes.push(<GridNode
             grid={[x,y]}
             key={k}
             addPoint={e => handlers.addPoint(e, point)}
-            location={[(layout.gridUnit * x)+2-layout.gridUnit/2, (layout.gridUnit * y)+2-layout.gridUnit/2]}
-            size={layout.gridUnit-4} />
+            location={[(gridUnit * x)+2-gridUnit/2, (gridUnit * y)+2-gridUnit/2]}
+            size={gridUnit-4} />
         );
     };
     return (

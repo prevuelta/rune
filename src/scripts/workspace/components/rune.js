@@ -34,13 +34,22 @@ function Overlay (props) {
 }
 
 function RenderLayer (props) {
-    let {height, width, paths} = props;
+    let {height, width, paths, pathPoints} = props;
     return (
         <svg id="render" height={height} width={width}>
             {
-                paths.map((path, i) => {
-                    let str = path.map((p, i) => `${i?'L':'M'} ${p.x} ${p.y} `); 
-                    return <path key={i} d={str} stroke={'red'} strokeWidth={1} fill={'none'} />;
+                pathPoints.map((points, i) => {
+                    let str = points.map((p, i) => `${i?'L':'M'} ${p.x*width} ${p.y*height} `); 
+                    let path = props.paths[i];
+                    if (path.isClosed) str += 'Z';
+                    console.log(path);
+                    return <path
+                                key={i}
+                                d={str}
+                                stroke={path.stroke}
+                                strokeWidth={1}
+                                fill={path.fill}
+                                />;
                 })
             }
         </svg>
@@ -48,20 +57,19 @@ function RenderLayer (props) {
 }
 
 function Rune (props) {
-    let { points, tablet, paths, selectedPoints, proofView, currentPath } = props;
-    let { options: { layout } } = tablet;
-
-    let height = layout.size.y * layout.gridUnit;
-    let width = layout.size.x * layout.gridUnit;
+    let { points, tablet, pathPoints, paths, selectedPoints, proofView, currentPath } = props;
+    let height = tablet.y * tablet.gridUnit;
+    let width = tablet.x * tablet.gridUnit;
     let size = {width, height};
 
     return (
-        <div className="rune" style={{width, height, padding: SLUG}}>
-            { !proofView && <BGLayer {...size} layout={layout} /> }
-            <RenderLayer {...size} paths={paths} />
+        <div className="rune" style={{width, height, padding: `${height/tablet.y/2}px ${width/tablet.x/2}px` }}>
+            <p className="rune-label">{ tablet.name }</p>
+            { !proofView && <BGLayer {...size} tablet={tablet} /> }
+            <RenderLayer {...size} pathPoints={pathPoints} paths={paths} />
             { !proofView && <Overlay
                 {...size}
-                layout={layout}
+                tablet={tablet}
                 points={points}
                 selectedPoints={selectedPoints}
                 currentPath={currentPath}
@@ -77,10 +85,12 @@ function mapStateToProps (state, ownProps) {
     let hist = {};
     points.forEach(p => { p.path in hist ? hist[p.path].push(p) : hist[p.path] = [p]; } );
     let paths = [];
-    for (let path in hist) paths.push(hist[path]);
+    for (let path in hist) paths[path] = hist[path];
+    console.log(hist);
     return {
         ...ownProps,
-        paths,
+        pathPoints: paths,
+        paths: state.path.all,
         points,
         currentPath: state.path.current,
         selectedPoints: state.point.selected,
