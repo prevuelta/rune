@@ -16,7 +16,10 @@ const keyCodes = {
     38: 'up',
     39: 'right',
     40: 'down',
+    65: 'a',
+    66: 'b',
     67: 'c',
+    68: 'd',
     75: 'k',
     76: 'l',
     78: 'n',
@@ -50,19 +53,32 @@ Object.keys(nudgeVectors).forEach(k => {
     };
 });
 
-let keyActions = {
-    'delete': actions.deleteSelectedPoints,
-    'p' : actions.toggleProofView,
-    'n' : actions.nextPoint,
-    'ctrlKey+]': actions.increaseX,
-    'ctrlKey+[': actions.decreaseX,
-    'shiftKey+ctrlKey+]': actions.increaseY,
-    'shiftKey+ctrlKey+[': actions.decreaseY,
-    'ctrlKey++': actions.increaseGridUnit,
-    'ctrlKey+-': actions.decreaseGridUnit,
-    'c' : actions.togglePathClosed,
-    ...keys
+const MODES = {
+    normal: 0,
 };
+
+let globalActions = {
+    'p' : actions.toggleProofView,
+};
+
+let modeActions = {
+    [MODES.normal]: {
+        'delete': actions.deleteSelectedPoints,
+        'a' : actions.arcMode,
+        'n' : actions.nextPoint,
+        'ctrlKey+]': actions.increaseX,
+        'ctrlKey+[': actions.decreaseX,
+        'ctrlKey+a' : actions.selectAll,
+        'shiftKey+ctrlKey+]': actions.increaseY,
+        'shiftKey+ctrlKey+[': actions.decreaseY,
+        'ctrlKey++': actions.increaseGridUnit,
+        'ctrlKey+-': actions.decreaseGridUnit,
+        'c' : actions.togglePathClosed,
+        ...keys
+    }
+};
+
+let mode = MODES.normal;
 
 document.addEventListener('keydown', function(e) {
     if (!e.metaKey) {
@@ -70,70 +86,16 @@ document.addEventListener('keydown', function(e) {
     }
     let hasModifier = MODIFIERS.filter(m => e[m]).join('+');
     let ref = `${hasModifier && hasModifier + '+'}${keyCodes[e.keyCode] || e.keyCode}`;
-    console.log('Key pressed: ', ref);
-    if (keyActions[ref] && e.target.tagName !== 'INPUT') {
-        e.preventDefault();
-        let action = keyActions[ref];
-        console.log('Key action: ', action);
-        Store.dispatch(action());
+    if (e.target.tagName !== 'INPUT') {
+        let action;
+        if (globalActions[ref]) {
+            action = globalActions[ref]();
+        } else if (modeActions[mode][ref]) {
+            action = modeActions[mode][ref]();
+        }
+        if (action) {
+            e.preventDefault();
+            Store.dispatch(action);
+        }
     }
 });
-
-// 
-// let Keys = {
-//     key: keyMap,
-//     maps: {},
-//     mapKey (key, callback) {
-//         if (this.maps[key]) {
-//             throw new Error('Key already mapped, soz bro.');
-//         }
-//         this.maps[key] = callback;
-//     },
-//     init () {
-//         let _this = this;
-
-//         this.mapKey(this.key.delete, () => {
-//             Events.deleteSelected.dispatch();
-//         });
-
-//         this.mapKey(this.key.p, () => {
-//             Events.display.dispatch();
-//         });
-
-//         this.mapKey(this.key.l, () => {
-//             Events.nextPoint.dispatch();
-//         });
-
-
-//         this.mapKey(this.key.k, () => {
-//             Events.prevPoint.dispatch();
-//         });
-
-//         Object.keys({
-//             'up' : this.key.up,
-//             'down' : this.key.down,
-//             'left' : this.key.left,
-//             'right' : this.key.right,
-//         }).forEach(key => {
-//             Keys.mapKey(`shiftKey+${Keys.key[key]}`, () => {
-//                 Events.nudge.dispatch(superNudgeVectors[key]);
-//             });
-//             Keys.mapKey(`${Keys.key[key]}`, () => {
-//                 Events.nudge.dispatch(nudgeVectors[key]);
-//             });
-//         });
-
-//         document.addEventListener('mousewheel', mouseScroll);
-
-//         function mouseScroll (e) {
-//             let delta = e.wheelDelta;
-//             console.log('delta', delta);
-//             if (delta < 0) {
-//                 Events.zoomIn.dispatch();
-//             } else {
-//                 Events.zoomOut.dispatch();
-//             }
-//         }
-//         return this;
-//     }
-// };

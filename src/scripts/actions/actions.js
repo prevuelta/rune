@@ -21,6 +21,9 @@ export function selectPoint (e, index) {
     };
 }
 
+export const selectAll = action('SELECT_ALL');
+console.log(selectAll);
+
 export const nextPoint = action('NEXT_POINT');
 
 export const deleteSelectedPoints = () => ({ type: 'DELETE_SELECTED_POINTS' });

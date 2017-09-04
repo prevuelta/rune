@@ -45,6 +45,12 @@ export default function ( state = initialState, action) {
 
         }
             break;
+        case 'SELECT_ALL' : 
+            return {
+                ...state,
+                selected: state.all.map((p, i) => i)
+            };
+            break;
         case 'SELECT_POINT': {
 
             let index = selected.indexOf(action.index);

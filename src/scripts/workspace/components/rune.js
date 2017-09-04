@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react';
+import React, { Component } from 'react';
 import { GridLines, GridNodes } from './grid';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/actions';
@@ -19,18 +19,63 @@ function BGLayer (props) {
     );
 }
 
-function Overlay (props) {
-    let {height, width, points, selectedPoints} = props;
+function Helpers (props) {
+
+    let mX, mY;
+    if (props.mousePosition) {
+        mX = props.mousePosition.x;
+        mY = props.mousePosition.y;
+    }
+    
+    let { point, width, height, tablet: { gridUnit } } = props;
+    console.log(point, gridUnit);
+    mX = (Math.round(mX * width / gridUnit) * gridUnit );
+    mY = (Math.round(mY * height / gridUnit) * gridUnit );
+
+    let str = `M ${pX} ${pY} A 30 50 0 0 1 ${mX} ${mY}`;
+
     return (
-        <svg id="overlay" height={height} width={width}>
-            <GridNodes {...props} />
-            <Group>
-                {
-                    points.map((p, i) => <Point index={i} selected={selectedPoints.indexOf(i) > -1} key={i} {...p} />)
-                }
-            </Group>
+        <svg>
+            { props.mousePosition && 
+            <path stroke="red" fill="none" pointerEvents="none"  d={str} /> }
         </svg>
     );
+}
+
+class Overlay extends Component {
+
+    constructor (props) {
+        super(props);
+        this.state = {
+            mousePosition: {x:0, y:0},
+        };
+    }
+
+    _onMouseMove (e, data) {
+        this.setState({ mousePosition: { x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY }});
+    }
+
+    _onMouseLeave (e) {
+        this.setState({ mousePosition: null });
+    }
+
+    render () {
+        let { props } = this;
+
+        let {height, width, points, selectedPoints} = props;
+
+        return (
+            <svg id="overlay" height={height} width={width} onMouseMove={this._onMouseMove.bind(this)} onMouseLeave={this._onMouseLeave.bind(this)}>
+                <GridNodes {...props} />
+                <Group>
+                    {
+                        points.map((p, i) => <Point index={i} selected={selectedPoints.indexOf(i) > -1} key={i} {...p} />)
+                    }
+                </Group>
+                <Helpers {...props} mousePosition={this.state.mousePosition} point={points[selectedPoints[0]] || { x: 0, y: 0}} />
+            </svg>
+        );
+    }
 }
 
 function RenderLayer (props) {
