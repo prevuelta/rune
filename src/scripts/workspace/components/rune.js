@@ -10,6 +10,11 @@ import { COLORS } from '../../util/constants';
 
 const SLUG = 20;
 
+const POINT_TYPE_STRING = {
+    'straight' : (mX, mY) => `L ${mX} ${mY}`,
+    'arc': (mX, mY) => `A 30 50 0 0 1 ${mX} ${mY}`
+};
+
 function BGLayer (props) {
     let {height, width} = props;
     return (
@@ -21,23 +26,27 @@ function BGLayer (props) {
 
 function Helpers (props) {
 
-    let mX, mY;
-    if (props.mousePosition) {
-        mX = props.mousePosition.x;
-        mY = props.mousePosition.y;
-    }
-    
-    let { point, width, height, tablet: { gridUnit } } = props;
-    console.log(point, gridUnit);
-    mX = (Math.round(mX * width / gridUnit) * gridUnit );
-    mY = (Math.round(mY * height / gridUnit) * gridUnit );
+    let { mousePosition, point, width, height, tablet: { gridUnit } } = props;
 
-    let str = `M ${pX} ${pY} A 30 50 0 0 1 ${mX} ${mY}`;
+    let mX = mousePosition && mousePosition.x || 0;
+    let mY = mousePosition && mousePosition.y || 0;
+
+    // mX = (Math.round(mX * width / gridUnit) * gridUnit );
+    // mY = (Math.round(mY * height / gridUnit) * gridUnit );
+    mX = Math.round(mX / gridUnit) * gridUnit;
+    mY = Math.round(mY / gridUnit) * gridUnit;
+    
+    let pX = point.x * width;
+    let pY = point.y * height;
+
+    let str = `M ${pX} ${pY} ${POINT_TYPE_STRING[point.type](mX, mY)}`;
+
+    let stroke = 'red';
 
     return (
         <svg>
             { props.mousePosition && 
-            <path stroke="red" fill="none" pointerEvents="none"  d={str} /> }
+            <path stroke={stroke} fill="none" pointerEvents="none" d={str} /> }
         </svg>
     );
 }
@@ -47,7 +56,7 @@ class Overlay extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            mousePosition: {x:0, y:0},
+            mousePosition: { x:0, y:0 },
         };
     }
 
@@ -72,7 +81,9 @@ class Overlay extends Component {
                         points.map((p, i) => <Point index={i} selected={selectedPoints.indexOf(i) > -1} key={i} {...p} />)
                     }
                 </Group>
-                <Helpers {...props} mousePosition={this.state.mousePosition} point={points[selectedPoints[0]] || { x: 0, y: 0}} />
+                { selectedPoints.length && 
+                    <Helpers {...props} mousePosition={this.state.mousePosition} point={points[selectedPoints[0]] || { x: 0, y: 0}} />
+                }
             </svg>
         );
     }
@@ -80,6 +91,16 @@ class Overlay extends Component {
 
 function RenderLayer (props) {
     let {height, width, paths, pathPoints} = props;
+
+    let stroke;
+
+    function _mouseEnter () {
+        console.log("Path hover");
+        stroke = 3;
+    }
+
+    console.log("Pathpoints",pathPoints);
+
     return (
         <svg id="render" height={height} width={width}>
             {
@@ -91,9 +112,10 @@ function RenderLayer (props) {
                     return <path
                                 key={i}
                                 d={str}
-                                stroke={path.stroke}
-                                strokeWidth={1}
+                                stroke={stroke || path.stroke}
+                                strokeWidth={stroke || 1}
                                 fill={path.fill}
+                                onMouseEnter={_mouseEnter}
                                 />;
                 })
             }
@@ -128,10 +150,11 @@ function Rune (props) {
 function mapStateToProps (state, ownProps) {
     let points = state.point.all.filter(p => p.rune === ownProps.id);
     let hist = {};
+    console.log(points);
     points.forEach(p => { p.path in hist ? hist[p.path].push(p) : hist[p.path] = [p]; } );
-    let paths = [];
-    for (let path in hist) paths[path] = hist[path];
     console.log(hist);
+    let paths = [];
+    for (let path in hist) paths.push(hist[path]);
     return {
         ...ownProps,
         pathPoints: paths,

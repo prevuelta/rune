@@ -22,11 +22,10 @@ export function selectPoint (e, index) {
 }
 
 export const selectAll = action('SELECT_ALL');
-console.log(selectAll);
 
 export const nextPoint = action('NEXT_POINT');
 
-export const deleteSelectedPoints = () => ({ type: 'DELETE_SELECTED_POINTS' });
+export const deleteSelectedPoints = action('DELETE_SELECTED_POINTS');
 
 export function nudge (vector, isSuper) {
     return { type: 'NUDGE', vector };
@@ -35,7 +34,7 @@ export function nudge (vector, isSuper) {
 /* WORKSPACE */
 
 export const toggleProofView = action('TOGGLE_PROOF_VIEW');
-export const deselectAllPoints = () => ({ type: 'DESELECT_ALL_POINTS' });
+export const deselectAllPoints = action('DESELECT_ALL_POINTS');
 
 /* TABLET */
 
@@ -58,3 +57,4 @@ export const selectPath = id => ({ type: 'SELECT_PATH', id });
 export const togglePathClosed = id => ({ type: 'TOGGLE_PATH_CLOSED', id });
 export const addSubPath = id => ({ type: 'ADD_SUB_PATH', id });
 export const addPath = () => ({ type: 'ADD_PATH' });
+export const togglePathFill = id => ({ type: 'TOGGLE_PATH_FILL', id });

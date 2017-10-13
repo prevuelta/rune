@@ -20,10 +20,13 @@ const keyCodes = {
     66: 'b',
     67: 'c',
     68: 'd',
+    69: 'e',
+    70: 'f',
     75: 'k',
     76: 'l',
     78: 'n',
     80: 'p', 
+    86: 'v',
     187: '+',
     189: '-',
     219: '[',
@@ -58,7 +61,7 @@ const MODES = {
 };
 
 let globalActions = {
-    'p' : actions.toggleProofView,
+    'v' : actions.toggleProofView,
 };
 
 let modeActions = {
@@ -66,6 +69,8 @@ let modeActions = {
         'delete': actions.deleteSelectedPoints,
         'a' : actions.arcMode,
         'n' : actions.nextPoint,
+        'f' : actions.togglePathFill,
+        'p' : actions.addPath,
         'ctrlKey+]': actions.increaseX,
         'ctrlKey+[': actions.decreaseX,
         'ctrlKey+a' : actions.selectAll,

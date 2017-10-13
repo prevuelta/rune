@@ -13,6 +13,9 @@
 /* Proportional unit divisions */
 /* Proportional unit multiplications */
 /* Misc measurements */
+* {
+  user-select: none; }
+
 .cf:before,
 .cf:after {
   content: " ";
@@ -190,6 +193,9 @@ input {
       #rune-actionbar ul li span {
         background: #ece5d4;
         color: #3b3935; }
+
+svg path {
+  pointer-events: stroke; }
 
 .rune {
   padding: 6px;

@@ -1,3 +1,6 @@
 svg {
     // background: white;
+    path {
+        pointer-events: stroke;
+    }
 }

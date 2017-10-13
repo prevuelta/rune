@@ -1,10 +1,14 @@
 'use strict';
 
 import React from 'react';
-import {Line, Vline, Hline} from './line';
+import { Line, Vline, Hline } from './line';
 import Group from './group';
 //import Styles = from '../../util/styles';
 import { COLORS } from '../../util/constants';
+
+const PointTypes = {
+    STRAIGHT: 'straight'
+};
 
 export function GridLines (props) {
     let { tablet: { gridUnit, x: tX, y: tY}, height, width } = props;
@@ -39,7 +43,7 @@ export function GridNodes (props) {
     let { x: tX, y: tY, gridUnit } = tablet;
     let nodes = [];
     for (let x = 0; x <= tX; x++) for (let y = 0; y <= tY; y++) {
-        let point = {x: x/tX, y: y/tY, path: props.currentPath, rune: props.rune};
+        let point = { x: x/tX, y: y/tY, path: props.currentPath, rune: props.rune, type: PointTypes.STRAIGHT };
         let k = x * ( tY + 1 ) + y;
         nodes.push(<GridNode
             grid={[x,y]}

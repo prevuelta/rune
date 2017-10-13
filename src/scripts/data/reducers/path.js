@@ -2,10 +2,13 @@
 
 import Path from '../models/path';
 
-const initialPathState = {
-    all: [ Path({id: 0})],
-    current: 0
-};
+const initialPathState = (function () {
+    let path = Path();
+    return {
+        all: [ path ],
+        current: path.id
+    };
+})();
 
 export default function (state = initialPathState, action) {
 
@@ -22,16 +25,42 @@ export default function (state = initialPathState, action) {
                 } else {
                     return p;
                 }
-            })
+            });
             return {
                 ...state,
                 all: newPaths
             };
             break;
+        case 'TOGGLE_PATH_FILL' : {
+                let newPaths = state.all.map(p => {
+                    if (p.id === state.current) {
+                        return {
+                            ...p,
+                            fill: p.fill === 'none' && 'black' || 'none'
+                        };
+                    } else {
+                        return p;
+                    }
+                });
+                return {
+                    ...state,
+                    all: newPaths
+                };
+            }
+            break;
         case 'ADD_PATH' :
+            // if ( state.points.all.some(p => p.path === state.current ) {
+                
+            // }
+            let path = Path();
             return {
                 ...state,
-                all: [...state.all, Path()] 
+                current: path.id,
+                points: {
+                    ...state.points,
+                    selected: []
+                },
+                all: [...state.all, path] 
             };
             break;
         default:
