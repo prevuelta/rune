@@ -1,6 +1,7 @@
 $panel-width: 20%;
 
-html, body {
+html,
+body {
     height: 100%;
     width: 100%;
 }
@@ -19,6 +20,19 @@ body {
 #rune-workspace {
     width: 100%;
     height: 100%;
+}
+
+#rune-status {
+    background: $cream-dark;
+    height: auto;
+    font-size: 12px;
+    padding: $qu;
+    position: fixed;
+    top: 0;
+    right: 0;
+    color: $cream;
+    display: flex;
+    left: 0;
 }
 
 #rune-tools {

@@ -1,6 +1,4 @@
-'use strict';
-
-import { combineReducers } from 'redux';
+import {combineReducers} from 'redux';
 
 import Rune from '../models/rune';
 
@@ -9,43 +7,41 @@ import path from './path';
 import tablet from './tablet';
 // import view from './view';
 
-
-const initialViewState = {
-    proofView: false
+const initialAppState = {
+    proofView: false,
+    mode: 0,
 };
 
 const initialRuneState = {
-    all: [{tablet: 0, id:0}],
-    current: 0
+    all: [{tablet: 0, id: 0}],
+    current: 0,
 };
 
+const rune = (state = initialRuneState, action) => {
+    return ({}[action.type] || (() => state))();
+};
 
-function rune (state = initialRuneState, action) {
-    switch(action.type) {
-        default:
-            return state;
-            break;
-    };
-}
-
-function view (state = initialViewState, action) {
-    switch(action.type) {
-        case 'TOGGLE_PROOF_VIEW':
+const app = (state = initialAppState, action) => {
+    return ({
+        TOGGLE_MODE: () => {
             return {
                 ...state,
-                proofView: !state.proofView
+                mode: action.mode,
             };
-            break;
-        default:
-            return state;
-            break;
-    }
-}
+        },
+        TOGGLE_PROOF_VIEW: () => {
+            return {
+                ...state,
+                proofView: !state.proofView,
+            };
+        },
+    }[action.type] || (() => state))();
+};
 
 export default combineReducers({
-    view,
+    app,
     rune,
     tablet,
     point,
-    path
+    path,
 });

@@ -1,14 +1,7 @@
-'use strict';
-
 import Store from '../data/store';
-
 import * as actions from '../actions/actions';
 
-const MODIFIERS = [
-    'shiftKey',
-    'ctrlKey',
-    'metaKey'
-];
+const MODIFIERS = ['shiftKey', 'ctrlKey', 'metaKey'];
 
 const keyCodes = {
     8: 'delete',
@@ -22,10 +15,13 @@ const keyCodes = {
     68: 'd',
     69: 'e',
     70: 'f',
+    71: 'h',
     75: 'k',
     76: 'l',
+    77: 'm',
     78: 'n',
-    80: 'p', 
+    79: 'o',
+    80: 'p',
     86: 'v',
     187: '+',
     189: '-',
@@ -34,14 +30,14 @@ const keyCodes = {
 };
 
 var nudgeVectors = {
-    'up' : [0,-0.1],
-    'down': [0,0.1],
-    'left' : [-0.1,0],
-    'right' : [0.1,0],
-    'shiftKey+up' : [0,-1],
-    'shiftKey+down': [0,1],
-    'shiftKey+left' : [-1,0],
-    'shiftKey+right' : [1,0]
+    up: [0, -0.1],
+    down: [0, 0.1],
+    left: [-0.1, 0],
+    right: [0.1, 0],
+    'shiftKey+up': [0, -1],
+    'shiftKey+down': [0, 1],
+    'shiftKey+left': [-1, 0],
+    'shiftKey+right': [1, 0],
 };
 
 let keys = {};
@@ -50,47 +46,53 @@ Object.keys(nudgeVectors).forEach(k => {
     keys[k] = () => {
         let state = Store.getState();
         let tablet = state.tablet.all[state.tablet.current];
-        let { x, y } = tablet;
+        let {x, y} = tablet;
         let v = nudgeVectors[k];
-        return {type: 'NUDGE_POINTS', vector: [v[0]*(1/x), v[1]*(1/y)] };
+        return {type: 'NUDGE_POINTS', vector: [v[0] * (1 / x), v[1] * (1 / y)]};
     };
 });
 
 const MODES = {
     normal: 0,
+    draw: 1,
 };
 
-let globalActions = {
-    'v' : actions.toggleProofView,
+const globalActions = {
+    v: actions.toggleProofView,
+    h: actions.toggleHelp,
 };
 
-let modeActions = {
+const modeActions = {
+    [MODES.draw]: {
+        a: actions.arcMode,
+        m: actions.setNormalMode,
+    },
     [MODES.normal]: {
-        'delete': actions.deleteSelectedPoints,
-        'a' : actions.arcMode,
-        'n' : actions.nextPoint,
-        'f' : actions.togglePathFill,
-        'p' : actions.addPath,
+        delete: actions.deleteSelectedPoints,
+        c: actions.togglePathClosed,
+        m: actions.setDrawMode,
+        n: actions.nextPoint,
+        f: actions.togglePathFill,
+        p: actions.addPath,
         'ctrlKey+]': actions.increaseX,
         'ctrlKey+[': actions.decreaseX,
-        'ctrlKey+a' : actions.selectAll,
+        'ctrlKey+a': actions.selectAll,
         'shiftKey+ctrlKey+]': actions.increaseY,
         'shiftKey+ctrlKey+[': actions.decreaseY,
         'ctrlKey++': actions.increaseGridUnit,
         'ctrlKey+-': actions.decreaseGridUnit,
-        'c' : actions.togglePathClosed,
-        ...keys
-    }
+        ...keys,
+    },
 };
 
-let mode = MODES.normal;
-
 document.addEventListener('keydown', function(e) {
+    let mode = Store.getState().app.mode;
     if (!e.metaKey) {
         // e.preventDefault();
     }
     let hasModifier = MODIFIERS.filter(m => e[m]).join('+');
-    let ref = `${hasModifier && hasModifier + '+'}${keyCodes[e.keyCode] || e.keyCode}`;
+    let ref = `${hasModifier && hasModifier + '+'}${keyCodes[e.keyCode] ||
+        e.keyCode}`;
     if (e.target.tagName !== 'INPUT') {
         let action;
         if (globalActions[ref]) {
