@@ -1,8 +1,8 @@
 #rune-panels {
     position: fixed;
-    right: $hu;
-    top: $hu;
-    bottom: $hu;
+    right: 0;
+    top: $u2;
+    bottom: 0;
     box-sizing: border-box;
     width: auto;
     max-width: 25%;
@@ -11,17 +11,18 @@
         width: auto;
         // height: 100%;
         box-sizing: border-box;
-        padding: $hu;
         overflow-y: auto;
         overflow-x: visible;
-        background: $neutral-grey-dark;
+        // background: $neutral-grey-dark;
         // border-left: $hu solid $cream-dark;
         &:hover {
             // border-color: $sky;
         }
         &.collapsed {
             width: 0;
-            .panel { display: none;}
+            .panel {
+                display: none;
+            }
         }
         .collapse-tab {
             display: flex;
@@ -50,27 +51,21 @@
 }
 
 .panel {
-    height: auto;//$u * 16;
+    height: auto; //$u * 16;
     width: 100%;
-    font-size: 13px;
-    margin-bottom: $qu;
-    background: $sky-dark;
-    border-radius: $hu;
-    border-bottom: 1px solid black;
+    // margin-bottom: $qu;
+    background: $dark;
     &.ui-draggable-dragging {
         z-index: 9999;
     }
     .panel-content {
-        padding: $qu;
+        // padding: $qu;
     }
     .handle {
         cursor: pointer;
         color: white;
-        // background: #d4d4d4;
         width: 100%;
-        height: $u2;
-        padding: 0 $hu;
-        line-height: $u2;
+        padding: $qu;
         box-sizing: border-box;
         display: flex;
         justify-content: space-between;
@@ -118,7 +113,7 @@
             margin: 0;
         }
         &.active {
-            border-color: $glow;//lighten($sky, 20);
+            border-color: $glow; //lighten($sky, 20);
         }
         svg {
             width: auto;
@@ -133,11 +128,11 @@
     margin-bottom: $hu;
     font-size: $qqqpu;
     & > span {
-       margin-bottom: 2px;
-       display: inline-block;
-       padding: $qu $hu;
-       background: $sky-dark;
-       border-radius: 2px;
+        margin-bottom: 2px;
+        display: inline-block;
+        padding: $qu $hu;
+        background: $sky-dark;
+        border-radius: 2px;
     }
     em {
         color: $field;

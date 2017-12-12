@@ -1,21 +1,23 @@
 $primary-font: 'Inconsolata', sans-serif;
 
 body {
-	font-family: $primary-font;
-	font-weight: 400;
+    font-family: $primary-font;
+    font-weight: 400;
+    font-size: 12px;
 }
 
 h1 {
-	font-size: 60px;
-	text-align: center;
+    font-size: 60px;
+    text-align: center;
 }
 
 h5 {
-	margin: 0;
+    margin: 0;
 }
 
-ul, li {
-	list-style: none;
-	margin: 0;
-	padding: 0;
+ul,
+li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }

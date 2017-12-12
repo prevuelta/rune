@@ -1,16 +1,15 @@
 .switch,
 .button {
-	width: $uh;
-	height: $uh;
-    margin-top: $qu;
-	cursor: pointer;
-	border-radius: 2px;
-	text-align: center;
-	color: white;
-	font-size: $u;
-	line-height: $uh;
-	box-sizing: border-box;
-	font-family: 'Courier New';
+    width: $uh;
+    height: $uh;
+    cursor: pointer;
+    border-radius: 2px;
+    text-align: center;
+    color: white;
+    font-size: $u;
+    line-height: $uh;
+    box-sizing: border-box;
+    font-family: 'Courier New';
     display: flex;
     align-items: center;
     justify-content: center;
@@ -48,7 +47,7 @@
         border-left: $u solid $field;
     }
     .path {
-        .sheet{
+        .sheet {
             border-left: $u solid $rust;
         }
     }
