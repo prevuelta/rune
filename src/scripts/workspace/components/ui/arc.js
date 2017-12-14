@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Point, Group} from '../.';
+import {Position} from '../../workspaceUtil';
 
 class Arc extends Component {
     constructor(props) {
@@ -21,7 +22,11 @@ class Arc extends Component {
     render() {
         const {x, y} = this.state.center;
         const {radius} = this.state;
-        const drawString = `M ${x} ${y} A 45 45 0 0 0 ${radius} ${radius}`;
+        const actualCoords = Position.getAbsolute(this.state.center);
+        console.log(actualCoords);
+        const drawString = `M ${actualCoords.x} ${
+            actualCoords.y
+        } A ${radius} ${radius} 0 0 0 ${radius} ${radius}`;
         return (
             <Group>
                 <Point
