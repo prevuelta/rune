@@ -101,13 +101,16 @@ body {
   background: #3b3935;
   height: auto;
   font-size: 12px;
-  padding: 3px;
   position: fixed;
   top: 0;
   right: 0;
   color: #ece5d4;
   display: flex;
   left: 0; }
+  #rune-status .tag {
+    padding: 3px 5px;
+    color: #3b3935;
+    background: #27dded; }
 
 #rune-tools {
   position: fixed;

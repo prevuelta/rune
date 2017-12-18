@@ -20,6 +20,12 @@ export const MODE = {
     ARC: 2,
 };
 
+export const MODE_TAG = {
+    [MODE.NORMAL]: 'Normal',
+    [MODE.DRAW]: 'Draw',
+    [MODE.ARC]: 'Arc',
+};
+
 export const POINT_TYPES = {
     STRAIGHT: 0,
     ARC: 1,

@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import Rune from './components/rune';
 import * as actionCreators from '../actions/actions';
 
@@ -9,6 +9,8 @@ import * as actionCreators from '../actions/actions';
 import PanelContainer from './panels/panelContainer';
 import TabletPanel from './panels/tabletPanel';
 import PathPanel from './panels/pathPanel';
+
+import { MODE, MODE_TAG } from '../util/constants';
 
 let panels = {
     Tablet: TabletPanel,
@@ -18,7 +20,9 @@ let panels = {
 let Workspace = props => {
     return (
         <div id="rune-workspace">
-            <div id="rune-status">Mode: {props.app.mode}</div>
+            <div id="rune-status">
+                <span className="tag">{MODE_TAG[props.app.mode]} mode</span>
+            </div>
             <div id="rune-tools" />
             <div id="rune-panels">
                 {Object.keys(panels).map((k, i) => {
@@ -42,7 +46,7 @@ let Workspace = props => {
 function mapStateToProps(state) {
     let tablet = state.tablet.all[state.tablet.current];
     let runes = state.rune.all.filter(r => r.tablet === tablet.id);
-    const {app} = state;
+    const { app } = state;
     return {
         tablet,
         runes,

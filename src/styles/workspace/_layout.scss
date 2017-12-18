@@ -23,10 +23,16 @@ body {
 }
 
 #rune-status {
+    .tag {
+        // border-radius: 2px;
+        padding: 3px 5px;
+        color: $dark;
+        background: $sky;
+    }
     background: $cream-dark;
     height: auto;
     font-size: 12px;
-    padding: $qu;
+    // padding: $qu;
     position: fixed;
     top: 0;
     right: 0;

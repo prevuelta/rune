@@ -1,6 +1,7 @@
 import React from 'react';
 import { Line, Vline, Hline } from '../components/line';
 import { Group } from '../components';
+import { connect } from 'react-redux';
 //import Styles = from '../../util/styles';
 import { COLORS, POINT_TYPES } from '../../util/constants';
 import WorkspaceUtil from '../workspaceUtil';
@@ -84,12 +85,12 @@ export function GridNodes(props) {
                     ? POINT_TYPES.ARC
                     : POINT_TYPES.STRAIGHT,
             };
-            let k = x * (tY + 1) + y;
+            const k = x * (tY + 1) + y;
             nodes.push(
                 <GridNode
                     grid={[x, y]}
                     key={k}
-                    addPoint={e => handlers.addPoint(e, point)}
+                    addPoint={e => props.addPoint(e, point)}
                     location={[
                         gridUnit * x + 2 - gridUnit / 2,
                         gridUnit * y + 2 - gridUnit / 2,
@@ -116,3 +117,11 @@ function GridNode(props) {
         />
     );
 }
+
+function mapStateToProps(state, ownProps) {
+    return {
+        ...ownProps,
+    };
+}
+
+export default connect(mapStateToProps, actionCreators)(GridNodes);

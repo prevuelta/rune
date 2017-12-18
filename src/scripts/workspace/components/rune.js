@@ -3,10 +3,15 @@ import { GridLines, GridNodes } from '../layers/grid';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/actions';
 import { Group, Point } from '.';
-import { COLORS } from '../../util/constants';
+import { COLORS, POINT_TYPES } from '../../util/constants';
 import { Overlay } from '../layers';
 
 const SLUG = 20;
+
+const POINT_TYPE_STRING = {
+    [POINT_TYPES.STRAIGHT]: (mX, mY) => `L ${mX} ${mY}`,
+    [POINT_TYPES.ARC]: (mX, mY) => `A 50 50 0 0 1 ${mX} ${mY}`,
+};
 
 function BGLayer(props) {
     let { height, width } = props;
@@ -120,7 +125,6 @@ function Rune(props) {
                     selectedPoints={selectedPoints}
                     currentPath={currentPath}
                     rune={props.id}
-                    handlers={{ addPoint: props.addPoint }}
                 />
             )}
         </div>
