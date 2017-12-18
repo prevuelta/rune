@@ -1,3 +1,5 @@
+import { POINT_TYPES } from '../../util/constants';
+
 const initialState = {
     all: [],
     selected: [],
@@ -5,7 +7,7 @@ const initialState = {
 };
 
 export default function(state = initialState, action) {
-    let {all: points, selected, lastSelected} = state;
+    let { all: points, selected, lastSelected } = state;
 
     switch (action.type) {
         case 'RESIZE_POINTS':
@@ -105,6 +107,15 @@ export default function(state = initialState, action) {
                 all: points.filter((p, i) => selected.indexOf(i) === -1),
             };
 
+            break;
+        case 'DRAW_ARC':
+            return {
+                ...state,
+                all: points.map((p, i) => {
+                    if (selected.indexOf(i) > -1) p.type = POINT_TYPES.ARC;
+                    return p;
+                }),
+            };
             break;
 
         case 'ADD_POINT':

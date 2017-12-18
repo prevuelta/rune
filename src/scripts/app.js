@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Workspace} from './workspace';
-console.log(Workspace);
-import {Provider} from 'react-redux';
+import { Workspace } from './workspace';
+import { Provider } from 'react-redux';
 
 import Store from './data/store';
 
@@ -15,7 +14,7 @@ const render = () => {
         <Provider store={Store}>
             <Workspace />
         </Provider>,
-        document.getElementById('app'),
+        document.getElementById('app')
     );
 };
 

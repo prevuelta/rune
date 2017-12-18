@@ -1,17 +1,15 @@
-'use strict';
-
-import React, {Component} from 'react';
-import {GridLines, GridNodes} from '../layers/grid';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { GridLines, GridNodes } from '../layers/grid';
+import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/actions';
-import {Group, Point} from '.';
-import {COLORS} from '../../util/constants';
-import {Overlay} from '../layers';
+import { Group, Point } from '.';
+import { COLORS } from '../../util/constants';
+import { Overlay } from '../layers';
 
 const SLUG = 20;
 
 function BGLayer(props) {
-    let {height, width} = props;
+    let { height, width } = props;
     return (
         <svg id="background" height={height} width={width}>
             <GridLines {...props} />
@@ -19,8 +17,40 @@ function BGLayer(props) {
     );
 }
 
+function Helpers(props) {
+    let { mousePosition, point, width, height, tablet: { gridUnit } } = props;
+
+    let mX = (mousePosition && mousePosition.x) || 0;
+    let mY = (mousePosition && mousePosition.y) || 0;
+
+    // mX = (Math.round(mX * width / gridUnit) * gridUnit );
+    // mY = (Math.round(mY * height / gridUnit) * gridUnit );
+    mX = Math.round(mX / gridUnit) * gridUnit;
+    mY = Math.round(mY / gridUnit) * gridUnit;
+
+    let pX = point.x * width;
+    let pY = point.y * height;
+
+    let str = `M ${pX} ${pY} ${POINT_TYPE_STRING[point.type](mX, mY)}`;
+
+    let stroke = 'red';
+
+    return (
+        <svg>
+            {props.mousePosition && (
+                <path
+                    stroke={stroke}
+                    fill="none"
+                    pointerEvents="none"
+                    d={str}
+                />
+            )}
+        </svg>
+    );
+}
+
 function RenderLayer(props) {
-    let {height, width, paths, pathPoints} = props;
+    let { height, width, paths, pathPoints } = props;
 
     let stroke;
 
@@ -35,8 +65,7 @@ function RenderLayer(props) {
         <svg id="render" height={height} width={width}>
             {pathPoints.map((points, i) => {
                 let str = points.map(
-                    (p, i) =>
-                        `${i ? 'L' : 'M'} ${p.x * width} ${p.y * height} `,
+                    (p, i) => `${i ? 'L' : 'M'} ${p.x * width} ${p.y * height} `
                 );
                 let path = props.paths[i];
                 if (path.isClosed) str += 'Z';
@@ -65,10 +94,11 @@ function Rune(props) {
         selectedPoints,
         proofView,
         currentPath,
+        mode,
     } = props;
     let height = tablet.y * tablet.gridUnit;
     let width = tablet.x * tablet.gridUnit;
-    let size = {width, height};
+    let size = { width, height };
 
     return (
         <div
@@ -83,13 +113,14 @@ function Rune(props) {
             <RenderLayer {...size} pathPoints={pathPoints} paths={paths} />
             {!proofView && (
                 <Overlay
+                    mode={mode}
                     {...size}
                     tablet={tablet}
                     points={points}
                     selectedPoints={selectedPoints}
                     currentPath={currentPath}
                     rune={props.id}
-                    handlers={{addPoint: props.addPoint}}
+                    handlers={{ addPoint: props.addPoint }}
                 />
             )}
         </div>
@@ -105,6 +136,7 @@ function mapStateToProps(state, ownProps) {
     let paths = [];
     for (let path in hist) paths.push(hist[path]);
     return {
+        mode: state.app.mode,
         ...ownProps,
         pathPoints: paths,
         paths: state.path.all,

@@ -1,11 +1,12 @@
 import React from 'react';
-import {Line, Vline, Hline} from '../components/line';
-import {Group} from '../components';
+import { Line, Vline, Hline } from '../components/line';
+import { Group } from '../components';
 //import Styles = from '../../util/styles';
-import {COLORS, POINT_TYPES} from '../../util/constants';
+import { COLORS, POINT_TYPES } from '../../util/constants';
+import WorkspaceUtil from '../workspaceUtil';
 
 export function GridLines(props) {
-    let {tablet: {gridUnit, x: tX, y: tY}, height, width} = props;
+    let { tablet: { gridUnit, x: tX, y: tY }, height, width } = props;
     let lines = [];
     for (let i = 0; i <= Math.max(tX, tY); i++) {
         for (let j = 0; j < 5; j++) {
@@ -17,7 +18,7 @@ export function GridLines(props) {
                         opacity={0.2}
                         color={COLORS.BLUE}
                         length={height}
-                    />,
+                    />
                 );
             if (i < tY)
                 lines.push(
@@ -27,7 +28,7 @@ export function GridLines(props) {
                         opacity={0.2}
                         color={COLORS.BLUE}
                         length={width}
-                    />,
+                    />
                 );
         }
         if (i <= tY)
@@ -37,7 +38,7 @@ export function GridLines(props) {
                     y={i * gridUnit}
                     color={COLORS.BLUE}
                     length={width}
-                />,
+                />
             );
         if (i <= tX)
             lines.push(
@@ -46,7 +47,7 @@ export function GridLines(props) {
                     x={i * gridUnit}
                     color={COLORS.BLUE}
                     length={height}
-                />,
+                />
             );
     }
 
@@ -62,15 +63,15 @@ export function GridLines(props) {
             x={width / 2}
             color={COLORS.RED}
             length={height}
-        />,
+        />
     );
 
     return <Group>{lines}</Group>;
 }
 
 export function GridNodes(props) {
-    let {handlers, tablet, currentPath} = props;
-    let {x: tX, y: tY, gridUnit} = tablet;
+    let { handlers, tablet, currentPath } = props;
+    let { x: tX, y: tY, gridUnit } = tablet;
     let nodes = [];
     for (let x = 0; x <= tX; x++)
         for (let y = 0; y <= tY; y++) {
@@ -79,7 +80,9 @@ export function GridNodes(props) {
                 y: y / tY,
                 path: props.currentPath,
                 rune: props.rune,
-                type: POINT_TYPES.STRAIGHT,
+                type: WorkspaceUtil.isArcMode
+                    ? POINT_TYPES.ARC
+                    : POINT_TYPES.STRAIGHT,
             };
             let k = x * (tY + 1) + y;
             nodes.push(
@@ -92,14 +95,14 @@ export function GridNodes(props) {
                         gridUnit * y + 2 - gridUnit / 2,
                     ]}
                     size={gridUnit - 4}
-                />,
+                />
             );
         }
     return <Group>{nodes}</Group>;
 }
 
 function GridNode(props) {
-    let {location, addPoint, size} = props;
+    let { location, addPoint, size } = props;
     return (
         <rect
             className="grid-node"

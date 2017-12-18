@@ -14,6 +14,12 @@ export const COLORS = {
     CREAM: '#ece5d4',
 };
 
+export const MODE = {
+    NORMAL: 0,
+    DRAW: 1,
+    ARC: 2,
+};
+
 export const POINT_TYPES = {
     STRAIGHT: 0,
     ARC: 1,

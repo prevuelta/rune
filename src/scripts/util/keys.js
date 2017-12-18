@@ -1,10 +1,12 @@
 import Store from '../data/store';
 import * as actions from '../actions/actions';
+import { MODE } from '../util/constants';
 
 const MODIFIERS = ['shiftKey', 'ctrlKey', 'metaKey'];
 
 const keyCodes = {
     8: 'delete',
+    27: 'esc',
     37: 'left',
     38: 'up',
     39: 'right',
@@ -46,34 +48,32 @@ Object.keys(nudgeVectors).forEach(k => {
     keys[k] = () => {
         let state = Store.getState();
         let tablet = state.tablet.all[state.tablet.current];
-        let {x, y} = tablet;
+        let { x, y } = tablet;
         let v = nudgeVectors[k];
-        return {type: 'NUDGE_POINTS', vector: [v[0] * (1 / x), v[1] * (1 / y)]};
+        return {
+            type: 'NUDGE_POINTS',
+            vector: [v[0] * (1 / x), v[1] * (1 / y)],
+        };
     };
 });
-
-const MODES = {
-    normal: 0,
-    draw: 1,
-};
 
 const globalActions = {
     v: actions.toggleProofView,
     h: actions.toggleHelp,
+    esc: actions.setNormalMode,
 };
 
 const modeActions = {
-    [MODES.draw]: {
-        a: actions.arcMode,
-        m: actions.setNormalMode,
+    [MODE.DRAW]: {
+        a: actions.drawArc,
+        p: actions.addPath,
     },
-    [MODES.normal]: {
+    [MODE.NORMAL]: {
+        d: actions.setDrawMode,
         delete: actions.deleteSelectedPoints,
         c: actions.togglePathClosed,
-        m: actions.setDrawMode,
         n: actions.nextPoint,
         f: actions.togglePathFill,
-        p: actions.addPath,
         'ctrlKey+]': actions.increaseX,
         'ctrlKey+[': actions.decreaseX,
         'ctrlKey+a': actions.selectAll,
@@ -83,9 +83,14 @@ const modeActions = {
         'ctrlKey+-': actions.decreaseGridUnit,
         ...keys,
     },
+    [MODE.ARC]: {
+        f: actions.flipArc,
+        c: actions.toggleCenterLock,
+    },
 };
 
 document.addEventListener('keydown', function(e) {
+    console.log();
     let mode = Store.getState().app.mode;
     if (!e.metaKey) {
         // e.preventDefault();

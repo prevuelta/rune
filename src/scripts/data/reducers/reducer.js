@@ -1,19 +1,19 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 
 import Rune from '../models/rune';
 
 import point from './point';
 import path from './path';
 import tablet from './tablet';
-// import view from './view';
+import { MODE } from '../../util/constants';
 
 const initialAppState = {
     proofView: false,
-    mode: 0,
+    mode: MODE.ARC,
 };
 
 const initialRuneState = {
-    all: [{tablet: 0, id: 0}],
+    all: [{ tablet: 0, id: 0 }],
     current: 0,
 };
 

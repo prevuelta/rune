@@ -1,4 +1,18 @@
 import Store from '../data/store';
+import { MODE } from '../util/constants';
+
+export default {
+    get isDrawingMode() {
+        return Store.getState().app.mode === MODE.DRAW;
+    },
+    get isArcMode() {
+        return Store.getState().app.node === MODE.ARC;
+    },
+
+    get isNormalMode() {
+        return Store.getState().app.node === MODE.NORMAL;
+    },
+};
 
 export const Position = {
     getTablet() {
@@ -7,16 +21,16 @@ export const Position = {
     },
     get tabletWidth() {
         const tablet = this.getTablet();
-        return tablet.gridUnits * tablet.x;
+        return tablet.gridUnit * tablet.x;
     },
     get tabletHeight() {
         const tablet = this.getTablet();
-        return tablet.gridUnits * tablet.y;
+        return tablet.gridUnit * tablet.y;
     },
     getAbsolute(coord) {
         return {
-            x: coord.x * this.tabletWidth(),
-            y: coord.y * this.tabletHeight(),
+            x: coord.x * this.tabletWidth,
+            y: coord.y * this.tabletHeight,
         };
     },
 };

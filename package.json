@@ -55,7 +55,7 @@
     "babelify": "^8.0.0",
     "browser-sync": "^2.18.13",
     "browserify": "latest",
-    "eslint": "^4.12.1",
+    "eslint": "^4.13.1",
     "flow-bin": "^0.61.0",
     "parallelshell": "^3.0.2",
     "redux-devtools": "^3.4.1",
@@ -64,6 +64,7 @@
     "watch": "latest"
   },
   "dependencies": {
+    "babel-core": "^6.26.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-draggable": "^3.0.4",
