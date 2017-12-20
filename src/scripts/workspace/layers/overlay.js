@@ -5,7 +5,7 @@ import * as actionCreators from '../../actions/actions';
 import { POINT_TYPES } from '../../util/constants';
 import { GridNodes } from './grid';
 import { Arc, Group, Point } from '../components';
-import WorkspaceUtil from '../workspaceUtil';
+import WorkspaceUtil, { Position } from '../workspaceUtil';
 
 const pointStrings = {
     [POINT_TYPES.STRAIGHT]: (mX, mY) => `L ${mX} ${mY}`,
@@ -33,7 +33,7 @@ function Helpers(props) {
         } else if (WorkspaceUtil.isArcMode) {
             str = `M ${pX} ${pY} a ${100} ${100} ${pointStrings[point.type](
                 mX,
-                mY
+                mY,
             )}`;
         }
     }
@@ -57,10 +57,18 @@ class Overlay extends Component {
     }
 
     _onMouseMove(e, data) {
+        const { unitSize } = this.props.tablet;
+        let { offsetX: x, offsetY: y } = e.nativeEvent;
+        const { width, height } = Position.tabletSize;
+        x = Math.round(x / 10) * 10;
+        y = Math.round(y / 10) * 10;
+
         this.setState({
             mousePosition: {
-                x: e.nativeEvent.offsetX,
-                y: e.nativeEvent.offsetY,
+                x,
+                y,
+                nX: x / width,
+                nY: y / height,
             },
         });
     }
@@ -69,9 +77,19 @@ class Overlay extends Component {
         this.setState({ mousePosition: null });
     }
 
+    _clickHandler(e) {
+        console.log(e.nativeEvent.offsetX);
+    }
+
     render() {
         let { props } = this;
         let { height, width, points, selectedPoints, mode } = props;
+        const { mousePosition } = this.state;
+        let x, y;
+        if (mousePosition) {
+            x = mousePosition.x;
+            y = mousePosition.y;
+        }
 
         return (
             <svg
@@ -79,9 +97,11 @@ class Overlay extends Component {
                 height={height}
                 width={width}
                 onMouseMove={this._onMouseMove.bind(this)}
-                onMouseLeave={this._onMouseLeave.bind(this)}>
-                <GridNodes {...props} />
-                <Arc mousePosition={this.state.mousePosition} />
+                onMouseLeave={this._onMouseLeave.bind(this)}
+                onClick={e => this._clickHandler(e)}>
+                {mousePosition && (
+                    <rect x={x - 5} y={y - 5} width={10} height={10} />
+                )}
                 {points.map((p, i) => (
                     <Point
                         index={i}
@@ -105,9 +125,22 @@ class Overlay extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
+    let points = state.point.all.filter(p => p.rune === ownProps.id);
+    let hist = {};
+    points.forEach(p => {
+        p.path in hist ? hist[p.path].push(p) : (hist[p.path] = [p]);
+    });
+    let paths = [];
+    for (let path in hist) paths.push(hist[path]);
     return {
         mode: state.app.mode,
         ...ownProps,
+        pathPoints: paths,
+        paths: state.path.all,
+        points,
+        currentPath: state.path.current,
+        selectedPoints: state.point.selected,
+        proofView: state.app.proofView,
     };
 }
 

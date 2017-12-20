@@ -9,7 +9,8 @@ import { MODE } from '../../util/constants';
 
 const initialAppState = {
     proofView: false,
-    mode: MODE.ARC,
+    mode: MODE.DRAW,
+    snap: true,
 };
 
 const initialRuneState = {

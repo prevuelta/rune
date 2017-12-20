@@ -3,6 +3,7 @@ import { Line, Vline, Hline } from '../components/line';
 import { Group } from '../components';
 import { connect } from 'react-redux';
 //import Styles = from '../../util/styles';
+import * as actionCreators from '../../actions/actions';
 import { COLORS, POINT_TYPES } from '../../util/constants';
 import WorkspaceUtil from '../workspaceUtil';
 
@@ -19,7 +20,7 @@ export function GridLines(props) {
                         opacity={0.2}
                         color={COLORS.BLUE}
                         length={height}
-                    />
+                    />,
                 );
             if (i < tY)
                 lines.push(
@@ -29,7 +30,7 @@ export function GridLines(props) {
                         opacity={0.2}
                         color={COLORS.BLUE}
                         length={width}
-                    />
+                    />,
                 );
         }
         if (i <= tY)
@@ -39,7 +40,7 @@ export function GridLines(props) {
                     y={i * gridUnit}
                     color={COLORS.BLUE}
                     length={width}
-                />
+                />,
             );
         if (i <= tX)
             lines.push(
@@ -48,7 +49,7 @@ export function GridLines(props) {
                     x={i * gridUnit}
                     color={COLORS.BLUE}
                     length={height}
-                />
+                />,
             );
     }
 
@@ -64,7 +65,7 @@ export function GridLines(props) {
             x={width / 2}
             color={COLORS.RED}
             length={height}
-        />
+        />,
     );
 
     return <Group>{lines}</Group>;
@@ -96,7 +97,7 @@ export function GridNodes(props) {
                         gridUnit * y + 2 - gridUnit / 2,
                     ]}
                     size={gridUnit - 4}
-                />
+                />,
             );
         }
     return <Group>{nodes}</Group>;

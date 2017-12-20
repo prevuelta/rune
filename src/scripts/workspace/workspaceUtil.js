@@ -15,6 +15,9 @@ export default {
 };
 
 export const Position = {
+    get tabletSize() {
+        return { width: this.tabletWidth, height: this.tabletHeight };
+    },
     getTablet() {
         const state = Store.getState();
         return state.tablet.all[state.tablet.current];

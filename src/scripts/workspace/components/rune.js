@@ -70,7 +70,8 @@ function RenderLayer(props) {
         <svg id="render" height={height} width={width}>
             {pathPoints.map((points, i) => {
                 let str = points.map(
-                    (p, i) => `${i ? 'L' : 'M'} ${p.x * width} ${p.y * height} `
+                    (p, i) =>
+                        `${i ? 'L' : 'M'} ${p.x * width} ${p.y * height} `,
                 );
                 let path = props.paths[i];
                 if (path.isClosed) str += 'Z';
@@ -118,11 +119,8 @@ function Rune(props) {
             <RenderLayer {...size} pathPoints={pathPoints} paths={paths} />
             {!proofView && (
                 <Overlay
-                    mode={mode}
                     {...size}
                     tablet={tablet}
-                    points={points}
-                    selectedPoints={selectedPoints}
                     currentPath={currentPath}
                     rune={props.id}
                 />
@@ -140,6 +138,7 @@ function mapStateToProps(state, ownProps) {
     let paths = [];
     for (let path in hist) paths.push(hist[path]);
     return {
+        tablet: state.tablet.all[state.tablet.current],
         mode: state.app.mode,
         ...ownProps,
         pathPoints: paths,
