@@ -1,39 +1,42 @@
 {
     "name": "Rune",
     "version": "0.0.1",
-    "description": "SVG glyph creator using paper.js. Grid based design system to produce letter forms, icons etc then export as SVG from browser.",
+    "description":
+        "SVG glyph creator using paper.js. Grid based design system to produce letter forms, icons etc then export as SVG from browser.",
     "main": "app.min.js",
     "scripts": {
         "flow": "flow",
         "start": "npm run lib && npm run build && npm run serve",
         "watch": "run-p copy-statics watch:js watch:css build:html serve",
-        "serve": "echo 'Serving on 8000' && browser-sync start --port 8000 --serveStatic './dist' --files './dist/*'",
+        "serve":
+            "echo 'Serving on 8000' && browser-sync start --port 8000 --serveStatic './dist' --files './dist/*'",
         "watch:js": "watch 'npm run build:js' ./src/scripts/",
-        "watch:css": "sass --watch ./src/styles/main.scss:./dist/styles/main.css",
+        "watch:css":
+            "sass --watch ./src/styles/main.scss:./dist/styles/main.css",
         "watch:html": "watch 'npm run build:html'",
         "build:html": "cp ./src/index.html ./dist/index.html",
-        "build": "echo 'building app...' && npm run lib && npm run build:js && npm run build:css && npm run copy-statics",
-        "build:js": "echo 'compiling javascript...' && browserify -t unflowify --fast -x react -x react-draggable -x react-dom -x redux ./src/scripts/app.js > ./dist/app.min.js && echo 'Finished compiling.'",
-        "lib": "echo 'compiling libraries...' && browserify -r react -r react-draggable -r react-dom -r redux -o ./dist/lib.min.js && echo 'Finished lib compile'",
-        "build:css": "echo 'compiling stylesheets...' && sass ./src/styles/main.scss:./dist/styles/main.css",
-        "copy-statics": "echo 'Copying statics...' && cp -R ./src/assets/ ./dist/assets/"
+        "build":
+            "echo 'building app...' && npm run lib && npm run build:js && npm run build:css && npm run copy-statics",
+        "build:js":
+            "echo 'compiling javascript...' && browserify -t unflowify --fast -x react -x react-draggable -x react-dom -x redux ./src/scripts/app.js > ./dist/app.min.js && echo 'Finished compiling.'",
+        "lib":
+            "echo 'compiling libraries...' && browserify -r react -r react-draggable -r react-dom -r redux -o ./dist/lib.min.js && echo 'Finished lib compile'",
+        "build:css":
+            "echo 'compiling stylesheets...' && sass ./src/styles/main.scss:./dist/styles/main.css",
+        "copy-statics":
+            "echo 'Copying statics...' && cp -R ./src/assets/ ./dist/assets/"
     },
     "repository": {
         "type": "git",
         "url": "https://github.com/prevuelta/rune.git"
     },
     "browserify": {
-        "extension": [
-            "jsx"
-        ],
+        "extension": ["jsx"],
         "transform": [
             [
                 "babelify",
                 {
-                    "presets": [
-                        "es2015",
-                        "react"
-                    ]
+                    "presets": ["env", "react"]
                 }
             ]
         ]

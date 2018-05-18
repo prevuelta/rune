@@ -1,4 +1,3 @@
-// React
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/actions';
@@ -13,10 +12,10 @@ const pointStrings = {
 };
 
 function Helpers(props) {
-    let { mousePosition, point, width, height, tablet: { gridUnit } } = props;
+    let { markerPosition, point, width, height, tablet: { gridUnit } } = props;
 
-    let mX = (mousePosition && mousePosition.x) || 0;
-    let mY = (mousePosition && mousePosition.y) || 0;
+    let mX = (markerPosition && markerPosition.x) || 0;
+    let mY = (markerPosition && markerPosition.y) || 0;
 
     // mX = (Math.round(mX * width / gridUnit) * gridUnit );
     // mY = (Math.round(mY * height / gridUnit) * gridUnit );
@@ -27,7 +26,7 @@ function Helpers(props) {
     let pY = point.y * height;
 
     let str = '';
-    if (props.mousePosition) {
+    if (props.markerPosition) {
         if (WorkspaceUtil.isDrawingMode) {
             str = `M ${pX} ${pY} ${pointStrings[point.type](mX, mY)}`;
         } else if (WorkspaceUtil.isArcMode) {
@@ -52,7 +51,7 @@ class Overlay extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mousePosition: { x: 0, y: 0 },
+            markerPosition: { x: 0, y: 0 },
         };
     }
 
@@ -60,11 +59,11 @@ class Overlay extends Component {
         const { unitSize } = this.props.tablet;
         let { offsetX: x, offsetY: y } = e.nativeEvent;
         const { width, height } = Position.tabletSize;
-        x = Math.round(x / 10) * 10;
-        y = Math.round(y / 10) * 10;
+        x = Math.abs(Math.round(x / 10) * 10);
+        y = Math.abs(Math.round(y / 10) * 10);
 
         this.setState({
-            mousePosition: {
+            markerPosition: {
                 x,
                 y,
                 nX: x / width,
@@ -74,21 +73,22 @@ class Overlay extends Component {
     }
 
     _onMouseLeave(e) {
-        this.setState({ mousePosition: null });
+        this.setState({ markerPosition: null });
     }
 
     _clickHandler(e) {
-        console.log(e.nativeEvent.offsetX);
+        console.log(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+        console.log(this.state.markerPosition.x, this.state.markerPosition.y);
     }
 
     render() {
         let { props } = this;
         let { height, width, points, selectedPoints, mode } = props;
-        const { mousePosition } = this.state;
+        const { markerPosition } = this.state;
         let x, y;
-        if (mousePosition) {
-            x = mousePosition.x;
-            y = mousePosition.y;
+        if (markerPosition) {
+            x = markerPosition.x;
+            y = markerPosition.y;
         }
 
         return (
@@ -99,7 +99,7 @@ class Overlay extends Component {
                 onMouseMove={this._onMouseMove.bind(this)}
                 onMouseLeave={this._onMouseLeave.bind(this)}
                 onClick={e => this._clickHandler(e)}>
-                {mousePosition && (
+                {markerPosition && (
                     <rect x={x - 5} y={y - 5} width={10} height={10} />
                 )}
                 {points.map((p, i) => (
@@ -115,7 +115,7 @@ class Overlay extends Component {
                     <Helpers
                         {...props}
                         mode={mode}
-                        mousePosition={this.state.mousePosition}
+                        markerPosition={this.state.markerPosition}
                         point={points[selectedPoints[0]] || { x: 0, y: 0 }}
                     />
                 )}

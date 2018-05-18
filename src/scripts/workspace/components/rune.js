@@ -75,7 +75,6 @@ function RenderLayer(props) {
                 );
                 let path = props.paths[i];
                 if (path.isClosed) str += 'Z';
-                console.log(path);
                 return (
                     <path
                         key={i}

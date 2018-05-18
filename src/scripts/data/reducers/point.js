@@ -120,6 +120,7 @@ export default function(state = initialState, action) {
 
         case 'ADD_POINT':
             let index = lastSelected || points.length;
+            console.log(action);
 
             return {
                 ...state,
