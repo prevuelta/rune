@@ -226,6 +226,8 @@ svg path {
     overflow: visible;
     position: absolute;
     background: none; }
+  .rune .rune-size {
+    color: #3b3935; }
   .rune .rune-label {
     left: 0;
     position: absolute;
@@ -338,12 +340,13 @@ svg path {
 #rune-panels {
   position: fixed;
   right: 0;
-  top: 24px;
+  top: 18px;
   bottom: 0;
   box-sizing: border-box;
   width: auto;
   max-width: 25%;
-  min-width: 240px; }
+  min-width: 240px;
+  background: #cccccc; }
   #rune-panels > div {
     width: auto;
     box-sizing: border-box;

@@ -22,38 +22,6 @@ function BGLayer(props) {
     );
 }
 
-function Helpers(props) {
-    let { mousePosition, point, width, height, tablet: { gridUnit } } = props;
-
-    let mX = (mousePosition && mousePosition.x) || 0;
-    let mY = (mousePosition && mousePosition.y) || 0;
-
-    // mX = (Math.round(mX * width / gridUnit) * gridUnit );
-    // mY = (Math.round(mY * height / gridUnit) * gridUnit );
-    mX = Math.round(mX / gridUnit) * gridUnit;
-    mY = Math.round(mY / gridUnit) * gridUnit;
-
-    let pX = point.x * width;
-    let pY = point.y * height;
-
-    let str = `M ${pX} ${pY} ${POINT_TYPE_STRING[point.type](mX, mY)}`;
-
-    let stroke = 'red';
-
-    return (
-        <svg>
-            {props.mousePosition && (
-                <path
-                    stroke={stroke}
-                    fill="none"
-                    pointerEvents="none"
-                    d={str}
-                />
-            )}
-        </svg>
-    );
-}
-
 function RenderLayer(props) {
     let { height, width, paths, pathPoints } = props;
 
@@ -113,7 +81,12 @@ function Rune(props) {
                 height,
                 padding: `${height / tablet.y / 2}px ${width / tablet.x / 2}px`,
             }}>
-            <p className="rune-label">{tablet.name}</p>
+            <p className="rune-label">
+                {tablet.name}{' '}
+                <span className="rune-size">
+                    ({tablet.x}x{tablet.y})
+                </span>
+            </p>
             {!proofView && <BGLayer {...size} tablet={tablet} />}
             <RenderLayer {...size} pathPoints={pathPoints} paths={paths} />
             {!proofView && (

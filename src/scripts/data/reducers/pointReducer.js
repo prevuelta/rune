@@ -1,4 +1,5 @@
 import { POINT_TYPES } from '../../util/constants';
+import { guid } from '../../util';
 
 const initialState = {
     all: [],
@@ -120,15 +121,10 @@ export default function(state = initialState, action) {
 
         case 'ADD_POINT':
             let index = lastSelected || points.length;
-            console.log(action);
 
             return {
                 ...state,
-                all: [
-                    ...points.slice(0, index),
-                    action.point,
-                    ...points.slice(index),
-                ],
+                all: [...points, action.point],
                 selected: [index],
             };
 

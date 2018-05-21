@@ -41,7 +41,13 @@ function Helpers(props) {
 
     return (
         <svg>
-            <path stroke={stroke} fill="none" pointerEvents="none" d={str} />
+            <path
+                strokeWidth={1}
+                stroke={stroke}
+                fill="none"
+                pointerEvents="none"
+                d={str}
+            />
         </svg>
     );
 }
@@ -77,8 +83,11 @@ class Overlay extends Component {
     }
 
     _clickHandler(e) {
-        console.log(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-        console.log(this.state.markerPosition.x, this.state.markerPosition.y);
+        this.props.addPoint({
+            x: this.state.markerPosition.x,
+            y: this.state.markerPosition.y,
+            selected: true,
+        });
     }
 
     render() {
@@ -100,7 +109,14 @@ class Overlay extends Component {
                 onMouseLeave={this._onMouseLeave.bind(this)}
                 onClick={e => this._clickHandler(e)}>
                 {markerPosition && (
-                    <rect x={x - 5} y={y - 5} width={10} height={10} />
+                    <rect
+                        x={x - 5}
+                        y={y - 5}
+                        width={10}
+                        height={10}
+                        fill="none"
+                        stroke="red"
+                    />
                 )}
                 {points.map((p, i) => (
                     <Point

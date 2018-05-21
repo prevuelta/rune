@@ -31,7 +31,7 @@ const keyCodes = {
     221: ']',
 };
 
-var nudgeVectors = {
+const nudgeVectors = {
     up: [0, -0.1],
     down: [0, 0.1],
     left: [-0.1, 0],
@@ -42,10 +42,11 @@ var nudgeVectors = {
     'shiftKey+right': [1, 0],
 };
 
-let keys = {};
+const keys = {};
+const nudgeActions = {};
 
 Object.keys(nudgeVectors).forEach(k => {
-    keys[k] = () => {
+    nudgeActions[k] = () => {
         let state = Store.getState();
         let tablet = state.tablet.all[state.tablet.current];
         let { x, y } = tablet;
@@ -60,25 +61,26 @@ Object.keys(nudgeVectors).forEach(k => {
 const globalActions = {
     v: actions.toggleProofView,
     h: actions.toggleHelp,
-    esc: actions.setNormalMode,
+    esc: actions.setDocumentMode,
 };
 
 const modeActions = {
     [MODE.DRAW]: {
         a: actions.drawArc,
         p: actions.addPath,
+        ...nudgeActions,
     },
-    [MODE.NORMAL]: {
+    [MODE.DOCUMENT]: {
         d: actions.setDrawMode,
         delete: actions.deleteSelectedPoints,
         c: actions.togglePathClosed,
         n: actions.nextPoint,
         f: actions.togglePathFill,
-        'ctrlKey+]': actions.increaseX,
-        'ctrlKey+[': actions.decreaseX,
+        right: actions.increaseX,
+        left: actions.decreaseX,
         'ctrlKey+a': actions.selectAll,
-        'shiftKey+ctrlKey+]': actions.increaseY,
-        'shiftKey+ctrlKey+[': actions.decreaseY,
+        down: actions.increaseY,
+        up: actions.decreaseY,
         'ctrlKey++': actions.increaseGridUnit,
         'ctrlKey+-': actions.decreaseGridUnit,
         ...keys,

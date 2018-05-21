@@ -1,26 +1,22 @@
-'use strict';
+import Path from '../models/pathFactory';
 
-import Path from '../models/path';
-
-const initialPathState = (function () {
+const initialPathState = (function() {
     let path = Path();
     return {
-        all: [ path ],
-        current: path.id
+        all: [path],
+        current: path._id,
     };
 })();
 
-export default function (state = initialPathState, action) {
-
+export default function(state = initialPathState, action) {
     switch (action.type) {
-
-        case 'TOGGLE_PATH_CLOSED' : 
+        case 'TOGGLE_PATH_CLOSED':
             let id = action.id || state.current;
             let newPaths = state.all.map(p => {
                 if (p.id === id) {
                     return {
                         ...p,
-                        isClosed: !p.isClosed
+                        isClosed: !p.isClosed,
                     };
                 } else {
                     return p;
@@ -28,15 +24,16 @@ export default function (state = initialPathState, action) {
             });
             return {
                 ...state,
-                all: newPaths
+                all: newPaths,
             };
             break;
-        case 'TOGGLE_PATH_FILL' : {
+        case 'TOGGLE_PATH_FILL':
+            {
                 let newPaths = state.all.map(p => {
                     if (p.id === state.current) {
                         return {
                             ...p,
-                            fill: p.fill === 'none' && 'black' || 'none'
+                            fill: (p.fill === 'none' && 'black') || 'none',
                         };
                     } else {
                         return p;
@@ -44,13 +41,13 @@ export default function (state = initialPathState, action) {
                 });
                 return {
                     ...state,
-                    all: newPaths
+                    all: newPaths,
                 };
             }
             break;
-        case 'ADD_PATH' :
+        case 'ADD_PATH':
             // if ( state.points.all.some(p => p.path === state.current ) {
-                
+
             // }
             let path = Path();
             return {
@@ -58,15 +55,14 @@ export default function (state = initialPathState, action) {
                 current: path.id,
                 points: {
                     ...state.points,
-                    selected: []
+                    selected: [],
                 },
-                all: [...state.all, path] 
+                all: [...state.all, path],
             };
             break;
         default:
-
             return state;
 
             break;
-    };
+    }
 }

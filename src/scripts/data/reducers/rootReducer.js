@@ -1,22 +1,16 @@
 import { combineReducers } from 'redux';
 
-import Rune from '../models/rune';
-
-import point from './point';
-import path from './path';
-import tablet from './tablet';
+import { pointReducer, pathReducer, tabletReducer } from '.';
+console.log(tabletReducer, pointReducer, pathReducer);
 import { MODE } from '../../util/constants';
 
 const initialAppState = {
     proofView: false,
-    mode: MODE.DRAW,
+    mode: MODE.DOCUMENT,
     snap: true,
 };
 
-const initialRuneState = {
-    all: [{ tablet: 0, id: 0 }],
-    current: 0,
-};
+const intialRuneState = {};
 
 const rune = (state = initialRuneState, action) => {
     return ({}[action.type] || (() => state))();
@@ -24,13 +18,13 @@ const rune = (state = initialRuneState, action) => {
 
 const app = (state = initialAppState, action) => {
     return ({
-        TOGGLE_MODE: () => {
+        TOGGLE_MODE() {
             return {
                 ...state,
                 mode: action.mode,
             };
         },
-        TOGGLE_PROOF_VIEW: () => {
+        TOGGLE_PROOF_VIEW() {
             return {
                 ...state,
                 proofView: !state.proofView,
@@ -42,7 +36,7 @@ const app = (state = initialAppState, action) => {
 export default combineReducers({
     app,
     rune,
-    tablet,
-    point,
-    path,
+    tablet: tabletReducer,
+    point: pointReducer,
+    path: pathReducer,
 });

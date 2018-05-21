@@ -1,9 +1,7 @@
-'use strict';
-
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import * as actionCreators from '../../../actions/actions';
-import {connect} from 'react-redux';
-import {COLORS} from '../../../util/constants';
+import { connect } from 'react-redux';
+import { COLORS } from '../../../util/constants';
 
 class Point extends Component {
     constructor(props) {
@@ -14,7 +12,7 @@ class Point extends Component {
     }
 
     render() {
-        const {props} = this;
+        const { props } = this;
         return (
             <circle
                 cx={`${props.x * 100}%`}

@@ -1,11 +1,17 @@
+import { MODE } from '../util/constants';
+import { guid } from '../util';
+
 function action(type) {
     return () => ({ type });
 }
 
 /* WORKSPACE */
 
-export const setDrawMode = () => ({ type: 'TOGGLE_MODE', mode: 1 });
-export const setNormalMode = () => ({ type: 'TOGGLE_MODE', mode: 0 });
+export const setDrawMode = () => ({ type: 'TOGGLE_MODE', mode: MODE.DRAW });
+export const setDocumentMode = () => ({
+    type: 'TOGGLE_MODE',
+    mode: MODE.DOCUMENT,
+});
 export const toggleMode = mode => ({ type: 'TOGGLE_MODE', mode });
 export const toggleProofView = action('TOGGLE_PROOF_VIEW');
 export const toggleHelp = action('TOGGLE_HELP');
@@ -17,9 +23,9 @@ export const drawArc = () => ({ type: 'DRAW_ARC' });
 
 /* POINT */
 
-export function addPoint(e, point) {
-    e.stopPropagation();
+export function addPoint(point) {
     return {
+        _id: guid(),
         type: 'ADD_POINT',
         point,
     };

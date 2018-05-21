@@ -1,12 +1,13 @@
 #rune-panels {
     position: fixed;
     right: 0;
-    top: $u2;
+    top: $uh;
     bottom: 0;
     box-sizing: border-box;
     width: auto;
     max-width: 25%;
-    min-width: $u*20;
+    min-width: $u * 20;
+    background: $lightGreyShade;
     & > div {
         width: auto;
         // height: 100%;

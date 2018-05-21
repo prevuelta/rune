@@ -1,5 +1,3 @@
-'use strict';
-
 export default {
     SILVER_RATIO: Math.sqrt(2),
     GOLDEN_RATIO: (1 + Math.sqrt(5)) / 2,
@@ -15,13 +13,15 @@ export const COLORS = {
 };
 
 export const MODE = {
-    NORMAL: 0,
-    DRAW: 1,
-    ARC: 2,
+    DOCUMENT: 0,
+    PATH: 1,
+    DRAW: 2,
+    ARC: 3,
 };
 
 export const MODE_TAG = {
-    [MODE.NORMAL]: 'Normal',
+    [MODE.DOCUMENT]: 'Document',
+    [MODE.PATH]: 'Path',
     [MODE.DRAW]: 'Draw',
     [MODE.ARC]: 'Arc',
 };
