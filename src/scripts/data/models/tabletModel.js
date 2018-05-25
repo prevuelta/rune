@@ -10,13 +10,7 @@ const ViewModeEnum = {
 function TabletFactory(data) {
     return {
         _id: (data && data._id) || guid(),
-        name: (data && data.name) || nameGen(3),
-        active: (data && data.active) || false,
         zoomLevel: (data && data.zoomLevel) || Constants.DEFAULT_ZOOM_LEVEL,
-        gridUnit: 40,
-        gridRatio: 1,
-        x: 7,
-        y: 10,
         viewMode: ViewModeEnum.normal,
     };
 }

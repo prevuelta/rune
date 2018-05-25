@@ -1,4 +1,4 @@
-import Store from '../data/store';
+import { Store } from '../data';
 import { MODE } from '../util/constants';
 
 export default {
@@ -9,31 +9,31 @@ export default {
         return Store.getState().app.node === MODE.ARC;
     },
 
-    get isNormalMode() {
-        return Store.getState().app.node === MODE.NORMAL;
+    get isDocumentMode() {
+        return Store.getState().app.node === MODE.DOCUMENT;
     },
 };
 
 export const Position = {
-    get tabletSize() {
-        return { width: this.tabletWidth, height: this.tabletHeight };
+    get runeSize() {
+        return { width: this.runeWidth, height: this.runeHeight };
     },
-    getTablet() {
+    getRune() {
         const state = Store.getState();
-        return state.tablet.all[state.tablet.current];
+        return state.rune.all[state.rune.current];
     },
-    get tabletWidth() {
-        const tablet = this.getTablet();
-        return tablet.gridUnit * tablet.x;
+    get runeWidth() {
+        const rune = this.getRune();
+        return rune.gridUnit * rune.x;
     },
-    get tabletHeight() {
-        const tablet = this.getTablet();
-        return tablet.gridUnit * tablet.y;
+    get runeHeight() {
+        const rune = this.getRune();
+        return rune.gridUnit * rune.y;
     },
     getAbsolute(coord) {
         return {
-            x: coord.x * this.tabletWidth,
-            y: coord.y * this.tabletHeight,
+            x: coord.x * this.runeWidth,
+            y: coord.y * this.runeHeight,
         };
     },
 };

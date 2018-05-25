@@ -2,14 +2,13 @@ import React from 'react';
 import { Line, Vline, Hline } from '../components/line';
 import { Group } from '../components';
 import { connect } from 'react-redux';
-//import Styles = from '../../util/styles';
 import * as actionCreators from '../../actions/actions';
 import { COLORS, POINT_TYPES } from '../../util/constants';
 import WorkspaceUtil from '../workspaceUtil';
 
 export function GridLines(props) {
-    let { tablet: { gridUnit, x: tX, y: tY }, height, width } = props;
-    let lines = [];
+    const { rune: { gridUnit, x: tX, y: tY }, height, width } = props;
+    const lines = [];
     for (let i = 0; i <= Math.max(tX, tY); i++) {
         for (let j = 0; j < 5; j++) {
             if (i < tX)
@@ -72,12 +71,12 @@ export function GridLines(props) {
 }
 
 export function GridNodes(props) {
-    let { handlers, tablet, currentPath } = props;
-    let { x: tX, y: tY, gridUnit } = tablet;
-    let nodes = [];
+    const { handlers, rune, currentPath } = props;
+    const { x: tX, y: tY, gridUnit } = rune;
+    const nodes = [];
     for (let x = 0; x <= tX; x++)
         for (let y = 0; y <= tY; y++) {
-            let point = {
+            const point = {
                 x: x / tX,
                 y: y / tY,
                 path: props.currentPath,
@@ -104,7 +103,7 @@ export function GridNodes(props) {
 }
 
 function GridNode(props) {
-    let { location, addPoint, size } = props;
+    const { location, addPoint, size } = props;
     return (
         <rect
             className="grid-node"

@@ -50,10 +50,10 @@ export function nudge(vector, isSuper) {
 /* TABLET */
 
 function adjust(key, value) {
-    return () => ({ type: 'ADJUST_TABLET_VALUE', key, value });
+    return () => ({ type: 'ADJUST_RUNE_VALUE', key, value });
 }
 
-export const updateTablet = tablet => ({ type: 'UPDATE_TABLET', tablet });
+export const updateTablet = tablet => ({ type: 'UPDATE_RUNE', tablet });
 export const increaseX = adjust('x', 1);
 export const increaseY = adjust('y', 1);
 export const decreaseX = adjust('x', -1);

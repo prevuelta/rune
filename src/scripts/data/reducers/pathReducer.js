@@ -1,7 +1,7 @@
-import Path from '../models/pathFactory';
+import { PathModel } from '../models';
 
 const initialPathState = (function() {
-    let path = Path();
+    let path = PathModel();
     return {
         all: [path],
         current: path._id,

@@ -7,6 +7,7 @@ import * as actionCreators from '../actions/actions';
 import PanelContainer from './panels/panelContainer';
 import TabletPanel from './panels/tabletPanel';
 import PathPanel from './panels/pathPanel';
+import { Data } from '../data';
 
 import { MODE, MODE_TAG } from '../util/constants';
 
@@ -34,7 +35,7 @@ let Workspace = props => {
             </div>
             <div id="runes" onClick={props.deselectAllPoints}>
                 {props.runes.map((r, i) => {
-                    return <Rune tablet={props.tablet} key={i} id={r.id} />;
+                    return <Rune rune={r} key={i} />;
                 })}
             </div>
         </div>
@@ -42,11 +43,10 @@ let Workspace = props => {
 };
 
 function mapStateToProps(state) {
-    let tablet = state.tablet.all.find(t => t._id === state.tablet.current);
-    let runes = state.rune.all.filter(r => r.tablet === tablet._id);
+    const tablet = Data.getTablet(state);
+    const runes = Data.getAll('rune', state);
     const { app } = state;
     return {
-        tablet,
         runes,
         app,
     };

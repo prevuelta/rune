@@ -1,5 +1,3 @@
-'use strict';
-
 import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/actions';
 import React from 'react';
@@ -9,49 +7,49 @@ import XYInput from '../components/xyInput';
 import NumberInput from '../components/numberInput';
 import Button from '../components/button';
 import Cross from '../icons/cross';
-
+import { Data } from '../../data';
 
 class TabletPanel extends React.Component {
-    constructor (props) {
+    constructor(props) {
         super(props);
     }
 
-    _updateSize (value) {
-        console.log(value);
-        this._updateTablet('x', value.x);
-        this._updateTablet('y', value.y);
+    _updateSize(value) {
+        this._updateRune('x', value.x);
+        this._updateRune('y', value.y);
     }
 
-    _updateTablet (prop, value) {
-        console.log(prop, value);
-        let { tablet } = this.props;
-        tablet[prop] = value;
-        this.props.updateTablet(tablet);
+    _updateRune(prop, value) {
+        let { rune } = this.props;
+        rune[prop] = value;
+        this.props.updateRune(rune);
     }
 
-    render () {
+    render() {
         return (
             <div>
                 <div className="pane">
                     <NumberInput
-                        value={this.props.tablet.gridUnit}
+                        value={this.props.rune.gridUnit}
                         label="Grid Unit"
-                        onChange={this._updateTablet.bind(this, 'gridUnit')} />
+                        onChange={value => this._updateRune('gridUnit', value)}
+                    />
                     <XYInput
                         label="Size"
-                        x={this.props.tablet.x}
-                        y={this.props.tablet.y}
-                        onChange={this._updateSize.bind(this)} />
+                        x={this.props.rune.x}
+                        y={this.props.rune.y}
+                        onChange={this._updateSize.bind(this)}
+                    />
                 </div>
             </div>
         );
     }
 }
 
-function mapStateToProps (state) {
-    let tablet = state.tablet.all[state.tablet.current];
+function mapStateToProps(state) {
+    const rune = Data.getRune(state);
     return {
-        tablet
+        rune,
     };
 }
 
@@ -60,7 +58,6 @@ export default connect(mapStateToProps, actionCreators)(TabletPanel);
 // let Events = require('../../global/Events');
 // let Button = require('../../components/Button.jsx');
 // let GridModel = require('../../data/GridModel');
-
 
 // module.exports = {
 //     title: 'Grid',

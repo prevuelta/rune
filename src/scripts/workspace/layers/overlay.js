@@ -5,6 +5,7 @@ import { POINT_TYPES } from '../../util/constants';
 import { GridNodes } from './grid';
 import { Arc, Group, Point } from '../components';
 import WorkspaceUtil, { Position } from '../workspaceUtil';
+import { Data } from '../../data';
 
 const pointStrings = {
     [POINT_TYPES.STRAIGHT]: (mX, mY) => `L ${mX} ${mY}`,
@@ -12,7 +13,7 @@ const pointStrings = {
 };
 
 function Helpers(props) {
-    let { markerPosition, point, width, height, tablet: { gridUnit } } = props;
+    let { markerPosition, point, width, height, rune: { gridUnit } } = props;
 
     let mX = (markerPosition && markerPosition.x) || 0;
     let mY = (markerPosition && markerPosition.y) || 0;
@@ -62,9 +63,9 @@ class Overlay extends Component {
     }
 
     _onMouseMove(e, data) {
-        const { unitSize } = this.props.tablet;
+        const { unitSize } = this.props.rune;
         let { offsetX: x, offsetY: y } = e.nativeEvent;
-        const { width, height } = Position.tabletSize;
+        const { width, height } = Position.runeSize;
         x = Math.abs(Math.round(x / 10) * 10);
         y = Math.abs(Math.round(y / 10) * 10);
 
@@ -141,22 +142,21 @@ class Overlay extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-    let points = state.point.all.filter(p => p.rune === ownProps.id);
-    let hist = {};
+    const points = state.point.all.filter(p => p.rune === ownProps.id);
+    const hist = {};
     points.forEach(p => {
         p.path in hist ? hist[p.path].push(p) : (hist[p.path] = [p]);
     });
-    let paths = [];
+    const paths = [];
     for (let path in hist) paths.push(hist[path]);
     return {
-        mode: state.app.mode,
         ...ownProps,
+        mode: state.app.mode,
         pathPoints: paths,
         paths: state.path.all,
         points,
         currentPath: state.path.current,
         selectedPoints: state.point.selected,
-        proofView: state.app.proofView,
     };
 }
 

@@ -5,6 +5,7 @@ import * as actionCreators from '../../actions/actions';
 import { Group, Point } from '.';
 import { COLORS, POINT_TYPES } from '../../util/constants';
 import { Overlay } from '../layers';
+import { Data } from '../../data';
 
 const SLUG = 20;
 
@@ -31,8 +32,6 @@ function RenderLayer(props) {
         console.log('Path hover');
         stroke = 3;
     }
-
-    console.log('Pathpoints', pathPoints);
 
     return (
         <svg id="render" height={height} width={width}>
@@ -61,7 +60,7 @@ function RenderLayer(props) {
 function Rune(props) {
     let {
         points,
-        tablet,
+        rune,
         pathPoints,
         paths,
         selectedPoints,
@@ -69,8 +68,8 @@ function Rune(props) {
         currentPath,
         mode,
     } = props;
-    let height = tablet.y * tablet.gridUnit;
-    let width = tablet.x * tablet.gridUnit;
+    let height = rune.y * rune.gridUnit;
+    let width = rune.x * rune.gridUnit;
     let size = { width, height };
 
     return (
@@ -79,40 +78,34 @@ function Rune(props) {
             style={{
                 width,
                 height,
-                padding: `${height / tablet.y / 2}px ${width / tablet.x / 2}px`,
+                padding: `${height / rune.y / 2}px ${width / rune.x / 2}px`,
             }}>
             <p className="rune-label">
-                {tablet.name}{' '}
+                {rune.name}{' '}
                 <span className="rune-size">
-                    ({tablet.x}x{tablet.y})
+                    ({rune.x}x{rune.y})
                 </span>
             </p>
-            {!proofView && <BGLayer {...size} tablet={tablet} />}
+            {!proofView && <BGLayer {...size} rune={rune} />}
             <RenderLayer {...size} pathPoints={pathPoints} paths={paths} />
             {!proofView && (
-                <Overlay
-                    {...size}
-                    tablet={tablet}
-                    currentPath={currentPath}
-                    rune={props.id}
-                />
+                <Overlay {...size} rune={rune} currentPath={currentPath} />
             )}
         </div>
     );
 }
 
 function mapStateToProps(state, ownProps) {
-    let points = state.point.all.filter(p => p.rune === ownProps.id);
-    let hist = {};
+    const points = state.point.all.filter(p => p.rune === ownProps.rune._id);
+    const hist = {};
     points.forEach(p => {
         p.path in hist ? hist[p.path].push(p) : (hist[p.path] = [p]);
     });
-    let paths = [];
+    const paths = [];
     for (let path in hist) paths.push(hist[path]);
     return {
-        tablet: state.tablet.all[state.tablet.current],
-        mode: state.app.mode,
         ...ownProps,
+        mode: state.app.mode,
         pathPoints: paths,
         paths: state.path.all,
         points,

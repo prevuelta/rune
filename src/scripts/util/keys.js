@@ -47,10 +47,10 @@ const nudgeActions = {};
 
 Object.keys(nudgeVectors).forEach(k => {
     nudgeActions[k] = () => {
-        let state = Store.getState();
-        let tablet = state.tablet.all[state.tablet.current];
-        let { x, y } = tablet;
-        let v = nudgeVectors[k];
+        const state = Store.getState();
+        const rune = state.rune.all[state.rune.current];
+        const { x, y } = rune;
+        const v = nudgeVectors[k];
         return {
             type: 'NUDGE_POINTS',
             vector: [v[0] * (1 / x), v[1] * (1 / y)],
