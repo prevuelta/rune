@@ -15,7 +15,7 @@ const POINT_TYPE_STRING = {
 };
 
 function BGLayer(props) {
-    let { height, width } = props;
+    const { height, width } = props;
     return (
         <svg id="background" height={height} width={width}>
             <GridLines {...props} />
@@ -24,7 +24,7 @@ function BGLayer(props) {
 }
 
 function RenderLayer(props) {
-    let { height, width, paths, pathPoints } = props;
+    const { height, width, paths, pathPoints } = props;
 
     let stroke;
 
@@ -35,13 +35,13 @@ function RenderLayer(props) {
 
     return (
         <svg id="render" height={height} width={width}>
-            {pathPoints.map((points, i) => {
-                let str = points.map(
+            {paths.map((path, i) => {
+                const str = path.points.map(
                     (p, i) =>
-                        `${i ? 'L' : 'M'} ${p.x * width} ${p.y * height} `,
+                        `${i ? 'L' : 'M'} ${p.x * width} ${p.y * height}${
+                            path.isClosed ? ' Z' : ''
+                        }`,
                 );
-                let path = props.paths[i];
-                if (path.isClosed) str += 'Z';
                 return (
                     <path
                         key={i}
@@ -87,7 +87,7 @@ function Rune(props) {
                 </span>
             </p>
             {!proofView && <BGLayer {...size} rune={rune} />}
-            <RenderLayer {...size} pathPoints={pathPoints} paths={paths} />
+            <RenderLayer {...size} paths={paths} />
             {!proofView && (
                 <Overlay {...size} rune={rune} currentPath={currentPath} />
             )}
@@ -96,19 +96,22 @@ function Rune(props) {
 }
 
 function mapStateToProps(state, ownProps) {
-    const points = state.point.all.filter(p => p.rune === ownProps.rune._id);
-    const hist = {};
-    points.forEach(p => {
-        p.path in hist ? hist[p.path].push(p) : (hist[p.path] = [p]);
+    // const points = state.point.all.filter(p => p.rune === ownProps.rune._id);
+    // const hist = {};
+    // points.forEach(p => {
+    // p.path in hist ? hist[p.path].push(p) : (hist[p.path] = [p]);
+    // });
+    // const paths = [];
+    // for (let path in hist) paths.push(hist[path]);
+    const paths = state.path.all.filter(p => p.rune === ownProps.rune._id);
+    paths.forEach(path => {
+        p.points = state.points.all.filter(p => p.path === path._id);
     });
-    const paths = [];
-    for (let path in hist) paths.push(hist[path]);
+    console.log(state.path.all, paths, ownProps);
     return {
         ...ownProps,
         mode: state.app.mode,
-        pathPoints: paths,
-        paths: state.path.all,
-        points,
+        paths,
         currentPath: state.path.current,
         selectedPoints: state.point.selected,
         proofView: state.app.proofView,

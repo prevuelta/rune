@@ -1,10 +1,9 @@
 import { PathModel } from '../models';
 
 const initialPathState = (function() {
-    let path = PathModel();
     return {
-        all: [path],
-        current: path._id,
+        all: {},
+        current: null,
     };
 })();
 
@@ -49,7 +48,7 @@ export default function(state = initialPathState, action) {
             // if ( state.points.all.some(p => p.path === state.current ) {
 
             // }
-            let path = Path();
+            let path = Path({ rune: action.runeId });
             return {
                 ...state,
                 current: path.id,

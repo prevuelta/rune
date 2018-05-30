@@ -84,9 +84,10 @@ class Overlay extends Component {
     }
 
     _clickHandler(e) {
+        const { width, height } = Position.runeSize;
         this.props.addPoint({
-            x: this.state.markerPosition.x,
-            y: this.state.markerPosition.y,
+            x: this.state.markerPosition.x / width,
+            y: this.state.markerPosition.y / height,
             selected: true,
         });
     }
