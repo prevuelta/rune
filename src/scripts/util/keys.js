@@ -1,5 +1,5 @@
 import Store from '../data/store';
-import * as actions from '../actions/actions';
+import * as actions from '../actions';
 import { MODE } from '../util/constants';
 
 const MODIFIERS = ['shiftKey', 'ctrlKey', 'metaKey'];
@@ -48,7 +48,7 @@ const nudgeActions = {};
 Object.keys(nudgeVectors).forEach(k => {
     nudgeActions[k] = () => {
         const state = Store.getState();
-        const rune = state.rune.all[state.rune.current];
+        const rune = state.runes.all[state.runes.current];
         const { x, y } = rune;
         const v = nudgeVectors[k];
         return {
@@ -86,8 +86,8 @@ const modeActions = {
         ...keys,
     },
     [MODE.ARC]: {
-        f: actions.flipArc,
-        c: actions.toggleCenterLock,
+        // f: actions.flipArc,
+        // c: actions.toggleCenterLock,
     },
 };
 

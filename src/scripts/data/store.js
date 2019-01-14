@@ -1,9 +1,11 @@
+'use strict';
+
 import { createStore, applyMiddleware } from 'redux';
 
 /* Reducer is passed an action and returns modified state */
 import { rootReducer } from './reducers';
 import { pointResize } from '../middleware';
-import { TabletModel, RuneModel } from './models';
+import { TabletModel, RuneModel, PathModel } from './models';
 import { MODE } from '../util/constants';
 
 const initialAppState = {
@@ -14,15 +16,20 @@ const initialAppState = {
 
 const tablet = TabletModel();
 const rune = RuneModel({ tablet: tablet._id });
+const path = PathModel({ rune: rune._id });
 
 const initialState = {
-    tablet: {
+    tablets: {
         all: { [tablet._id]: tablet },
         current: tablet._id,
     },
-    rune: {
+    runes: {
         all: { [rune._id]: rune },
         current: rune._id,
+    },
+    paths: {
+        all: { [path._id]: path },
+        current: path._id,
     },
     app: initialAppState,
 };
@@ -30,7 +37,7 @@ const initialState = {
 const store = createStore(
     rootReducer,
     initialState,
-    applyMiddleware(pointResize),
+    applyMiddleware(pointResize)
 );
 console.log('Initial store', store.getState());
 

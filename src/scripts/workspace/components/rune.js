@@ -1,7 +1,9 @@
+'use strict';
+
 import React, { Component } from 'react';
 import { GridLines, GridNodes } from '../layers/grid';
 import { connect } from 'react-redux';
-import * as actionCreators from '../../actions/actions';
+import * as actionCreators from '../../actions';
 import { Group, Point } from '.';
 import { COLORS, POINT_TYPES } from '../../util/constants';
 import { Overlay } from '../layers';
@@ -40,7 +42,7 @@ function RenderLayer(props) {
                     (p, i) =>
                         `${i ? 'L' : 'M'} ${p.x * width} ${p.y * height}${
                             path.isClosed ? ' Z' : ''
-                        }`,
+                        }`
                 );
                 return (
                     <path
@@ -103,17 +105,18 @@ function mapStateToProps(state, ownProps) {
     // });
     // const paths = [];
     // for (let path in hist) paths.push(hist[path]);
-    const paths = state.path.all.filter(p => p.rune === ownProps.rune._id);
+    const paths = Data.getAll('paths').filter(
+        p => p.rune === ownProps.rune._id
+    );
     paths.forEach(path => {
-        p.points = state.points.all.filter(p => p.path === path._id);
+        path.points = state.points.all.filter(p => p.pathId === path._id);
     });
-    console.log(state.path.all, paths, ownProps);
     return {
         ...ownProps,
         mode: state.app.mode,
         paths,
-        currentPath: state.path.current,
-        selectedPoints: state.point.selected,
+        currentPath: state.paths.current,
+        selectedPoints: state.points.selected,
         proofView: state.app.proofView,
     };
 }

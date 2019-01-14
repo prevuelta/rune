@@ -12,7 +12,7 @@ import ButtonGroup from '../components/buttonGroup';
 import Cross from '../icons/cross';
 import X from '../icons/x';
 import Stack from '../icons/stack';
-import PointIcon from '../icons/point';
+import PointIcon from '../icons/point.svg';
 import PathIcon from '../icons/path';
 
 class PathPanel extends React.Component {
@@ -37,7 +37,7 @@ class PathPanel extends React.Component {
                 </Sheet>
                 {this.props.paths.map((path, i) => {
                     let points = this.props.points.filter(
-                        p => path.id === p.path,
+                        p => path.id === p.path
                     );
                     return (
                         <Path
@@ -46,7 +46,7 @@ class PathPanel extends React.Component {
                             points={points}
                             togglePathClosed={togglePathClosed.bind(
                                 null,
-                                path.id,
+                                path.id
                             )}
                             addPoint={addPoint}
                             deletePoint={deletePoint}
@@ -201,8 +201,8 @@ class Path extends Component {
 
 function mapStateToProps(state) {
     return {
-        paths: state.path.all,
-        points: state.point.all,
+        paths: state.paths.all,
+        points: state.points.all,
         selectedPath: state.selectedPath,
     };
 }

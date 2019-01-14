@@ -25,7 +25,7 @@ export const drawArc = () => ({ type: 'DRAW_ARC' });
 
 export function addPoint(point) {
     return {
-        _id: guid(),
+        id: guid(),
         type: 'ADD_POINT',
         point,
     };

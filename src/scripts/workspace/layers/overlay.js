@@ -1,6 +1,8 @@
+'use strict';
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actionCreators from '../../actions/actions';
+import * as actionCreators from '../../actions';
 import { POINT_TYPES } from '../../util/constants';
 import { GridNodes } from './grid';
 import { Arc, Group, Point } from '../components';
@@ -33,7 +35,7 @@ function Helpers(props) {
         } else if (WorkspaceUtil.isArcMode) {
             str = `M ${pX} ${pY} a ${100} ${100} ${pointStrings[point.type](
                 mX,
-                mY,
+                mY
             )}`;
         }
     }
@@ -62,7 +64,7 @@ class Overlay extends Component {
         };
     }
 
-    _onMouseMove(e, data) {
+    _onMouseMove = (e, data) => {
         const { unitSize } = this.props.rune;
         let { offsetX: x, offsetY: y } = e.nativeEvent;
         const { width, height } = Position.runeSize;
@@ -77,20 +79,24 @@ class Overlay extends Component {
                 nY: y / height,
             },
         });
-    }
+    };
 
-    _onMouseLeave(e) {
+    _onMouseLeave = e => {
         this.setState({ markerPosition: null });
-    }
+    };
 
-    _clickHandler(e) {
+    _clickHandler = e => {
+        console.log(this.props);
+        const { currentPath } = this.props;
         const { width, height } = Position.runeSize;
+        console.log(currentPath);
         this.props.addPoint({
             x: this.state.markerPosition.x / width,
             y: this.state.markerPosition.y / height,
+            pathId: currentPath._id,
             selected: true,
         });
-    }
+    };
 
     render() {
         let { props } = this;
@@ -107,9 +113,9 @@ class Overlay extends Component {
                 id="overlay"
                 height={height}
                 width={width}
-                onMouseMove={this._onMouseMove.bind(this)}
-                onMouseLeave={this._onMouseLeave.bind(this)}
-                onClick={e => this._clickHandler(e)}>
+                onMouseMove={this._onMouseMove}
+                onMouseLeave={this._onMouseLeave}
+                onClick={this._clickHandler}>
                 {markerPosition && (
                     <rect
                         x={x - 5}
@@ -143,21 +149,22 @@ class Overlay extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-    const points = state.point.all.filter(p => p.rune === ownProps.id);
+    const points = state.points.all.filter(p => p.rune === ownProps.id);
     const hist = {};
     points.forEach(p => {
         p.path in hist ? hist[p.path].push(p) : (hist[p.path] = [p]);
     });
     const paths = [];
     for (let path in hist) paths.push(hist[path]);
+    const currentPath = Data.getCurrent('paths');
     return {
         ...ownProps,
         mode: state.app.mode,
         pathPoints: paths,
-        paths: state.path.all,
+        paths: state.paths.all,
         points,
-        currentPath: state.path.current,
-        selectedPoints: state.point.selected,
+        currentPath,
+        selectedPoints: state.points.selected,
     };
 }
 

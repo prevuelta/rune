@@ -1,3 +1,5 @@
+'use strict';
+
 import { PathModel } from '../models';
 
 const initialPathState = (function() {
@@ -12,7 +14,7 @@ export default function(state = initialPathState, action) {
         case 'TOGGLE_PATH_CLOSED':
             let id = action.id || state.current;
             let newPaths = state.all.map(p => {
-                if (p.id === id) {
+                if (p._id === id) {
                     return {
                         ...p,
                         isClosed: !p.isClosed,
@@ -29,7 +31,7 @@ export default function(state = initialPathState, action) {
         case 'TOGGLE_PATH_FILL':
             {
                 let newPaths = state.all.map(p => {
-                    if (p.id === state.current) {
+                    if (p._id === state.current) {
                         return {
                             ...p,
                             fill: (p.fill === 'none' && 'black') || 'none',
@@ -51,11 +53,8 @@ export default function(state = initialPathState, action) {
             let path = Path({ rune: action.runeId });
             return {
                 ...state,
-                current: path.id,
-                points: {
-                    ...state.points,
-                    selected: [],
-                },
+                current: path._id,
+                selected: [],
                 all: [...state.all, path],
             };
             break;

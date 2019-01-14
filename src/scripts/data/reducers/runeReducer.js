@@ -1,4 +1,8 @@
+'use strict';
+
 // import { insertAt } from '../../util';
+
+import { guid } from '../../util';
 
 export default function(state = {}, action) {
     return ({

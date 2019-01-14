@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as actionCreators from '../../../actions/actions';
+import * as actionCreators from '../../../actions';
 import { connect } from 'react-redux';
 import { COLORS } from '../../../util/constants';
 

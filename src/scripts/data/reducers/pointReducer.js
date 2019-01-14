@@ -1,5 +1,6 @@
+'use strict';
+
 import { POINT_TYPES } from '../../util/constants';
-import { guid } from '../../util';
 
 const initialState = {
     all: [],
@@ -120,7 +121,9 @@ export default function(state = initialState, action) {
             break;
 
         case 'ADD_POINT':
-            let index = lastSelected || points.length;
+            const index = lastSelected || points.length;
+
+            console.log('Point', action.point);
 
             return {
                 ...state,

@@ -1,5 +1,8 @@
+'use strict';
+
 import React, { Component } from 'react';
-import { Point, Group } from '../.';
+import Point from './point';
+import Group from './group';
 import { Position } from '../../workspaceUtil';
 
 class Arc extends Component {

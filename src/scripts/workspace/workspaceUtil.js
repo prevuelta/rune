@@ -1,3 +1,5 @@
+'use strict';
+
 import { Store } from '../data';
 import { MODE } from '../util/constants';
 
@@ -20,7 +22,7 @@ export const Position = {
     },
     getRune() {
         const state = Store.getState();
-        return state.rune.all[state.rune.current];
+        return state.runes.all[state.runes.current];
     },
     get runeWidth() {
         const rune = this.getRune();
