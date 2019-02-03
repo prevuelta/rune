@@ -94,8 +94,9 @@ body {
   height: 100%; }
 
 #rune-workspace {
-  width: 100%;
-  height: 100%; }
+  height: 100%;
+  margin-left: 240px;
+  position: relative; }
 
 #rune-status {
   background: #3b3935;
@@ -108,7 +109,7 @@ body {
   display: flex;
   left: 0; }
   #rune-status .tag {
-    padding: 3px 5px;
+    padding: 3px 6px;
     color: #3b3935;
     background: #27dded; }
 
@@ -220,8 +221,9 @@ svg path {
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
   background: white;
   position: absolute;
-  left: 50px;
-  top: 50px; }
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); }
   .rune svg {
     overflow: visible;
     position: absolute;
@@ -339,13 +341,11 @@ svg path {
 
 #rune-panels {
   position: fixed;
-  right: 0;
+  left: 0;
   top: 18px;
   bottom: 0;
   box-sizing: border-box;
-  width: auto;
-  max-width: 25%;
-  min-width: 240px;
+  width: 240px;
   background: #cccccc; }
   #rune-panels > div {
     width: auto;

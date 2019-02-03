@@ -1,30 +1,27 @@
 'use strict';
 
-let React = require('react');
+import React, { Component } from 'react';
 
-class Switch extends React.Component {
-
-    constructor (props) {
+class Switch extends Component {
+    constructor(props) {
         super(props);
         this.state = {
-            toggle: props.toggle || false
+            toggle: props.toggle || false,
         };
     }
 
-    _toggle () {
+    _toggle = () => {
         if (this.props.onToggle) {
             this.props.onToggle();
         }
-        this.setState({toggle: !this.state.toggle});
-    }
+        this.setState({ toggle: !this.state.toggle });
+    };
 
-    render () {
+    render() {
         let classes = `switch ${this.state.toggle ? 'on' : 'off'}`;
         return (
-            <div
-                className={classes}
-                onClick={this._toggle.bind(this)}>
-                { this.props.children || this.props.symbol }
+            <div className={classes} onClick={this._toggle}>
+                {this.props.children || this.props.symbol}
             </div>
         );
     }

@@ -8,42 +8,39 @@ import React from 'react';
 // let PanelWrapper = require('./PanelWrapper.jsx');
 
 // Componente
-import Button from '../components/button'
-import Switch from '../components/switch';
+import { Button, Switch } from '../components';
 
 // Icons
-import StackIcon from '../icons/stack';
+// import StackIcon from '../icons/stack';
+// <StackIcon />
 
 class PanelContainer extends React.Component {
-
-    constructor (props) {
+    constructor(props) {
         super(props);
         this.state = {
-            collapsed: false
+            collapsed: false,
         };
     }
 
-    _toggleCollapsed () {
-        this.setState({collapsed: !this.state.collapsed});
+    _toggleCollapsed() {
+        this.setState({ collapsed: !this.state.collapsed });
     }
 
-    render () {
+    render() {
         let { title, children } = this.props;
         let className = this.state.collapsed ? 'collapsed' : '';
         return (
             <div className="panel">
                 <div className="handle" onClick={() => this._toggleCollapsed()}>
-                    { title }
+                    {title}
                     <Switch
                         onToggle={() => this._toggleCollapsed()}
-                        toggle={this.state.collapsed}>
-                        <StackIcon />
-                    </Switch>
+                        toggle={this.state.collapsed}
+                    />
                 </div>
-                { !this.state.collapsed ?
-                    <div className="panel-content">
-                        { children }
-                    </div> : null }
+                {!this.state.collapsed ? (
+                    <div className="panel-content">{children}</div>
+                ) : null}
             </div>
         );
     }

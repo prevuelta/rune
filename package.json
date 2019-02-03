@@ -10,7 +10,7 @@
         "prewatch": "rm -rf dist/*; npm run copy-statics; npm run lib",
         "watch": "run-p copy-statics watch:js watch:css build:html serve",
         "serve":
-            "echo 'Serving on 8000' && browser-sync start --port 8000 --serveStatic './dist' --files './dist/*'",
+            "echo 'Serving on 8000' && browser-sync start --port 7200 --serveStatic './dist' --files './dist/*'",
         "watch:js": "nodemon --watch ./src/scripts -x 'npm run build:js'",
         "watch:css":
             "sass --watch ./src/styles/main.scss:./dist/styles/main.css",

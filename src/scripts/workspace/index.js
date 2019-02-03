@@ -6,17 +6,21 @@ import Rune from './components/rune';
 import * as actionCreators from '../actions';
 
 // Panels
-// import PanelContainer from './panels/panelContainer';
+import { PanelContainer, PathEditor } from './panels';
 // import TabletPanel from './panels/tabletPanel';
-// import PathPanel from './panels/pathPanel';
+// import PathPanel from './panels/pathPa';
 import { Data } from '../data';
 
 import { MODE, MODE_TAG } from '../util/constants';
 
-// let panels = {
-// Tablet: TabletPanel,
-// Path: PathPanel,
-// };
+let panels = [
+    // Tablet: TabletPanel,
+    // Path: PathPanel,
+    {
+        title: 'Path Editor',
+        panel: PathEditor,
+    },
+];
 
 let Workspace = props => {
     return (
@@ -24,11 +28,18 @@ let Workspace = props => {
             <div id="rune-status">
                 <span className="tag">{MODE_TAG[props.app.mode]} mode</span>
             </div>
-            <div id="rune-tools" />
+            : <div id="rune-tools" />
             <div id="runes" onClick={props.deselectAllPoints}>
                 {props.runes.map((r, i) => {
                     return <Rune rune={r} key={i} />;
                 })}
+            </div>
+            <div id="rune-panels">
+                {panels.map(panel => (
+                    <PanelContainer title={panel.title}>
+                        <panel.panel />
+                    </PanelContainer>
+                ))}
             </div>
         </div>
     );
