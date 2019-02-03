@@ -4,6 +4,8 @@ import { MODE } from '../util/constants';
 
 const MODIFIERS = ['shiftKey', 'ctrlKey', 'metaKey'];
 
+const protectedElements = ['INPUT', 'TEXTAREA'];
+
 const keyCodes = {
     8: 'delete',
     27: 'esc',
@@ -100,7 +102,7 @@ document.addEventListener('keydown', function(e) {
     let hasModifier = MODIFIERS.filter(m => e[m]).join('+');
     let ref = `${hasModifier && hasModifier + '+'}${keyCodes[e.keyCode] ||
         e.keyCode}`;
-    if (e.target.tagName !== 'INPUT') {
+    if (!protectedElements.includes(e.target.tagName)) {
         let action;
         if (globalActions[ref]) {
             action = globalActions[ref]();

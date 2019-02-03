@@ -54,24 +54,24 @@
 .panel {
     height: auto; //$u * 16;
     width: 100%;
-    // margin-bottom: $qu;
     background: $dark;
+
     &.ui-draggable-dragging {
         z-index: 9999;
     }
-    .panel-content {
-        // padding: $qu;
-    }
+
     .handle {
         cursor: pointer;
         color: white;
         width: 100%;
-        padding: $qu;
+        padding: $hu;
         box-sizing: border-box;
         display: flex;
         justify-content: space-between;
+        align-items: center;
+
         &:active {
-            background: red;
+            background: $sky-dark;
         }
     }
     .toggle {
@@ -139,5 +139,14 @@
         color: $field;
         font-size: $pu;
         font-style: normal;
+    }
+}
+
+.panel-content {
+    padding: $hu;
+
+    textarea {
+        max-width: 100%;
+        height: $u * 20;
     }
 }

@@ -13,29 +13,31 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
     svg {
         width: $u;
         height: $u;
         fill: white;
     }
+
     &:hover {
-        background: $rust;
+        background: $cream;
         svg {
-            fill: $cream;
+            fill: $dark;
         }
     }
+
     &.on {
-        background: $sky;
         svg {
-            fill: $glow;
+            fill: $sky;
         }
     }
 }
 
 .button-group {
     display: flex;
-    // border: 1px solid red;
     margin-top: $qu;
+
     .button,
     .switch {
         margin: 0;
@@ -46,6 +48,7 @@
     .sheet {
         border-left: $u solid $field;
     }
+
     .path {
         .sheet {
             border-left: $u solid $rust;
@@ -60,6 +63,7 @@
     justify-content: space-between;
     padding-bottom: $hu;
     margin-bottom: $u;
+
     * {
         margin: 0;
     }

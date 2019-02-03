@@ -10,6 +10,10 @@ class Switch extends Component {
         };
     }
 
+    componentWillReceiveProps(newProps) {
+        this.setState({ toggle: newProps.toggle });
+    }
+
     _toggle = () => {
         if (this.props.onToggle) {
             this.props.onToggle();

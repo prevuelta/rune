@@ -11,8 +11,7 @@ import React from 'react';
 import { Button, Switch } from '../components';
 
 // Icons
-// import StackIcon from '../icons/stack';
-// <StackIcon />
+import { StackIcon } from '../icons';
 
 class PanelContainer extends React.Component {
     constructor(props) {
@@ -35,8 +34,9 @@ class PanelContainer extends React.Component {
                     {title}
                     <Switch
                         onToggle={() => this._toggleCollapsed()}
-                        toggle={this.state.collapsed}
-                    />
+                        toggle={this.state.collapsed}>
+                        <StackIcon />
+                    </Switch>
                 </div>
                 {!this.state.collapsed ? (
                     <div className="panel-content">{children}</div>

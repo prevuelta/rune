@@ -20,22 +20,31 @@ label {
 input,
 textarea {
     box-sizing: border-box;
-    box-shadow: inset 1px 1px 1px 0px rgba(0,0,0,0.2);
+    box-shadow: inset 1px 1px 1px 0px rgba(0, 0, 0, 0.2);
     padding: $hu;
     margin: $hu 0;
-    border: 2px solid $sky;
+    // border: 1px solid $sky;
+    border: none;
     font-family: $primary-font;
     color: white;
     display: inline-block;
     background: lighten($sky-dark, 5);
     width: 100%;
     font-size: $qqqpu;
+
+    &:focus {
+        outline: none;
+    }
 }
 
-input[type="number"] {
+input[type='number'] {
     max-width: $u6;
 }
 
 input {
     border-radius: 2px;
+}
+
+textarea {
+    resize: none;
 }
