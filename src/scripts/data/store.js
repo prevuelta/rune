@@ -4,7 +4,7 @@ import { createStore, applyMiddleware } from 'redux';
 
 /* Reducer is passed an action and returns modified state */
 import { rootReducer } from './reducers';
-import { pointResize } from '../middleware';
+import { pointResize, instructionParser } from '../middleware';
 import { TabletModel, RuneModel, PathModel } from './models';
 import { MODE } from '../util/constants';
 
@@ -37,7 +37,7 @@ const initialState = {
 const store = createStore(
     rootReducer,
     initialState,
-    applyMiddleware(pointResize)
+    applyMiddleware(pointResize, instructionParser)
 );
 console.log('Initial store', store.getState());
 

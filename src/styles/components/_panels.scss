@@ -4,21 +4,14 @@
     top: $uh;
     bottom: 0;
     box-sizing: border-box;
-    // width: auto;
-    // max-width: 25%;
     width: $u * 20;
     background: $lightGreyShade;
     & > div {
         width: auto;
-        // height: 100%;
         box-sizing: border-box;
         overflow-y: auto;
         overflow-x: visible;
-        // background: $neutral-grey-dark;
-        // border-left: $hu solid $cream-dark;
-        &:hover {
-            // border-color: $sky;
-        }
+
         &.collapsed {
             width: 0;
             .panel {
@@ -92,53 +85,6 @@
     .flex-group {
         display: flex;
         align-items: center;
-        // flex-align: row no-wrap;
-    }
-}
-
-.rune-previews {
-    display: flex;
-    flex-wrap: wrap;
-    .rune-preview {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: $sky;
-        padding: $qu;
-        cursor: pointer;
-        margin: 0 $qu $qu 0;
-        width: $u3;
-        height: $u3;
-        border: 2px solid $sky;
-        .button {
-            margin: 0;
-        }
-        &.active {
-            border-color: $glow; //lighten($sky, 20);
-        }
-        svg {
-            width: auto;
-            height: auto;
-            max-width: 100%;
-            max-height: 100%;
-        }
-    }
-}
-
-.coord {
-    margin-bottom: $hu;
-    font-size: $qqqpu;
-    & > span {
-        margin-bottom: 2px;
-        display: inline-block;
-        padding: $qu $hu;
-        background: $sky-dark;
-        border-radius: 2px;
-    }
-    em {
-        color: $field;
-        font-size: $pu;
-        font-style: normal;
     }
 }
 

@@ -1,4 +1,4 @@
 'use strict';
 
 export { default as PanelContainer } from './panelContainer';
-export { default as PathEditor } from './pathEditor';
+export { default as InstructionsPanel } from './instructionsPanel';

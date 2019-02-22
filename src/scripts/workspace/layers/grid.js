@@ -1,3 +1,5 @@
+'use strict';
+
 import React from 'react';
 import { Line, Vline, Hline } from '../components/line';
 import { Group } from '../components';

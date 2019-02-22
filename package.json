@@ -1,37 +1,36 @@
 {
     "name": "Rune",
     "version": "0.0.1",
-    "description":
-        "SVG glyph creator using paper.js. Grid based design system to produce letter forms, icons etc then export as SVG from browser.",
+    "description": "SVG glyph creator using paper.js. Grid based design system to produce letter forms, icons etc then export as SVG from browser.",
     "main": "app.min.js",
     "scripts": {
         "flow": "flow",
         "start": "npm run lib && npm run build && npm run serve",
         "prewatch": "rm -rf dist/*; npm run copy-statics; npm run lib",
         "watch": "run-p copy-statics watch:js watch:css build:html serve",
-        "serve":
-            "echo 'Serving on 8000' && browser-sync start --port 7200 --serveStatic './dist' --files './dist/*'",
+        "serve": "echo 'Serving on 7200' && browser-sync start --port 7200 --serveStatic './dist' --files './dist/*'",
         "watch:js": "nodemon --watch ./src/scripts -x 'npm run build:js'",
-        "watch:css":
-            "sass --watch ./src/styles/main.scss:./dist/styles/main.css",
+        "watch:css": "sass --watch ./src/styles/main.scss:./dist/styles/main.css",
         "watch:html": "watch 'npm run build:html'",
         "build:html": "cp ./src/index.html ./dist/index.html",
-        "build":
-            "echo 'building app...' && npm run lib && npm run build:js && npm run build:css && npm run copy-statics",
+        "build": "echo 'building app...' && npm run lib && npm run build:js && npm run build:css && npm run copy-statics",
         "build:js": "rollup -c rollup.config.app.js",
         "lib": "rollup -c rollup.config.lib.js",
-        "build:css":
-            "echo 'compiling stylesheets...' && sass ./src/styles/main.scss:./dist/styles/main.css",
-        "copy-statics":
-            "echo 'Copying statics...' && cp -R ./src/assets/ ./dist/assets/"
+        "build:css": "echo 'compiling stylesheets...' && sass ./src/styles/main.scss:./dist/styles/main.css",
+        "copy-statics": "echo 'Copying statics...' && cp -R ./src/assets/ ./dist/assets/"
     },
     "repository": {
         "type": "git",
         "url": "https://github.com/prevuelta/rune.git"
     },
     "babel": {
-        "presets": ["@babel/preset-env", "@babel/preset-react"],
-        "plugins": ["@babel/plugin-proposal-class-properties"]
+        "presets": [
+            "@babel/preset-env",
+            "@babel/preset-react"
+        ],
+        "plugins": [
+            "@babel/plugin-proposal-class-properties"
+        ]
     },
     "author": "",
     "license": "ISC",
@@ -47,7 +46,7 @@
         "@babel/preset-react": "^7.0.0",
         "browser-sync": "^2.26.3",
         "eslint": "^5.12.0",
-        "flow-bin": "^0.90.0",
+        "flow-bin": "^0.93.0",
         "npm-run-all": "^4.1.3",
         "rollup-plugin-babel": "^4.0.3",
         "rollup-plugin-commonjs": "^9.2.0",
@@ -55,7 +54,7 @@
         "rollup-plugin-json": "^3.1.0",
         "rollup-plugin-node-builtins": "^2.1.2",
         "rollup-plugin-node-globals": "^1.4.0",
-        "rollup-plugin-node-resolve": "^3.4.0",
+        "rollup-plugin-node-resolve": "^4.0.0",
         "rollup-plugin-string": "^2.0.2",
         "rollup-plugin-uglify": "^6.0.1"
     },

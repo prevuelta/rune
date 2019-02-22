@@ -6,7 +6,7 @@ import Rune from './components/rune';
 import * as actionCreators from '../actions';
 
 // Panels
-import { PanelContainer, PathEditor } from './panels';
+import { PanelContainer, InstructionsPanel } from './panels';
 // import TabletPanel from './panels/tabletPanel';
 // import PathPanel from './panels/pathPa';
 import { Data } from '../data';
@@ -17,8 +17,8 @@ let panels = [
     // Tablet: TabletPanel,
     // Path: PathPanel,
     {
-        title: 'Path Editor',
-        panel: PathEditor,
+        title: 'Instructions',
+        panel: InstructionsPanel,
     },
 ];
 
@@ -48,7 +48,6 @@ let Workspace = props => {
 function mapStateToProps(state) {
     const tablet = Data.getTablet(state);
     const runes = Data.getRunes(state);
-    console.log(runes);
     const { app } = state;
     return {
         runes,

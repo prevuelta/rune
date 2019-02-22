@@ -1,3 +1,5 @@
+'use strict';
+
 import { MODE } from '../util/constants';
 import { guid } from '../util';
 
@@ -45,6 +47,10 @@ export const deleteSelectedPoints = action('DELETE_SELECTED_POINTS');
 
 export function nudge(vector, isSuper) {
     return { type: 'NUDGE', vector };
+}
+
+export function sendInstructions(instructions) {
+    return { type: 'SEND_INSTRUCTIONS', instructions };
 }
 
 /* TABLET */

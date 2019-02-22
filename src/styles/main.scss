@@ -2,28 +2,27 @@
 
 //= require lib/normalize.css
 
-@import
-"base/measure",
-"base/global",
-"base/colors",
-"base/helpers",
-"base/type",
-"rune/grid",
-"workspace/header",
-"workspace/layout",
-"workspace/dialogue",
-"components/grid",
-"components/form",
-"components/action-bar",
-"components/svg",
-"components/tablet",
-"components/rune",
-"components/components",
-"components/sheet",
-"components/overlay",
-"components/tools",
-"components/panels";
-
+@import 'base/measure',
+    'base/global',
+    'base/colors',
+    'base/helpers',
+    'base/type',
+    'rune/grid',
+    'workspace/header',
+    'workspace/layout',
+    'workspace/dialogue',
+    'components/grid',
+    'components/form',
+    'components/action-bar',
+    'components/svg',
+    'components/tablet',
+    'components/rune',
+    'components/components',
+    'components/panel-instructions',
+    'components/sheet',
+    'components/overlay',
+    'components/tools',
+    'components/panels';
 
 .notes {
     z-index: 9999;
