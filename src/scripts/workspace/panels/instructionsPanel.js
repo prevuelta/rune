@@ -22,7 +22,6 @@ class InstructionLine extends Component {
     }
 
     _handleKeyPress = e => {
-        console.log(e);
         if (e.keyCode) {
         }
     };
@@ -33,11 +32,12 @@ class InstructionLine extends Component {
                 className="instruction"
                 onKeyPress={this._handleKeyPress}
                 contentEditable>
-                This text
+                {this.props.i}
             </li>
         );
     }
 }
+const InstructionLineConnected = connect(null, actionCreators)(InstructionLine);
 
 class PathEditor extends Component {
     constructor(props) {
@@ -55,7 +55,7 @@ class PathEditor extends Component {
         return (
             <ul className="instruction-list">
                 {instructions.map(i => {
-                    return <InstructionLine i={i} />;
+                    return <InstructionLineConnected i={i} />;
                 })}
             </ul>
         );
@@ -63,8 +63,6 @@ class PathEditor extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-    console.log('State', state, ownProps);
-
     return {
         instructions: [
             {
@@ -74,7 +72,5 @@ function mapStateToProps(state, ownProps) {
         ],
     };
 }
-
-connect(null, actionCreators)(InstructionLine);
 
 export default connect(mapStateToProps, actionCreators)(PathEditor);
