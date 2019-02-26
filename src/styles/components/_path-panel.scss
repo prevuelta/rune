@@ -1,0 +1,17 @@
+.editable {
+    background: white;
+    padding: $hu;
+
+    &:focus {
+        outline: none;
+        background: $cream;
+    }
+
+    &.path {
+        border-left: 4px solid $sky;
+    }
+
+    &.point {
+        border-left: 4px solid $rust;
+    }
+}

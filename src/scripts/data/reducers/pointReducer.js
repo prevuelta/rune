@@ -1,6 +1,7 @@
 'use strict';
 
 import { POINT_TYPES } from '../../util/constants';
+import { PointModel } from '../models';
 
 const initialState = {
     all: [],
@@ -120,14 +121,26 @@ export default function(state = initialState, action) {
             };
             break;
 
+        case 'UPDATE_POINT':
+            console.log(action);
+            return {
+                ...state,
+                all: points.map((p, i) => {
+                    if (p._id === action.id) {
+                        p.x = action.data.x;
+                        p.y = action.data.y;
+                    }
+                    return p;
+                }),
+            };
         case 'ADD_POINT':
             const index = lastSelected || points.length;
 
-            console.log('Point', action.point);
+            const point = PointModel(action.point);
 
             return {
                 ...state,
-                all: [...points, action.point],
+                all: [...points, point],
                 selected: [index],
             };
 

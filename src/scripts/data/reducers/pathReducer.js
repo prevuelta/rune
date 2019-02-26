@@ -4,7 +4,7 @@ import { PathModel } from '../models';
 
 const initialPathState = (function() {
     return {
-        all: {},
+        all: [],
         current: null,
     };
 })();

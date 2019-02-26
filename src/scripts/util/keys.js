@@ -8,6 +8,7 @@ const protectedElements = ['INPUT', 'TEXTAREA'];
 
 const keyCodes = {
     8: 'delete',
+    13: 'enter',
     27: 'esc',
     37: 'left',
     38: 'up',
@@ -94,7 +95,10 @@ const modeActions = {
 };
 
 document.addEventListener('keydown', function(e) {
-    console.log();
+    if (e.target.classList.contains('editable')) return;
+
+    console.log('Key code', e.keyCode);
+
     let mode = Store.getState().app.mode;
     if (!e.metaKey) {
         // e.preventDefault();

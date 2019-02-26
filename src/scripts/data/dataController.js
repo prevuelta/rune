@@ -15,9 +15,6 @@ export default {
     getPath(state) {
         return this.getCurrent('paths', state);
     },
-    getTablet(state) {
-        return this.getCurrent('tablets', state);
-    },
     getCurrent(model, state = Store.getState()) {
         return state[model].all[state[model].current];
     },

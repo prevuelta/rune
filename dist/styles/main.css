@@ -297,9 +297,16 @@ svg path {
   .header * {
     margin: 0; }
 
-ul.instruction-list li.instruction {
+.editable {
   background: white;
   padding: 6px; }
+  .editable:focus {
+    outline: none;
+    background: #ece5d4; }
+  .editable.path {
+    border-left: 4px solid #27dded; }
+  .editable.point {
+    border-left: 4px solid #e13d1c; }
 
 .sheet {
   display: flex;

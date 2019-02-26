@@ -5,72 +5,127 @@ import * as actionCreators from '../../actions';
 import { connect } from 'react-redux';
 import { COLORS, POINT_TYPES } from '../../util/constants';
 
-const lineItem = props => {};
-
-class InstructionLine extends Component {
+class Path extends Component {
     constructor(props) {
         super(props);
-        console.log(props);
+        const { path } = props;
+
         this.props.addPoint({
             x: 0,
             y: 0,
-            path: props.currentPath,
-            rune: props.rune,
+            path: path._id,
             type: POINT_TYPES.STRAIGHT,
         });
         this.state = {};
     }
 
     _handleKeyPress = e => {
+        console.log(e.keyCode);
         if (e.keyCode) {
         }
     };
 
     render() {
         return (
-            <li
-                className="instruction"
+            <div
+                className="editable path"
                 onKeyPress={this._handleKeyPress}
                 contentEditable>
-                {this.props.i}
-            </li>
+                P
+            </div>
         );
     }
 }
-const InstructionLineConnected = connect(null, actionCreators)(InstructionLine);
+
+class Point extends Component {
+    state = {};
+
+    _handleKeyPress = e => {
+        const { path, point } = this.props;
+        if (e.nativeEvent.keyCode === 13) {
+            this.props.addPoint({
+                x: 0,
+                y: 0,
+                path: path._id,
+                type: POINT_TYPES.STRAIGHT,
+            });
+            // var evt = new KeyboardEvent('keydown', {'keyCode':65gt, 'which':65};
+            // document.dispatchEvent (evt);
+
+            e.preventDefault();
+        }
+    };
+
+    _handleInput = e => {
+        const val = e.target.innerHTML;
+        const xy = val.split(',');
+        this.props.updatePoint(this.props.point._id, { x: xy[0], y: xy[1] });
+    };
+
+    render() {
+        const { x, y } = this.props.point;
+        return (
+            <div
+                className="editable point"
+                onKeyPress={this._handleKeyPress}
+                onInput={this._handleInput}
+                contentEditable>
+                {x},{y}
+            </div>
+        );
+    }
+}
+const PathConnected = connect(null, actionCreators)(Path);
+const PointConnected = connect(null, actionCreators)(Point);
 
 class PathEditor extends Component {
     constructor(props) {
         super(props);
+        this.pointRefs = props.points.map(p => React.createRef());
 
         this.state = {};
     }
 
+    componentWillReceiveProps(newProps) {
+        this.pointRefs = newProps.points.map(p => React.createRef());
+    }
+
     _onUpdate = e => {
-        this.props.sendInstructions(e.target.value);
+        // this.props.sendInstructions(e.target.value);
+    };
+
+    _handleKeyPress = e => {
+        if (e.nativeEvent.keyCode === 13) {
+            // this.pointRefs[
+        }
     };
 
     render() {
-        const { instructions } = this.props;
+        const { paths, points } = this.props;
+        console.log(this.props);
         return (
-            <ul className="instruction-list">
-                {instructions.map(i => {
-                    return <InstructionLineConnected i={i} />;
+            <div className="paths">
+                {paths.map(p => {
+                    return [
+                        <PathConnected path={p} key={p._id} />,
+                        ...points
+                            .filter(point => point.path === p._id)
+                            .map((point, i) => (
+                                <PointConnected
+                                    ref={this.pointRefs[i]}
+                                    point={point}
+                                    path={p}
+                                />
+                            )),
+                    ];
                 })}
-            </ul>
+            </div>
         );
     }
 }
 
 function mapStateToProps(state, ownProps) {
-    return {
-        instructions: [
-            {
-                x: 0,
-                y: 0,
-            },
-        ],
-    };
+    return { paths: state.paths.all, points: state.points.all };
 }
 
 export default connect(mapStateToProps, actionCreators)(PathEditor);

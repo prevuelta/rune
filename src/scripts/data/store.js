@@ -14,21 +14,16 @@ const initialAppState = {
     snap: true,
 };
 
-const tablet = TabletModel();
-const rune = RuneModel({ tablet: tablet._id });
+const rune = RuneModel();
 const path = PathModel({ rune: rune._id });
 
 const initialState = {
-    tablets: {
-        all: { [tablet._id]: tablet },
-        current: tablet._id,
-    },
     runes: {
         all: { [rune._id]: rune },
         current: rune._id,
     },
     paths: {
-        all: { [path._id]: path },
+        all: [path],
         current: path._id,
     },
     app: initialAppState,

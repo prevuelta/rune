@@ -5,7 +5,6 @@ import { combineReducers } from 'redux';
 import pointReducer from './pointReducer';
 import pathReducer from './pathReducer';
 import runeReducer from './runeReducer';
-import tabletReducer from './tabletReducer';
 
 const app = (state = {}, action) => {
     return ({
@@ -27,7 +26,6 @@ const app = (state = {}, action) => {
 export default combineReducers({
     app,
     runes: runeReducer,
-    tablets: tabletReducer,
     points: pointReducer,
     paths: pathReducer,
 });

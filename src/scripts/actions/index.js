@@ -49,6 +49,10 @@ export function nudge(vector, isSuper) {
     return { type: 'NUDGE', vector };
 }
 
+export function updatePoint(id, data) {
+    return { type: 'UPDATE_POINT', id, data };
+}
+
 export function sendInstructions(instructions) {
     return { type: 'SEND_INSTRUCTIONS', instructions };
 }
