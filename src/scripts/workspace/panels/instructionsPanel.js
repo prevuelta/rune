@@ -69,6 +69,7 @@ class Point extends Component {
                 className="editable point"
                 onKeyPress={this._handleKeyPress}
                 onInput={this._handleInput}
+                suppressContentEditableWarning={true}
                 contentEditable>
                 {x},{y}
             </div>
