@@ -109,7 +109,7 @@ function mapStateToProps(state, ownProps) {
         p => p.rune === ownProps.rune._id
     );
     paths.forEach(path => {
-        path.points = state.points.all.filter(p => p.pathId === path._id);
+        path.points = state.points.all.filter(p => p.path === path._id);
     });
     return {
         ...ownProps,
