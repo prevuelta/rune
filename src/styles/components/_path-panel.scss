@@ -1,10 +1,13 @@
-.editable {
+.editable,
+.editable-highlight {
     background: white;
     padding: $hu;
+    margin: 0;
+    border-radius: 0;
 
     &:focus {
         outline: none;
-        background: $cream;
+        background: rgba($cream, 0.4);
     }
 
     &.path {
@@ -14,4 +17,25 @@
     &.point {
         border-left: 4px solid $rust;
     }
+}
+
+.editable {
+    position: relative;
+    background: none;
+}
+
+.editable-container {
+    position: relative;
+}
+
+.editable-highlight {
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: pink;
+    border-left: 4px solid white;
+    display: none;
+}
+
+.paths {
 }

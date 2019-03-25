@@ -167,26 +167,18 @@ label {
 
 input,
 textarea {
-  box-sizing: border-box;
-  box-shadow: inset 1px 1px 1px 0px rgba(0, 0, 0, 0.2);
   padding: 6px;
-  margin: 6px 0;
   border: none;
   font-family: "Inconsolata", sans-serif;
-  color: white;
   display: inline-block;
-  background: #4e5657;
-  width: 100%;
-  font-size: 0.75rem; }
+  font-size: 0.75rem;
+  display: block; }
   input:focus,
   textarea:focus {
     outline: none; }
 
 input[type='number'] {
   max-width: 72px; }
-
-input {
-  border-radius: 2px; }
 
 textarea {
   resize: none; }
@@ -297,16 +289,37 @@ svg path {
   .header * {
     margin: 0; }
 
-.editable {
+.editable,
+.editable-highlight {
   background: white;
-  padding: 6px; }
-  .editable:focus {
+  padding: 6px;
+  margin: 0;
+  border-radius: 0; }
+  .editable:focus,
+  .editable-highlight:focus {
     outline: none;
-    background: #ece5d4; }
-  .editable.path {
+    background: rgba(236, 229, 212, 0.4); }
+  .editable.path,
+  .editable-highlight.path {
     border-left: 4px solid #27dded; }
-  .editable.point {
+  .editable.point,
+  .editable-highlight.point {
     border-left: 4px solid #e13d1c; }
+
+.editable {
+  position: relative;
+  background: none; }
+
+.editable-container {
+  position: relative; }
+
+.editable-highlight {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: pink;
+  border-left: 4px solid white;
+  display: none; }
 
 .sheet {
   display: flex;

@@ -134,6 +134,7 @@ export default function(state = initialState, action) {
                 }),
             };
         case 'ADD_POINT':
+            console.log('Adding point');
             const index = lastSelected || points.length;
 
             const point = PointModel(action.point);
