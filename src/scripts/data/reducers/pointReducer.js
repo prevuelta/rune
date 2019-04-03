@@ -111,6 +111,13 @@ export default function(state = initialState, action) {
             };
 
             break;
+        case 'DELETE_POINT':
+            console.log(action, state.all);
+            return {
+                ...state,
+                all: points.filter((p, i) => p._id !== action.id),
+            };
+            break;
         case 'DRAW_ARC':
             return {
                 ...state,

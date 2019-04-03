@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import * as actionCreators from '../../actions';
 import { connect } from 'react-redux';
 import { COLORS, POINT_TYPES } from '../../util/constants';
+import { keyCodes } from '../../util/keys';
 
 const parseStr = new Map();
 
@@ -22,9 +23,6 @@ class Path extends Component {
     }
 
     _handleKeyPress = e => {
-        console.log(e.nativeEvent.keyCode);
-        if (e.nativeEvent.keyCode) {
-        }
         this.props.keyPressHandler(e.nativeEvent.keyCode);
     };
 
@@ -58,7 +56,14 @@ class Point extends Component {
 
     _handleKeyPress = e => {
         const { path, point } = this.props;
-        if (e.nativeEvent.keyCode === 13) {
+        const { keyCode } = e.nativeEvent;
+        if (keyCodes[keyCode] === 'delete') {
+            if (this.state.value === '') {
+                this.props.deleteHandler(this.props.point._id, this.ref);
+                e.nativeEvent.preventDefault();
+            }
+        }
+        if (keyCodes[keyCode] === 'enter') {
             this.props.addPoint({
                 x: point.x,
                 y: point.y,
@@ -86,7 +91,6 @@ class Point extends Component {
         let value = e.target.value;
 
         const matches = e.target.value.match(exp);
-        console.log(matches);
         if (matches) {
             let [, x, y] = matches;
             if (typeof x !== 'undefined' && typeof y !== 'undefined') {
@@ -104,9 +108,9 @@ class Point extends Component {
         return (
             <div className="editable-container">
                 <input
-                    value={charArr}
+                    defaultValue={charArr}
                     className="editable-highlight"
-                    tabindex="-1"
+                    tabIndex="-1"
                 />
                 <input
                     className="editable point"
@@ -167,8 +171,26 @@ class PathEditor extends Component {
         this.pointRefs.push(ref);
     };
 
+    _handleDelete = (id, ref) => {
+        const index = this.state.selectedIndex - 1;
+        this.props.deletePoint(id);
+        this.pointRefs = this.pointRefs.filter(r => r !== ref);
+        this._focusIndex(index);
+
+        this.setState({
+            selectedIndex: index,
+        });
+    };
+
+    _focusIndex = index => {
+        if (index > -1) {
+            this.pointRefs[index].current.focus();
+        }
+    };
+
     _handleKeyPress = keyCode => {
-        if (keyCode === 40 || keyCode === 38) {
+        const key = keyCodes[keyCode];
+        if (['up', 'down'].includes(key)) {
             const { points } = this.props;
             const { selectedIndex } = this.state;
             let index;
@@ -179,8 +201,7 @@ class PathEditor extends Component {
                 index = Math.max(0, selectedIndex - 1);
             }
             this.setState({ selectedIndex: index });
-            console.log(this.pointRefs);
-            this.pointRefs[index].current.focus();
+            this._focusIndex(index);
             // const selected = this.pointRefs;
             // this.setState(
             //     {
@@ -198,7 +219,6 @@ class PathEditor extends Component {
 
     render() {
         const { paths, points } = this.props;
-        console.log(points, this.pointRefs);
         return (
             <div className="paths">
                 {points.map((point, j) => (
@@ -209,6 +229,7 @@ class PathEditor extends Component {
                         index={j}
                         keyPressHandler={this._handleKeyPress}
                         focusHandler={this._handleFocus}
+                        deleteHandler={this._handleDelete}
                     />
                 ))}
             </div>

@@ -6,7 +6,7 @@ const MODIFIERS = ['shiftKey', 'ctrlKey', 'metaKey'];
 
 const protectedElements = ['INPUT', 'TEXTAREA'];
 
-const keyCodes = {
+export const keyCodes = {
     8: 'delete',
     13: 'enter',
     27: 'esc',
