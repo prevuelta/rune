@@ -6,3 +6,4 @@ renders
 *.swp
 *.swo
 dist
+.env

@@ -26,6 +26,6 @@ const app = (state = {}, action) => {
 export default combineReducers({
     app,
     runes: runeReducer,
-    points: pointReducer,
+    // points: pointReducer,
     paths: pathReducer,
 });

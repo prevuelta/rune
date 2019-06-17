@@ -15,24 +15,33 @@ const initialAppState = {
 };
 
 const rune = RuneModel();
-const path = PathModel({ rune: rune._id });
+// const path = PathModel({ rune: rune._id });
 
 const initialState = {
-    runes: {
-        all: { [rune._id]: rune },
-        current: rune._id,
+    // runes: {
+    // all: { [rune._id]: rune },
+    // current: rune._id,
+    // },
+    app: {
+        selected: {
+            path: 0,
+            rune: 0,
+        },
     },
-    paths: {
-        all: [path],
-        current: path._id,
-    },
-    app: initialAppState,
+    runes: [rune],
+    // paths: {
+    // all: [path],
+    // current: path._id,
+    // },
+    // app: initialAppState,
+    paths: [],
+    points: [],
 };
 /* Remember: store is pure data */
 const store = createStore(
     rootReducer,
-    initialState,
-    applyMiddleware(pointResize, instructionParser)
+    initialState
+    // applyMiddleware(pointResize, instructionParser)
 );
 console.log('Initial store', store.getState());
 

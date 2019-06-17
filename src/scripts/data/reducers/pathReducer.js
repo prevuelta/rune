@@ -3,10 +3,7 @@
 import { PathModel } from '../models';
 
 const initialPathState = (function() {
-    return {
-        all: [],
-        current: null,
-    };
+    return [];
 })();
 
 export default function(state = initialPathState, action) {
@@ -50,12 +47,18 @@ export default function(state = initialPathState, action) {
             // if ( state.points.all.some(p => p.path === state.current ) {
 
             // }
-            let path = Path({ rune: action.runeId });
+            // let path = Path({ rune: action.runeId });
             return {
-                ...state,
-                current: path._id,
-                selected: [],
-                all: [...state.all, path],
+                paths: [...state.paths, ''],
+                // ...state,
+                // current: path._id,
+                // selected: [],
+                // all: [...state.all, path],
+            };
+            break;
+        case 'UPDATE_PATH':
+            return {
+                paths: paths.map((p, i) => (i === action.i ? action.value : p)),
             };
             break;
         default:

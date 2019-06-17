@@ -1,52 +1,30 @@
 'use strict';
 
 import React, { Component } from 'react';
+// const runes = Data.getRunes(state);
 import * as actionCreators from '../../actions';
 import { connect } from 'react-redux';
 import { COLORS, POINT_TYPES } from '../../util/constants';
 import { keyCodes } from '../../util/keys';
 
-const parseStr = new Map();
-
 const char = '█';
-
 const charArr = new Array(10).fill(char).join('');
 
-function format(number) {
-    return (+number).toFixed(2);
-}
+// function format(number) {
+//     return (+number).toFixed(2);
+// }
+
+// Sample instruction:
+const sampleInstruction = `
+   0,0 w,0 w,h 0,h +.5w,-.5w a(0,0 w)
+`;
 
 class Path extends Component {
     constructor(props) {
         super(props);
-        const { path } = props;
-    }
-
-    _handleKeyPress = e => {
-        this.props.keyPressHandler(e.nativeEvent.keyCode);
-    };
-
-    render() {
-        return (
-            <div
-                className="editable path"
-                onKeyDown={this._handleKeyPress}
-                suppressContentEditableWarning={true}
-                contentEditable>
-                P
-            </div>
-        );
-    }
-}
-
-class Point extends Component {
-    constructor(props) {
-        super(props);
         this.ref = React.createRef();
-        this.props.passRef(this.props.point._id, this.ref);
-
         this.state = {
-            value: `${props.point.x} ${props.point.y}`,
+            value: props.path,
         };
     }
 
@@ -55,30 +33,22 @@ class Point extends Component {
     }
 
     _handleKeyPress = e => {
-        const { path, point } = this.props;
+        const { path, index } = this.props;
         const { keyCode } = e.nativeEvent;
         if (keyCodes[keyCode] === 'delete') {
             if (this.state.value === '') {
-                this.props.deleteHandler(this.props.point._id, this.ref);
+                // this.props.deleteHandler(this.props.point._id, this.ref);
                 e.nativeEvent.preventDefault();
             }
         }
         if (keyCodes[keyCode] === 'enter') {
-            this.props.addPoint({
-                x: point.x,
-                y: point.y,
-                path: point.path,
-                type: POINT_TYPES.STRAIGHT,
-            });
+            this.props.addPath();
             e.preventDefault();
         }
         this.props.keyPressHandler(e.nativeEvent.keyCode);
     };
 
-    _handleBlur = e => {
-        x = format(x);
-        y = format(y);
-    };
+    _handleBlur = e => {};
 
     _handleInput = e => {
         // const val = e.target.innerText;
@@ -87,32 +57,33 @@ class Point extends Component {
         // console.log(parseStr.keys());
         // const result = parseStr.keys().some(key => key.test(e.target.value));
         // console.log(result);
-        const exp = /^(\d*(?:[.]\d*)?) (\d*(?:[.]\d*)?)$/;
+        // const exp = /^(\d*(?:[.]\d*)?) (\d*(?:[.]\d*)?)$/;
         let value = e.target.value;
 
-        const matches = e.target.value.match(exp);
-        if (matches) {
-            let [, x, y] = matches;
-            if (typeof x !== 'undefined' && typeof y !== 'undefined') {
-                value = `${x} ${y}`;
-                this.props.updatePoint(this.props.point._id, { x: +x, y: +y });
-            }
-        }
-        value = value.replace(/ +/g, ' ');
-        this.setState({ value });
+        // const matches = e.target.value.match(exp);
+        // if (matches) {
+        // let [, x, y] = matches;
+        // if (typeof x !== 'undefined' && typeof y !== 'undefined') {
+        // value = `${x} ${y}`;
+        // this.props.updatePoint(this.props.point._id, { x: +x, y: +y });
+        // }
+        // }
+        // value = value.replace(/ +/g, ' ');
+        this.setState({ value }, () => {
+            this.props.updatePath(this.props.index, value);
+        });
     };
 
     render() {
         // const { x, y } = this.props.p
+        // <input
+        //     defaultValue={charArr}
+        // className="editable-highlight"
+        // tabIndex="-1">
         const { value } = this.state;
         return (
             <div className="editable-container">
-                <input
-                    defaultValue={charArr}
-                    className="editable-highlight"
-                    tabIndex="-1"
-                />
-                <input
+                <textarea
                     className="editable point"
                     onKeyDown={this._handleKeyPress}
                     onChange={this._handleInput}
@@ -135,7 +106,7 @@ const PointConnected = connect(mapStateToProps, actionCreators)(PointWithRef);
 class PathEditor extends Component {
     constructor(props) {
         super(props);
-        this.pointRefs = props.points.map(p => React.createRef());
+        this.pathRefs = props.paths.map(p => React.createRef());
 
         for (let i = 0; i < 3; i++) {
             this.props.addPoint({
@@ -148,7 +119,7 @@ class PathEditor extends Component {
 
         this.state = {
             selectedIndex: 0,
-            pointCount: props.points.length,
+            pointCount: props.paths.length,
         };
     }
 
@@ -191,11 +162,11 @@ class PathEditor extends Component {
     _handleKeyPress = keyCode => {
         const key = keyCodes[keyCode];
         if (['up', 'down'].includes(key)) {
-            const { points } = this.props;
+            const { paths } = this.props;
             const { selectedIndex } = this.state;
             let index;
             if (keyCode === 40) {
-                index = Math.min(points.length - 1, selectedIndex + 1);
+                index = Math.min(paths.length - 1, selectedIndex + 1);
             } else {
                 console.log('Selectd Index', selectedIndex);
                 index = Math.max(0, selectedIndex - 1);
@@ -218,14 +189,14 @@ class PathEditor extends Component {
     };
 
     render() {
-        const { paths, points } = this.props;
+        const { paths } = this.props;
         return (
             <div className="paths">
-                {points.map((point, j) => (
-                    <PointConnected
+                {paths.map((path, j) => (
+                    <PathConnected
                         key={point._id}
                         passRef={this._passRef}
-                        point={point}
+                        path={path}
                         index={j}
                         keyPressHandler={this._handleKeyPress}
                         focusHandler={this._handleFocus}
@@ -238,7 +209,7 @@ class PathEditor extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-    return { paths: state.paths.all, points: state.points.all };
+    return { paths: state.paths.all };
 }
 
 export default connect(mapStateToProps, actionCreators)(PathEditor);

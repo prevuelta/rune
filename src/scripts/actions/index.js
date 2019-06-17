@@ -81,6 +81,7 @@ export const decreaseGridUnit = adjust('gridUnit', -1);
 /* PATH PANEL */
 
 export const deletePath = id => ({ type: 'DELETE_PATH', id });
+export const updatePath = (id, value) => ({ type: 'UPDATE_PATH', id, value });
 export const selectPath = id => ({ type: 'SELECT_PATH', id });
 export const togglePathClosed = id => ({ type: 'TOGGLE_PATH_CLOSED', id });
 export const addSubPath = id => ({ type: 'ADD_SUB_PATH', id });
