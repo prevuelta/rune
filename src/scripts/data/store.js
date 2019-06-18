@@ -12,6 +12,11 @@ const initialAppState = {
     proofView: false,
     mode: MODE.DOCUMENT,
     snap: true,
+    selected: {
+        path: 0,
+        rune: 0,
+        points: [],
+    },
 };
 
 const rune = RuneModel();
@@ -22,18 +27,12 @@ const initialState = {
     // all: { [rune._id]: rune },
     // current: rune._id,
     // },
-    app: {
-        selected: {
-            path: 0,
-            rune: 0,
-        },
-    },
     runes: [rune],
     // paths: {
     // all: [path],
     // current: path._id,
     // },
-    // app: initialAppState,
+    app: initialAppState,
     paths: [],
     points: [],
 };

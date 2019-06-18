@@ -89,13 +89,13 @@ function Rune(props) {
                 </span>
             </p>
             {!proofView && <BGLayer {...size} rune={rune} />}
-            <RenderLayer {...size} paths={paths} />
-            {!proofView && (
-                <Overlay {...size} rune={rune} currentPath={currentPath} />
-            )}
         </div>
     );
 }
+// <RenderLayer {...size} paths={paths} />
+// {!proofView && (
+//     <Overlay {...size} rune={rune} currentPath={currentPath} />
+// )}
 
 function mapStateToProps(state, ownProps) {
     // const points = state.point.all.filter(p => p.rune === ownProps.rune._id);
@@ -109,14 +109,15 @@ function mapStateToProps(state, ownProps) {
         p => p.rune === ownProps.rune._id
     );
     paths.forEach(path => {
-        path.points = state.points.all.filter(p => p.path === path._id);
+        path.points = state.points.filter(p => p.path === path._id);
     });
+
     return {
         ...ownProps,
         mode: state.app.mode,
         paths,
-        currentPath: state.paths.current,
-        selectedPoints: state.points.selected,
+        currentPath: state.app.currentPath,
+        selectedPoints: state.app.selectedPoints,
         proofView: state.app.proofView,
     };
 }
