@@ -1,4 +1,4 @@
-# Rüne DEPRECATED see [Rune2(https://github.com/prevuelta/rune2)
+# Rüne DEPRECATED see [Rune2](https://github.com/prevuelta/rune2)
 ## WORK IN PROGRESS
 
 Online SVG based icon and type creator for people who like to think inside the box.
