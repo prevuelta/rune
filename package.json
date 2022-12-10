@@ -60,7 +60,7 @@
     },
     "dependencies": {
         "dotenv": "^8.0.0",
-        "express": "^4.17.1",
+        "express": "^4.17.3",
         "react": "^16.2.0",
         "react-dom": "^16.2.0",
         "react-draggable": "^3.0.4",
